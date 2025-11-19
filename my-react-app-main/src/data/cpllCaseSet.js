@@ -1,0 +1,56 @@
+const cpllCaseSet = {
+  details: {
+    id: "cpll",
+    title: "CPLL",
+    subTitle: "2-Look PLL 1",
+    mask: "coll",
+    view: "plan",
+    numCases: 2,
+  },
+  cases: [
+    {
+      id: "b35780e5-4cf7-4278-ba74-4384a3470022",
+      name: "Headlights",
+      group: "",
+      prob: 4,
+      arrows: ["U2U8-s8-black,U8U2-s8-black"],
+      scrambles: [
+        "U L2 U B2 R2 U B2 D' B2 F2 R2 D L R' U2 L' R",
+        "U' B2 L2 R2 D L2 D' R2 D B2 R2 U L R F2 L' R",
+        "D B2 L2 D R2 D' B2 U B2 R2 U F2 L' R' U2 L' R'",
+        "L2 B2 D' R2 F2 L2 R2 U' F2 U B2 U' L' R' U2 L R'",
+        "R2 U' R2 U' R2 U2 B2 U R2 U' R2 U' B' F' U2 B' F",
+        "B2 U' B2 U' B2 U2 L2 U B2 U' B2 U' L' R' U2 L' R",
+        "F2 D2 L2 F2 R2 U F2 D L2 U' L2 U B F' D2 B F'",
+        "U F2 L2 R2 D' R2 U R2 U' B2 R2 D L' R F2 L' R'",
+        "U' L2 F2 D B2 D' L2 D F2 L2 U B2 L' R' U2 L' R'",
+        "U' F2 L2 U B2 U' L2 B2 D' R2 F2 U' L R' U2 L R'",
+      ],
+      algs: ["R U R' U' R' F R2 U' R' U' R U R' F'"],
+    },
+    {
+      id: "bf1c3991-fab1-441a-84bd-53d8674bdc16",
+      name: "No Headlights",
+      group: "",
+      prob: 4,
+      arrows: ["U0U8-s8-black,U8U0-s8-black"],
+      scrambles: [
+        "F2 U L2 R2 D L2 D' B2 D2 R2 U F2 L' R B2 L' R'",
+        "B2 U2 B U2 R2 B2 R2 F' U2 F2 R2 F' L R' U2 L' R'",
+        "R2 U2 B2 U' L2 U2 B2 U' L2 U2 B2 U' L' R B2 L' R",
+        "F2 D2 L2 U B2 D2 L2 U F2 U2 L2 U' L R' F2 L R'",
+        "L2 U' R2 D F2 D' R2 U' L2 U L2 U' L' R' U2 L' R",
+        "F2 U2 R2 U' F2 U2 R2 U F2 U2 R2 U L R' F2 L' R",
+        "L2 U R2 D' B2 D R2 U L2 U' L2 U L R U2 L R'",
+        "R2 U' R2 D B2 D' B2 U' L2 U L2 U L R B2 L' R'",
+        "B2 D2 R2 U F2 D2 R2 U B2 U2 R2 U' L' R B2 L' R",
+        "L2 U2 B2 U R2 U2 B2 U R2 U2 B2 U L' R B2 L' R",
+      ],
+      algs: [
+        "F R U' R' U' R U R' F' R U R' U' R' F R F'",
+        "F R' F R2 U' R' U' R U R' F' R U R' U' F'",
+      ],
+    },
+  ],
+};
+export default cpllCaseSet;

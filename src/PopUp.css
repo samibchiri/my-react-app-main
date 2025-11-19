@@ -1,0 +1,376 @@
+.PopUpCard{
+  position: absolute;
+  margin-left:500px;
+  top:40vw;
+}
+
+.ModalPopUp .modal-content{
+  display: flex;
+  flex-direction: column;
+  background-color: #191d21;
+  height:600px;
+  width:600px;
+  max-width: 105%;
+}
+.ModalPopUp .modal-header{
+  top:0px;
+  border:1px solid #484a4d;
+  background-color: #191d21;
+}
+.ModalPopUp .modal-footer{
+  display: flex;
+  flex-direction: column;
+  border:1px solid #484a4d;
+  background-color: #191d21;
+}
+
+.ModalPopUp .modal-body{
+  border:1px solid #484a4d;
+  border-top:0px;
+  border-bottom:0px;
+  height:600px;
+  background-color: #191d21;
+}
+
+@media (max-width: 576px) {
+  .modal {
+    width: 95%;          /* shrink modal */
+    padding: 10px;
+  }
+  .ModalPopUp .modal-body{
+  border:1px solid #484a4d;
+  border-top:0px;
+  border-bottom:0px;
+  height:600px;
+  background-color: #191d21;
+}
+  .popAlgUpRow>td{
+    font-size: 0.9rem;
+  }
+  .PopUpCopyButton{
+    transform: scale(0.75);
+    
+  }
+  .popAlgUpRow>td #PopUpButtonClose1{
+    transform: scale(0.75);
+    margin-top: 3px;
+  }
+  .popAlgUpRow>td #PopUpButtonClose1:hover{
+    transform: scale(0.9);
+    margin-top: 3px;
+  }
+  .popAlgUpRow>td .PopUpButtonSave{
+    transform: scale(0.75);
+    margin-top: 3px;
+  }
+  .popUpRow>td .PopUpButtonSave:hover{
+    transform: scale(0.9);
+    margin-top: 3px;
+  }
+  body .popUpContainer{
+  background-color: #272b2f;
+  height:337px;
+  margin-top: 25px;
+  border-radius: 10px;
+  border:1px solid #484a4d;
+  color:white
+}
+}
+
+
+body .alg-modal-dialog {
+  --bs-modal-width: min(100vw, 576px);
+  background-color: transparent;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+body .modalText{
+  font-size: 2rem;
+  font-weight: bold;
+  color:white;
+}
+
+body .popUpTitle{
+  color:white;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+body .popUpContainer{
+  background-color: #272b2f;
+  height:352px;
+  margin-top: 25px;
+  border-radius: 10px;
+  border:1px solid #484a4d;
+  color:white
+}
+
+.PopUpTd1{
+  width:110px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.PopUpTd2{
+  width: 400px;
+}
+#Alg1Td{
+  padding:10px;
+}
+.popUpTable{
+  color:white;
+  border-top:0px;
+}
+
+.popUpRow{
+  border-top:0px;
+  font-size: 1.2rem;
+  border-bottom:2px solid #343a40;
+  height:40px;
+}
+
+.popUpRowScramble{
+  border-top:0px;
+  font-size: 1.2rem;
+  border-bottom:2px solid #343a40;
+  height:70px;
+}
+.popAlgUpRow{
+  border-top:0px;
+  font-size: 1.2rem;
+  border-bottom:2px solid #343a40;
+  height:70px;
+}
+
+.lastPopUpRow{
+  border-bottom: 0px;
+  height: 70px;
+}
+
+.PopUpButtonClose{
+  background-color: rgb(40, 40, 40);
+  margin:10px;
+  padding:10px;
+  padding-top:5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color:white;
+  font-size: 1rem;
+  font-weight: 600;
+  border:2px solid rgb(40, 40, 40);
+}
+
+body .PopUpButtonClose:hover{
+  background-color: rgb(31, 31, 31);
+  border:2px solid rgba(255, 255, 255, 0.868);
+  transform: scale(1.05);
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+}
+
+.popAlgUpRow>td button.PopUpCopyButton{
+  background-color: rgb(67, 67, 67);
+  border-radius: 5px;
+  color:white;
+  height:30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left:0px;
+  border:0px; 
+}
+
+.popAlgUpRow>td button.PopUpCopyButton:hover{
+  background-color: rgb(48, 48, 48);
+  border:0px;
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+
+}
+
+.lastPopUpRow>td button.PopUpCopyButton{
+  background-color: rgb(67, 67, 67);
+  border-radius: 5px;
+  color:white;
+  height:30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left:0px;
+  border:0px; 
+}
+
+.lastPopUpRow>td button.PopUpCopyButton:hover{
+  background-color: rgb(48, 48, 48);
+  border:0px;
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+
+}
+
+.PopUpButtonHidden{
+  background-color: rgb(40, 40, 40);
+  margin:10px;
+  padding:10px;
+  padding-top:5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color:white;
+  font-size: 1rem;
+  font-weight: 600;
+  border:2px solid rgb(40, 40, 40);
+  visibility: hidden;
+}
+
+#PopUpButtonClose1{
+  background-color: rgb(40, 40, 40);
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color:white;
+  font-size: 1rem;
+  font-weight: 600;
+  border:2px solid rgb(255, 255, 255);
+  width:50px;
+  height:30px;
+}
+
+#PopUpButtonClose1:hover{
+  background-color: rgb(31, 31, 31);
+  border:2px solid rgba(255, 255, 255, 0.868);
+  transform: scale(1.05);
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+}
+.PopUpButtonSave{
+  background-color: rgb(40, 40, 40);
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color:white;
+  font-size: 1rem;
+  font-weight: 600;
+  border:2px solid rgb(255, 255, 255);
+  width:50px;
+  height:30px;
+}
+
+.PopUpButtonSave:hover{
+  background-color: rgb(31, 31, 31);
+  border:2px solid rgba(255, 255, 255, 0.868);
+  transform: scale(1.05);
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+}
+
+.PopUpInputAlg{
+  
+  --bs-table-bg: #1b1b1b;
+  --bs-table-color:white;
+  font-weight: bold;
+  border-radius: 5px;
+  --bs-focus-ring-width:0rem;
+  border-color: #5f5f68 !important;   
+
+}
+
+.PopUpInputAlg:focus{
+  --bs-table-bg: #1b1b1b;
+  --bs-table-color:white;
+  font-weight: bold;
+  border-radius: 5px;
+  border:2px solid #212121;
+  --bs-focus-ring-width:0rem;
+  background-color: #5f5f68;
+}
+
+table input.PopUpInputAlg:focus,
+table input.PopUpInputAlg:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #1b1b1b !important; /* prevent inherited hover/focus bg */
+  border-color: #5f5f68 !important;        /* override table active border */
+}
+
+
+td #PopUpInputAlg1{
+  all: unset;  
+  background-color: #1b1b1b;
+  --bs-table-color:white;
+  font-weight: bold;
+  text-align: left;
+  cursor: text;
+  height:45px;
+  width:238px;
+  font-size:1rem;
+  border-radius:3px;
+  padding-left: 5px;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-wrap:break-word;
+  border:2px solid rgba(211, 211, 211, 0.174)
+}
+
+td #PopUpInputAlg1:focus{
+  all: unset;  
+  background-color: #0f0f0f;
+  color:white;
+  font-weight: bold;
+  text-align: left;
+  cursor: text;
+  height:45px;
+  width:240px;
+  font-size:1rem;
+  border-radius:3px;
+  padding-left: 5px;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-wrap:break-word;
+  border:2px solid rgba(211, 211, 211, 0.174);
+}
+
+td #PopUpInputAlg2{
+  all: unset;  
+  background-color: #1b1b1b;
+  --bs-table-color:white;
+  font-weight: bold;
+  text-align: left;
+  cursor: text;
+  height:45px;
+  width:240px;
+  font-size:1rem;
+  border-radius:3px;
+  padding-left: 5px;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-wrap:break-word;
+  border:2px solid rgba(211, 211, 211, 0.174)
+}
+
+td #PopUpInputAlg2:focus{
+  all: unset;  
+  background-color: #0f0f0f;
+  color:white;
+  font-weight: bold;
+  text-align: left;
+  cursor: text;
+  height:45px;
+  width:240px;
+  font-size:1rem;
+  border-radius:3px;
+  padding-left: 5px;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-wrap:break-word;
+  border:2px solid rgba(211, 211, 211, 0.174);
+}
+
+#buttonSaveAndCopy1{
+  display:flex;
+  flex-direction: column;
+  background-color: transparent;
+  max-width: 60px;
+}
+#buttonSaveAndCopy2{
+  display:flex;
+  flex-direction: column;
+  background-color: transparent;
+  max-width: 60px;
+}
