@@ -6,6 +6,7 @@ import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import ollCaseSet from "./data/ollCaseSet.js";
+import { TbRuler } from "react-icons/tb";
 
 export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
@@ -134,6 +135,7 @@ let Remapping = [
 
   
   colorList=["#00d800","orange","#1f51ff","red","yellow"]
+  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
   
   // console.log(colorList)
   // console.log("GetPoints")
@@ -240,8 +242,9 @@ let Remapping = [
   
 
   let newPath=[[],[],[],[],[]]
-  let ConnectingLines=[[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]]]
-  
+  let ConnectingLines = Array.from({ length: 5 }, () =>
+  Array.from({ length: 4 }, () => [])
+);
 
   for(let i=0;i<5;i++){
     for(let j=0;j<colorIndexList[i].length;j++){
@@ -265,17 +268,33 @@ let Remapping = [
       distance=ConnectCenters(colorIndexList[i],0)[4]
       
       let circlePath=""
+
+      let Center1Used=false
+      let Center2Used=false
+
       if (distance<maxdistance){
       ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0)
       circlePath=ConnectingLines[i][1][5]
+      Center1Used=true
       }
       distance=ConnectCenters(colorIndexList[i],1)[4]
       if (distance<maxdistance){
       ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1)
-      circlePath=ConnectingLines[i][1][5]
+      if (Center1Used){
+        circlePath=ConnectingLines[i][1][5]
       }
+      Center2Used=true
+      }
+      
+      if (!Center1Used|| !Center2Used){
+        circlePath=""
+      }
+      
 
       ConnectingLines[i][2]=circlePath
+
+      console.log("ArrowBarOnly")
+      ConnectingLines[i][3]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,contrastingcolorList[i])
 
       console.log("CHeckOutput")
       console.log(ConnectingLines)
@@ -295,10 +314,7 @@ let Remapping = [
   color=newSquaresColors[PermIndex]
 
   color="rgba(13, 139, 13, 1)"
-  
-  //let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","rgba(204, 184, 0, 1)"]
-  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
-  
+
   let finalPath=[[],[],[],[]]
   for(let i=0;i<5;i++){
     finalPath[i]=path[i]+newPath[i]
@@ -310,19 +326,59 @@ let Remapping = [
 
 }
 
-function Connect2Centers(Center1,Center2){
+
+function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color){
   
-  console.log("Connect2CentersFail")
-  console.log(Center1,Center2)
+
+  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
   let Centers= GetCentersPosition(cubeSize)
-let centerx=Centers[Center1][0]
-let centery=Centers[Center1][1]
 
-let centerx2=Centers[Center2][0]
-let centery2=Centers[Center2][1]
+  console.log("ArrowBar")
+  console.log(PointsInfo)
 
-console.log("Datapoints")
-console.log(centerx,centery,centerx2,centery2)
+  let StartLocationX
+  let StartLocationY
+
+  let EndLocationX
+  let EndLocationY
+  
+  if (color==contrastingcolorList[3]){
+     EndLocationX=Centers[17][0]
+     EndLocationY=Centers[17][1]
+  }
+  
+  if (Center1Used && Center2Used){
+    StartLocationX=Centers[PointsInfo[0][0]][0]
+    StartLocationY=Centers[PointsInfo[0][0]][1]
+    
+  }
+
+  else if(Center1Used){
+    StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][0])/2
+    StartLocationY=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][1])/2
+  }
+
+  let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
+  
+  console.log("ConnectingPath")
+  console.log(pathArrow2)
+  console.log(angle,centerx2,centery2)
+  console.log()
+  //return "M 40,40 L 40,80 L 42,80 L 42, 40 Z"
+
+  console.log("SentData")
+    console.log(pathArrow2,angle,centerx2,centery2)
+  
+  return [pathArrow2,angle,centerx2,centery2]
+}
+
+
+function Connect2Points(centerx,centery,centerx2,centery2,arrowBoolean){
+  
+  
+
+// console.log("Datapoints")
+// console.log(centerx,centery,centerx2,centery2)
 
 
 let Correction=(centery2-centery)>0? 90:-90
@@ -334,9 +390,9 @@ if (centery==centery2){
 }
 if (centerx>centerx2 && centery==centery2){
     [centerx, centerx2] = [centerx2, centerx];
-    let difference=centerx2-centerx
-    centerx-=difference
-    centerx2-=difference
+    //let difference=centerx2-centerx
+    // centerx-=difference
+    // centerx2-=difference
     // centery2-=2.5
     // centery-=1.5
     Correction+=180
@@ -344,22 +400,25 @@ if (centerx>centerx2 && centery==centery2){
 
 angle+=Correction
 
-centerx=Centers[Center1][0]
-centery=Centers[Center1][1]
 
-centerx2=Centers[Center2][0]
-centery2=Centers[Center2][1]
 let distance=((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)
 centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)                                                                                                                                                                                                                                                                                                                   //L 37,41 37,45 27,39 37,33 Z"
 
 
 
 //let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`
-let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`  
-pathArrow2=`M ${centerx},${centery2} Q ${centerx},${centery2-lineWidth/2} ${centerx+1.5},${centery2-lineWidth/2} L ${centerx+2},${centery2-lineWidth/2} L ${centerx2-2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-2},${centery2+lineWidth/2} L ${centerx2-2},${centery2+lineWidth/2} L ${centerx2-6},${centery2+lineWidth/2} L ${centerx+2},${centery2+lineWidth/2} Q ${centerx},${centery2+lineWidth/2} ${centerx},${centery2} Z`
-                               
+//let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`  
+let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+    
+if(arrowBoolean){
+  // console.log("BooleanTrue")
+  // console.log(arrowBoolean)
+  pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+4+lineWidth/2},${centery2} L ${centerx2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+  
+}
+//console.log(distance)
 
-return [pathArrow2,angle,centerx2,centery2,distance]
+return [pathArrow2,angle,centerx2,centery2-2,distance]
 }
 
 function ConnectCenters(PointsInfo,CenterIndex){
@@ -369,28 +428,37 @@ function ConnectCenters(PointsInfo,CenterIndex){
   for(let i=0; i<PointsInfo.length;i++){
     PiecesIndex.push(PointsInfo[i][0])
   }
-  console.log("PiecesIndices")
-  console.log(PiecesIndex)
+  // console.log("PiecesIndices")
+  // console.log(PiecesIndex)
   
-  let [path1,angle,centerx2,centery2,distance]= Connect2Centers(PiecesIndex[CenterIndex+1],PiecesIndex[0])
-  
-  let path=""
   Centers=GetCentersPosition(cubeSize)
-  let circleRadius=0.5
+
+
+  let tempcenterx=Centers[PiecesIndex[CenterIndex+1]][0]
+  let tempcentery=Centers[PiecesIndex[CenterIndex+1]][1]
+  let tempcenterx2=Centers[PiecesIndex[0]][0]
+  let tempcentery2=Centers[PiecesIndex[0]][1]
+  let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
+  
+  //let path=""
+  
+  let circleRadius=3
   
   let midPointx1=Centers[PiecesIndex[0]][0]
   let midPointy1=Centers[PiecesIndex[0]][1]
   let circlePath1=`M ${midPointx1+circleRadius},${midPointy1} A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1-circleRadius},${midPointy1}
                                                               A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1+circleRadius},${midPointy1}`
-  console.log("CirclePath")
-  console.log(circlePath1)
-console.log(PiecesIndex)
-  console.log(Centers[PiecesIndex[0]])
+//   console.log("CirclePath")
+//   console.log(circlePath1)
+// console.log(PiecesIndex)
+//   console.log(Centers[PiecesIndex[0]])
      //path+=circlePath1
-    path+=path1
+    //path+=path1
  
+    console.log("SentData")
+    console.log(path,angle,centerx2,centery2)
   
-  return [path,angle,centerx2+1,centery2,distance,circlePath1]
+  return [path,angle,centerx2,centery2,distance,circlePath1]
 }
 
 function CalculateNewOutline(PointList,strokeWidth,index){
@@ -755,8 +823,8 @@ function centerOutLineInfo(IndexList){
 
 //  Offset=13
   CenterIndex=13
-    StartingPointx=Centers[CenterIndex][0]
-    StartingPointy=Centers[CenterIndex][1]
+  StartingPointx=Centers[CenterIndex][0]
+  StartingPointy=Centers[CenterIndex][1]
       //OffsetY=Offset
 
     //Points=[[OffsetX,OffsetY],[OffsetX,-OffsetY],[-OffsetX,-OffsetY],[-OffsetX,OffsetY]]
@@ -866,45 +934,15 @@ return (
                                       
                                       
                                       transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][j][3] ||"0"})`}
-                                      //transform={`rotate("0"} ${overlayPaths[refIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3] ||"0"})`}
-                               
+                                      //transform={`rotate 90 ${overlayPaths[refIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3] ||"0"}`}
+                                      //transform={`rotate(90 ${overlayPaths[refIndex]?.[2]?.[i][j][2] || 0} ${overlayPaths[refIndex]?.[2]?.[i][j][3] || 0})`}
+
                                     />
                                     
                                 </svg>
 
-                                <svg style={{position:"absolute"}}id="Hardcoded" width="100%" height="100%" >
-                                        <path 
-                                          d="M -2.4548899809190416,38.5 
-                                            L 43.65,38.5 
-                                            L 43.65,34.5 
-                                            L 52.65,40.5 
-                                            L 43.65,46.5 
-                                            L 43.65,42.5 
-                                            L -2.4548899809190416,42.5 
-                                            L -2.4548899809190416,42.5 
-                                            L -2.4548899809190416,46.5 
-                                            L -11.454889980919042,40.5 
-                                            L -2.4548899809190416,34.5 
-                                            Z"
-                                          fill="black"
-                                          stroke="rgba(44, 44, 44, 1)"
-                                          stroke-width="1"
-                                          stroke-linejoin="round"
-                                          transform="rotate(143.930590100419 45.65 40.5)"
-                                        />
-                                      </svg>
-                                      <svg style={{position:"absolute"}}id="Hardcoded2" width="100%" height="100%" >
-                                          <path
-                                            d="
-                                                  M 88,40
-                                                  A  2 2 0 1 1 84,40
-                                                  A 2 2 0 1 1 88,40
-                                                "
-                                             fill="none"
-                                            stroke="rgba(0,0,0,0)"
-                                            stroke-width="2"
-                                          />
-                                        </svg>
+                                
+                                      
                                         
 
 
@@ -925,19 +963,26 @@ return (
                                 </>
                                 ))}
                                 
-                                <svg style={{position:"absolute"}}id="Hardcoded2" width="100%" height="100%" >
+                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
                                           <path
-                                            // d="
-                                            //       M 95,40
-                                            //       A  5 5 0 1 1 85,40
-                                            //       A 5 5 0 1 1 95,40
-                                            //     "
-                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||"M 95,40 A  5 5 0 1 1 85,40 A 5 5 0 1 1 95,40"}
+                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
                                              fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
-                                            stroke="rgba(44, 44, 44, 0.6)"
+                                            stroke="rgba(44, 44, 44, 1)"
                                             stroke-width="1"
                                           />
                                         </svg>
+                                    <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                  <path
+                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
+                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                    stroke="rgba(0, 0, 0, 1)"
+                                      strokeWidth="1.5"
+                                      strokeLinejoin="round"
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+
+                                  />
+                                </svg>
 
                                 </>))
                                } 
