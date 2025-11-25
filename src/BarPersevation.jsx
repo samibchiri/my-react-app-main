@@ -343,14 +343,16 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color){
   let EndLocationY
   
   if (color==contrastingcolorList[3]){
-     EndLocationX=Centers[17][0]
-     EndLocationY=Centers[17][1]
+     EndLocationX=Centers[22][0]
+     EndLocationY=Centers[22][1]
   }
   
   if (Center1Used && Center2Used){
     StartLocationX=Centers[PointsInfo[0][0]][0]
     StartLocationY=Centers[PointsInfo[0][0]][1]
     
+     StartLocationX=Centers[7][0]
+     StartLocationY=Centers[7][1]
   }
 
   else if(Center1Used){
@@ -408,7 +410,7 @@ centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)           
 
 //let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`
 //let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`  
-let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2},${centery2+lineWidth/2} L ${centerx+lineWidth/2},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
     
 if(arrowBoolean){
   // console.log("BooleanTrue")
@@ -418,7 +420,7 @@ if(arrowBoolean){
 }
 //console.log(distance)
 
-return [pathArrow2,angle,centerx2,centery2-2,distance]
+return [pathArrow2,angle,centerx2,centery2,distance]
 }
 
 function ConnectCenters(PointsInfo,CenterIndex){
