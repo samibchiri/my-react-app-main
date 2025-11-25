@@ -11,13 +11,13 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
 
 
   
-  const [groupSelected,setGroupSelected]=useState(0)
+  const [groupSelected,setGroupSelected]=useState(1)
 
   const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(true)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
-  const [strokeWidth,setStrokeWidth]= useState(4.5)
-  const [lineWidth,setLineWidth]= useState(2)
+  const [strokeWidth,setStrokeWidth]= useState(3)
+  const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
  
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
@@ -47,7 +47,24 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
         borderWidth:"2px",
 
       }
+let Centers= GetCentersPosition(cubeSize)
+  
+function GetCentersPosition(cubeSize){
+ 
+    const xCoords = [9, 39, 79.5, 120,150];
+    const yCoords = [10.5, 40, 81.5, 122.5, 153.5];
 
+    let Centers = [];
+
+    for (let y of yCoords) {
+        for (let x of xCoords) {
+            Centers.push([x*(cubeSize/200)+5.65 /200*cubeSize, y*(cubeSize/200)-0.5]);
+        }
+    }
+
+    return Centers
+
+}
 
 function GetBarsIndices(PermIndex){
   // console.log("I is :")
@@ -101,12 +118,12 @@ let Remapping = [
   })
 
   console.log(newSquaresColors)
-  let colorIndexList=[[],[],[],[]]
+  let colorIndexList=[[],[],[],[],[]]
   
   let colorList=[]
   for(let i=0;i<newSquaresColors.length;i++){
     if(!colorList.includes(newSquaresColors[i])){
-      if(newSquaresColors[i]!=0 &&newSquaresColors[i]!="yellow"){
+      if(newSquaresColors[i]!=0){
         colorList.push(newSquaresColors[i])
       }
       
@@ -116,7 +133,7 @@ let Remapping = [
   }
 
   
-  colorList=["#00d800","orange","#1f51ff","red"]
+  colorList=["#00d800","orange","#1f51ff","red","yellow"]
   
   // console.log(colorList)
   // console.log("GetPoints")
@@ -128,10 +145,9 @@ let Remapping = [
   // }
 
   for(let i=0;i<newSquaresColors.length;i++){
-    if(newSquaresColors[i]!=0 &&newSquaresColors[i]!="yellow"){
+    if(newSquaresColors[i]!=0){
       let index= colorList.findIndex(x=> x==newSquaresColors[i])
-      console.log(index)
-      console.log("HELP")
+      
       
       let Points=[]
       for(let j=0;j<4;j++){
@@ -139,25 +155,31 @@ let Remapping = [
         Points.push(tempPoints[j].split(","))
         
       }
-      console.log(Points)
+      
       colorIndexList[index].push([i,Points])
     }
   }
   
   function isCenter(index){
+   
     let newIndex=index%10
     if(newIndex<5){
       if(newIndex%2==0){
         return 1
       }
     }
+    else if (newIndex==7){
+      return 1
+    }
+    if (index==11 || index==13){
+      return 1
+    }
     return 0
   }
 
 
-  console.log("List")
   colorIndexList.forEach(list=>{
-      console.log(list)
+      
       list.sort((a,b)=>(isCenter(a[0])<isCenter(b[0])))
       list.forEach(pointList=>{
         pointList.sort((a, b) => {
@@ -167,26 +189,23 @@ let Remapping = [
       })
     } 
   )
-  console.log("SortedColorIndex")
-  console.log(colorIndexList)
 
    colorIndexList.forEach(list=>{
-      console.log(list)
+      
       list.sort((a,b)=>(isCenter(a[0])<isCenter(b[0])))
+     
       list.forEach(pointList=>{
         let averagex=0
         //console.log("Item")
         pointList[1].forEach(item=>{
-          //console.log(item)
-          //console.log(item.split(","))
+          
           averagex+=item[0]/4
         })
         let averagey=0
         pointList[1].forEach(item=>{
           averagey+=item[1]/4
         })
-        //console.log(`Pointlist: `)
-        //console.log(pointList[1])
+        
         let indextostore=[]
         //Store topleft topright bottom right bottomleft
         for(let i=0;i<4;i++){
@@ -214,68 +233,164 @@ let Remapping = [
       })
     } 
   )
-  console.log("SortedColorIndex")
-  console.log(colorIndexList)
+
 
 
   
   
-  console.log("input")
-  console.log(colorIndexList[0])
-  let newPath=[[],[],[],[]]
+
+  let newPath=[[],[],[],[],[]]
+  let ConnectingLines=[[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]]]
   
 
-  for(let i=0;i<4;i++){
-    for(let j=0;j<3;j++){
+  for(let i=0;i<5;i++){
+    for(let j=0;j<colorIndexList[i].length;j++){
     
         console.log("Runs")
-        newPath[i]+=CalculateNewOutline(colorIndexList[i][j][1],strokeWidth,colorIndexList[i][j][0])
-      
+        if(i!=4){
+          newPath[i]+=CalculateNewOutline(colorIndexList[i][j][1],strokeWidth,colorIndexList[i][j][0])
+        
+        }
+        
      
 
     }
+    if(i==3){ //Not yellow
 
-    newPath[i]+=ConnectCenters(colorIndexList[i],lineWidth)
+      
+      let distance
+      
+      let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
+      maxdistance=1000
+      distance=ConnectCenters(colorIndexList[i],0)[4]
+      
+      let circlePath=""
+      if (distance<maxdistance){
+      ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0)
+      circlePath=ConnectingLines[i][1][5]
+      }
+      distance=ConnectCenters(colorIndexList[i],1)[4]
+      if (distance<maxdistance){
+      ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1)
+      circlePath=ConnectingLines[i][1][5]
+      }
+
+      ConnectingLines[i][2]=circlePath
+
+      console.log("CHeckOutput")
+      console.log(ConnectingLines)
+    }
     
   }
   
   
    
   
-  
-  console.log("Input")
-  console.log(colorIndexList)
+
   let [path,color]= centerOutLineInfo(colorIndexList)
   //connectListIndices(colorIndexList[0])
   //pathCalculated?"":setPathCalculated(true)
 
-  console.log("Newpath2")
-  console.log(newPath)
-  console.log(newSquaresColors[PermIndex])
-  
-  console.log("COLOR")
+
   color=newSquaresColors[PermIndex]
 
   color="rgba(13, 139, 13, 1)"
   
-  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)"]
+  //let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","rgba(204, 184, 0, 1)"]
+  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
+  
   let finalPath=[[],[],[],[]]
-  for(let i=0;i<4;i++){
+  for(let i=0;i<5;i++){
     finalPath[i]=path[i]+newPath[i]
   }
   console.log("Newpath2")
-  console.log(finalPath)
-
-  return [finalPath,contrastingcolorList]
+  //console.log(finalPath)
+  console.log(ConnectingLines)
+  return [finalPath,contrastingcolorList,ConnectingLines]
 
 }
 
-function ConnectCenters(PointsInfo){
-  console.log()
-  console.log()
+function Connect2Centers(Center1,Center2){
+  
+  console.log("Connect2CentersFail")
+  console.log(Center1,Center2)
+  let Centers= GetCentersPosition(cubeSize)
+let centerx=Centers[Center1][0]
+let centery=Centers[Center1][1]
 
-  console.log("PointsInfo")
-  console.log(PointsInfo)
+let centerx2=Centers[Center2][0]
+let centery2=Centers[Center2][1]
+
+console.log("Datapoints")
+console.log(centerx,centery,centerx2,centery2)
+
+
+let Correction=(centery2-centery)>0? 90:-90
+
+let angle = Math.atan(-(centerx2 - centerx) / (centery2 - centery))*180/Math.PI;
+if (centery==centery2){
+    angle=0
+    Correction=0
+}
+if (centerx>centerx2 && centery==centery2){
+    [centerx, centerx2] = [centerx2, centerx];
+    let difference=centerx2-centerx
+    centerx-=difference
+    centerx2-=difference
+    // centery2-=2.5
+    // centery-=1.5
+    Correction+=180
+}
+
+angle+=Correction
+
+centerx=Centers[Center1][0]
+centery=Centers[Center1][1]
+
+centerx2=Centers[Center2][0]
+centery2=Centers[Center2][1]
+let distance=((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)
+centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)                                                                                                                                                                                                                                                                                                                   //L 37,41 37,45 27,39 37,33 Z"
+
+
+
+//let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`
+let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`  
+pathArrow2=`M ${centerx},${centery2} Q ${centerx},${centery2-lineWidth/2} ${centerx+1.5},${centery2-lineWidth/2} L ${centerx+2},${centery2-lineWidth/2} L ${centerx2-2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-2},${centery2+lineWidth/2} L ${centerx2-2},${centery2+lineWidth/2} L ${centerx2-6},${centery2+lineWidth/2} L ${centerx+2},${centery2+lineWidth/2} Q ${centerx},${centery2+lineWidth/2} ${centerx},${centery2} Z`
+                               
+
+return [pathArrow2,angle,centerx2,centery2,distance]
+}
+
+function ConnectCenters(PointsInfo,CenterIndex){
+
+
+  let PiecesIndex=[]
+  for(let i=0; i<PointsInfo.length;i++){
+    PiecesIndex.push(PointsInfo[i][0])
+  }
+  console.log("PiecesIndices")
+  console.log(PiecesIndex)
+  
+  let [path1,angle,centerx2,centery2,distance]= Connect2Centers(PiecesIndex[CenterIndex+1],PiecesIndex[0])
+  
+  let path=""
+  Centers=GetCentersPosition(cubeSize)
+  let circleRadius=0.5
+  
+  let midPointx1=Centers[PiecesIndex[0]][0]
+  let midPointy1=Centers[PiecesIndex[0]][1]
+  let circlePath1=`M ${midPointx1+circleRadius},${midPointy1} A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1-circleRadius},${midPointy1}
+                                                              A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1+circleRadius},${midPointy1}`
+  console.log("CirclePath")
+  console.log(circlePath1)
+console.log(PiecesIndex)
+  console.log(Centers[PiecesIndex[0]])
+     //path+=circlePath1
+    path+=path1
+ 
+  
+  return [path,angle,centerx2+1,centery2,distance,circlePath1]
 }
 
 function CalculateNewOutline(PointList,strokeWidth,index){
@@ -286,9 +401,7 @@ function CalculateNewOutline(PointList,strokeWidth,index){
    if(index%20<5){
     strokeWidth+=1
   }
-  console.log(`Input1: ${PointList}`)
-  console.log("Calculate")
-  console.log(PointList)
+
 
   let Centers= GetCentersPosition(cubeSize)
   let Scale=13.1/0.15740740740740744/150*cubeSize
@@ -297,13 +410,9 @@ function CalculateNewOutline(PointList,strokeWidth,index){
   let newCoords=[]
   for(let i=0;i<4;i++){
     let [tempx,tempy]=PointList[i]
-    console.log("Why Wrong")
-    console.log(StartingPointy,tempy,Scale)
     tempx=StartingPointx+tempx*Scale
     tempy=StartingPointy+tempy*Scale
     newCoords[i]=[tempx,tempy]
-    console.log(newCoords[i])
-    console.log()
   }
   
   let [x1,y1]=newCoords[0]
@@ -311,13 +420,10 @@ function CalculateNewOutline(PointList,strokeWidth,index){
   let [x3,y3]=newCoords[2]
   let [x4,y4]=newCoords[3]
 
-  console.log(newCoords)
 
   let averagex=(x1+x2+x3+x4)/4
   let averagey=(y1+y2+y3+y4)/4
 
-  // console.log("Coordinates")
-  // console.log(newCoords)
   let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey)
   let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,strokeWidth,averagex,averagey)
   let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,strokeWidth,averagex,averagey)
@@ -332,13 +438,12 @@ function CalculateNewOutline(PointList,strokeWidth,index){
   
   let pointsPath=""
   for(let i=3;i>=0;i--){
-    console.log(pointsPath)
+    
     pointsPath+=" L "+ newCoords[i][0]+","+newCoords[i][1]+""
   }
   pointsPath+=" Z"
   CentersOutlinePath+=`M ${newCoords[3][0]},${newCoords[3][1]} ${pointsPath} `
-  // console.log("NEWPATH")
-  // console.log(CentersOutlinePath)
+
   return CentersOutlinePath
   
 }
@@ -355,14 +460,10 @@ function CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey){
 }
 
   let newslope= -1/slope;
-  //  console.log("Checkpoint0")
-  // console.log([newslope])
+
   
   let [x3,y3]=normalizeVector(1,newslope);
-  
-  // console.log("X1,Y1,X2,Y2,Slope")
-  // console.log(x1,y1,x2,y2,slope)
-  
+
   if(x2==x1){
     x3=1
     y3=0
@@ -372,12 +473,9 @@ function CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey){
     x3=0
   }
 
-  //console.log(strokeWidth)
   x3=x3*strokeWidth
   y3=y3*strokeWidth
 
-  // console.log("Checkpoint")
-  // console.log([x3,y3])
 
   let newx1= x1+x3
   let newy1= y1+y3
@@ -389,10 +487,6 @@ function CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey){
   if(Math.abs(newy1-averagey)>Math.abs(y1-averagey)){
     newy1= y1-y3
   }
-
-  // console.log("CHANGES")
-  // console.log([x1,newx1])
-  // console.log([y1,newy1])
 
   newx1=parseFloat(newx1)
   newy1=parseFloat(newy1)
@@ -458,22 +552,7 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex)
 //     let Offset=(Centers[1][0]-Centers[0][0])/2
 //   }
 
-function GetCentersPosition(cubeSize){
- 
-    const xCoords = [9, 39, 79.5, 120,150];
-    const yCoords = [10.5, 40, 81.5, 122.5, 153.5];
 
-    let Centers = [];
-
-    for (let y of yCoords) {
-        for (let x of xCoords) {
-            Centers.push([x*(cubeSize/200)+5.8/200*cubeSize, y*(cubeSize/200)-0.5]);
-        }
-    }
-
-    return Centers
-
-}
 
 const renderedCases = arrowOllSet[groupSelected];
 const totalRefs = renderedCases.length * CornerPermutations.length;
@@ -516,6 +595,14 @@ useLayoutEffect(() => {
       return ["","none"];
     }
   });
+  console.log("Allpaths")
+  console.log(paths)
+  console.log()
+console.log()
+console.log()
+console.log()
+console.log()
+  console.log()
   setOverlayPaths(paths);
   setPathCalculated(true);
 }, [refsReady, groupSelected, totalRefs]);
@@ -530,17 +617,21 @@ function centerOutLineInfo(IndexList){
   let CenterIndex=12
   console.log(Centers)
 
-  let Points=[[],[],[],[]]
-  for (let i=0;i<3;i++){
-  for (let j=0;j<4;j++){
+  let Points=[[],[],[],[],[]]
+  for (let j=0;j<5;j++){
+    for (let i=0;i<IndexList[j].length;i++){
+  
     Points[j].push([])
   }}
+
+  console.log("PointsNow")
+  console.log(Points)
 
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
   //IndexList*Scale=13 0.1574*Scale=13
   // Scale is 13/0.1574=82.588
-  let Scale=13.1/0.15740740740740744/150*cubeSize
+  let Scale=13.2/0.15740740740740744/150*cubeSize
 
 
   //For top height of halfCenter, Scale 2 is 59/0.7183908045977012= 82.128 
@@ -558,11 +649,15 @@ function centerOutLineInfo(IndexList){
   //IndexList: Color, Center+Points, Points, PointIndex
 
   //Points: Color, Center1, Corner1,Corner2
-  for (let i=0;i<3;i++){
-  for (let j=0;j<4;j++){
+ 
+  for (let j=0;j<5;j++){ // Color
+     for (let i=0;i<Points[j].length;i++){ //Center
     //console.log("TESTINGPOint")
     let TempPointsList=IndexList[j][i][1]
     // console.log(IndexList)
+    // console.log(i,j)
+    // console.log(IndexList[j])
+    // console.log(IndexList[j].length)
     // console.log(TempPointsList)
     //Points[j][i]=[StartingPointx+Scale*TempPointsList[i].split(",")[0],StartingPointy+Scale*TempPointsList[i].split(",")[1]]
     let tempTempPointsList=[]
@@ -599,8 +694,6 @@ function centerOutLineInfo(IndexList){
   let [x3,y3]=tempTempPointsList[2]
   let [x4,y4]=tempTempPointsList[3]
 
-  console.log(tempTempPointsList)
-
   let averagex=(x1+x2+x3+x4)/4
   let averagey=(y1+y2+y3+y4)/4
 
@@ -622,8 +715,8 @@ function centerOutLineInfo(IndexList){
     
     //console.log([StartingPointx,Scale,TempPointsList[i],TempPointsList[i][0],TempPointsList[i][1]])
   }
-
-//console.log(Points)
+  console.log("PointsEnd")
+  console.log(Points)
   let centerx=Centers[CenterIndex][0]
   let centery=Centers[CenterIndex][1]
   let scale=2
@@ -635,17 +728,21 @@ function centerOutLineInfo(IndexList){
   let pointsPath=""
   // console.log("Points")
   // console.log(Points)
-  let CentersOutlinePath=[[],[],[],[]]
-  for(let k=0;k<4;k++)
-  for(let i=0;i<3;i++){
+  let CentersOutlinePath=[[],[],[],[],[]]
+  for(let k=0;k<5;k++){
+  for(let i=0;i<Points[k].length;i++){
     let pointsPath=""
     for(let j=1;j<4;j++){
       //console.log(pointsPath)
       pointsPath+=" L "+ Points[k][i][j][0]+","+Points[k][i][j][1]+""
+      if(Points[k][i][j][0]==undefined||Points[k][i][j][0]==undefined){
+        console.log("UNDEFINED")
+        console.log(k,i,j)
+      }
     }
     pointsPath+=" Z"
     CentersOutlinePath[k]+=`M ${Points[k][i][0][0]},${Points[k][i][0][1]} ${pointsPath} `
-  }
+  }}
   
 
   let Offset=13/150*cubeSize
@@ -696,8 +793,8 @@ function centerOutLineInfo(IndexList){
   // console.log(path2)
 
   //let path=CentersOutlinePath+path2
-  // console.log("Path")
-  // console.log(CentersOutlinePath)
+  console.log("Path")
+  console.log(CentersOutlinePath)
 
   
   return [CentersOutlinePath,color]
@@ -750,22 +847,100 @@ return (
                                 pathCalculated &&(
                                <>
                                
-                               {
-                                Array.from({ length: 4 }, (_, i) => i).map(i => (
-                                    <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
+                                {
+                                Array.from({ length: 5 }, (_, i) => i).map(i => (
+                                  <>
+                                  
+                                  {Array.from({ length: 2 }, (_, j) => j).map(j => (
+                                  <>
+                                  
+                                  <svg style={{position:"absolute"}}id="Goodline" width="100%" height="100%" >
+                                    
+                                    <path
+                                      d={overlayPaths[refIndex]?.[2]?.[i][j][0] || ""}
+                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                      
+                                      stroke="rgba(44, 44, 44, 1)"
+                                      strokeWidth="1"
+                                      strokeLinejoin="round"
+                                      
+                                      
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][j][3] ||"0"})`}
+                                      //transform={`rotate("0"} ${overlayPaths[refIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3] ||"0"})`}
+                               
+                                    />
+                                    
+                                </svg>
+
+                                <svg style={{position:"absolute"}}id="Hardcoded" width="100%" height="100%" >
+                                        <path 
+                                          d="M -2.4548899809190416,38.5 
+                                            L 43.65,38.5 
+                                            L 43.65,34.5 
+                                            L 52.65,40.5 
+                                            L 43.65,46.5 
+                                            L 43.65,42.5 
+                                            L -2.4548899809190416,42.5 
+                                            L -2.4548899809190416,42.5 
+                                            L -2.4548899809190416,46.5 
+                                            L -11.454889980919042,40.5 
+                                            L -2.4548899809190416,34.5 
+                                            Z"
+                                          fill="black"
+                                          stroke="rgba(44, 44, 44, 1)"
+                                          stroke-width="1"
+                                          stroke-linejoin="round"
+                                          transform="rotate(143.930590100419 45.65 40.5)"
+                                        />
+                                      </svg>
+                                      <svg style={{position:"absolute"}}id="Hardcoded2" width="100%" height="100%" >
+                                          <path
+                                            d="
+                                                  M 88,40
+                                                  A  2 2 0 1 1 84,40
+                                                  A 2 2 0 1 1 88,40
+                                                "
+                                             fill="none"
+                                            stroke="rgba(0,0,0,0)"
+                                            stroke-width="2"
+                                          />
+                                        </svg>
+                                        
+
+
+
+                                    {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
                                       d={overlayPaths[refIndex]?.[0]?.[i] || ""}
                                       fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
                                       fillRule="evenodd"
-                                      stroke="rgba(40, 39, 39, 1)"
-                                      strokeWidth="2"
+                                      stroke="rgba(44, 44, 44, 1)"
+                                      strokeWidth="1"
                                       strokeLinejoin="round"
                                       filter="url(#shadow)"
                                     />
-                                </svg>
-                                ))
-                               }
+                                </svg> */}
+                                
+                                </>
+                                ))}
+                                
+                                <svg style={{position:"absolute"}}id="Hardcoded2" width="100%" height="100%" >
+                                          <path
+                                            // d="
+                                            //       M 95,40
+                                            //       A  5 5 0 1 1 85,40
+                                            //       A 5 5 0 1 1 95,40
+                                            //     "
+                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||"M 95,40 A  5 5 0 1 1 85,40 A 5 5 0 1 1 95,40"}
+                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                            stroke="rgba(44, 44, 44, 0.6)"
+                                            stroke-width="1"
+                                          />
+                                        </svg>
+
+                                </>))
+                               } 
                                 
                                 
                                 <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
