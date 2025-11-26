@@ -294,7 +294,7 @@ let Remapping = [
       ConnectingLines[i][2]=circlePath
 
       console.log("ArrowBarOnly")
-      ConnectingLines[i][3]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,contrastingcolorList[i])
+      ConnectingLines[i][3]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,contrastingcolorList[i],newSquaresColors)
 
       console.log("CHeckOutput")
       console.log(ConnectingLines)
@@ -327,7 +327,7 @@ let Remapping = [
 }
 
 
-function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color){
+function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors){
   
 
   let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
@@ -339,26 +339,137 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color){
   let StartLocationX
   let StartLocationY
 
-  let EndLocationX
-  let EndLocationY
+  let EndLocationIndex
   
-  if (color==contrastingcolorList[3]){
-     EndLocationX=Centers[22][0]
-     EndLocationY=Centers[22][1]
+  function CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors){
+
+    let Center1=PointsInfo[1][0]
+    let Center2
+    let NewCenter1
+    let NewCenter2
+    let PositionLeft=false
+    if (Center1<5){
+      if (SquareColors[Center1+5]!="Yellow"){ //If it is position doesnt change
+        if (Center1==1){
+           PositionLeft=false
+        }
+        if(Center1==3){
+          PositionLeft=true
+        }
+      }
+    }
+    else if (Center1==5){
+      if (SquareColors[6]!="Yellow"){
+        PositionLeft=false
+      }
+    }
+    else if (Center1==9){{
+      if (SquareColors[6]!="Yellow"){
+        PositionLeft=true
+      }
+    }}
+
+    else if (Center1==15){
+      if (SquareColors[6]!="Yellow"){
+        PositionLeft=true
+      }
+    }
+    else if (Center1==19){{
+      if (SquareColors[6]!="Yellow"){
+        Center1=23
+        PositionLeft=false
+      }
+    }}
+    else if (Center1>20){
+      if (SquareColors[Center1-5]!="Yellow"){ //If it is position doesnt change
+        if (Center1==21){
+           PositionLeft=false
+        }
+        if(Center1==3){
+          PositionLeft=true
+        }
+      }
+    }
+
+    console.log("Lefttrue?")
+    console.log(Center1,PositionLeft)
+    
+    
+    console.log("EndIndex")
+    console.log(EndLocationIndex)
+    if (EndLocationIndex==2){
+      NewCenter1=3
+      NewCenter2=1
+    }
+    else if(EndLocationIndex==10){
+      NewCenter1=5
+      NewCenter2=15
+    }
+    else if (EndLocationIndex==22){
+      NewCenter1=21
+      NewCenter2=23
+    }
+    else if (EndLocationIndex==14){
+      NewCenter1=19
+      NewCenter2=9
+    }
+
+    if (PositionLeft){
+      [NewCenter1,NewCenter2]=[NewCenter2,NewCenter1]
+    }
+    
+
+    return [NewCenter1,NewCenter2,PositionLeft]
   }
+
+  console.log(PointsInfo)
+
+  if (color==contrastingcolorList[0]){
+     EndLocationIndex=2
+    
+  }
+
+  if (color==contrastingcolorList[1]){
+     EndLocationIndex=10
+    
+  }
+
+  if (color==contrastingcolorList[2]){
+     EndLocationIndex=22
+    
+  }
+    if (color==contrastingcolorList[3]){
+     EndLocationIndex=14
+    
+  }
+  let [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
+
+  console.log("NewCentersInfo")
+  console.log(Center1,Center2)
+    
+
+  let EndLocationX = Centers[EndLocationIndex][0]
+  let EndLocationY = Centers[EndLocationIndex][1]
+
+
+
   
   if (Center1Used && Center2Used){
     StartLocationX=Centers[PointsInfo[0][0]][0]
     StartLocationY=Centers[PointsInfo[0][0]][1]
     
-     StartLocationX=Centers[7][0]
-     StartLocationY=Centers[7][1]
+    EndLocationX = Centers[EndLocationIndex][0]
+    EndLocationY = Centers[EndLocationIndex][1]
+    
   }
 
   else if(Center1Used){
     StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][0])/2
     StartLocationY=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][1])/2
+    EndLocationX = Centers[EndLocationIndex][0]
+    EndLocationY = Centers[EndLocationIndex][1]
   }
+
 
   let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
   
@@ -415,7 +526,7 @@ let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${
 if(arrowBoolean){
   // console.log("BooleanTrue")
   // console.log(arrowBoolean)
-  pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+4+lineWidth/2},${centery2} L ${centerx2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+  pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+2+lineWidth/2},${centery2} L ${centerx2-2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
   
 }
 //console.log(distance)
