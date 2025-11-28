@@ -39,7 +39,7 @@ function Trainpage() {
     const [caseClicked,setCaseClicked]= useState(false)
     const [buttonClicked,setButtonClicked]= useState(false)
     const [cpClicked,setCpClicked]=useState(false)
-    const [barClicked,setBarClicked]=useState(false)
+    const [barClicked,setBarClicked]=useState(true)
      const buttonStyle = {
     width: "85%",
     height: "15vh",

@@ -135,7 +135,7 @@ let Remapping = [
 
   
   colorList=["#00d800","orange","#1f51ff","red","yellow"]
-  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
+  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(0, 71, 204, 1)","rgba(207, 1, 1, 1)","yellow"]
   
   // console.log(colorList)
   // console.log("GetPoints")
@@ -242,6 +242,7 @@ let Remapping = [
   
 
   let newPath=[[],[],[],[],[]]
+  let borderPath=""
   let ConnectingLines = Array.from({ length: 5 }, () =>
   Array.from({ length: 4 }, () => [])
 );
@@ -251,7 +252,7 @@ let Remapping = [
     
         console.log("Runs")
         if(i!=4){
-          newPath[i]+=CalculateNewOutline(colorIndexList[i][j][1],strokeWidth,colorIndexList[i][j][0])
+          //newPath[i]+=CalculateNewOutline(colorIndexList[i][j][1],strokeWidth,colorIndexList[i][j][0])
         
         }
         
@@ -259,18 +260,21 @@ let Remapping = [
 
     }
     if(i==3){ //Not yellow
+    
 
       
       let distance
       
       let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
-      maxdistance=1000
+      maxdistance=maxdistance*3
       distance=ConnectCenters(colorIndexList[i],0)[4]
       
       let circlePath=""
 
       let Center1Used=false
       let Center2Used=false
+      let Center3Used=false
+      
 
       if (distance<maxdistance){
       ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0)
@@ -285,6 +289,15 @@ let Remapping = [
       }
       Center2Used=true
       }
+
+      distance=ConnectCenters(colorIndexList[i],2)[4]
+      if (distance<maxdistance){
+      if (!Center1Used && !Center2Used){
+        ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],2)
+        Center3Used=true
+      }
+      
+      }
       
       if (!Center1Used|| !Center2Used){
         circlePath=""
@@ -294,7 +307,7 @@ let Remapping = [
       ConnectingLines[i][2]=circlePath
 
       console.log("ArrowBarOnly")
-      ConnectingLines[i][3]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,contrastingcolorList[i],newSquaresColors)
+      ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors)
 
       console.log("CHeckOutput")
       console.log(ConnectingLines)
@@ -309,7 +322,7 @@ let Remapping = [
   let [path,color]= centerOutLineInfo(colorIndexList)
   //connectListIndices(colorIndexList[0])
   //pathCalculated?"":setPathCalculated(true)
-
+  
 
   color=newSquaresColors[PermIndex]
 
@@ -322,15 +335,15 @@ let Remapping = [
   console.log("Newpath2")
   //console.log(finalPath)
   console.log(ConnectingLines)
-  return [finalPath,contrastingcolorList,ConnectingLines]
+  return [finalPath,contrastingcolorList,ConnectingLines,borderPath]
 
 }
 
 
-function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors){
+function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Used,Center3Used,color,SquareColors){
   
 
-  let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
+  //let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
   let Centers= GetCentersPosition(cubeSize)
 
   console.log("ArrowBar")
@@ -340,6 +353,8 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors)
   let StartLocationY
 
   let EndLocationIndex
+
+
   
   function CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors){
 
@@ -442,6 +457,12 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors)
      EndLocationIndex=14
     
   }
+  console.log("EndIndex")
+  console.log(color)
+  console.log(contrastingcolorList)
+  
+  console.log(EndLocationIndex)
+
   let [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
 
   console.log("NewCentersInfo")
@@ -465,14 +486,34 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors)
 
   else if(Center1Used){
     StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][0])/2
-    StartLocationY=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][1])/2
+    StartLocationY=(Centers[PointsInfo[0][0]][1]+Centers[PointsInfo[1][0]][1])/2
+    EndLocationX += Centers[Center1][0]
+    EndLocationY += Centers[Center1][1]
+
+    EndLocationX=EndLocationX/2
+    EndLocationY=EndLocationY/2
+  }
+   else if(Center2Used){
+    StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[2][0]][0])/2
+    StartLocationY=(Centers[PointsInfo[0][0]][1]+Centers[PointsInfo[2][0]][1])/2
+    EndLocationX += Centers[Center2][0]
+    EndLocationY += Centers[Center2][1]
+
+    EndLocationX=EndLocationX/2
+    EndLocationY=EndLocationY/2
+  }
+  else if(Center3Used){
+    StartLocationX=(Centers[PointsInfo[1][0]][0]+Centers[PointsInfo[2][0]][0])/2
+    StartLocationY=(Centers[PointsInfo[1][0]][1]+Centers[PointsInfo[2][0]][1])/2
+   
     EndLocationX = Centers[EndLocationIndex][0]
     EndLocationY = Centers[EndLocationIndex][1]
   }
 
-
   let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
-  
+  if((StartLocationX-EndLocationX)>1 ||(StartLocationY-EndLocationY)>1){
+     [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
+  }
   console.log("ConnectingPath")
   console.log(pathArrow2)
   console.log(angle,centerx2,centery2)
@@ -486,7 +527,7 @@ function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,color,SquareColors)
 }
 
 
-function Connect2Points(centerx,centery,centerx2,centery2,arrowBoolean){
+function Connect2Points(centerx,centery,centerx2,centery2,connectHeadlightsBoolean){
   
   
 
@@ -503,9 +544,9 @@ if (centery==centery2){
 }
 if (centerx>centerx2 && centery==centery2){
     [centerx, centerx2] = [centerx2, centerx];
-    //let difference=centerx2-centerx
-    // centerx-=difference
-    // centerx2-=difference
+    let difference=centerx2-centerx
+    centerx-=difference
+    centerx2-=difference
     // centery2-=2.5
     // centery-=1.5
     Correction+=180
@@ -521,11 +562,11 @@ centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)           
 
 //let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`
 //let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`  
-let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2},${centery2+lineWidth/2} L ${centerx+lineWidth/2},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx+lineWidth/2},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
     
-if(arrowBoolean){
+if(connectHeadlightsBoolean){
   // console.log("BooleanTrue")
-  // console.log(arrowBoolean)
+  // console.log(connectHeadlightsBoolean)
   pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+2+lineWidth/2},${centery2} L ${centerx2-2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
   
 }
@@ -547,13 +588,25 @@ function ConnectCenters(PointsInfo,CenterIndex){
   Centers=GetCentersPosition(cubeSize)
 
 
-  let tempcenterx=Centers[PiecesIndex[CenterIndex+1]][0]
-  let tempcentery=Centers[PiecesIndex[CenterIndex+1]][1]
+  let tempcenterx=Centers[PiecesIndex[(CenterIndex+1)%3]][0] //%3 So that no  error occurs 
+  let tempcentery=Centers[PiecesIndex[(CenterIndex+1)%3]][1]
   let tempcenterx2=Centers[PiecesIndex[0]][0]
   let tempcentery2=Centers[PiecesIndex[0]][1]
+  console.log("Points")
+     console.log(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
   let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
   
   //let path=""
+  if(CenterIndex==2){
+     tempcenterx=Centers[PiecesIndex[1]][0] //%2 So that no  error occurs 
+     tempcentery=Centers[PiecesIndex[1]][1]
+     tempcenterx2=Centers[PiecesIndex[2]][0]
+     tempcentery2=Centers[PiecesIndex[2]][1]
+     console.log("Points")
+     console.log(tempcenterx,tempcentery,tempcenterx2,tempcentery2);
+    [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
+    
+  }
   
   let circleRadius=3
   
@@ -577,7 +630,7 @@ function ConnectCenters(PointsInfo,CenterIndex){
 function CalculateNewOutline(PointList,strokeWidth,index){
 
   if(index%5==0||index%5==4){
-    strokeWidth+=1
+    strokeWidth+=3
   }
    if(index%20<5){
     strokeWidth+=1
@@ -880,16 +933,15 @@ function centerOutLineInfo(IndexList){
 
   // console.log("Coordinates")
   // console.log(tempTempPointsList)
-  let tempStrokeWidth=1
-  let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,tempStrokeWidth,averagex,averagey)
-  let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,tempStrokeWidth,averagex,averagey)
-  let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,tempStrokeWidth,averagex,averagey)
-  let [slope4,c4]=CalculateSlope(x4,y4,x1,y1,tempStrokeWidth,averagex,averagey)
+  let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey)
+  let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,strokeWidth,averagex,averagey)
+  let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,strokeWidth,averagex,averagey)
+  let [slope4,c4]=CalculateSlope(x4,y4,x1,y1,strokeWidth,averagex,averagey)
 
-  tempTempPointsList[0]= CalculateNewCoordinates(c4,slope4,c1,slope1,x4,x1,tempStrokeWidth,averagex)
-  tempTempPointsList[1]= CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,tempStrokeWidth,averagex)
-  tempTempPointsList[2]= CalculateNewCoordinates(c2,slope2,c3,slope3,x2,x3,tempStrokeWidth,averagex)
-  tempTempPointsList[3]= CalculateNewCoordinates(c3,slope3,c4,slope4,x3,x4,tempStrokeWidth,averagex)
+  tempTempPointsList[0]= CalculateNewCoordinates(c4,slope4,c1,slope1,x4,x1,strokeWidth,averagex)
+  tempTempPointsList[1]= CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex)
+  tempTempPointsList[2]= CalculateNewCoordinates(c2,slope2,c3,slope3,x2,x3,strokeWidth,averagex)
+  tempTempPointsList[3]= CalculateNewCoordinates(c3,slope3,c4,slope4,x3,x4,strokeWidth,averagex)
       Points[j][i]=tempTempPointsList
       }
     }
@@ -974,7 +1026,7 @@ function centerOutLineInfo(IndexList){
   // console.log(path2)
 
   //let path=CentersOutlinePath+path2
-  console.log("Path")
+  console.log("CenterOutlinePath")
   console.log(CentersOutlinePath)
 
   
@@ -1060,18 +1112,18 @@ return (
 
 
 
-                                    {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
+                                    <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
                                       d={overlayPaths[refIndex]?.[0]?.[i] || ""}
                                       fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
                                       fillRule="evenodd"
                                       stroke="rgba(44, 44, 44, 1)"
-                                      strokeWidth="1"
+                                      strokeWidth="0.5"
                                       strokeLinejoin="round"
                                       filter="url(#shadow)"
                                     />
-                                </svg> */}
+                                </svg>
                                 
                                 </>
                                 ))}
@@ -1096,6 +1148,18 @@ return (
 
                                   />
                                 </svg>
+                                 <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                  <path
+                                      d={overlayPaths[refIndex]?.[3]?.[0]||""}
+                                      fill={overlayPaths[refIndex]?.[3]?.[1] || "black"}
+                                      stroke="rgba(255, 251, 3, 1)"
+                                      strokeWidth="2.5"
+                                      strokeLinejoin="round"
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+
+                                  />
+                                </svg>
 
                                 </>))
                                } 
@@ -1108,7 +1172,7 @@ return (
                                       d={"M 58,54 L 58,56 L 133,56 L 133,54 Z "}
                                       fill={"rgba(207, 1, 1, 1)"}
                                       stroke="rgba(255, 0, 234, 1)"
-                                      strokeWidth="0.1"
+                                      strokeWidthstrokeWidth="0.1"
                                       filter="url(#shadow)"
                                       transform="rotate(45)"
                                     />
