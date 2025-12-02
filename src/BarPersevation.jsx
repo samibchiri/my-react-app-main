@@ -7,20 +7,49 @@ import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import ollCaseSet from "./data/ollCaseSet.js";
 import { TbRuler } from "react-icons/tb";
+import { range } from "lodash";
+import { SiTrueup } from "react-icons/si";
 
 export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
   
-  const [groupSelected,setGroupSelected]=useState(1)
+  const [groupSelected,setGroupSelected]=useState(3)
 
   const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(true)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
-  const [strokeWidth,setStrokeWidth]= useState(3)
+  const [strokeWidth,setStrokeWidth]= useState(2)
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
- 
+  const noMovementCenterRef = useRef(
+    Array.from({ length: 4 }, () => Array(3).fill(false))
+  );
+  const data = [
+  [
+    [7, 2],
+    [8, 3],
+    [23, 1]
+  ],
+  [
+    [17, 10],
+    [19, 5],
+    [6, 15]
+  ],
+  [
+    [14, 22],
+    [1, 21],
+    [15, 23]
+  ],
+  [
+    [10, 14],
+    [21, 19],
+    [3, 9]
+  ]
+];
+
+  const piecesMovementRef = useRef(data) // mirror for immediate reads
+
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
   
@@ -146,72 +175,118 @@ let Remapping = [
   //    }
   // }
 
-  for(let i=0;i<newSquaresColors.length;i++){
-    if(newSquaresColors[i]!=0){
-      let index= colorList.findIndex(x=> x==newSquaresColors[i])
-      
-      
-      let Points=[]
-      for(let j=0;j<4;j++){
-        let tempPoints=newCombinedSquaresList[i].getAttribute("points").split(" ")
-        Points.push(tempPoints[j].split(","))
+  if(PermIndex<0){
+    for(let i=0;i<newSquaresColors.length;i++){
+      if(newSquaresColors[i]!=0){
         
+        let index= colorList.findIndex(x=> x==newSquaresColors[i])
+        
+        
+        let Points=[]
+        for(let j=0;j<4;j++){
+          let tempPoints=newCombinedSquaresList[i].getAttribute("points").split(" ")
+          Points.push(tempPoints[j].split(","))
+          
+        }
+        
+        colorIndexList[index].push([i,,"",Points])
       }
-      
-      colorIndexList[index].push([i,Points])
     }
   }
+  else{
+      //console.log("pIECESmOVEMENT",JSON.stringify(piecesMovementRef.current))
+    for(let i=0;i<piecesMovementRef.current.length;i++){
+      for(let j=0;j<piecesMovementRef.current[i].length;j++){
+        
+        let currentIndex=piecesMovementRef.current[i][j][0]
+        let futureIndex=piecesMovementRef.current[i][j][1]
+        let color=newCombinedSquaresList[currentIndex].getAttribute("fill")
+
+        let Points=[]
+        for(let j=0;j<4;j++){
+          let tempPoints=newCombinedSquaresList[currentIndex].getAttribute("points").split(" ")
+          Points.push(tempPoints[j].split(","))
+          
+        }
+        console.log("NewColorIndexAddition",[currentIndex,futureIndex,color,Points])
+        colorIndexList[i].push([currentIndex,futureIndex,color,Points])
+      }
+      
+    }
+  }
+
   
-  function isCenter(index){
+  function sortCenterLeftRight(index,SquareColors){
    
+    console.log("TheseColors",SquareColors)
     let newIndex=index%10
+    let returnedvalue=0
     if(newIndex<5){
       if(newIndex%2==0){
-        return 1
+        console.log("ReturnedSortValue",index,returnedvalue)
+        return returnedvalue
       }
     }
     else if (newIndex==7){
-      return 1
+      console.log("ReturnedSortValue",index,returnedvalue)
+      return returnedvalue
     }
     if (index==11 || index==13){
-      return 1
+      console.log("ReturnedSortValue",index,returnedvalue)
+      return returnedvalue
     }
-    return 0
+
+    let PositionLeft=isPositionLeft(index,SquareColors)
+    console.log("PositionLeft",index,PositionLeft)
+    if(PositionLeft){
+      returnedvalue=1
+    }
+    else{
+      returnedvalue=2
+    }
+    console.log("ReturnedSortValue",index,returnedvalue)
+    return returnedvalue
   }
 
 
-  colorIndexList.forEach(list=>{
+  // console.log("What am i sorting",colorIndexList)
+  // colorIndexList.forEach(list=>{
       
-      list.sort((a,b)=>(isCenter(a[0])<isCenter(b[0])))
-      list.forEach(pointList=>{
-        pointList.sort((a, b) => {
-          if (a[0] !== b[0]) return b[0] - a[0]; 
-          return b[1] - a[1]; 
-        });
-      })
-    } 
-  )
+  //     list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
+  //     list.forEach(pointList=>{
+  //       pointList.sort((a, b) => {
+  //         if (a[0] !== b[0]) return b[0] - a[0]; 
+  //         return b[1] - a[1]; 
+  //       });
+  //     })
+  //   } 
+  // )
 
+
+  console.log("What am i sorting,1",colorIndexList)
    colorIndexList.forEach(list=>{
+      console.log("mylist",list)
+      list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
+
+      console.log("What have i sorting,1",list)
       
-      list.sort((a,b)=>(isCenter(a[0])<isCenter(b[0])))
-     
       list.forEach(pointList=>{
         let averagex=0
         //console.log("Item")
-        pointList[1].forEach(item=>{
+        console.log("Pointlist1",pointList)
+        pointList[3].forEach(item=>{
           
           averagex+=item[0]/4
         })
         let averagey=0
-        pointList[1].forEach(item=>{
+        pointList[3].forEach(item=>{
           averagey+=item[1]/4
         })
         
         let indextostore=[]
         //Store topleft topright bottom right bottomleft
         for(let i=0;i<4;i++){
-          let [x,y]=pointList[1][i]
+          let [x,y]=pointList[3][i]
           
           if(y<averagey &&x<averagex){
             indextostore[i]=0
@@ -226,48 +301,62 @@ let Remapping = [
             indextostore[i]=3
           }
         }
-        let TempPointsList=[...pointList[1]]
+        let TempPointsList=[...pointList[3]]
         for(let i=0;i<4;i++){
-          pointList[1][indextostore[i]]=TempPointsList[i]
+          pointList[3][indextostore[i]]=TempPointsList[i]
         }
         
        
       })
     } 
+    
   )
-
+  console.log("What am i sorting",colorIndexList)
 
 
   
   
 
-  let newPath=[[],[],[],[],[]]
+  let newPath=Array.from({ length: 4 }, () =>
+  Array.from({ length: 3 }, () => [])
+  );
   let borderPath=""
   let ConnectingLines = Array.from({ length: 5 }, () =>
   Array.from({ length: 4 }, () => [])
 );
 
-  for(let i=0;i<5;i++){
+  for(let i=0;i<4;i++){
     for(let j=0;j<colorIndexList[i].length;j++){
     
         console.log("Runs")
         if(i!=4){
-          //newPath[i]+=CalculateNewOutline(colorIndexList[i][j][1],strokeWidth,colorIndexList[i][j][0])
+          console.log("InputGive",colorIndexList[i][j][3])
+          newPath[i][j]+=CalculateNewOutline(colorIndexList[i][j][3],strokeWidth,colorIndexList[i][j][0])
         
         }
         
      
 
     }
-    if(i==3){ //Not yellow
+    if(i<4){ //Not yellow
     
 
       
       let distance
-      
+      let color
+      let contrastingcolor
       let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
-      maxdistance=maxdistance*3
-      distance=ConnectCenters(colorIndexList[i],0)[4]
+      maxdistance=maxdistance*5
+      
+      if(colorIndexList[i][0][2]!=colorIndexList[i][1][2]){
+        distance=1000
+      }
+      else{
+        color=colorIndexList[i][0][2]
+        let colorindex=colorList.find(x=>x==color)
+        contrastingcolor=contrastingcolorList[colorindex]
+        distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
+      }
       
       let circlePath=""
 
@@ -275,25 +364,44 @@ let Remapping = [
       let Center2Used=false
       let Center3Used=false
       
-
+      
       if (distance<maxdistance){
-      ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0)
+      ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)
       circlePath=ConnectingLines[i][1][5]
       Center1Used=true
       }
-      distance=ConnectCenters(colorIndexList[i],1)[4]
+      
+      if(colorIndexList[i][0][2]!=colorIndexList[i][2][2]){
+        distance=1000
+      }
+      else{
+        color=colorIndexList[i][0][2]
+        let colorindex=colorList.find(x=>x==color)
+        contrastingcolor=contrastingcolorList[colorindex]
+        distance=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)[4]
+      }
       if (distance<maxdistance){
-      ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1)
+      ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)
       if (Center1Used){
         circlePath=ConnectingLines[i][1][5]
       }
       Center2Used=true
       }
 
-      distance=ConnectCenters(colorIndexList[i],2)[4]
+
+      if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
+        distance=1000
+      }
+      else{
+        color=colorIndexList[i][0][2]
+        let colorindex=colorList.find(x=>x==color)
+        contrastingcolor=contrastingcolorList[colorindex]
+        distance=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)[4]
+        
+      }
       if (distance<maxdistance){
       if (!Center1Used && !Center2Used){
-        ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],2)
+        ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)
         Center3Used=true
       }
       
@@ -307,22 +415,46 @@ let Remapping = [
       ConnectingLines[i][2]=circlePath
 
       console.log("ArrowBarOnly")
-      ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors)
+      ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors,PermIndex)
 
-      console.log("CHeckOutput")
+      for(let j=0;j<3;j++){
+
+        let PrevIndex=colorIndexList[i][j][0]
+        let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
+         
+       
+        let distance=((Centers[PrevIndex][0]-Centers[NewIndex][0])**2+(Centers[PrevIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
+        let smalldistance=Math.abs(Centers[6][0]-Centers[7][0])
+        console.log("Prev/New Index:, ",PrevIndex,NewIndex, i,j,distance,smalldistance)
+        if(distance<smalldistance){ 
+           
+        noMovementCenterRef.current[i][j]=true
+        
+      }
+      else{
+        noMovementCenterRef.current[i][j]=false
+      }
+      }
+      
+      console.log("CHeckOutput",noMovementCenterRef.current)
       console.log(ConnectingLines)
+      console.log(noMovementCenterRef)
     }
     
   }
   
-  
-   
+
+    
   
 
-  let [path,color]= centerOutLineInfo(colorIndexList)
+  let [pathList,color]= centerOutLineInfo(colorIndexList)
   //connectListIndices(colorIndexList[0])
   //pathCalculated?"":setPathCalculated(true)
+  console.log("Path")
+  //console.log(path)
   
+  
+
 
   color=newSquaresColors[PermIndex]
 
@@ -330,17 +462,110 @@ let Remapping = [
 
   let finalPath=[[],[],[],[]]
   for(let i=0;i<5;i++){
-    finalPath[i]=path[i]+newPath[i]
+    //finalPath[i]=newPath[i]
+  }
+
+  console.log("NoMovementCenter",noMovementCenterRef)
+  for (let i=0;i<4;i++){
+    for (let j=0;j<3;j++){
+      if(noMovementCenterRef.current[i][j]==true){
+      finalPath[i]+=pathList[i][j]
+      finalPath[i]+=newPath[i][j]
+      }
+    }
   }
   console.log("Newpath2")
   //console.log(finalPath)
-  console.log(ConnectingLines)
-  return [finalPath,contrastingcolorList,ConnectingLines,borderPath]
+  console.log("FinalConnectLines",ConnectingLines)
+  return [finalPath,colorList,ConnectingLines,borderPath]
 
 }
 
+function isPositionLeft(Center1,SquareColors){
+      let PositionLeft=false
+      if (Center1==1){
+       if (SquareColors[6]=="yellow"){ //If it is position doesnt change
+           PositionLeft=false
+       }
+       else{
+        PositionLeft=true
+      }
+      }
+     
+      if(Center1==3){
+         if (SquareColors[8]=="yellow"){ //If it is position doesnt change
+          PositionLeft=true
+        
+      }
+    }
+    else if (Center1==5){
+      if (SquareColors[6]=="yellow"){
+        PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }
+    else if (Center1==6){
+      if (SquareColors[1]=="yellow"){
+        PositionLeft=true
+      }
+    }
+    else if (Center1==8){
+      if (SquareColors[3]=="yellow"){
+        PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }
+    else if (Center1==9){{
+      if (SquareColors[8]=="yellow"){
+        PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }}
 
-function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Used,Center3Used,color,SquareColors){
+    else if (Center1==15){
+      if (SquareColors[16]=="yellow"){
+        PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }
+    else if (Center1==16){
+      if (SquareColors[21]=="yellow"){
+        PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }
+    else if (Center1==19){{
+      if (SquareColors[18]=="yellow"){
+        PositionLeft=true
+      }
+    }}
+    if (Center1==21){
+      if (SquareColors[16]=="yellow"){ //If it is position doesnt change
+           PositionLeft=true
+      }
+    }
+    if(Center1==23){
+      if (SquareColors[18]=="yellow"){ //If it is position doesnt change
+           PositionLeft=false
+      }
+      else{
+        PositionLeft=true
+      }
+    }
+      return PositionLeft
+    }
+
+function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Used,Center3Used,color,SquareColors,PermIndex){
   
 
   //let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(3, 78, 216, 1)","rgba(207, 1, 1, 1)","yellow"]
@@ -352,62 +577,21 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   let StartLocationX
   let StartLocationY
 
+  let Center1
+  let Center2
   let EndLocationIndex
-
 
   
   function CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors){
 
-    let Center1=PointsInfo[1][0]
-    let Center2
+    Center1=PointsInfo[1][0]
+    Center2
     let NewCenter1
     let NewCenter2
-    let PositionLeft=false
-    if (Center1<5){
-      if (SquareColors[Center1+5]!="Yellow"){ //If it is position doesnt change
-        if (Center1==1){
-           PositionLeft=false
-        }
-        if(Center1==3){
-          PositionLeft=true
-        }
-      }
-    }
-    else if (Center1==5){
-      if (SquareColors[6]!="Yellow"){
-        PositionLeft=false
-      }
-    }
-    else if (Center1==9){{
-      if (SquareColors[6]!="Yellow"){
-        PositionLeft=true
-      }
-    }}
 
-    else if (Center1==15){
-      if (SquareColors[6]!="Yellow"){
-        PositionLeft=true
-      }
-    }
-    else if (Center1==19){{
-      if (SquareColors[6]!="Yellow"){
-        Center1=23
-        PositionLeft=false
-      }
-    }}
-    else if (Center1>20){
-      if (SquareColors[Center1-5]!="Yellow"){ //If it is position doesnt change
-        if (Center1==21){
-           PositionLeft=false
-        }
-        if(Center1==3){
-          PositionLeft=true
-        }
-      }
-    }
-
-    console.log("Lefttrue?")
-    console.log(Center1,PositionLeft)
+    let PositionLeft=isPositionLeft(Center1,SquareColors)
+    console.log("Lefttrue?",Center1,PositionLeft)
+ 
     
     
     console.log("EndIndex")
@@ -429,46 +613,71 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
       NewCenter2=9
     }
 
-    if (PositionLeft){
-      [NewCenter1,NewCenter2]=[NewCenter2,NewCenter1]
-    }
+    // if (!PositionLeft){
+    //   [NewCenter1,NewCenter2]=[NewCenter2,NewCenter1]
+    // }
     
-
-    return [NewCenter1,NewCenter2,PositionLeft]
+    
+  
+    
+    return [NewCenter1,NewCenter2,EndLocationIndex,PositionLeft]
   }
 
   console.log(PointsInfo)
 
+  console.log("Prev/Color",color)
+
+  let contrastingcolorlistIndex
+  //if(PermIndex==0){
   if (color==contrastingcolorList[0]){
-     EndLocationIndex=2
+     EndLocationIndex=22
+     contrastingcolorlistIndex=0
     
   }
 
   if (color==contrastingcolorList[1]){
-     EndLocationIndex=10
+     EndLocationIndex=14
+     contrastingcolorlistIndex=1
     
   }
 
   if (color==contrastingcolorList[2]){
-     EndLocationIndex=22
+     EndLocationIndex=2
+     contrastingcolorlistIndex=2
     
   }
     if (color==contrastingcolorList[3]){
-     EndLocationIndex=14
+     EndLocationIndex=10
+     contrastingcolorlistIndex=3
     
   }
   console.log("EndIndex")
   console.log(color)
   console.log(contrastingcolorList)
   
+  console.log("EndIndex2",EndLocationIndex);
+
+  [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
+
+
+  console.log("NewCentersInfo",Center1,Center2)
+
+  if(PermIndex==0){
+    console.log("Update State")
+    console.log("INSERTING INTO STATE: ",
+  PointsInfo[0][0],
+  EndLocationIndex,
+  PointsInfo[1][0],
+  Center1,
+  PointsInfo[2][0],
+  Center2
+)
+    piecesMovementRef.current[contrastingcolorlistIndex]=[[PointsInfo[0][0],EndLocationIndex],[PointsInfo[1][0],Center1],[PointsInfo[2][0],Center2]]
+  }
+  
+//}
+  console.log(piecesMovementRef)
   console.log(EndLocationIndex)
-
-  let [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
-
-  console.log("NewCentersInfo")
-  console.log(Center1,Center2)
-    
-
   let EndLocationX = Centers[EndLocationIndex][0]
   let EndLocationY = Centers[EndLocationIndex][1]
 
@@ -509,10 +718,15 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
     EndLocationX = Centers[EndLocationIndex][0]
     EndLocationY = Centers[EndLocationIndex][1]
   }
+  
 
   let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
-  if((StartLocationX-EndLocationX)>1 ||(StartLocationY-EndLocationY)>1){
-     [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
+  if(!Center1Used && !Center2Used && !Center3Used){
+    pathArrow2=""
+    angle=""
+  }
+  if(Math.abs(StartLocationX-EndLocationX)<1 &&Math.abs(StartLocationY-EndLocationY)<1){
+     pathArrow2=""
   }
   console.log("ConnectingPath")
   console.log(pathArrow2)
@@ -521,9 +735,9 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   //return "M 40,40 L 40,80 L 42,80 L 42, 40 Z"
 
   console.log("SentData")
-    console.log(pathArrow2,angle,centerx2,centery2)
-  
-  return [pathArrow2,angle,centerx2,centery2]
+  console.log(pathArrow2,angle,centerx2,centery2)
+  console.log("Prev/UsedCenters",Center1Used,Center2Used,Center3Used,EndLocationIndex,PointsInfo)
+  return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
 }
 
 
@@ -575,8 +789,23 @@ if(connectHeadlightsBoolean){
 return [pathArrow2,angle,centerx2,centery2,distance]
 }
 
-function ConnectCenters(PointsInfo,CenterIndex){
+function ConnectCenters(PointsInfo,CenterIndex,newSquaresColors,PermIndex,color){
 
+  // if(PermIndex!=0){
+    
+  //   let colorIndex
+
+  //   for(let i=0;i<piecesMovementRef.current.length;i++){
+  //     console.log("PointsInfo",PointsInfo)
+  //     console.log("CorrectRef?",piecesMovementRef.current[i][0],PointsInfo[0])
+  //     if(piecesMovementRef.current[i][0][0]==PointsInfo[0][0]){
+        
+  //     }
+  //   }
+
+  //   let distance=1000
+  //   //return [path,angle,centerx2,centery2,distance,circlePath1]
+  // }
 
   let PiecesIndex=[]
   for(let i=0; i<PointsInfo.length;i++){
@@ -598,7 +827,7 @@ function ConnectCenters(PointsInfo,CenterIndex){
   
   //let path=""
   if(CenterIndex==2){
-     tempcenterx=Centers[PiecesIndex[1]][0] //%2 So that no  error occurs 
+     tempcenterx=Centers[PiecesIndex[1]][0] 
      tempcentery=Centers[PiecesIndex[1]][1]
      tempcenterx2=Centers[PiecesIndex[2]][0]
      tempcentery2=Centers[PiecesIndex[2]][1]
@@ -630,7 +859,8 @@ function ConnectCenters(PointsInfo,CenterIndex){
 function CalculateNewOutline(PointList,strokeWidth,index){
 
   if(index%5==0||index%5==4){
-    strokeWidth+=3
+    strokeWidth+=1
+    
   }
    if(index%20<5){
     strokeWidth+=1
@@ -638,7 +868,7 @@ function CalculateNewOutline(PointList,strokeWidth,index){
 
 
   let Centers= GetCentersPosition(cubeSize)
-  let Scale=13.1/0.15740740740740744/150*cubeSize
+  let Scale=13.15/0.15740740740740744/150*cubeSize
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
   let newCoords=[]
@@ -738,7 +968,7 @@ function CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey){
 }
 
 
-function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex){
+function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex,outerCenterBoolean){
 
   // console.log("Slopes")
   // console.log(slope1,slope2)
@@ -749,8 +979,10 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex)
 
   let interceptx=(c2-c1)/(slope1-slope2)
 
+  let tempStrokeWidth=1
   if(Math.abs(slope1)=="Infinity"){
     interceptx=x1+strokeWidth
+    
     if(Math.abs(interceptx-averagex)>Math.abs(x1-averagex)){
       interceptx=x1-strokeWidth
     }
@@ -852,20 +1084,20 @@ function centerOutLineInfo(IndexList){
   console.log(Centers)
 
   let Points=[[],[],[],[],[]]
-  for (let j=0;j<5;j++){
+  for (let j=0;j<3;j++){
     for (let i=0;i<IndexList[j].length;i++){
   
     Points[j].push([])
   }}
 
-  console.log("PointsNow")
-  console.log(Points)
+  console.log("PointsNow",Points)
+ 
 
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
   //IndexList*Scale=13 0.1574*Scale=13
   // Scale is 13/0.1574=82.588
-  let Scale=13.2/0.15740740740740744/150*cubeSize
+  let Scale=13.15/0.15740740740740744/150*cubeSize
 
 
   //For top height of halfCenter, Scale 2 is 59/0.7183908045977012= 82.128 
@@ -884,10 +1116,10 @@ function centerOutLineInfo(IndexList){
 
   //Points: Color, Center1, Corner1,Corner2
  
-  for (let j=0;j<5;j++){ // Color
+  for (let j=0;j<4;j++){ // Color
      for (let i=0;i<Points[j].length;i++){ //Center
-    //console.log("TESTINGPOint")
-    let TempPointsList=IndexList[j][i][1]
+    
+    let TempPointsList=IndexList[j][i][3]
     // console.log(IndexList)
     // console.log(i,j)
     // console.log(IndexList[j])
@@ -933,15 +1165,16 @@ function centerOutLineInfo(IndexList){
 
   // console.log("Coordinates")
   // console.log(tempTempPointsList)
-  let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey)
-  let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,strokeWidth,averagex,averagey)
-  let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,strokeWidth,averagex,averagey)
-  let [slope4,c4]=CalculateSlope(x4,y4,x1,y1,strokeWidth,averagex,averagey)
+  let tempstrokewidth=1
+  let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,tempstrokewidth,averagex,averagey)
+  let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,tempstrokewidth,averagex,averagey)
+  let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,tempstrokewidth,averagex,averagey)
+  let [slope4,c4]=CalculateSlope(x4,y4,x1,y1,tempstrokewidth,averagex,averagey)
 
-  tempTempPointsList[0]= CalculateNewCoordinates(c4,slope4,c1,slope1,x4,x1,strokeWidth,averagex)
-  tempTempPointsList[1]= CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex)
-  tempTempPointsList[2]= CalculateNewCoordinates(c2,slope2,c3,slope3,x2,x3,strokeWidth,averagex)
-  tempTempPointsList[3]= CalculateNewCoordinates(c3,slope3,c4,slope4,x3,x4,strokeWidth,averagex)
+  tempTempPointsList[0]= CalculateNewCoordinates(c4,slope4,c1,slope1,x4,x1,tempstrokewidth,averagex)
+  tempTempPointsList[1]= CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,tempstrokewidth,averagex)
+  tempTempPointsList[2]= CalculateNewCoordinates(c2,slope2,c3,slope3,x2,x3,tempstrokewidth,averagex)
+  tempTempPointsList[3]= CalculateNewCoordinates(c3,slope3,c4,slope4,x3,x4,tempstrokewidth,averagex)
       Points[j][i]=tempTempPointsList
       }
     }
@@ -962,6 +1195,11 @@ function centerOutLineInfo(IndexList){
   // console.log("Points")
   // console.log(Points)
   let CentersOutlinePath=[[],[],[],[],[]]
+  for (let i=0;i< CentersOutlinePath.length; i++){
+     for(let j=0;j<4;j++){ //Not including yellow
+    CentersOutlinePath[i].push([])
+     }
+  }
   for(let k=0;k<5;k++){
   for(let i=0;i<Points[k].length;i++){
     let pointsPath=""
@@ -974,7 +1212,7 @@ function centerOutLineInfo(IndexList){
       }
     }
     pointsPath+=" Z"
-    CentersOutlinePath[k]+=`M ${Points[k][i][0][0]},${Points[k][i][0][1]} ${pointsPath} `
+    CentersOutlinePath[k][i]+=`M ${Points[k][i][0][0]},${Points[k][i][0][1]} ${pointsPath} `
   }}
   
 
@@ -1069,6 +1307,7 @@ return (
                               <CaseImage
                                   size={cubeSize}
                                   //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
+                                      //alg={(oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
                                       alg={(oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
                                   caseSetDetails={ScrambleVisualizerDetails}
                                   co="40"
@@ -1083,7 +1322,18 @@ return (
                                 {
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
                                   <>
-                                  
+                                  <svg style={{position:"absolute", zIndex:"0"}}id="GoodLine" width="100%" height="100%">
+                                    
+                                    <path
+                                      d={overlayPaths[refIndex]?.[0]?.[i] || ""}
+                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                      fillRule="evenodd"
+                                      stroke="rgba(44, 44, 44, 1)"
+                                      strokeWidth="0.5"
+                                      strokeLinejoin="round"
+                                      filter="url(#shadow)"
+                                    />
+                                </svg>
                                   {Array.from({ length: 2 }, (_, j) => j).map(j => (
                                   <>
                                   
@@ -1112,18 +1362,7 @@ return (
 
 
 
-                                    <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
                                     
-                                    <path
-                                      d={overlayPaths[refIndex]?.[0]?.[i] || ""}
-                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
-                                      fillRule="evenodd"
-                                      stroke="rgba(44, 44, 44, 1)"
-                                      strokeWidth="0.5"
-                                      strokeLinejoin="round"
-                                      filter="url(#shadow)"
-                                    />
-                                </svg>
                                 
                                 </>
                                 ))}
@@ -1139,7 +1378,7 @@ return (
                                     <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
                                   <path
                                       d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
-                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                      fill={overlayPaths[refIndex]?.[2]?.[i][3][7] || "black"}
                                     stroke="rgba(0, 0, 0, 1)"
                                       strokeWidth="1.5"
                                       strokeLinejoin="round"
