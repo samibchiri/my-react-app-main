@@ -14,7 +14,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
 
 
   
-  const [groupSelected,setGroupSelected]=useState(3)
+  const [groupSelected,setGroupSelected]=useState(7)
 
   const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(true)
@@ -22,6 +22,10 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [strokeWidth,setStrokeWidth]= useState(2)
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
+  
+  const [dificultCenters,setDificultCenters]=useState([1,2,3,5])
+  const [barColorsAllowed,setBarColorsAllowed]=useState(["red","orange"])
+  
   const noMovementCenterRef = useRef(
     Array.from({ length: 4 }, () => Array(3).fill(false))
   );
@@ -48,7 +52,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   ]
 ];
 
-  const piecesMovementRef = useRef(data) // mirror for immediate reads
+  const piecesMovementRef = useRef([]) // mirror for immediate reads
 
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
@@ -175,7 +179,7 @@ let Remapping = [
   //    }
   // }
 
-  if(PermIndex<0){
+  if(PermIndex==0){
     for(let i=0;i<newSquaresColors.length;i++){
       if(newSquaresColors[i]!=0){
         
@@ -189,12 +193,13 @@ let Remapping = [
           
         }
         
-        colorIndexList[index].push([i,,"",Points])
+        colorIndexList[index].push([i,"","",Points])
       }
     }
+    console.log("newCentersInfo",colorIndexList)
   }
   else{
-      //console.log("pIECESmOVEMENT",JSON.stringify(piecesMovementRef.current))
+      console.log("pIECESmOVEMENT",JSON.stringify(piecesMovementRef.current))
     for(let i=0;i<piecesMovementRef.current.length;i++){
       for(let j=0;j<piecesMovementRef.current[i].length;j++){
         
@@ -325,6 +330,8 @@ let Remapping = [
   Array.from({ length: 4 }, () => [])
 );
 
+  let combinedColorList=Array.from({ length: 5 }, () => [])
+
   for(let i=0;i<4;i++){
     for(let j=0;j<colorIndexList[i].length;j++){
     
@@ -340,22 +347,32 @@ let Remapping = [
     }
     if(i<4){ //Not yellow
     
-
+      
       
       let distance
       let color
       let contrastingcolor
       let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
       maxdistance=maxdistance*5
-      
+      console.log("I?",PermIndex,i,colorIndexList[i])
       if(colorIndexList[i][0][2]!=colorIndexList[i][1][2]){
-        distance=1000
+        distance=10000
+      }
+      else if(dificultCenters.includes(colorIndexList[i][0][0])|| dificultCenters.includes(colorIndexList[i][1][0])){
+        distance=10000
       }
       else{
         color=colorIndexList[i][0][2]
-        let colorindex=colorList.find(x=>x==color)
-        contrastingcolor=contrastingcolorList[colorindex]
+        if(combinedColorList[i].length==0){
+          let colorIndex=(colorList.findIndex(x=>x==color))
+          combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
+          console.log("NewCombColorList",combinedColorList,colorList,contrastingcolorList,colorIndex)
+        }
+        contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
+        if(!barColorsAllowed.includes(color)){
+          distance=10000
+        }
       }
       
       let circlePath=""
@@ -372,14 +389,26 @@ let Remapping = [
       }
       
       if(colorIndexList[i][0][2]!=colorIndexList[i][2][2]){
-        distance=1000
+        distance=10000
+      }
+      else if(dificultCenters.includes(colorIndexList[i][0][0]) ||dificultCenters.includes(colorIndexList[i][2][0])){
+        distance=10000
       }
       else{
+        console.log("Passed4",colorIndexList[i][0][0],colorIndexList[i][2][0])
+        console.log("Passed44",!dificultCenters.includes(colorIndexList[i][2][0]))
         color=colorIndexList[i][0][2]
-        let colorindex=colorList.find(x=>x==color)
-        contrastingcolor=contrastingcolorList[colorindex]
+        if(combinedColorList[i].length==0){
+          let colorIndex=(colorList.findIndex(x=>x==color))
+          combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
+        }
+        contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)[4]
+        if(!barColorsAllowed.includes(color)){
+          distance=10000
+        }
       }
+
       if (distance<maxdistance){
       ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)
       if (Center1Used){
@@ -390,14 +419,22 @@ let Remapping = [
 
 
       if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
-        distance=1000
+        distance=10000
+      }
+      else if(dificultCenters.includes(colorIndexList[i][1][0])||dificultCenters.includes(colorIndexList[i][2][0])){
+        distance=10000
       }
       else{
-        color=colorIndexList[i][0][2]
-        let colorindex=colorList.find(x=>x==color)
-        contrastingcolor=contrastingcolorList[colorindex]
+        color=colorIndexList[i][1][2]
+        if(combinedColorList[i].length==0){
+          let colorIndex=(colorList.findIndex(x=>x==color))
+          combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
+        }
+        contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)[4]
-        
+        if(!barColorsAllowed.includes(color)){
+          distance=10000
+        }
       }
       if (distance<maxdistance){
       if (!Center1Used && !Center2Used){
@@ -416,7 +453,8 @@ let Remapping = [
 
       console.log("ArrowBarOnly")
       ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors,PermIndex)
-
+      console.log("NoColorPathCheck",ConnectingLines[i][3][0],combinedColorList[i][0])
+      
       for(let j=0;j<3;j++){
 
         let PrevIndex=colorIndexList[i][j][0]
@@ -425,11 +463,28 @@ let Remapping = [
        
         let distance=((Centers[PrevIndex][0]-Centers[NewIndex][0])**2+(Centers[PrevIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
         let smalldistance=Math.abs(Centers[6][0]-Centers[7][0])
-        console.log("Prev/New Index:, ",PrevIndex,NewIndex, i,j,distance,smalldistance)
-        if(distance<smalldistance){ 
-           
-        noMovementCenterRef.current[i][j]=true
+        let xdifference=(Centers[PrevIndex][0]-Centers[NewIndex][0])
+        let ydifference=(Centers[PrevIndex][1]-Centers[NewIndex][1])
         
+        console.log("Prev/New Index:, ",PrevIndex,NewIndex,xdifference,ydifference)
+        
+      if(distance<smalldistance){ 
+        if(ydifference>1){
+        noMovementCenterRef.current[i][j]=0
+        
+      }
+      else if (xdifference<-1){
+        noMovementCenterRef.current[i][j]=1
+      }
+      else if(ydifference<-1){
+        noMovementCenterRef.current[i][j]=2 
+      }
+      else if (xdifference>1){
+        noMovementCenterRef.current[i][j]=3
+      }
+      else{
+        noMovementCenterRef.current[i][j]=4
+      }
       }
       else{
         noMovementCenterRef.current[i][j]=false
@@ -466,18 +521,78 @@ let Remapping = [
   }
 
   console.log("NoMovementCenter",noMovementCenterRef)
+  let noMovementCenterCircle=[]
   for (let i=0;i<4;i++){
     for (let j=0;j<3;j++){
-      if(noMovementCenterRef.current[i][j]==true){
-      finalPath[i]+=pathList[i][j]
+      if(noMovementCenterRef.current[i][j]!=false && noMovementCenterRef.current[i][j]!=4){
       finalPath[i]+=newPath[i][j]
+      finalPath[i]+=pathList[i][j]
+      console.log("ColorList5",colorIndexList[i][j])
+      
+      let radius=1
+      let circlePosition=noMovementCenterRef.current[i][j]
+      let circleX
+      let circleY
+      
+      if(circlePosition!=4){
+        console.log("X1,X2",colorIndexList[i][j][3][circlePosition][0],colorIndexList[i][j][3][(circlePosition+1)%4][0])
+        circleX=colorIndexList[i][j][3][circlePosition][0]/2+colorIndexList[i][j][3][(circlePosition+1)%4][0]/2
+        circleY=colorIndexList[i][j][3][circlePosition][1]/2+colorIndexList[i][j][3][(circlePosition+1)%4][1]/2
       }
+      
+      let Scale=13.15/0.15740740740740744/150*cubeSize
+      let StartingPointx=Centers[12][0]
+      let StartingPointy=Centers[12][1]
+      console.log("Small2",StartingPointx,StartingPointy)
+
+      circleX=StartingPointx+circleX*Scale
+      circleY=StartingPointy+circleY*Scale
+
+      circleX=circleX
+
+      if(colorIndexList[i][j][0]%5>=1 &&colorIndexList[i][j][0]%5<=3){
+        if(colorIndexList[i][j][1]%5>=1 &&colorIndexList[i][j][1]%5<=3){
+          if(noMovementCenterRef.current[i][j]==0){
+            circleY+=1.2/cubeSize*200
+          }
+          if(noMovementCenterRef.current[i][j]==1){
+            circleX-=1.2/cubeSize*200
+          }
+          if(noMovementCenterRef.current[i][j]==2){
+            circleY-=1.2/cubeSize*200
+          }
+          if(noMovementCenterRef.current[i][j]==3){
+            circleX+=1.2/cubeSize*200
+          }
+        }
+      }
+
+      if(circlePosition==4){
+        circleX=Centers[colorIndexList[i][j][0]][0]
+        circleY=Centers[colorIndexList[i][j][0]][1]
+        console.log("SmallCircleCenter",colorIndexList[i][j][0])
+      }
+
+      let smallCirclePath=drawSmallCircle(circleX,circleY,radius)
+      noMovementCenterCircle.push(smallCirclePath)
+    }
     }
   }
-  console.log("Newpath2")
-  //console.log(finalPath)
-  console.log("FinalConnectLines",ConnectingLines)
-  return [finalPath,colorList,ConnectingLines,borderPath]
+
+  let stringNoMovementCircle=""
+  for (let i=0;i<noMovementCenterCircle.length;i++){
+    stringNoMovementCircle+=noMovementCenterCircle[i]
+  }
+  return [finalPath,colorList,ConnectingLines,stringNoMovementCircle,combinedColorList]
+
+}
+
+function drawSmallCircle(x,y,radius){
+
+
+  let circlePath=`M ${x+radius},${y} A ${radius},${radius} 0 1 1 ${x-radius},${y} A ${radius},${radius} 0 1 1 ${x+radius},${y} Z `
+ 
+  return circlePath
 
 }
 
@@ -660,11 +775,14 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
 
 
-  console.log("NewCentersInfo",Center1,Center2)
+  if(PermIndex==0){
+    console.log("NewCentersInfo",PointsInfo,EndLocationIndex,Center1,Center2)
+  }
+  
 
   if(PermIndex==0){
     console.log("Update State")
-    console.log("INSERTING INTO STATE: ",
+    console.log("newCentersInfo, INSERTING INTO STATE: ",
   PointsInfo[0][0],
   EndLocationIndex,
   PointsInfo[1][0],
@@ -673,10 +791,11 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   Center2
 )
     piecesMovementRef.current[contrastingcolorlistIndex]=[[PointsInfo[0][0],EndLocationIndex],[PointsInfo[1][0],Center1],[PointsInfo[2][0],Center2]]
+    console.log("PiecesMovementRefUpdated",piecesMovementRef.current)
   }
   
 //}
-  console.log(piecesMovementRef)
+  console.log("Populated",piecesMovementRef)
   console.log(EndLocationIndex)
   let EndLocationX = Centers[EndLocationIndex][0]
   let EndLocationY = Centers[EndLocationIndex][1]
@@ -737,6 +856,7 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   console.log("SentData")
   console.log(pathArrow2,angle,centerx2,centery2)
   console.log("Prev/UsedCenters",Center1Used,Center2Used,Center3Used,EndLocationIndex,PointsInfo)
+  
   return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
 }
 
@@ -852,7 +972,7 @@ function ConnectCenters(PointsInfo,CenterIndex,newSquaresColors,PermIndex,color)
  
     console.log("SentData")
     console.log(path,angle,centerx2,centery2)
-  
+    
   return [path,angle,centerx2,centery2,distance,circlePath1]
 }
 
@@ -888,6 +1008,7 @@ function CalculateNewOutline(PointList,strokeWidth,index){
   let averagex=(x1+x2+x3+x4)/4
   let averagey=(y1+y2+y3+y4)/4
 
+  
   let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,strokeWidth,averagex,averagey)
   let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,strokeWidth,averagex,averagey)
   let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,strokeWidth,averagex,averagey)
@@ -1062,7 +1183,7 @@ useLayoutEffect(() => {
     }
   });
   console.log("Allpaths")
-  console.log(paths)
+  console.log("Allpaths",paths,paths[0][4])
   console.log()
 console.log()
 console.log()
@@ -1084,7 +1205,7 @@ function centerOutLineInfo(IndexList){
   console.log(Centers)
 
   let Points=[[],[],[],[],[]]
-  for (let j=0;j<3;j++){
+  for (let j=0;j<4;j++){
     for (let i=0;i<IndexList[j].length;i++){
   
     Points[j].push([])
@@ -1097,20 +1218,7 @@ function centerOutLineInfo(IndexList){
   let StartingPointy=Centers[12][1]
   //IndexList*Scale=13 0.1574*Scale=13
   // Scale is 13/0.1574=82.588
-  let Scale=13.15/0.15740740740740744/150*cubeSize
-
-
-  //For top height of halfCenter, Scale 2 is 59/0.7183908045977012= 82.128 
-  //Scale=59/0.7183908045977012
-
-  //For bottom height of halfCenter, Scale3 is: 46.5/0.5544061302681993 =83.875
-  //Scale=83.875
-
-  //For bottom width of halfCenter, Scale 4 is: 13.4/0.17445721583652612=76.81
-  //Scale= 76.81
-
-  //For top width of halfCenter, Scale 5 is: 13.1/0.16168582375478924=81.02
-  //Scale= 81
+  let Scale=13.2/0.15740740740740744/150*cubeSize
 
   //IndexList: Color, Center+Points, Points, PointIndex
 
@@ -1165,7 +1273,7 @@ function centerOutLineInfo(IndexList){
 
   // console.log("Coordinates")
   // console.log(tempTempPointsList)
-  let tempstrokewidth=1
+  let tempstrokewidth=0.6
   let [slope1,c1]=CalculateSlope(x1,y1,x2,y2,tempstrokewidth,averagex,averagey)
   let [slope2,c2]=CalculateSlope(x2,y2,x3,y3,tempstrokewidth,averagex,averagey)
   let [slope3,c3]=CalculateSlope(x3,y3,x4,y4,tempstrokewidth,averagex,averagey)
@@ -1312,7 +1420,8 @@ return (
                                   caseSetDetails={ScrambleVisualizerDetails}
                                   co="40"
                               ></CaseImage>
-                              
+                             
+                             
                               <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,marginTop:`${45+cubeSize/10}px`}}>
                            
                                {
@@ -1320,28 +1429,64 @@ return (
                                <>
                                
                                 {
+                                  
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
                                   <>
-                                  <svg style={{position:"absolute", zIndex:"0"}}id="GoodLine" width="100%" height="100%">
+                                  <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
                                       d={overlayPaths[refIndex]?.[0]?.[i] || ""}
-                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                      //fill={overlayPaths[refIndex]?.[4]?.[i][1] || "black"}
+                                      fill={"rgba(248, 246, 246, 1)"}
                                       fillRule="evenodd"
                                       stroke="rgba(44, 44, 44, 1)"
-                                      strokeWidth="0.5"
+                                      strokeWidth="1"
                                       strokeLinejoin="round"
                                       filter="url(#shadow)"
                                     />
                                 </svg>
-                                  {Array.from({ length: 2 }, (_, j) => j).map(j => (
+                                  
+                                <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
+      
+                                  <path
+                                      d={overlayPaths[refIndex]?.[3]||""}
+                                      fill={"black"}
+                                      stroke="rgba(255, 255, 255, 1)"
+                                      strokeWidth="0.5"
+                                      strokeLinejoin="round"
+                                      
+                                  />
+                                </svg>
+                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                          <path
+                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
+                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                            stroke="rgba(44, 44, 44, 1)"
+                                            stroke-width="1"
+                                          />
+                                        </svg>
+                                    <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                  <path
+                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
+                                    stroke="rgba(0, 0, 0, 1)"
+                                      strokeWidth="1.5"
+                                      strokeLinejoin="round"
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+
+                                  />
+                                  
+                                </svg>
+                                
+                                {Array.from({ length: 2 }, (_, j) => j).map(j => (
                                   <>
                                   
                                   <svg style={{position:"absolute"}}id="Goodline" width="100%" height="100%" >
                                     
                                     <path
                                       d={overlayPaths[refIndex]?.[2]?.[i][j][0] || ""}
-                                      fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][0] || "black"}
                                       
                                       stroke="rgba(44, 44, 44, 1)"
                                       strokeWidth="1"
@@ -1355,50 +1500,8 @@ return (
                                     />
                                     
                                 </svg>
-
-                                
-                                      
-                                        
-
-
-
-                                    
-                                
                                 </>
                                 ))}
-                                
-                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                          <path
-                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
-                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
-                                            stroke="rgba(44, 44, 44, 1)"
-                                            stroke-width="1"
-                                          />
-                                        </svg>
-                                    <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                  <path
-                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
-                                      fill={overlayPaths[refIndex]?.[2]?.[i][3][7] || "black"}
-                                    stroke="rgba(0, 0, 0, 1)"
-                                      strokeWidth="1.5"
-                                      strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-
-                                  />
-                                </svg>
-                                 <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                  <path
-                                      d={overlayPaths[refIndex]?.[3]?.[0]||""}
-                                      fill={overlayPaths[refIndex]?.[3]?.[1] || "black"}
-                                      stroke="rgba(255, 251, 3, 1)"
-                                      strokeWidth="2.5"
-                                      strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-
-                                  />
-                                </svg>
 
                                 </>))
                                } 
