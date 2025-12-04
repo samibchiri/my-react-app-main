@@ -23,8 +23,8 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
   
-  const [dificultCenters,setDificultCenters]=useState([1,2,3,5])
-  const [barColorsAllowed,setBarColorsAllowed]=useState(["red","orange"])
+  const [dificultCenters,setDificultCenters]=useState([1,2,3])
+  const [barColorsFiltered,setBarColorsFiltered]=useState([])
   
   const noMovementCenterRef = useRef(
     Array.from({ length: 4 }, () => Array(3).fill(false))
@@ -370,7 +370,7 @@ let Remapping = [
         }
         contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
-        if(!barColorsAllowed.includes(color)){
+        if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
@@ -404,7 +404,7 @@ let Remapping = [
         }
         contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)[4]
-        if(!barColorsAllowed.includes(color)){
+        if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
@@ -432,7 +432,7 @@ let Remapping = [
         }
         contrastingcolor=combinedColorList[i][1]
         distance=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)[4]
-        if(!barColorsAllowed.includes(color)){
+        if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
@@ -453,7 +453,7 @@ let Remapping = [
 
       console.log("ArrowBarOnly")
       ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors,PermIndex)
-      console.log("NoColorPathCheck",ConnectingLines[i][3][0],combinedColorList[i][0])
+      console.log("NoColorPathCheck",colorIndexList[i],Center1Used,Center2Used,Center3Used,PermIndex)
       
       for(let j=0;j<3;j++){
 
@@ -1429,8 +1429,8 @@ return (
                                <>
                                
                                 {
-                                  
-                                Array.from({ length: 5 }, (_, i) => i).map(i => (
+                                  //In this array to prevent outline from overlapping with connecting lines
+                                  Array.from({ length: 5 }, (_, i) => i).map(i => (
                                   <>
                                   <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                                     
@@ -1445,7 +1445,7 @@ return (
                                       filter="url(#shadow)"
                                     />
                                 </svg>
-                                  
+
                                 <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
       
                                   <path
@@ -1457,28 +1457,26 @@ return (
                                       
                                   />
                                 </svg>
-                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                          <path
-                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
-                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
-                                            stroke="rgba(44, 44, 44, 1)"
-                                            stroke-width="1"
-                                          />
-                                        </svg>
-                                    <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                  <path
-                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
-                                      fill={overlayPaths[refIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
-                                    stroke="rgba(0, 0, 0, 1)"
-                                      strokeWidth="1.5"
-                                      strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
-
-                                  />
+                                </>
+                                  ))}
+                                  {
                                   
+                                Array.from({ length: 5 }, (_, i) => i).map(i => (
+                                  <>
+                                  {/* <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
+                                    
+                                    <path
+                                      d={overlayPaths[refIndex]?.[0]?.[i] || ""}
+                                      //fill={overlayPaths[refIndex]?.[4]?.[i][1] || "black"}
+                                      fill={"rgba(248, 246, 246, 1)"}
+                                      fillRule="evenodd"
+                                      stroke="rgba(44, 44, 44, 1)"
+                                      strokeWidth="1"
+                                      strokeLinejoin="round"
+                                      filter="url(#shadow)"
+                                    />
                                 </svg>
-                                
+                                   */}
                                 {Array.from({ length: 2 }, (_, j) => j).map(j => (
                                   <>
                                   
@@ -1502,6 +1500,28 @@ return (
                                 </svg>
                                 </>
                                 ))}
+                                
+                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                          <path
+                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
+                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
+                                            stroke="rgba(44, 44, 44, 1)"
+                                            stroke-width="1"
+                                          />
+                                        </svg>
+                                    <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                  <path
+                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
+                                    stroke="rgba(0, 0, 0, 1)"
+                                      strokeWidth="1.5"
+                                      strokeLinejoin="round"
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+
+                                  />
+                                  
+                                </svg>
 
                                 </>))
                                } 
