@@ -26,9 +26,10 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [dificultCenters,setDificultCenters]=useState([1,2,3])
   const [barColorsFiltered,setBarColorsFiltered]=useState([])
   
-  const noMovementCenterRef = useRef(
-    new Array(25).fill(0)
-  );
+const noMovementCenterRef = useRef(
+  Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
+);
+
   const data = [
   [
     [7, 2],
@@ -462,45 +463,51 @@ let Remapping = [
          
        
         let distance=((Centers[PrevIndex][0]-Centers[NewIndex][0])**2+(Centers[PrevIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
-        let smalldistance=Math.abs(Centers[6][0]-Centers[7][0])
+        let smalldistance=Math.abs(Centers[6][0]-Centers[12][0])*1.3
         let xdifference=(Centers[PrevIndex][0]-Centers[NewIndex][0])
         let ydifference=(Centers[PrevIndex][1]-Centers[NewIndex][1])
         
-        console.log("Prev/New Index:, ",PrevIndex,NewIndex,xdifference,ydifference)
+        console.log("Prev/New Index:, ",PrevIndex,NewIndex,xdifference,ydifference,distance,smalldistance)
       
+      if(PermIndex==0){
       if(distance<smalldistance){ 
         if(xdifference>1){
-          noMovementCenterRef.current[i][j][0]=1
+           console.log("PrevNew Index:, ",PrevIndex,NewIndex,xdifference,ydifference)
+      
+          noMovementCenterRef.current[PrevIndex][0]=-1
         }
         else if(xdifference<-1){
-          noMovementCenterRef.current[i][j][0]=-1
+          noMovementCenterRef.current[PrevIndex][0]=1
         }
         else{
           console.log(noMovementCenterRef.current)
-          noMovementCenterRef.current[i][j][0]=0
+          noMovementCenterRef.current[PrevIndex][0]=0
         }
         if(ydifference>1){
-          noMovementCenterRef.current[i][j][1]=1
+          noMovementCenterRef.current[PrevIndex][1]=1
         }
         else if(ydifference<-1){
-          noMovementCenterRef.current[i][j][1]=-1
+          noMovementCenterRef.current[PrevIndex][1]=-1
         }
         else{
-          noMovementCenterRef.current[i][j][1]=0
+          noMovementCenterRef.current[PrevIndex][1]=0
         }
-        console.log("NoMovementCenter15",noMovementCenterRef.current[i][j],PrevIndex,NewIndex)
+        console.log("NoMovementCenter15",noMovementCenterRef.current[PrevIndex],PrevIndex,NewIndex)
       }
       else{
-        noMovementCenterRef.current[i][j][0]=false
-        noMovementCenterRef.current[i][j][1]=false
+        console.log("Prev/False",PrevIndex,NewIndex)
+        noMovementCenterRef.current[PrevIndex][0]=false
+        noMovementCenterRef.current[PrevIndex][1]=false
+        console.log("Prev/False Array",noMovementCenterRef.current[PrevIndex])
       }
       
       
       
-      console.log("CHeckOutput",PrevIndex,NewIndex,noMovementCenterRef.current[i][j])
+      console.log("Prev/CHeckOutput",PrevIndex,NewIndex,noMovementCenterRef.current[PrevIndex],noMovementCenterRef.current)
       console.log(ConnectingLines)
-      console.log(noMovementCenterRef)
-      }
+      //console.log("Final",noMovementCenterRef.current,noMovementCenterRef.current[PrevIndex])
+      }  
+    }
     }
     
   }
@@ -534,32 +541,34 @@ let Remapping = [
       let PrevIndex=colorIndexList[i][j][0]
         let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
          
-        console.log("NoMovementCenter1",noMovementCenterRef.current[i][j],PrevIndex,NewIndex)
-      if(noMovementCenterRef.current[i][j][0]!=false){
-       console.log("NoMovementCenter2",noMovementCenterRef.current[i][j])
+        console.log("NoMovementCenter1",noMovementCenterRef.current[PrevIndex],PrevIndex,NewIndex)
+      if(noMovementCenterRef.current[PrevIndex][0]!==false){
+       console.log("NoMovementCenter2",noMovementCenterRef.current[PrevIndex],PrevIndex,NewIndex)
       finalPath[i]+=newPath[i][j]
       finalPath[i]+=pathList[i][j]
       console.log("ColorList5",colorIndexList[i][j])
       
       let radius=1
-      let circlePosition=noMovementCenterRef.current[i][j]
-      let changeX=noMovementCenterRef.current[i][j][0]
-      let changeY=noMovementCenterRef.current[i][j][1]
+      
+      let changeX=noMovementCenterRef.current[PrevIndex][0]
+      let changeY=noMovementCenterRef.current[PrevIndex][1]
       let circleX
       let circleY
       
+      console.log("SmallCPass",changeX,changeY,noMovementCenterRef.current[PrevIndex],PrevIndex)
       //[i][j][3] is array of point positions going from top left to top right to bottom right to bottom left
-      if(changeX!=0 &&changeY!=0){
-        console.log("ColIndex,",colorIndexList[i][j],i,j)
-        console.log("X1,X2",colorIndexList[i][j][3][circlePosition][0],colorIndexList[i][j][3][(circlePosition+1)%4][0])
-        
-        if(changeX==0 &&changeY==1){
-          circleX=colorIndexList[i][j][3][0][0]/2+colorIndexList[i][j][3][1][0]
+      if(changeX!==0 ||changeY!==0){
+        console.log("SmallCPass",PrevIndex)
+        if(changeX===0 &&changeY===1){
+          circleX=colorIndexList[i][j][3][0][0]/2+colorIndexList[i][j][3][1][0]/2
           circleY=colorIndexList[i][j][3][1][1]
+          console.log("SmallDrawCircle",PrevIndex,circleX,circleY)
+      
         }
         if(changeX==1 &&changeY==1){
           circleX=colorIndexList[i][j][3][1][0]
           circleY=colorIndexList[i][j][3][1][1]
+          
         }
         if(changeX==1 &&changeY==0){
           circleX=colorIndexList[i][j][3][1][0]
@@ -568,6 +577,7 @@ let Remapping = [
         if(changeX==1 &&changeY==-1){
           circleX=colorIndexList[i][j][3][2][0]
           circleY=colorIndexList[i][j][3][2][1]
+
         }
         if(changeX==0 &&changeY==-1){
           circleX=colorIndexList[i][j][3][2][0]/2+colorIndexList[i][j][3][3][0]/2
@@ -581,7 +591,7 @@ let Remapping = [
           circleX=colorIndexList[i][j][3][3][0]
           circleY=colorIndexList[i][j][3][3][1]/2+colorIndexList[i][j][3][0][1]/2
         }
-        if(changeX==-1 &&changeY==1){
+        if(changeX==-1 &&changeY==-1){
           circleX=colorIndexList[i][j][3][0][0]
           circleY=colorIndexList[i][j][3][0][1]
         }
@@ -592,36 +602,38 @@ let Remapping = [
       let StartingPointx=Centers[12][0]
       let StartingPointy=Centers[12][1]
       console.log("Small2",StartingPointx,StartingPointy)
-
+      
+      
       circleX=StartingPointx+circleX*Scale
       circleY=StartingPointy+circleY*Scale
 
-      circleX=circleX
+      console.log("SmallCoord",circleX,circleY)
 
+      
       if(colorIndexList[i][j][0]%5>=1 &&colorIndexList[i][j][0]%5<=3){
         if(colorIndexList[i][j][0]>=5 &&colorIndexList[i][j][1]<=18){
-          if(noMovementCenterRef.current[i][j][1]==1){
+          if(noMovementCenterRef.current[PrevIndex][1]==1){
             circleY+=1.2/cubeSize*200
           }
-          else if(noMovementCenterRef.current[i][j][1]==-1){
+          else if(noMovementCenterRef.current[PrevIndex][1]==-1){
             circleY-=1.2/cubeSize*200
           }
-          if(noMovementCenterRef.current[i][j][0]==1){
+          if(noMovementCenterRef.current[PrevIndex][0]==1){
             circleX+=1/cubeSize*200
           }
-          if(noMovementCenterRef.current[i][j]==-1){
+          if(noMovementCenterRef.current[PrevIndex]==-1){
             circleX-=1.2/cubeSize*200
           }
         }
       }
 
-      if(circlePosition==4){
+      if(noMovementCenterRef.current[PrevIndex][0]===0 &&noMovementCenterRef.current[PrevIndex][1]===0 ){
         circleX=Centers[colorIndexList[i][j][0]][0]
         circleY=Centers[colorIndexList[i][j][0]][1]
         console.log("SmallCircleCenter",colorIndexList[i][j][0])
       }
 
-      console.log("SmallDrawCircl")
+      console.log("SmallDrawCircl",PrevIndex,circleX,circleY)
       let smallCirclePath=drawSmallCircle(circleX,circleY,radius)
       noMovementCenterCircle.push(smallCirclePath)
     }
@@ -664,10 +676,10 @@ function isPositionLeft(Center1,SquareColors){
     }
     else if (Center1==5){
       if (SquareColors[6]=="yellow"){
-        PositionLeft=false
+        PositionLeft=true
       }
       else{
-        PositionLeft=true
+        PositionLeft=false
       }
     }
     else if (Center1==6){
@@ -706,6 +718,14 @@ function isPositionLeft(Center1,SquareColors){
       }
       else{
         PositionLeft=true
+      }
+    }
+    else if (Center1==8){
+      if (SquareColors[23]=="yellow"){
+        PositionLeft=true
+      }
+      else{
+        PositionLeft=false
       }
     }
     else if (Center1==19){{
