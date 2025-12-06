@@ -17,7 +17,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [groupSelected,setGroupSelected]=useState(7)
 
   const [refsReady, setRefsReady] = useState(false);
-  const [pathCalculated,setPathCalculated]= useState(false)
+  const [pathCalculated,setPathCalculated]= useState(true)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
   const [strokeWidth,setStrokeWidth]= useState(2)
   const [lineWidth,setLineWidth]= useState(4)
@@ -101,13 +101,13 @@ function GetCentersPosition(cubeSize){
 
 }
 
-function GetBarsIndices(OllIndex,PermIndex){
+function GetBarsIndices(PermIndex){
   // console.log("I is :")
   // console.log(i)
   //i=i-i%6
   console.log("PermIndex is",PermIndex)
   
-  let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
+  let containerparent = altoverlayRefs.current[PermIndex];
   
     if (!containerparent) {
       console.warn('GetBarsIndices: no ref for index', PermIndex);
@@ -136,13 +136,13 @@ let Remapping = [
       [15,5],[16,10],[17,15],[18,3],[19,2],
       [20,1],[21,24],[22,20],[23,4],[24,0]
     ];
-  let newCombinedSquaresList=Array.from( {length:25}, ()=> 0)
+  let newCombinedSquaresList=new Array(25).fill(0);
   //console.log(newCombinedSquaresList)
   combinedSquaresList.forEach((_,i)=>{
       newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
   })
   //console.log(newCombinedSquaresList)
-  let newSquaresColors= Array.from( {length:25}, ()=> 0)
+  let newSquaresColors=new Array(25).fill(0);
   newCombinedSquaresList.forEach((_,i)=>{
     if (newCombinedSquaresList[i]!=0){
         newSquaresColors[i]=newCombinedSquaresList[i].getAttribute("fill")
@@ -225,33 +225,33 @@ let Remapping = [
   
   function sortCenterLeftRight(index,SquareColors){
    
-    //console.log("TheseColors",SquareColors)
+    console.log("TheseColors",SquareColors)
     let newIndex=index%10
     let returnedvalue=0
     if(newIndex<5){
       if(newIndex%2==0){
-        //console.log("ReturnedSortValue",index,returnedvalue)
+        console.log("ReturnedSortValue",index,returnedvalue)
         return returnedvalue
       }
     }
     else if (newIndex==7){
-      //console.log("ReturnedSortValue",index,returnedvalue)
+      console.log("ReturnedSortValue",index,returnedvalue)
       return returnedvalue
     }
     if (index==11 || index==13){
-      //console.log("ReturnedSortValue",index,returnedvalue)
+      console.log("ReturnedSortValue",index,returnedvalue)
       return returnedvalue
     }
 
     let PositionLeft=isPositionLeft(index,SquareColors)
-    //console.log("PositionLeft",index,PositionLeft)
+    console.log("PositionLeft",index,PositionLeft)
     if(PositionLeft){
       returnedvalue=1
     }
     else{
       returnedvalue=2
     }
-    //console.log("ReturnedSortValue",index,returnedvalue)
+    console.log("ReturnedSortValue",index,returnedvalue)
     return returnedvalue
   }
 
@@ -272,15 +272,15 @@ let Remapping = [
 
   console.log("What am i sorting,1",colorIndexList)
    colorIndexList.forEach(list=>{
-      //console.log("mylist",list)
+      console.log("mylist",list)
       list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
 
-      console.log("What have i sorting,2",list)
+      console.log("What have i sorting,1",list)
       
       list.forEach(pointList=>{
         let averagex=0
         //console.log("Item")
-        //console.log("Pointlist1",pointList)
+        console.log("Pointlist1",pointList)
         pointList[3].forEach(item=>{
           
           averagex+=item[0]/4
@@ -366,7 +366,6 @@ let Remapping = [
       else{
         color=colorIndexList[i][0][2]
         if(combinedColorList[i].length==0){
-          console.log("ColorCheck",color,colorList)
           let colorIndex=(colorList.findIndex(x=>x==color))
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
           console.log("NewCombColorList",combinedColorList,colorList,contrastingcolorList,colorIndex)
@@ -604,7 +603,7 @@ let Remapping = [
       let Scale=13.15/0.15740740740740744/150*cubeSize
       let StartingPointx=Centers[12][0]
       let StartingPointy=Centers[12][1]
-      console.log("Small2",StartingPointx,StartingPointy,circleX,circleY)
+      console.log("Small2",StartingPointx,StartingPointy)
       
       
       circleX=StartingPointx+circleX*Scale
@@ -929,8 +928,6 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   console.log(pathArrow2,angle,centerx2,centery2)
   console.log("Prev/UsedCenters",Center1Used,Center2Used,Center3Used,EndLocationIndex,PointsInfo)
   
-  
-
   return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
 }
 
@@ -1220,14 +1217,11 @@ const totalRefs = renderedCases.length * CornerPermutations.length;
 
 useEffect(() => {
   if (!refsReady) return;
-  console.log("Starterror",altoverlayRefs.current)
-  for (let OllIndex = 0; OllIndex < altoverlayRefs.current.length; OllIndex++) {
-      for (let PermIndex = 0; PermIndex < altoverlayRefs.current[OllIndex].length; PermIndex++) {
-    const el = altoverlayRefs.current[OllIndex][PermIndex];
+  for (let idx = 0; idx < altoverlayRefs.current.length; idx++) {
+    const el = altoverlayRefs.current[idx];
     if (el) {
-      GetBarsIndices(OllIndex,PermIndex);
+      GetBarsIndices(idx);
     }
-  }
   }
 }, [refsReady]);
 
@@ -1238,57 +1232,34 @@ useEffect(() => {
 // }, [totalRefs]);
 
 const setOverlayRef = (index) => (el) => {
-  console.log("SetOverlay")
-  const rowIndex = Math.floor(index / 6);
-  const colIndex = index % 6;
-
-  if (!altoverlayRefs.current[rowIndex]) {
-    altoverlayRefs.current[rowIndex] = Array.from({length:6}, ()=> null);
+  altoverlayRefs.current[index] = el;
+  // check if all refs are now mounted (non-null)
+  const mounted = altoverlayRefs.current.filter(Boolean).length;
+  if (mounted >0) {
+    setRefsReady(true);
   }
-
-  altoverlayRefs.current[rowIndex][colIndex] = el;
-
-  // Check if ALL refs are mounted
-  const allMounted =
-    altoverlayRefs.current.length > 0 
-    &&
-    altoverlayRefs.current.every(row =>{
-      console.log("RowCol",row)
-      return row.every(item => item != null)
-    }
-      
-    );
-    console.log("RowcolMounting",allMounted,altoverlayRefs.current)
-    
-  if (allMounted) setRefsReady(true);
 };
 
 // compute overlayPaths after refs mount; run this AFTER setRefsReady becomes true
 useLayoutEffect(() => {
   
-  console.log("RefsRDy?",refsReady)
   if (!refsReady) return;
-  const paths = altoverlayRefs.current.map((algListRef, OllIndex) => {
-    return algListRef.map((_,PermIndex)=>{
-
-    
-      try {
-        const result = GetBarsIndices(OllIndex,PermIndex); 
-        console.log("Resulting outcome",result,OllIndex,PermIndex)
-        return result || ["","none"];
-      } catch (err) {
-        console.error('GetBarsIndices error for idx',OllIndex ,PermIndex, err)
-        return ["","none"];
-      }
-    });
-  })
+  const paths = altoverlayRefs.current.map((_, idx) => {
+    try {
+      const result = GetBarsIndices(idx); 
+      return result || ["","none"];
+    } catch (err) {
+      console.error('GetBarsIndices error for idx', idx, err);
+      return ["","none"];
+    }
+  });
   console.log("Allpaths")
   console.log("Allpaths",paths,paths[0][4])
   console.log()
-  console.log()
-  console.log()
-  console.log()
-  console.log()
+console.log()
+console.log()
+console.log()
+console.log()
   console.log()
   setOverlayPaths(paths);
   setPathCalculated(true);
@@ -1533,8 +1504,6 @@ return (
                                 }
 
                               const refIndex = i * CornerPermutations.length + j;
-                              const OllIndex=i
-                              const PermIndex=j
                               return(
                                 <>
                               <div className="RecCont"  ref={setOverlayRef(refIndex)}> 
@@ -1563,8 +1532,8 @@ return (
                                   <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[0]?.[i] || ""}
-                                      //fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "black"}
+                                      d={overlayPaths[refIndex]?.[0]?.[i] || ""}
+                                      //fill={overlayPaths[refIndex]?.[4]?.[i][1] || "black"}
                                       fill={"rgba(248, 246, 246, 1)"}
                                       fillRule="evenodd"
                                       stroke="rgba(44, 44, 44, 1)"
@@ -1577,7 +1546,7 @@ return (
                                 <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
       
                                   <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[3]||""}
+                                      d={overlayPaths[refIndex]?.[3]||""}
                                       fill={"black"}
                                       stroke="rgba(255, 255, 255, 1)"
                                       strokeWidth="0.5"
@@ -1597,17 +1566,17 @@ return (
                                   <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][0] || ""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][0] || "black"}
+                                      d={overlayPaths[refIndex]?.[2]?.[i][j][0] || ""}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][0] || "black"}
                                       
                                       stroke="rgba(44, 44, 44, 1)"
                                       strokeWidth="1"
                                       strokeLinejoin="round"
                                       
                                       
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][3] ||"0"})`}
-                                      //transform={`rotate 90 ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3] ||"0"}`}
-                                      //transform={`rotate(90 ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][2] || 0} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][3] || 0})`}
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][j][3] ||"0"})`}
+                                      //transform={`rotate 90 ${overlayPaths[refIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3] ||"0"}`}
+                                      //transform={`rotate(90 ${overlayPaths[refIndex]?.[2]?.[i][j][2] || 0} ${overlayPaths[refIndex]?.[2]?.[i][j][3] || 0})`}
 
                                     />
                                     
@@ -1624,8 +1593,8 @@ return (
                                   {/* <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[0]?.[i] || ""}
-                                      //fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "black"}
+                                      d={overlayPaths[refIndex]?.[0]?.[i] || ""}
+                                      //fill={overlayPaths[refIndex]?.[4]?.[i][1] || "black"}
                                       fill={"rgba(248, 246, 246, 1)"}
                                       fillRule="evenodd"
                                       stroke="rgba(44, 44, 44, 1)"
@@ -1641,17 +1610,17 @@ return (
                                   <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][0] || ""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][0] || "black"}
+                                      d={overlayPaths[refIndex]?.[2]?.[i][j][0] || ""}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][0] || "black"}
                                       
                                       stroke="rgba(44, 44, 44, 1)"
                                       strokeWidth="1"
                                       strokeLinejoin="round"
                                       
                                       
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][3] ||"0"})`}
-                                      //transform={`rotate 90 ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3] ||"0"}`}
-                                      //transform={`rotate(90 ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][2] || 0} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][3] || 0})`}
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][j][3] ||"0"})`}
+                                      //transform={`rotate 90 ${overlayPaths[refIndex]?.[2]?.[i][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3] ||"0"}`}
+                                      //transform={`rotate(90 ${overlayPaths[refIndex]?.[2]?.[i][j][2] || 0} ${overlayPaths[refIndex]?.[2]?.[i][j][3] || 0})`}
 
                                     />
                                     
@@ -1661,21 +1630,21 @@ return (
                                 
                                 <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
                                           <path
-                                             d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2]||""}
-                                             fill={overlayPaths[OllIndex][PermIndex]?.[1]?.[i] || "black"}
+                                             d={overlayPaths[refIndex]?.[2]?.[i][2]||""}
+                                             fill={overlayPaths[refIndex]?.[1]?.[i] || "black"}
                                             stroke="rgba(44, 44, 44, 1)"
                                             stroke-width="1"
                                           />
                                         </svg>
                                     <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
                                   <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3]||""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
+                                      d={overlayPaths[refIndex]?.[2]?.[i][3]||""}
+                                      fill={overlayPaths[refIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
                                     stroke="rgba(0, 0, 0, 1)"
                                       strokeWidth="1.5"
                                       strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][3] ||"0"})`}
-                                      //transform={`rotate(0 ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      transform={`rotate(${overlayPaths[refIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      //transform={`rotate(0 ${overlayPaths[refIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[refIndex]?.[2]?.[i][3][3] ||"0"})`}
 
                                   />
                                   
