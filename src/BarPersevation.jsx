@@ -19,7 +19,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(false)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
-  const [strokeWidth,setStrokeWidth]= useState(2)
+  const [strokeWidth,setStrokeWidth]= useState(1)
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
   
@@ -30,35 +30,17 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
-  const data = [
-  [
-    [7, 2],
-    [8, 3],
-    [23, 1]
-  ],
-  [
-    [17, 10],
-    [19, 5],
-    [6, 15]
-  ],
-  [
-    [14, 22],
-    [1, 21],
-    [15, 23]
-  ],
-  [
-    [10, 14],
-    [21, 19],
-    [3, 9]
-  ]
-];
+const cubeSize=400
+const Scale=13.1/0.15740740740740744/150*cubeSize
+
+
 
   const piecesMovementRef = useRef([]) // mirror for immediate reads
 
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
   
-  const cubeSize=200
+
 
   let CornerPermutations=["",T_Perm,"U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
   let PermTable=[0,5,1,2,3,4]
@@ -85,7 +67,26 @@ const noMovementCenterRef = useRef(
 let Centers= GetCentersPosition(cubeSize)
   
 function GetCentersPosition(cubeSize){
- 
+
+    //Cubesizes ranging from 100 to 400, incremented by 50
+    let EmpericalcoordOffset=[[5.3,0.5],[5.3,0],[5.3,-0.5],[5.3,-0.9],[6,-0.9],[6,-1.5],[6,-2.2]]
+    
+    let BetweenArray=[Math.floor((cubeSize-100)/50),Math.ceil((cubeSize-100)/50)]
+
+    let LowerEnd=BetweenArray[0]
+    let UpperEnd=BetweenArray[1]
+    if(LowerEnd<0){
+      LowerEnd=0
+      UpperEnd=0
+    }
+    if(LowerEnd>=EmpericalcoordOffset.length-1 ||UpperEnd>=EmpericalcoordOffset.length-1){
+      LowerEnd=EmpericalcoordOffset.length-1
+      UpperEnd=EmpericalcoordOffset.length-1
+    }
+
+    let xCoordOffset=EmpericalcoordOffset[LowerEnd][0]/2+EmpericalcoordOffset[UpperEnd][0]/2
+    let yCoordOffset=EmpericalcoordOffset[LowerEnd][1]/2+EmpericalcoordOffset[UpperEnd][1]/2
+
     const xCoords = [9, 39, 79.5, 120,150];
     const yCoords = [10.5, 40, 81.5, 122.5, 153.5];
 
@@ -93,7 +94,7 @@ function GetCentersPosition(cubeSize){
 
     for (let y of yCoords) {
         for (let x of xCoords) {
-            Centers.push([x*(cubeSize/200)+5.65 /200*cubeSize, y*(cubeSize/200)-0.5]);
+            Centers.push([x*(cubeSize/200)+xCoordOffset, y*(cubeSize/200)+yCoordOffset]);
         }
     }
 
@@ -545,7 +546,7 @@ let Remapping = [
         let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
          
         console.log("NoMovementCenter1",noMovementCenterRef.current[PrevIndex],PrevIndex,NewIndex)
-      if(noMovementCenterRef.current[PrevIndex][0]!==false){
+      if(noMovementCenterRef.current[PrevIndex][0]!==false ||true){
        console.log("NoMovementCenter2",noMovementCenterRef.current[PrevIndex],PrevIndex,NewIndex)
       finalPath[i]+=newPath[i][j]
       finalPath[i]+=pathList[i][j]
@@ -601,7 +602,7 @@ let Remapping = [
         
       }
       
-      let Scale=13.15/0.15740740740740744/150*cubeSize
+      
       let StartingPointx=Centers[12][0]
       let StartingPointy=Centers[12][1]
       console.log("Small2",StartingPointx,StartingPointy,circleX,circleY)
@@ -929,7 +930,7 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   console.log(pathArrow2,angle,centerx2,centery2)
   console.log("Prev/UsedCenters",Center1Used,Center2Used,Center3Used,EndLocationIndex,PointsInfo)
   
-  
+  pathArrow2=""
 
   return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
 }
@@ -1047,6 +1048,7 @@ function ConnectCenters(PointsInfo,CenterIndex,newSquaresColors,PermIndex,color)
     console.log("SentData")
     console.log(path,angle,centerx2,centery2)
     
+    path=""
   return [path,angle,centerx2,centery2,distance,circlePath1]
 }
 
@@ -1062,7 +1064,6 @@ function CalculateNewOutline(PointList,strokeWidth,index){
 
 
   let Centers= GetCentersPosition(cubeSize)
-  let Scale=13.15/0.15740740740740744/150*cubeSize
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
   let newCoords=[]
@@ -1318,7 +1319,6 @@ function centerOutLineInfo(IndexList){
   let StartingPointy=Centers[12][1]
   //IndexList*Scale=13 0.1574*Scale=13
   // Scale is 13/0.1574=82.588
-  let Scale=13.2/0.15740740740740744/150*cubeSize
 
   //IndexList: Color, Center+Points, Points, PointIndex
 
@@ -1419,7 +1419,7 @@ function centerOutLineInfo(IndexList){
   console.log(Points)
   let centerx=Centers[CenterIndex][0]
   let centery=Centers[CenterIndex][1]
-  let scale=2
+  
 
   let color="none"
   // let path = `M${centerx+Points[0][0]},${centery+Points[0][1]} L${centerx+Points[1][0]},${centery+Points[1][1]} 
@@ -1528,7 +1528,7 @@ return (
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
-                                if(i>=3){
+                                if(i>=1){
                                   return
                                 }
 
@@ -1565,9 +1565,9 @@ return (
                                     <path
                                       d={overlayPaths[OllIndex][PermIndex]?.[0]?.[i] || ""}
                                       //fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "black"}
-                                      fill={"rgba(248, 246, 246, 1)"}
+                                      fill={"rgba(248, 246, 246, 0.2)"}
                                       fillRule="evenodd"
-                                      stroke="rgba(44, 44, 44, 1)"
+                                      stroke="rgba(44, 44, 44, 0.1)"
                                       strokeWidth="1"
                                       strokeLinejoin="round"
                                       filter="url(#shadow)"
