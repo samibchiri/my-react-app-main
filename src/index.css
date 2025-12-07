@@ -530,8 +530,9 @@ th{
 }
 
 .OllCpLocation{
+  position:relative;
   margin-top: 20px;
-  font-size: 30px;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
@@ -594,7 +595,11 @@ th{
 @media (min-width:900px){
   .GroupItemName{
   margin-bottom: 10px;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
+}
+.OllGroupOptionsGrid{
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr  1fr 1fr;
 }
 }
 .OllItemQuickSelect{
@@ -603,6 +608,7 @@ th{
   grid-template-rows: 1fr;
   grid-auto-flow: row;
   margin-bottom: 20px;
+  margin-top:40px;
   gap:10px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   max-width: calc(150px * 4 + 10px * 3);

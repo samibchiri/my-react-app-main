@@ -30,7 +30,7 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
-const cubeSize=400
+const cubeSize=200
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
 
@@ -1120,7 +1120,7 @@ return (
   <>
   
 
-  { (
+  { (false) && (
     arrowOllSet[groupSelected].map((oll,i)=>(
       <>
                           {(
@@ -1282,9 +1282,9 @@ return (
   {(false)&&
     arrowOllSet[groupSelected].map((oll,i)=>(
       <>
-                          {oll.algNumber==0 &&(
+                          {(
                           <div>
-                          <h2>{arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][i+1].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
+                          <h2>{arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%2].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
@@ -1310,7 +1310,7 @@ return (
                       </div>
                       </div>
                           )}
-                    {(!oll.algNumber) &&(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][i+1].name)&&(
+                    {(!oll.algNumber) &&(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%2].name)&&(
                       <div>
                           <h2>{oll.name + " AUF ("+oll.altAUF[0]+ ") Version 1"}</h2>
                           <div className="OllGrid">

@@ -5,8 +5,8 @@ import viteLogo from '/vite.svg';
 import CaseImage from "./cubing/cubeImage.jsx";
 import { FaChevronRight,FaChevronDown } from 'react-icons/fa';
 import TestPage from './TestPage.jsx'
-//import CornerPermutationPage from './cpPage.jsx'
-import CornerPermutationPage from './ArrowDataGenerator.jsx'
+import CornerPermutationPage from './cpPage.jsx'
+//import CornerPermutationPage from './ArrowDataGenerator.jsx'
 import BarPersevation from './BarPersevation.jsx'
 import cpllCaseSet from "./data/cpllCaseSet.js";
 import eollCaseSet from "./data/eollCaseSet.js";
@@ -38,8 +38,8 @@ function Trainpage() {
     const {darkMode}= useContext(ThemeContext)
     const [caseClicked,setCaseClicked]= useState(false)
     const [buttonClicked,setButtonClicked]= useState(false)
-    const [cpClicked,setCpClicked]=useState(false)
-    const [barClicked,setBarClicked]=useState(true)
+    const [cpClicked,setCpClicked]=useState(true)
+    const [barClicked,setBarClicked]=useState(false)
      const buttonStyle = {
     width: "85%",
     height: "15vh",

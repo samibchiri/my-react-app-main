@@ -12,7 +12,7 @@ function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClic
 
 console.log(algGroup)
 
-const [groupSelected,setGroupSelected]=useState(null)
+const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
 
 const ScrambleVisualizerDetails={
@@ -500,7 +500,7 @@ useEffect(() => {
             <>
            
             <div className="OllQuickSelectCont"> 
-                 <div style={{height:"50px", alignItems:"center",position:"absolute",top:"5px",left:"0px", display:"inline-block"}} className='col p-0 justify-content-start '>
+                 <div style={{height:"50px", alignItems:"center",position:"absolute",top:"-35px",left:"0px", display:"inline-block"}} className='col p-0 justify-content-start '>
                 <button
                 onClick={() => {setGroupSelected(null), setOllSelectList([])}}
                 className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
@@ -516,42 +516,51 @@ useEffect(() => {
                 </button>
             </div>
             <div className="OllItemQuickSelect">{
-                arrowOllSet[groupSelected].map((oll,i)=>
-
-                    <div className={`OllQuickSelectItem ${ollSelectList.includes(i) ? "selected" : ""}`}  onClick={()=>AddItemToQuickSelect(i)}>
+                arrowOllSet[groupSelected].map((oll,i)=>{
+                    if(oll.algNumber!=0){
+                        return null
+                    }
+                        
+                    return (
+                    <>
+                    
+                    
+                    <div className={`OllQuickSelectItem ${ollSelectList.includes(oll.name.split(",")[1]) ? "selected" : ""}`}  onClick={()=>AddItemToQuickSelect(i)}>
                         <CaseImage
                         size={100}
                         alg={oll.algs}
                         caseSetDetails={ollCaseSet.details}
                         ></CaseImage>
                    </div>
-                )
+                    
+                   </>
+                   )
+                })
             }
                  </div>
             </div>
             </>
         )}
             
-
-           
-
             { (groupSelected!=null) && (
                 <div className="OllGridsCont">
                     {
                 arrowOllSet[groupSelected].map((oll,i)=>
-                (ollSelectList.includes(i) ||ollSelectList.length==0) &&
+                (ollSelectList.includes(oll.name.split(",")[1]) ||ollSelectList.length==0) &&
                 
                 (
                     <>
                     
                     <div>
                     <h2>{oll.name}</h2>
+                    
                     <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
                         <div className="RecCont">  
                         <h2 className="OllCpLocation">{CpLocation[j]}</h2>
-                        
+                        <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2>
+                        <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
                         <CaseImage
                             size={cubeSize}
                             //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
@@ -559,7 +568,9 @@ useEffect(() => {
                             caseSetDetails={ScrambleVisualizerDetails}
                             co="40"
                         ></CaseImage>
-                        <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}>
+
+                        
+                        <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -588,7 +599,8 @@ useEffect(() => {
                             }
                             
                         </div>
-                        <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}>
+                        </div>
+                        <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
                         </div>
                         </div>
@@ -608,6 +620,8 @@ useEffect(() => {
                         <div className="RecCont">  
                         <h2 className="OllCpLocation">{CpLocation[j]}</h2>
                         
+                         <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
+                       
                         <CaseImage
                             size={cubeSize}
                             //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
@@ -615,7 +629,7 @@ useEffect(() => {
                             caseSetDetails={ScrambleVisualizerDetails}
                             co="40"
                         ></CaseImage>
-                        <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}>
+                        <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -644,7 +658,8 @@ useEffect(() => {
                             }
                             
                         </div>
-                        <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}>
+                        </div>
+                        <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
                         </div>
                         </div>
