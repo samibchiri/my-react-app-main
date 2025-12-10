@@ -444,8 +444,7 @@ function getSameOppInfo(oll,index,arrowNumber,cubeSize){
 
 function AddItemToQuickSelect(i){
 
-    console.log(ollSelectList)
-    console.log(i)
+    console.log("AddThis",i)
     if(ollSelectList.includes(i)
     ){
         setOllSelectList(prev =>prev.filter(item=>
@@ -525,7 +524,7 @@ useEffect(() => {
                     <>
                     
                     
-                    <div className={`OllQuickSelectItem ${ollSelectList.includes(oll.name.split(",")[1]) ? "selected" : ""}`}  onClick={()=>AddItemToQuickSelect(i)}>
+                    <div className={`OllQuickSelectItem ${ollSelectList.includes(oll.name.split(" ")[1]) ? "selected" : ""}`}  onClick={()=>AddItemToQuickSelect(oll.name.split(" ")[1])}>
                         <CaseImage
                         size={100}
                         alg={oll.algs}
@@ -546,7 +545,7 @@ useEffect(() => {
                 <div className="OllGridsCont">
                     {
                 arrowOllSet[groupSelected].map((oll,i)=>
-                (ollSelectList.includes(oll.name.split(",")[1]) ||ollSelectList.length==0) &&
+                (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&
                 
                 (
                     <>
@@ -559,7 +558,7 @@ useEffect(() => {
                         {CornerPermutations.map((_,j)=>
                         <div className="RecCont">  
                         <h2 className="OllCpLocation">{CpLocation[j]}</h2>
-                        <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2>
+                        {/* <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2> */}
                         <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
                         <CaseImage
                             size={cubeSize}

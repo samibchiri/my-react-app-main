@@ -26,11 +26,25 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [dificultCenters,setDificultCenters]=useState([1,2,3])
   const [barColorsFiltered,setBarColorsFiltered]=useState([])
   
+  // let decreaserate=0.1
+  // let rescaledCubesize=200-(700-window.innerWidth)/2
+  // const [cubeSize,setCubeSize]=useState(window.innerWidth < 700 ? 200-(700-window.innerWidth)/2 : 200);
 const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
 const cubeSize=200
+
+// useEffect(() => {
+//   const updateSize = () => {
+//     setCubeSize(window.innerWidth < 700 ?200-(700-window.innerWidth)/2:200)
+//   };
+
+//   window.addEventListener("resize", updateSize);
+//   return () => window.removeEventListener("resize", updateSize);
+// }, []);
+
+
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
 
@@ -1120,7 +1134,7 @@ return (
   <>
   
 
-  { (false) && (
+  { (true) && (
     arrowOllSet[groupSelected].map((oll,i)=>(
       <>
                           {(
@@ -1154,7 +1168,7 @@ return (
                                   co="40"
                               ></CaseImage>
                              
-                              <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,marginTop:`${45+cubeSize/10}px`}}>
+                              <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,marginTop:`${33+cubeSize/10}px`}}>
 
                                {
                                 pathCalculated &&(
