@@ -301,7 +301,7 @@ function GetBarsIndices(OllIndex,PermIndex){
           newPath[i][j]+=CalculateNewOutline(colorIndexList[i][j][3],strokeWidth,colorIndexList[i][j][0])
         }
     }
-    if(i<4){ //Not yellow
+    if(i<4){ //Not yellow 
       let distance
       let color
       let contrastingcolor
