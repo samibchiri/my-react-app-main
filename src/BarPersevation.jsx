@@ -799,7 +799,6 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
     EndLocationX = Centers[EndLocationIndex][0]
     EndLocationY = Centers[EndLocationIndex][1]
   }
-
   else if(Center1Used){
     StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][0])/2
     StartLocationY=(Centers[PointsInfo[0][0]][1]+Centers[PointsInfo[1][0]][1])/2
@@ -836,7 +835,6 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   }
   return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
 }
-
 
 function Connect2Points(centerx,centery,centerx2,centery2,connectHeadlightsBoolean){
 
