@@ -38,9 +38,9 @@ function Trainpage() {
     const {darkMode}= useContext(ThemeContext)
     const [caseClicked,setCaseClicked]= useState(false)
     const [buttonClicked,setButtonClicked]= useState(false)
-    const [cpClicked,setCpClicked]=useState(false)
-    const [barClicked,setBarClicked]=useState(true)
-     const buttonStyle = {
+    const [cpClicked,setCpClicked]=useState(true)
+    const [barClicked,setBarClicked]=useState(false)
+    const buttonStyle = {
     width: "85%",
     height: "15vh",
     color: darkMode ? "#ffffffff" : "#000000ff", // dark text for light grey, white text for dark
@@ -387,7 +387,7 @@ const TestButtonClick=()=>{
 
                         return(
                         <>
-                            <h1>{AlgGroups}</h1>
+                            
                             <tr className={`CasesGroupTableRow ${darkMode ? "darkGroupRow" : "lightGroupRow"} trainTableRow`} role="row" >
                                 <td  style={{minWidth:"180px"}} onClick={(()=>toggleGroup(group))}  className='align-middle' role="columnheader">
                                     {group} 

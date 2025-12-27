@@ -1414,7 +1414,9 @@ function GroupRecognition(){
     
 
     groupdict ={
+        id:ollCaseSet.cases[algRef.current].name+"-"+algIndexRef.current,
         name:ollCaseSet.cases[algRef.current].name,
+        ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
         algNumber:algIndexRef.current,
         altAUF:AUF,
         barMovements:barMovements,
@@ -1475,50 +1477,37 @@ function GroupRecognition(){
 
 useEffect(() => {
     console.log("Print Json")
-    console.log(algRef.current)
-    console.log(jsonArrowsToExport)
   if (algRef.current+1 === ollCaseSet.cases.length) {
-    console.log("Print Json")
-    console.log(algRef.current)
-    
-    const groupTable = {
-    "Cross": 0,
-    "Dot": 1,
-    "T Shape": 2,
-    "C Shape": 3,
-    "I Shape": 4,
-    "P Shape": 5,
-    "W Shape": 6,
-    "Small L Shape": 7,
-    "Small Lightning Bolt": 8,
-    "Big Lightning Bolt": 9,
-    "Square Shape": 10,
-    "Fish Shape": 11,
-    "Knight Move Shape": 12,
-    "Awkward Shape": 13,
-    "Corners Oriented": 14,
-    }
-    let groupedArray =Array.from({length:15},()=>[])
+    // const groupTable = {
+    // "Cross": 0,
+    // "Dot": 1,
+    // "T Shape": 2,
+    // "C Shape": 3,
+    // "I Shape": 4,
+    // "P Shape": 5,
+    // "W Shape": 6,
+    // "Small L Shape": 7,
+    // "Small Lightning Bolt": 8,
+    // "Big Lightning Bolt": 9,
+    // "Square Shape": 10,
+    // "Fish Shape": 11,
+    // "Knight Move Shape": 12,
+    // "Awkward Shape": 13,
+    // "Corners Oriented": 14,
+    // }
+    // let groupedArray =Array.from({length:15},()=>[])
         
-    jsonArrowsToExport.forEach((OllAlg)=>{    
-        // console.log("GroupedArray")
-        // console.log(groupedArray)
-        // console.log(OllAlg)
-        // console.log("TestingGroupTable")
-        // console.log(groupedArray)
-        // console.log(OllAlg.group)
-        // console.log(groupTable[OllAlg.group])
-        groupedArray[groupTable[OllAlg.group]].push(OllAlg)
-        groupedArray.forEach(group => group.sort((a,b)=>parseInt(a.group.split(" ")[1])-parseInt(b.group.split(" ")[1])))
-        //console.log(groupedArray)
-    })
+    // jsonArrowsToExport.forEach((OllAlg)=>{    
+    //     groupedArray[groupTable[OllAlg.group]].push(OllAlg)
+    //     groupedArray.forEach(group => group.sort((a,b)=>parseInt(a.group.split(" ")[1])-parseInt(b.group.split(" ")[1])))
+    // })
     
     //console.log(JSON.stringify(groupedArray, null, 2).replace(/"([^"]+)":/g, '$1:'));
     
     //Important!
     console.log(
     "const arrowOllSet = " +
-    JSON.stringify(groupedArray, null, 2)
+    JSON.stringify(jsonArrowsToExport, null, 2)
         .replace(/"([^"]+)":/g, '$1:') + 
     ";\n\nexport default arrowOllSet;"
     );

@@ -1,16 +1,24 @@
 
-import arrowOllSet from "./data/arrowOllSet.js";
+//import arrowOllSet from "./data/arrowOllSet.js";
+import arrowOllSet from "./data/arrowOllSet copy.js"
 import { ThemeContext } from './DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
 import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import ollCaseSet from "./data/ollCaseSet.js";
+import { db } from './data/db.js';
+
+import { useLiveQuery } from "dexie-react-hooks";
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
-console.log(algGroup)
+// const allOlls = useLiveQuery(() => db.olls.toArray(), []);
+// const changeOll = async (event)=>{
+//     event.preventDefault()
+//     const newOll= 
+// }
 
 const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
@@ -36,6 +44,24 @@ const {darkMode}= useContext(ThemeContext)
 
   }
 
+const groupTable = {
+  0: "Cross",
+  1: "Dot",
+  2: "T Shape",
+  3: "C Shape",
+  4: "I Shape",
+  5: "P Shape",
+  6: "W Shape",
+  7: "Small L Shape",
+  8: "Small Lightning Bolt",
+  9: "Big Lightning Bolt",
+  10: "Square Shape",
+  11: "Fish Shape",
+  12: "Knight Move Shape",
+  13: "Awkward Shape",
+  14: "Corners Oriented"
+}
+
 function GetCentersPosition(cubeSize){
  
     const xCoords = [9.5, 39.5, 79.5, 119.5,149.5];
@@ -49,10 +75,6 @@ function GetCentersPosition(cubeSize){
             Centers.push([x*(cubeSize/200), y*(cubeSize/200)]);
         }
     }
-
-    console.log("CUBESIZe")
-    console.log(cubeSize)
-    console.log(Centers)
     
     return Centers
 
@@ -141,16 +163,12 @@ function getCenter1And2(oll,index,arrowNumber){
         Center2=oll.frontBackCp[0][1][1+arrowNumber*3]
     }
 
-    console.log("GetCenter12")
-    console.log([Center1,Center2])
     return [Center1,Center2]
 }
 
 function getPath(oll,index,arrowNumber){
     
-    console.log("getPath")
     let [Center1,Center2]=getCenter1And2(oll,index,arrowNumber);
-    console.log(Center1,Center2)
     let Centers=GetCentersPosition(cubeSize)
     let centerx=Centers[Center1][0]
     let centery=Centers[Center1][1]
@@ -166,8 +184,6 @@ function getPath(oll,index,arrowNumber){
 
     let pathArrow=`M ${centerx+3},${centery2-arrowWidth} L ${centerx2-1},${centery2-arrowWidth} L ${centerx2-1},${centery2-arrowWidth*3} L ${centerx2+arrowWidth*4},${centery2} L ${centerx2-1},${centery2+arrowWidth*3} L ${centerx2-1},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth*3} L ${centerx-arrowWidth*3},${centery2} L ${centerx+3},${centery2-arrowWidth*3}  Z`
     
-    console.log(pathArrow)
-    
     return pathArrow
 }
 
@@ -175,15 +191,8 @@ function getPath(oll,index,arrowNumber){
 
 function getRotation(oll,index,arrowNumber){ 
 
-    console.log("getRotation")
-    console.log(index)
-
     let [Center1,Center2]=getCenter1And2(oll,index,arrowNumber);
     
-    console.log("GotCenters")
-    console.log(Center1,Center2)
-
-     
     let Centers=GetCentersPosition(cubeSize)
 
     let centerx=Centers[Center1][0]
@@ -211,8 +220,6 @@ function getRotation(oll,index,arrowNumber){
     }
 
     angle+=Correction
-
-    console.log(angle)
     return angle
 
 }
@@ -221,35 +228,27 @@ function GetColor(oll,index,arrowNumber){
     
     let color
     let type
-    console.log("Gettingcolorf")
-    console.log(arrowNumber)
+
     //First select which set of arrows,
     //Then Select whether it is first or second arrow.
     //Then arrow properties
     if(index==0){
         type=oll.fullDiagCp[0][0][2+arrowNumber*3]
-        console.log(type)
     }
     else if(index==1){
         type=oll.leftRightCp[0][0][2+arrowNumber*3]
-        console.log(color)
     }
     else if(index==2){
         type=oll.leftRightCp[0][1][2+arrowNumber*3]
-        console.log(color)
     }
     else if(index==3){
         type=oll.frontBackCp[0][0][2+arrowNumber*3]
-        console.log(color)
     }
     else if(index==4){
-        console.log(oll.frontBackCp)
         type=oll.frontBackCp[0][1][2+arrowNumber*3]
-        console.log(color)
     }
     else if(index==5){
         type=oll.fullDiagCp[0][1][2+arrowNumber*3]
-        console.log(color)
     }
 
     if(type=="opp"){
@@ -261,19 +260,15 @@ function GetColor(oll,index,arrowNumber){
     else{
         color="lime"
     }
-    console.log(color)
     return color
 }
 
 function getArrowTipCoord(oll,index,arrowNumber,cubeSize){
     let [Center1,Center2]=getCenter1And2(oll,index,arrowNumber);
-    console.log("Tip")
-    console.log(Center2)
     let Centers= GetCentersPosition(cubeSize)
     let centerx2=Centers[Center2][0]
     let centery2=Centers[Center2][1]
 
-    console.log([centerx2,centery2])
     //+1 for correction, don't know why
     return [centerx2+1,centery2]
 
@@ -288,7 +283,7 @@ let PermTable=[0,5,1,2,3,4]
 
 let CpLocation=["Full","Diag","Left","Right","Front","Back"]
 
-console.log(arrowOllSet)
+
 const cubeSize=150
 
 function getEasyRotation(Center1,Center2,cubeSize){
@@ -321,15 +316,11 @@ function getEasyRotation(Center1,Center2,cubeSize){
     }
 
     angle+=Correction
-    console.log("Easyangle")
-    console.log(angle)
     return angle
 }
 
 function getEasyPath(Center1,Center2,cubeSize){
     let Centers=GetCentersPosition(cubeSize)
-    console.log(Centers)
-    console.log(Center1,Center2,cubeSize)
     let centerx=Centers[Center1][0]
     let centery=Centers[Center1][1]
 
@@ -346,16 +337,10 @@ function getEasyPath(Center1,Center2,cubeSize){
 
     let pathArrow=`M ${centerx+3},${centery2-arrowWidth} L ${centerx2-1},${centery2-arrowWidth} L ${centerx2-1},${centery2-arrowWidth*3} L ${centerx2+arrowWidth*4},${centery2} L ${centerx2-1},${centery2+arrowWidth*3} L ${centerx2-1},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth} L ${centerx+3},${centery2+arrowWidth*3} L ${centerx-arrowWidth*3},${centery2} L ${centerx+3},${centery2-arrowWidth*3}  Z`
     
-    console.log(pathArrow)
-    
-    console.log("EASY")
-    console.log(Center1,Center2)
-    console.log(centerx,centery)
     return pathArrow
 }
 
 function getEasierRecognitionInfo(oll,index,arrowNumber,cubeSize){
-    console.log(oll)
     let infoList=oll.easierRecognition[0]
 
     let SpecificPermInfo=infoList[index]
@@ -381,16 +366,10 @@ function getEasierRecognitionInfo(oll,index,arrowNumber,cubeSize){
     let centerx2=Centers[Center2][0]
     let centery2=Centers[Center2][1]
     let arrowTipCoord=[centerx2,centery2]
-    console.log("EasierRecTest")
-    console.log(SpecificPermInfo)
-    console.log(cubeSize)
-    // console.log(oll,index,arrowNumber)
-    // console.log(Center1,Center2,color)
    
     let rotation=getEasyRotation(Center1,Center2,cubeSize)
     let pathArrow=getEasyPath(Center1,Center2,cubeSize)
 
-    console.log([rotation,pathArrow,color,arrowTipCoord])
     return [rotation,pathArrow,color,arrowTipCoord]
 
 
@@ -400,8 +379,6 @@ function getEasierRecognitionInfo(oll,index,arrowNumber,cubeSize){
 
 function getSameOppInfo(oll,index,arrowNumber,cubeSize){
     let infoList=[oll.SameOpp[0][0][0],oll.SameOpp[1][0][0],oll.SameOpp[1][0][1],oll.SameOpp[2][0][0],oll.SameOpp[2][0][1],oll.SameOpp[0][0][1]]
-    console.log("Test")
-    console.log(infoList)
     let SpecificPermInfo=infoList[index]
 
     let color
@@ -425,17 +402,10 @@ function getSameOppInfo(oll,index,arrowNumber,cubeSize){
     let centerx2=Centers[Center2][0]
     let centery2=Centers[Center2][1]
     let arrowTipCoord=[centerx2,centery2]
-    console.log("EasierRecTest")
-    console.log(SpecificPermInfo)
-    console.log(cubeSize)
-    console.log(Centers,Center1,Center2)
-    // console.log(oll,index,arrowNumber)
-    // console.log(Center1,Center2,color)
-   
+
     let rotation=getEasyRotation(Center1,Center2,cubeSize)
     let pathArrow=getEasyPath(Center1,Center2,cubeSize)
 
-    console.log([rotation,pathArrow,color,arrowTipCoord])
     return [rotation,pathArrow,color,arrowTipCoord]
 
 
@@ -444,7 +414,6 @@ function getSameOppInfo(oll,index,arrowNumber,cubeSize){
 
 function AddItemToQuickSelect(i){
 
-    console.log("AddThis",i)
     if(ollSelectList.includes(i)
     ){
         setOllSelectList(prev =>prev.filter(item=>
@@ -464,8 +433,7 @@ function AddItemToQuickSelect(i){
 //     alg.group==group
 // )))
 // })
-// console.log(Groups)
-// console.log(FirstGroupCase)
+
 useEffect(() => {
   console.time("OllGridsCont Render");
   // Force measurement after DOM paint
@@ -542,7 +510,7 @@ useEffect(() => {
         )}
             
             { (groupSelected!=null) && (
-                <div className="OllGridsCont">
+                <div className="CpOllGridsCont">
                     {
                 arrowOllSet[groupSelected].map((oll,i)=>
                 (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&
@@ -551,7 +519,11 @@ useEffect(() => {
                     <>
                     
                     <div>
-                    <h2>{oll.name}</h2>
+                    {/* <h2>{oll.name}</h2> */}
+                    <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
+                                              
+                                              arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
+                                              oll.name + " Version "+oll.algNumber:oll.name+" Version 0"}</h2>
                     
                     <div className="OllGrid">
                         
@@ -612,7 +584,11 @@ useEffect(() => {
 
                 
                     <div>
-                    <h2>{oll.name}</h2>
+                    {/* <h2>{oll.name}</h2> */}
+                    <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
+                          
+                          arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
+                          oll.name + " Version "+oll.algNumber:oll.name +" Version 0"}</h2>
                     <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>

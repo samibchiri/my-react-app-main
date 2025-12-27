@@ -25,7 +25,9 @@ import {
   faMoon,
   faStar,
   faCopy,
+  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
+
 
 library.add(
   faCheck,
@@ -51,7 +53,8 @@ library.add(
   faSun,
   faMoon,
   faStar,
-  faCopy
+  faCopy,
+  faQuestionCircle
 );
 
 export { FontAwesomeIcon as FaIcon };

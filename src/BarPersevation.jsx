@@ -23,7 +23,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
   
-  const [dificultCenters,setDificultCenters]=useState([1,2,3])
+  const [difficultCenters,setDifficultCenters]=useState((Array.from({ length: arrowOllSet[groupSelected].length }, () => [])))
   const [barColorsFiltered,setBarColorsFiltered]=useState([])
   
   // let decreaserate=0.1
@@ -33,7 +33,71 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
-const cubeSize=200
+const [cubeSize,setCubeSize]=useState(200)
+
+
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (width<600){
+    let smallCubeSize=120
+    if(cubeSize!=smallCubeSize){
+      setCubeSize(120)
+      setStrokeWidth(1)
+      setLineWidth(3)
+      setRefsReady(false)
+    }
+    
+  }
+  else if (width<900){
+    let mediumCubeSize=150
+    if(cubeSize!=mediumCubeSize){
+      setCubeSize(150)
+      setStrokeWidth(1.2)
+      setLineWidth(3.5)
+      setRefsReady(false)
+    }
+  }
+  else if (width<1100){
+    let largeCubeSize=200
+    if(cubeSize!=largeCubeSize){
+      setCubeSize(200)
+      setStrokeWidth(1.5)
+      setLineWidth(4)
+      setRefsReady(false)
+    }
+  }
+  else if (width<1500){
+    let mediumCubeSize=150
+    if(cubeSize!=mediumCubeSize){
+      setCubeSize(150)
+      setStrokeWidth(1.2)
+      setLineWidth(3.5)
+      setRefsReady(false)
+    }
+  }
+  else{
+    let largeCubeSize=200
+    if(cubeSize!=largeCubeSize){
+      setCubeSize(200)
+      setStrokeWidth(1.2)
+      setLineWidth(3.5)
+      setRefsReady(false)
+    } 
+  }
+
+  return width;
+}
+const width = useWindowWidth();
+
 
 // useEffect(() => {
 //   const updateSize = () => {
@@ -53,10 +117,11 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
 
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
-  
+  let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
-  let CornerPermutations=["",T_Perm,"U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
+  //let CornerPermutations=["",F_Perm, "U2"+F_Perm   ,"U"+F_Perm,"U'"+F_Perm,Y_Perm]
+  let CornerPermutations=["","", "","","",""]
   let PermTable=[0,5,1,2,3,4]
 
   let CpLocation=["Full","Diag","Left","Right","Front","Back"]
@@ -79,7 +144,18 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
 
       }
 let Centers= GetCentersPosition(cubeSize)
-  
+
+let renderedCases = arrowOllSet[groupSelected];
+let totalRefs = renderedCases.length * CornerPermutations.length;
+useEffect(()=>{
+  renderedCases = arrowOllSet[groupSelected];
+  totalRefs = renderedCases.length * CornerPermutations.length;
+
+  setDifficultCenters((Array.from({ length: renderedCases.length }, () => [])))
+
+},[groupSelected])
+
+
 function GetCentersPosition(cubeSize){
 
     //Cubesizes ranging from 100 to 400, incremented by 50
@@ -118,6 +194,7 @@ function GetCentersPosition(cubeSize){
 
 function GetBarsIndices(OllIndex,PermIndex){
 
+  console.log("Indicess", OllIndex,PermIndex)
   let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
   
     if (!containerparent) {
@@ -308,12 +385,12 @@ function GetBarsIndices(OllIndex,PermIndex){
       let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
       //Bars can be connected if they are close to each other, 
       //or always if maxdistance is multiplied by a large number
-      //Bars with hard to see pieces can be excluded with dificultCenters Array
+      //Bars with hard to see pieces can be excluded with difficultCenters Array
       maxdistance=maxdistance*10
       if(colorIndexList[i][0][2]!=colorIndexList[i][1][2]){
         distance=10000
       }
-      else if(dificultCenters.includes(colorIndexList[i][0][0])|| dificultCenters.includes(colorIndexList[i][1][0])){
+      else if(difficultCenters[OllIndex].includes(colorIndexList[i][0][0])|| difficultCenters[OllIndex].includes(colorIndexList[i][1][0])){
         distance=10000
       }
       else{
@@ -334,7 +411,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       let Center1Used=false
       let Center2Used=false
       let Center3Used=false
-      
+
       if (distance<maxdistance){
       ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)
       circlePath=ConnectingLines[i][1][5]
@@ -344,7 +421,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][0][2]!=colorIndexList[i][2][2]){
         distance=10000
       }
-      else if(dificultCenters.includes(colorIndexList[i][0][0]) ||dificultCenters.includes(colorIndexList[i][2][0])){
+      else if(difficultCenters[OllIndex].includes(colorIndexList[i][0][0]) ||difficultCenters[OllIndex].includes(colorIndexList[i][2][0])){
         distance=10000
       }
       else{
@@ -372,7 +449,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
         distance=10000
       }
-      else if(dificultCenters.includes(colorIndexList[i][1][0])||dificultCenters.includes(colorIndexList[i][2][0])){
+      else if(difficultCenters[OllIndex].includes(colorIndexList[i][1][0])||difficultCenters[OllIndex].includes(colorIndexList[i][2][0])){
         distance=10000
       }
       else{
@@ -457,7 +534,6 @@ function GetBarsIndices(OllIndex,PermIndex){
       finalPath[i]+=newPath[i][j]
       finalPath[i]+=pathList[i][j]
       
-      let radius=1/200*cubeSize
       let changeX=noMovementCenterRef.current[PrevIndex][0]
       let changeY=noMovementCenterRef.current[PrevIndex][1]
       let circleX
@@ -489,17 +565,16 @@ function GetBarsIndices(OllIndex,PermIndex){
           circleY=colorIndexList[i][j][3][2][1]
         }
         if(changeX==-1 &&changeY==1){
-          console.log("Pass-1,1")
-          circleX=colorIndexList[i][j][3][3][0]
-          circleY=colorIndexList[i][j][3][3][1]
+          circleX=colorIndexList[i][j][3][0][0]
+          circleY=colorIndexList[i][j][3][0][1]
         }
         if(changeX==-1 &&changeY==0){
           circleX=colorIndexList[i][j][3][3][0]
           circleY=colorIndexList[i][j][3][3][1]/2+colorIndexList[i][j][3][0][1]/2
         }
         if(changeX==-1 &&changeY==-1){
-          circleX=colorIndexList[i][j][3][0][0]
-          circleY=colorIndexList[i][j][3][0][1]
+          circleX=colorIndexList[i][j][3][3][0]
+          circleY=colorIndexList[i][j][3][3][1]
         }
       }
       
@@ -512,13 +587,13 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][j][0]%5>=1 &&colorIndexList[i][j][0]%5<=3){
         if(colorIndexList[i][j][0]>=5 &&colorIndexList[i][j][1]<=18){
           if(noMovementCenterRef.current[PrevIndex][1]==1){
-            circleY+=1.2/cubeSize*200
+            circleY+=0.2/cubeSize*200
           }
           else if(noMovementCenterRef.current[PrevIndex][1]==-1){
-            circleY-=1.2/cubeSize*200
+            circleY-=0/cubeSize*200
           }
           if(noMovementCenterRef.current[PrevIndex][0]==1){
-            circleX+=1/cubeSize*200
+            circleX-=1/cubeSize*200
           }
           if(noMovementCenterRef.current[PrevIndex]==-1){
             circleX-=1.2/cubeSize*200
@@ -535,8 +610,10 @@ function GetBarsIndices(OllIndex,PermIndex){
           circleX-=1*changeX/200*cubeSize
           circleY+=1*changeY/200*cubeSize
         }
+      
+        let radius=2/200*cubeSize
       let smallCirclePath=drawSmallCircle(circleX,circleY,radius)
-      noMovementCenterCircle.push(smallCirclePath)
+      //noMovementCenterCircle.push(smallCirclePath)
     }
     }
   }
@@ -814,7 +891,7 @@ function ConnectCenters(PointsInfo,CenterIndex,newSquaresColors,PermIndex,color)
     
   }
   
-  let circleRadius=3
+  let circleRadius=3/200*cubeSize
   
   let midPointx1=Centers[PiecesIndex[0]][0]
   let midPointy1=Centers[PiecesIndex[0]][1]
@@ -953,8 +1030,7 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex,
   return [interceptx,y]
 }
 
-const renderedCases = arrowOllSet[groupSelected];
-const totalRefs = renderedCases.length * CornerPermutations.length;
+
 
 useEffect(() => {
   if (!refsReady) return;
@@ -1011,7 +1087,7 @@ useLayoutEffect(() => {
 
   setOverlayPaths(paths);
   setPathCalculated(true);
-}, [refsReady, groupSelected, totalRefs]);
+}, [refsReady, groupSelected, totalRefs,cubeSize]);
 
 
 //Calculate inner outline
@@ -1127,7 +1203,94 @@ function centerOutLineInfo(IndexList){
 
 }
 
+function excludeCenters(e,OllIndex){
+  console.log(e)
+  if(e.key=="Enter"){
+      e.preventDefault()
+      verifyAndUpdateExcludeBarInput(e.target.value,OllIndex)
+  }
+    
+}
 
+function verifyAndUpdateExcludeBarInput(inputString,OllIndex){
+  let testList=[]
+  try{
+    if(inputString.includes(",")){
+      inputString=inputString.split(",")
+      console.log(inputString)
+      for(let i=0;i<inputString.length;i++){   
+        if(inputString[i]!=""){
+          let intInputString=parseInt(inputString[i])
+          if (!isNaN(intInputString)){
+            if(intInputString<0 || intInputString>=25){
+              throw new Error(`Invalid number: ${inputString[i]}`)
+            }
+            else{
+              testList.push(intInputString);
+            }
+          }
+          else{
+            throw new Error(`Invalid number: ${inputString[i]}`)
+          }
+        }
+      }
+    }
+    else{
+      if(inputString!=""){
+        let intInputString=parseInt(inputString)
+        if (!isNaN(intInputString)) {
+          if(intInputString<0 || intInputString>=25){
+              throw new Error(`Invalid number: ${inputString}`)
+            }
+            else{
+              testList.push(intInputString);
+            }
+        }
+        else{
+          throw new Error(`Invalid number: ${inputString[i]}`)
+        }
+      }
+    }
+  }
+  catch (error){
+    console.error(error)
+    document.getElementById(`barExcludeCenters-${OllIndex}`).value=difficultCenters[OllIndex]
+    
+  }
+  console.log(testList)
+
+  const sortedOld = [...difficultCenters[OllIndex]].sort((a,b) => a-b);
+  const sortedNew = [...testList].sort((a,b) => a-b);
+
+  const isDifferent = sortedOld.length !== sortedNew.length || 
+                      sortedOld.some((val, idx) => val !== sortedNew[idx]);
+
+  if (isDifferent) {
+    setDifficultCenters((prev) => {
+      const newCenters = [...prev];
+      newCenters[OllIndex] = testList;
+      return newCenters;
+    });
+    setRefsReady(false);
+  }
+}
+
+
+function changeOllAlgEnterPressed(e,OllIndex){
+  console.log(e)
+  if(e.key=="Enter"){
+      e.preventDefault()
+      changeOllAlg(e.target.value,OllIndex)
+  }
+    
+}
+
+function changeOllAlg(inputString,OllIndex){
+
+  console.log(inputString)
+  //setRefsReady(false);
+  
+}
 
 return (
   
@@ -1135,6 +1298,9 @@ return (
   
 
   { (true) && (
+    <div className="BarOllGridsCont">
+
+    {
     arrowOllSet[groupSelected].map((oll,i)=>(
       <>
                           {(
@@ -1149,7 +1315,7 @@ return (
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
-                                if(i>=1){
+                                if(i>=10){
                                   return
                                 }
 
@@ -1236,18 +1402,10 @@ return (
                                   
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
                                   <>                                
-                                <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                          <path
-                                             d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2]||""}
-                                             fill={overlayPaths[OllIndex][PermIndex]?.[1]?.[i] || "black"}
-                                            stroke="rgba(44, 44, 44, 1)"
-                                            stroke-width="1"
-                                          />
-                                        </svg>
                                     <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
                                   <path
                                       d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3]||""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "rgba(0, 0, 0, 0)"}
+                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "purple"}
                                     stroke="rgba(0, 0, 0, 1)"
                                       strokeWidth="1.5"
                                       strokeLinejoin="round"
@@ -1255,12 +1413,20 @@ return (
                                   />
                                   
                                 </svg>
+                                 <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                                    <path
+                                        d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2]||""}
+                                        fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || ""}
+                                      stroke="rgba(22, 22, 22, 1)"
+                                      stroke-width="1"
+                                    />
+                                  </svg>
 
                                 </>))
                                } 
                                 
                                 
-                                <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
+                                {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
 
                                     
                                     <path
@@ -1271,7 +1437,7 @@ return (
                                       filter="url(#shadow)"
                                       transform="rotate(45)"
                                     />
-                                </svg>                             
+                                </svg>                              */}
                                 </>
                                 )
                             }
@@ -1286,12 +1452,65 @@ return (
                           
                       
                       </div>
+<div className="barExcludeCont">
+  <div></div>
+  <div style={{display:"flex",justifyContent:"center",justifySelf :"end"}}>
+    <div className="barQuestionIconCont">
+        <FaIcon className="barQuestionCircle" icon="question-circle" style={{ color: "white",width:"24px",height:"24px",border:"2px solid black",borderRadius:"50%",verticalAlign:"middle"}} />
+        <div className="barQuestionIconExtraInfo">
+        {Array.from({ length: 5 }).map((_, i) =>
+            Array.from({ length: 5 }).map((_, j) => (
+              <div
+                key={`${i}-${j}`}
+                style={{
+                  border: "1px solid grey",
+                  backgroundColor: "black",
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {i * 5 + j}
+              </div>
+            ))
+          )}                  
+        </div>
+    </div>
+          <label htmlFor={`barExcludeCenters-${i}`}>Do not include bars with:</label>
+    </div>
+    <div>
+   <input id={`barExcludeCenters-${i}`} className="barExcludeCentersInput" placeholder="Exclude centers, ex: 1,2,3" onKeyDown={ (e)=>(excludeCenters(e,i))}></input>
+  <button className="barExcludeButtonSave" onClick={() => {
+    const value = document.getElementById(`barExcludeCenters-${i}`).value;
+    verifyAndUpdateExcludeBarInput(value, i);
+  }}> Save</button></div>
+  </div>
+                      
+<div className="barExcludeCont">
+  <div></div>
+  <div style={{display:"flex", justifyContent:"center",justifySelf :"end"}}>
+   <label htmlFor={`barchangeOllAlg-${i}`}>Change alg:</label>
+   </div>
+   <div>
+   <input id={`barchangeOllAlg-${i}`} className="barExcludeCentersInput" placeholder="Enter new alg, ex: R U R' U' R U2 R'" onKeyDown={ (e)=>(changeOllAlgEnterPressed(e,i))}></input>
+  <button className="barExcludeButtonSave" onClick={() => {
+    const value = document.getElementById(`barchangeOllAlg-${i}`).value;
+    changeOllAlg(value, i);
+  }}> Save</button> </div>
+  </div>
                       </div>
+                      
                           )}
                       </> 
-    ))
-    
+    ))}
+    <div>
+
+    </div>
+
+    </div>
   )}
+
 
   {(false)&&
     arrowOllSet[groupSelected].map((oll,i)=>(

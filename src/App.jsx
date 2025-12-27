@@ -7,6 +7,7 @@ import './App.css'
 import { ThemeContext } from './DarkThemeContext.jsx'
 import React, { useEffect, useState } from "react"
 import Trainpage from './trainpage1.jsx'
+import {seedDatabaseIfEmpty} from './data/db.js'
 
 function App() {
   const [darkMode, setDarkMode] = useState(true)
@@ -20,6 +21,12 @@ function App() {
     document.body.style.backgroundColor = darkMode ? "#191d21" : "#f8f9fa";
     document.body.style.paddingTop ="60px"
   }, [darkMode])
+
+  useEffect(() => {
+    seedDatabaseIfEmpty();
+  }, []);
+
+  
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
