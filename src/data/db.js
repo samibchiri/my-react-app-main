@@ -20,7 +20,7 @@ export async function seedDatabaseIfEmpty() {
   try {
     const count = await db.olls.count();
 
-    if (count === 0) {
+    if (count==0) { //Change to ===0 later
       console.log("Seeding IndexedDB with default OLLs...");
       await db.olls.bulkPut(arrowOllSet);
       const newCount = await db.olls.count();

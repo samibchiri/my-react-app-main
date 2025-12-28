@@ -4,15 +4,48 @@ import React, { use, useContext,useRef, useEffect, useState } from "react";
 import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
-import Stopwatch from './Stopwatch.jsx';
-import { difference, get } from 'lodash';
-import html2canvas from "html2canvas";
 import { flushSync } from 'react-dom';
 import ollCaseSet from "./data/ollCaseSet.js";
-import { json } from 'react-router-dom';
+import { db } from "./data/db";
 
 
-function CornerPermutationPage({testedAlgs,setButtonClicked,setCaseClicked}){
+//Function to invert the oll alg
+function Inverse(alg){
+
+    console.log(`InverseAlgStart ${alg}`)
+    let inverse=""
+    alg=alg.trim()
+    let splitAlg=alg.split(" ")
+    for(let i=splitAlg.length-1;i>=0;i--){
+        let part=splitAlg[i][0]
+        inverse+=" "+part
+        if(splitAlg[i][1]!="'" &&splitAlg[i][1]!=2){
+            inverse+="'"
+        }
+        else if(splitAlg[i][1]=="2"){
+            inverse+="2"
+        }
+    }
+    inverse=inverse.trim()
+    console.log(`InverseAlgEnd ${inverse}`)
+
+    return inverse
+}
+
+async function UpdateOll(oll_id,newdata){
+    await db.olls.update(oll_id, {
+    ...newdata
+  });
+}
+
+
+
+export function CornerPermutationPage({newAlg,oll,setCaseClicked}){
+
+// oll={}
+// oll["id"]="OLL 57-0"
+// chosenAlg="F R U R' U' F'"
+console.log("Start",newAlg,oll)
 
 const [pathArrowList, setPathArrowList] = useState([]);
 const [angleList, setAngleList] = useState([]);
@@ -26,10 +59,10 @@ const [squaresColors, setSquaresColors] = useState([]);
 const [arrowCombination,setArrowCombination]=useState([])
 const [arrowColor, setArrowColor]=useState([])
 const [scramble, setScramble] = useState("");
+const [chosenAlg,setChosenAlg]= useState(null)
 
 const [altscramble,setAltScramble] = useState(Array(4).fill("null"));
 const [AUF,setAUF]=useState([])
-const [barMovements,setBarMovements]=useState([])
 
 const [arrowCombinationSorted,setArrowCombinationSorted]= useState(false)
 const [arrowDone,setArrowDone]=useState(false)
@@ -40,14 +73,14 @@ const [possibleArrowCombination, setPossibleArrowCombination] = useState(new Set
 
 const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
 
+
+
     let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
     let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
     
     let algRef=useRef(0)
     let algIndexRef=useRef(0)
-    
-    //let algScramble=ollCaseSet.cases[algRef.current].algs[0]
 
     let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
     let allAUF=["","U'","U","U2"]
@@ -62,8 +95,6 @@ const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
 
   let pathArrow1="M 37,37 L 117,37 L 117,33 L 127,39 L 117,43 L 117,41 L 37,41 37,45 27,39 37,33 Z"
 
-
-
 const xCoords = [9.5, 39.5, 79.5, 119.5,149.5];
 const yCoords = [9.75, 39.75, 79.75, 119.75, 149.75];
 
@@ -75,270 +106,55 @@ for (let y of yCoords) {
   }
 }
 
-
-
-
-
-function Arrow(Center1,Center2,color){
-
-let centerx=Centers[Center1][0]
-let centery=Centers[Center1][1]
-
-let centerx2=Centers[Center2][0]
-let centery2=Centers[Center2][1]
-
-
-let Correction=(centery2-centery)>0? 90:-90
-
-let angle = Math.atan(-(centerx2 - centerx) / (centery2 - centery))*180/Math.PI;
-if (centery==centery2){
-    angle=0
-    Correction=0
-}
-if (centerx>centerx2 && centery==centery2){
-    [centerx, centerx2] = [centerx2, centerx];
-    let difference=centerx2-centerx
-    centerx-=difference
-    centerx2-=difference
-    // centery2-=2.5
-    // centery-=1.5
-    Correction+=180
-}
-
-angle+=Correction
-
-
-
-centerx=Centers[Center1][0]
-centery=Centers[Center1][1]
-
-let centerpath=`M ${centerx+0.5},${centery} L ${centerx+0.5},${centery+1} L ${centerx+1},${centery+1} L ${centerx+1},${centery} L ${centerx},${centery} Z`
-
-
-// centerx=Centers[Center2][0]                                                               
-// centery=Centers[Center2][1]
-// let centerpath2=`M ${centerx},${centery} L ${centerx},${centery+2} L ${centerx+2},${centery+2} L ${centerx+2},${centery} L ${centerx},${centery} Z`
-centerx=Centers[Center2][0]                                                               
-centery=Centers[Center2][1]
-
-let centerpath2=`M ${centerx+0.5},${centery} L ${centerx+0.5},${centery+1} L ${centerx+1},${centery+1} L ${centerx+1},${centery} L ${centerx},${centery} Z`
-
-
-
-centerx=Centers[Center1][0]
-centery=Centers[Center1][1]
-
-centerx2=Centers[Center2][0]
-centery2=Centers[Center2][1]
-centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)                                                                                                                                                                                                                                                                                                                   //L 37,41 37,45 27,39 37,33 Z"
-centery2+=1
-
-let pathArrow2=`M ${centerx+3},${centery2-2} L ${centerx2-1},${centery2-2} L ${centerx2-1},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-1},${centery2+6} L ${centerx2-1},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+2} L ${centerx+3},${centery2+6} L ${centerx-6},${centery2} L ${centerx+3},${centery2-6}  Z`
-console.log()
-console.log()
-console.log()
-console.log("Patharrow")
-console.log(pathArrow2)
-console.log(centerpath)
-console.log(centerx2)
-console.log(centery2)
-console.log()
-console.log()
-console.log()
-console.log()
-
-
-  setPathArrowList(prev => [...prev, pathArrow2]);
-  setAngleList(prev => [...prev, angle]);
-  setCenterPathList(prev => [...prev, centerpath]);
-  setCenterPath2List(prev => [...prev, centerpath2]);
-  setCenterxList(prev => [...prev, centerx]);
-  setCenterx2List(prev => [...prev, centerx2]);
-  setCenteryList(prev => [...prev, centery]);
-  setCentery2List(prev => [...prev, centery2])
-  setArrowColor(prev => [...prev,color]);
-}
-
-
-
-function oneWayArrow(Center1,Center2){
-
-
-let centerx=Centers[Center1][0]
-let centery=Centers[Center1][1]
-
-let centerx2=Centers[Center2][0]
-let centery2=Centers[Center2][1]
-
-
-
-let Correction=(centery2-centery)>0? 90:-90
-
-let angle = Math.atan(-(centerx2 - centerx) / (centery2 - centery))*180/Math.PI;
-if (centery==centery2){
-    angle=0
-    Correction=0
-}
-if (centerx>centerx2){
-    [centerx, centerx2] = [centerx2, centerx];
-    let difference=centerx2-centerx
-    centerx-=difference
-    centerx2-=difference
-    // centery2-=2.5
-    // centery-=1.5
-    Correction+=180
-}
-
-angle+=Correction
-
-
-
-centerx=Centers[Center1][0]
-centery=Centers[Center1][1]
-let centerpath=`M ${centerx},${centery} L ${centerx},${centery+2} L ${centerx+2},${centery+2} L ${centerx+2},${centery} L ${centerx},${centery} Z`
-
-centerx=Centers[Center2][0]
-centery=Centers[Center2][1]
-let centerpath2=`M ${centerx},${centery} L ${centerx},${centery+2} L ${centerx+2},${centery+2} L ${centerx+2},${centery} L ${centerx},${centery} Z`
-
-
-
-centerx=Centers[Center1][0]
-centery=Centers[Center1][1]
-
-centerx2=Centers[Center2][0]
-centery2=Centers[Center2][1]
-centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)
-
-centerx2-=0
-let pathArrow2=`M ${centerx-5},${centery2} Q ${centerx-3},${centery2-2} ${centerx},${centery2-2} L ${centerx},${centery2-2} L ${centerx2-2},${centery2-2} L ${centerx2-2},${centery2-6} L ${centerx2+8},${centery2} L ${centerx2-2},${centery2+6.75} L ${centerx2-2},${centery2+3} L ${centerx},${centery2+3} Q ${centerx-2},${centery2+3} ${centerx-2},${centery2} Z`
-
-
-
-return [pathArrow2,angle,centerpath,centerpath2,centerx,centerx2,centery,centery2]
-}
-
-
-// let newPathArrow2
-// let newAngle
-// let newCenterPath
-// let newCenterPath2
-// let newCenterx
-// let newCenterx2
-// let newCentery
-// let newCentery2
-// [newPathArrow2,newAngle,newCenterPath,newCenterPath2,newCenterx,newCenterx2,newCentery,newCentery2]=Arrow(Center1,Center2)
-  
-
-
-
-
-
-
-
-// pathArrowList=[...pathArrowList,newPathArrow2]
-// angleList=[...angleList,newAngle]
-// centerPathList=[...centerPathList,newCenterPath]
-// centerPath2List=[...centerPath2List,newCenterPath2]
-// centerxList=[...centerxList,newCenterx]
-// centerx2List=[...centerx2List,newCenterx2]
-// centeryList=[...centeryList,newCentery]
-// centery2List=[...centery2List,newCentery2]
-// console.log(centery2List)
-// [newPathArrow2,newAngle,newCenterPath,newCenterPath2,newCenterx,newCenterx2,newCentery,newCentery2]=Arrow(Center2,Center1)
-  
-// pathArrowList=[...pathArrowList,newPathArrow2]
-// angleList=[...angleList,newAngle]
-// centerPathList=[...centerPathList,newCenterPath]
-// centerPath2List=[...centerPath2List,newCenterPath2]
-// centerxList=[...centerxList,newCenterx]
-// centerx2List=[...centerx2List,newCenterx2]
-// centeryList=[...centeryList,newCentery]
-// centery2List=[...centery2List,newCentery2]
-
-// console.log(centery2List)
-
-
-// useEffect(() => {
-//   //let [newPathArrow2, newAngle, newCenterPath, newCenterPath2, newCenterx, newCenterx2, newCentery, newCentery2] =
-//   if (!scramble) return;
-
-//   if (scrambleIndex.current >= CornerPermutations.length) return; // stop if done
-
-//     setScramble("R U R' U R U2 R'"+CornerPermutations[scrambleIndex.current])
-    
-//     setPathArrowList([]);
-//   setAngleList([]);
-//   setCenterPathList([]);
-//   setCenterPath2List([]);
-//   setCenterxList([]);
-//   setCenterx2List([]);
-//   setCenteryList([]);
-//   setCentery2List([]);
-//   setArrowColor([]);
-
-//     getSquareColors();
-//     scrambleIndex.current += 1; // move to next scramble
-// }, [arrowCombination]); // <-- empty dependency array ensures it runs only once
-
-// 1️⃣ Initialize first scramble
 let scrambleIndex=useRef(0)
-
-let algAUF=""
-function Inverse(alg){
-
-    console.log(`InverseAlgStart ${alg}`)
-    let inverse=""
-    let splitAlg=alg.split(" ")
-    for(let i=splitAlg.length-1;i>=0;i--){
-        let part=splitAlg[i][0]
-        //console.log(`InverseAlgPart ${part}`)
-        inverse+=" "+part
-        if(splitAlg[i][1]!="'" &&splitAlg[i][1]!=2){
-            inverse+="'"
-        }
-        else if(splitAlg[i][1]==2){
-            inverse+="2"
-        }
-    }
-    console.log(`InverseAlgEnd ${inverse}`)
-
-    return inverse
+console.log("SetNewAlg",newAlg!=chosenAlg,newAlg,[newAlg,chosenAlg])
+if(newAlg!=chosenAlg && newAlg){
+    console.log("DifferentAlg",newAlg,chosenAlg)
+    setChosenAlg(newAlg)
 }
-useEffect(() => {
-    console.log("Here")
-    //setScramble("" + CornerPermutations[scrambleIndex.current]);
 
-    setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
-    
-    
-   
-   
-    let alg1=ollCaseSet.cases[algRef.current].algs[0]
-    let alg2=ollCaseSet.cases[algRef.current].algs[1]
+
+
+//Initialize scramble
+useEffect(() => {
+    let currentalg={}
+    currentalg["algs"]=[chosenAlg]
+    if (chosenAlg ==null){
+        currentalg=ollCaseSet.cases[algRef.current]
+    }
+    else{
+        scrambleIndex.current=0
+    }
+    console.log("NewAlg5",currentalg,chosenAlg,algIndexRef.current,scrambleIndex.current)
+    setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
+
+    let alg1=currentalg.algs[0]
+    let alg2=currentalg.algs[1]
     if(alg2==undefined){
         alg2=alg1
     }
     
-
     if(algIndexRef.current==1){
-        alg1=ollCaseSet.cases[algRef.current].algs[1]
-        alg2=ollCaseSet.cases[algRef.current].algs[0]
+        alg1=currentalg.algs[1]
+        alg2=currentalg.algs[0]
     }
     alg2=Inverse(alg2)
     
+    //Search for angle in which alternative oll should be performed
     setAltScramble(
         new Array(4).fill("").map((_,i)=>
             alg2+allAUF[i] +alg1+
             CornerPermutations[scrambleIndex.current]
         )
     );
-}, []);
+
+    
+}, [chosenAlg]);
 
 //Whenever scramble changes, reset lists & read squares
 useEffect(() => {
     console.log(`ScrambleIndex,${scrambleIndex.current}`)
-    console.log(scramble)
+    console.log("CurrentScramble",scramble)
     if (!scramble && scramble!="") return;
     console.log("run")
 
@@ -355,77 +171,52 @@ useEffect(() => {
     // give CaseImage time to render
      const timeout = setTimeout(() => {
     getSquareColors();
-  }, 10);
+  }, 1000);
 
   return () => clearTimeout(timeout);
 }, [scramble]);
 
+//If colors are initialized, get possible arrows
 useEffect(() => {
   if (!squaresColors || squaresColors.length === 0) return;
-  getPossibleArrows(squaresColors); // pass in current colors
+  getPossibleArrows(squaresColors);
 }, [squaresColors]);
 
-//After arrows are generated → go to next scramble
+//After arrows are generated, go to next scramble
 useEffect(() => {
-    console.log("Here???")
-    console.log(scrambleIndex.current)
-    console.log(arrowCombination)
     if (arrowCombination.length==CornerPermutations.length){
         setArrowDone(true)
     }
     if (arrowCombination.length === 0) return;
-//CornerPermutations.length
+
     if (scrambleIndex.current + 1 < CornerPermutations.length) {
         scrambleIndex.current += 1;
+
+
+        let currentalg={algs:[chosenAlg]}
+        if (chosenAlg ==null){
+            currentalg=ollCaseSet.cases[algRef.current]
+        }
+        setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
         
-        //setScramble("" + CornerPermutations[scrambleIndex.current]);
-        setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
-        
-        let alg1=ollCaseSet.cases[algRef.current].algs[0]
-        let alg2=ollCaseSet.cases[algRef.current].algs[1]
+        let alg1=currentalg.algs[0]
+        let alg2=currentalg.algs[1]
         if(alg2==undefined){
             alg2=alg1
         }
-        //console.log(`PreAlg2: ${alg2}`)
-        
-    function Inverse(alg){
 
-        //console.log(`InverseAlgStart ${alg}`)
-        let inverse=""
-        let splitAlg=alg.trim().split(" ")
-        for(let i=splitAlg.length-1;i>=0;i--){
-            let part=splitAlg[i][0]
-            //console.log(`InverseAlgPart ${part}`)
-            inverse+=" "+part
-            if(splitAlg[i][1]!="'" &&splitAlg[i][1]!=2){
-                inverse+="'"
-            }
-            else if(splitAlg[i][1]==2){
-                inverse+="2"
-            }
-        }
-        //console.log(`InverseAlgEnd ${inverse}`)
-
-        return inverse
-    }
         if(algIndexRef.current==1){
-        alg1=ollCaseSet.cases[algRef.current].algs[1]
-        alg2=ollCaseSet.cases[algRef.current].algs[0]
-    }
+            alg1=currentalg.algs[1]
+            alg2=currentalg.algs[0]
+        }
         alg2=Inverse(alg2)
-        //console.log(`Alg1: ${alg1}`)
-        //console.log(`Alg2: ${alg2}`)
-        let testscramble=alg2
+
         setAltScramble(
         new Array(4).fill("").map((_,i)=>
             alg2+allAUF[i] +alg1+
             CornerPermutations[scrambleIndex.current]
-            //testscramble+CornerPermutations[scrambleIndex.current]
-            
         )
     );
-
-
     }
     
 }, [arrowCombination]);
@@ -441,37 +232,10 @@ useEffect(()=>{
 
 
 function arrowCombinationSort(){
-    //console.log(`ScrambleIndex,${scrambleIndex.current}`)
-    //console.log(arrowCombination)
      if(scrambleIndex.current===5 &&arrowCombination.length==6){
-        // console.log("Continue")
-        
         let newArray=[]
-        //console.log(arrowCombination.length)
         for (let j=0;j<Math.min(arrowCombination.length,6);j++){
-            // console.log("Continue2")
             let partOfArray=arrowCombination[j]
-            // console.log(partOfArray)
-            // let firstSmallerThanSecondPartOfArray = partOfArray
-            // .map(([c1, c2, type, penalty]) => {
-            //     if (c1 > c2) [c1, c2] = [c2, c1]; // ensure c1 < c2
-            //     return [c1, c2, type, penalty];
-            // })
-            // .sort((a, b) => {
-            //     if (a[0] !== b[0]) return a[0] - b[0]; // first element ascending
-            //     return a[1] - b[1];                     // second element ascending
-            // });
-
-            // console.log(firstSmallerThanSecondPartOfArray);
-
-            // console.log("PartSort")
-            // console.log(firstSmallerThanSecondPartOfArray)
-            // let sortedArray = [...firstSmallerThanSecondPartOfArray].sort((a, b) => {
-            // if (a[3] !== b[3]) return a[3] - b[3]; // third element ascending
-            // if (a[0] !== b[0]) return a[0] - b[0]; // second element ascending
-            // return a[1] - b[1]; // first element ascending
-            // });
-
             let sortedArray = partOfArray
             .map(([c1, c2, type, penalty]) => {
                 if (c1 > c2) [c1, c2] = [c2, c1]; // ensure center1 < center2
@@ -482,19 +246,15 @@ function arrowCombinationSort(){
                 if (a[0] !== b[0]) return a[0] - b[0]; // center1 ascending
                 return a[1] - b[1];                     // center2 ascending
             });
-
-
             newArray.push(sortedArray)
-            
         }
-        //console.log("FullSort")
-        //console.log(newArray)
         setArrowCombination(newArray)
     }
 }
 
 
 function EasyRecognition(){
+    console.log("StartEasyRec")
 
     let PossibleCombination=[]
     let AllCombination=[]
@@ -514,7 +274,6 @@ function EasyRecognition(){
                 let center2b=arrowCombination[index3][index2][1]
                 
                 if(index3==0){
-                    
                      if(arrowCombination[index3][index1][2]=="adj"){
                         skip=true
                      }
@@ -523,7 +282,6 @@ function EasyRecognition(){
                         }
                 }
                 if(index3==6){
-                    
                      if(arrowCombination[index3][index1][2]=="adj"){
                         skip=true
                      }
@@ -571,13 +329,9 @@ function EasyRecognition(){
                 let totalpenalty=arrowCombination[index3][index1][3]+arrowCombination[index3][index2][3]
                 
                 allCombSet.add(JSON.stringify([center1a,center1b,arrowCombination[index3][index1][2],center2a,center2b,arrowCombination[index3][index2][2],totalpenalty]))
-                
-                
             }
            
              if(tempset.size==6){
-                //  console.log("Tempset")
-                // console.log(tempset)
                 let setToArray = Array.from(tempset).map(JSON.parse);;
                 PossibleCombination.push(setToArray)
              }
@@ -585,47 +339,25 @@ function EasyRecognition(){
                 let setToArray = Array.from(allCombSet).map(JSON.parse);;
                 AllCombination.push(setToArray)
              }
-            //  if(tempset.size>6){
-            //      console.log("BigTempset")
-            //     console.log(tempset)
-            //  }
-
-            
-             
-             
                 }
             }
-        
-        // console.log("FilterCheck")
-        // console.log(PossibleCombination)
         for(let i=0;i<PossibleCombination.length;i++){
             let easyrec=true
             for(let j=0;j<PossibleCombination[i].length;j++){
-            // console.log(`This is ${i},${j}`)
-            // console.log(PossibleCombination[i][j])
             if(1<=j && j<=4){
                 if(PossibleCombination[i][j][2]!="adj" &&PossibleCombination[i][j][5]!="adj"){
-                    // console.log("ISFIlterGood")
-                    // console.log(PossibleCombination[i][j][2])
-                    // console.log(PossibleCombination[i][j][5])
                     easyrec=false
                 }
             }
             }
             if(easyrec){
-                // console.log("Filterd")
-                // console.log(PossibleCombination[i])
-                //console.log("Pushed")
                 ReducedCombinations.push(PossibleCombination[i])
             }
         }
     
     let LowestPenalty=[]
     let minpenalty=1000
-    // console.log("possiblecombi")
-    // console.log(AllCombination)
         for (let i=0;i<AllCombination.length;i++){
-        //console.log(AllCombination[i][0][6])
         if(AllCombination[i][0][6]<minpenalty){
             minpenalty=AllCombination[i][0][6]
         }
@@ -639,20 +371,14 @@ function EasyRecognition(){
             }
         }
         k=k+5
-
     }
     
-
     if(ReducedCombinations.length==0){
         ReducedCombinations=PossibleCombination
     }
 
     minpenalty=10000
-    // console.log("FullArray")
-    // console.log(ReducedCombinations)
     for (let i=0;i<ReducedCombinations.length;i++){
-        // console.log("ReducedNotempty")
-        // console.log(ReducedCombinations[i][0][6])
         if(ReducedCombinations[i][0][6]<minpenalty){
             minpenalty=ReducedCombinations[i][0][6]
         }
@@ -661,73 +387,39 @@ function EasyRecognition(){
     
     k=0
     while ((LowestPenaltyEasy.length<3 &&k<=20)){
-        //console.log("Enter While")
         for (let i=0;i<ReducedCombinations.length;i++){
-            //console.log(minpenalty,ReducedCombinations[i][0])
             if(ReducedCombinations[i][0][6]==minpenalty+k){
                 LowestPenaltyEasy.push(ReducedCombinations[i])
-                //console.log("Pushed")
             }
         }
         k=k+5
     }
 
-    // console.log("Lowest Penalty")
-    // console.log(LowestPenaltyEasy)
-
-    
-
     let dict ={
         name:ollCaseSet.cases[algRef.current].name,
-        //easierRecognition:LowestPenaltyEasy,
-        //lowestPenaltyRecognition:LowestPenalty
-        
     }
-    // console.log("Wait")
-    // console.log(jsonArrowsToExport)
-    // console.log(groupdict)
-    // console.log(dict)
-    
+
+    if (chosenAlg !=null){
+        dict["name"]=oll.name
+    }
+
     jsonArrowsToExport.forEach((item)=>{
-        // console.log(item.name)
-        // console.log(dict)
         console.log(item.name===dict.name)
     })
-    // setJsonArrowsToExport(prev=>
-    //     prev.map(item=>
-    //         item.name===dict.name?{...item,...dict}:item
-    //     )
-    // )
-
-    // console.log(`What is Dict, ${JSON.stringify(dict)}`)
-    // console.log(`What is GroupDict, ${JSON.stringify(groupdict)}`)
-    setJsonArrowsToExport(prev=>
-    [...prev,{...groupdict,...dict}]
+    console.log("Export")
+    console.log(groupdict)
+    if(chosenAlg){
+        setJsonArrowsToExport(prev=>
+    [{...groupdict,...dict}]
     )
-
-    if(algRef.current+1<ollCaseSet.cases.length){
-        if(algIndexRef.current==1){
-            algIndexRef.current=0
-            algRef.current+=1
-        }
-        else if(algIndexRef.current==0){
-            algIndexRef.current=1
-            console.log(`Undefined?,  ${ollCaseSet.cases[algRef.current].algs[algIndexRef.current]}`)
-            if(ollCaseSet.cases[algRef.current].algs[algIndexRef.current]==undefined){
-                algIndexRef.current=0
-                algRef.current+=1
-            }
-            
-        }
+    }
+    else{
+        setJsonArrowsToExport(prev=>
+        [...prev,{...groupdict,...dict}]
+        )
+    }
         
-        
-        if(algRef.current==1){
-            algRef.current=1
-        }
-        console.log(`Through, ${algRef.current}`)
-        console.log()
 
-   
     scrambleIndex.current=0
     setPathArrowList([]);
     setAngleList([]);
@@ -743,30 +435,32 @@ function EasyRecognition(){
     setArrowCombinationSorted(false);
     setArrowDone(false);
 
+  
+    if(!chosenAlg){
+
+   
+    if(algRef.current+1<ollCaseSet.cases.length){
+        if(algIndexRef.current==1){
+            algIndexRef.current=0
+            algRef.current+=1
+        }
+        else if(algIndexRef.current==0){
+            algIndexRef.current=1
+            if(ollCaseSet.cases[algRef.current].algs[algIndexRef.current]==undefined){
+                algIndexRef.current=0
+                algRef.current+=1
+            }
+        }
+
+        if(algRef.current==1){
+            algRef.current=1
+        }
+
+
     setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current])
 
     let alg1=ollCaseSet.cases[algRef.current].algs[0]
     let alg2=ollCaseSet.cases[algRef.current].algs[1]
-    function Inverse(alg){
-
-        console.log(`InverseAlgStart ${alg}`)
-        let inverse=""
-        let splitAlg=alg.trim().split(" ")
-        for(let i=splitAlg.length-1;i>=0;i--){
-            let part=splitAlg[i][0]
-            console.log(`InverseAlgPart ${part}`)
-            inverse+=" "+part
-            if(splitAlg[i][1]!="'" &&splitAlg[i][1]!=2){
-                inverse+="'"
-            }
-            else if(splitAlg[i][1]==2){
-                inverse+="2"
-            }
-        }
-        console.log(`InverseAlgEnd ${inverse}`)
-
-        return inverse
-    }
     if(alg2==undefined){
         alg2=alg1
     }
@@ -777,37 +471,14 @@ function EasyRecognition(){
     alg2=Inverse(alg2)
       
     setAUF([])
-    setBarMovements([])
     setAltScramble(
         new Array(4).fill("").map((_,i)=>
             alg2+allAUF[i] +alg1+
             CornerPermutations[scrambleIndex.current] 
-            //CornerPermutations[scrambleIndex.current]
         )
     );
-
      }
-
-
-    // if(LowestPenaltyEasy.length>0){
-    //     let color
-    //     if(LowestPenaltyEasy[0][0][2]=="same"){
-    //         color="blue"
-    //     }
-    //     else{
-    //         color="red"
-    //     }
-        
-    //     Arrow(LowestPenaltyEasy[0][0][0],LowestPenaltyEasy[0][0][1],color)
-    //     if(LowestPenaltyEasy[0][0][5]=="same"){
-    //         color="blue"
-    //     }
-    //     else{
-    //         color="red"
-    //     }
-        
-    //     Arrow(LowestPenaltyEasy[0][0][3],LowestPenaltyEasy[0][0][4],color)
-    // }
+    }
 }
 
 let groupdict
@@ -878,19 +549,14 @@ function GroupRecognition(){
     let ThirdPairSameOppTrueList=[]
 
     let Pairs=[[0,5],[1,2],[3,4]]
-    
-    console.log(arrowCombination)
+
     for (let j=0;j<Pairs.length;j++){
-    //for (let j=0;j<1;j++){
         for (let index1=0;index1<arrowCombination[0].length;index1++){
             let oppTrue=false
             let sameTrue=false
             let bothTrue=false
             let sameOppTrue=false
-            // console.log("Loop")
-            // console.log(arrowCombination[Pairs[j][0]])
-            // console.log(arrowCombination[Pairs[j][0]][index1])
-            // console.log(arrowCombination[Pairs[j][1]][index1])
+
             if(arrowCombination[Pairs[j][0]][index1][2]=="opp" &&arrowCombination[Pairs[j][1]][index1][2]=="opp"){
                 oppTrue=true
             }
@@ -923,6 +589,7 @@ function GroupRecognition(){
                 }
 
                 if(unique){
+                    console.log("PassHere",j)
                     for( let index2=0;index2<arrowCombination[0].length;index2++){
                         if(index2!=index1){
                         if (arrowCombination[Pairs[j][0]][index2][2]!="adj" && arrowCombination[Pairs[j][1]][index2][2]!="adj"){
@@ -1350,6 +1017,7 @@ function GroupRecognition(){
     }
     }
 
+
     FirstPairOppTrueList=SortAndShortenPenaltiesList(FirstPairOppTrueList)
     FirstPairSameTrueList=SortAndShortenPenaltiesList(FirstPairSameTrueList)
     FirstPairBothTrueList=SortAndShortenPenaltiesList(FirstPairBothTrueList)
@@ -1359,8 +1027,7 @@ function GroupRecognition(){
     ThirdPairOppTrueList=SortAndShortenPenaltiesList(ThirdPairOppTrueList)
     ThirdPairSameTrueList=SortAndShortenPenaltiesList(ThirdPairSameTrueList)
     ThirdPairBothTrueList=SortAndShortenPenaltiesList(ThirdPairBothTrueList)
-    
-    
+
     if(FirstPairSameOppTrueList.length==0){
         console.log("COoked")
         console.log(algRef.current)
@@ -1412,26 +1079,43 @@ function GroupRecognition(){
     
 
     
+    try{
+        groupdict ={
+            id:ollCaseSet.cases[algRef.current].name+"-"+algIndexRef.current,
+            name:ollCaseSet.cases[algRef.current].name,
+            ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
+            algNumber:algIndexRef.current,
+            altAUF:AUF,
+            barMovements:[],
+            algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
+            group:ollCaseSet.cases[algRef.current].group,
+            difficultCenters:[],
+            groupRecUsed:true,
+            sameOppUsed:true,
+            // fullDiagCp:[...FirstPairOppTrueList,FirstPairSameTrueList,FirstPairBothTrueList],
+            // leftRightCp:[...SecondPairOppTrueList,SecondPairSameTrueList,SecondPairBothTrueList],
+            // frontBackCp:[...ThirdPairOppTrueList,ThirdPairSameTrueList,ThirdPairBothTrueList],
+            
+            fullDiagCp:[[...FirstPairOppTrueList][0]],
+            leftRightCp:[[...SecondPairOppTrueList][0]],
+            frontBackCp:[[...ThirdPairOppTrueList][0]],
+            SameOpp:[[FirstPairSameOppTrueList[0]],[SecondPairSameOppTrueList[0]],[ThirdPairSameOppTrueList[0]]]
+        
+        }
+        if(chosenAlg !=null){
+            groupdict["id"]=oll.id
+            groupdict["name"]=oll.name
+            groupdict["ollNumber"]=oll.ollNumber
+            groupdict["algNumber"]=oll.algNumber
+            groupdict["algs"]=chosenAlg
+            groupdict["group"]=oll.group
 
-    groupdict ={
-        id:ollCaseSet.cases[algRef.current].name+"-"+algIndexRef.current,
-        name:ollCaseSet.cases[algRef.current].name,
-        ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
-        algNumber:algIndexRef.current,
-        altAUF:AUF,
-        barMovements:barMovements,
-        algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
-        group:ollCaseSet.cases[algRef.current].group,
-        // fullDiagCp:[...FirstPairOppTrueList,FirstPairSameTrueList,FirstPairBothTrueList],
-        // leftRightCp:[...SecondPairOppTrueList,SecondPairSameTrueList,SecondPairBothTrueList],
-        // frontBackCp:[...ThirdPairOppTrueList,ThirdPairSameTrueList,ThirdPairBothTrueList],
-    
-        fullDiagCp:[[...FirstPairOppTrueList][0]],
-        leftRightCp:[[...SecondPairOppTrueList][0]],
-        frontBackCp:[[...ThirdPairOppTrueList][0]],
-        SameOpp:[[FirstPairSameOppTrueList[0]],[SecondPairSameOppTrueList[0]],[ThirdPairSameOppTrueList[0]]]
-    
+        }
     }
+    catch(error){
+        console.error(error)
+    }
+    console.log("NewGroupDict",groupdict,oll)
     //setJsonArrowsToExport(prev=>[...prev,groupdict])
     
     //Groupdict will be added in EasyRecognition Function
@@ -1477,6 +1161,12 @@ function GroupRecognition(){
 
 useEffect(() => {
     console.log("Print Json")
+    if(chosenAlg !=null){
+        if(chosenAlg!=""){
+            console.log("Update",jsonArrowsToExport[0])
+            UpdateOll(oll.id,jsonArrowsToExport[0])    
+        }
+    }
   if (algRef.current+1 === ollCaseSet.cases.length) {
     // const groupTable = {
     // "Cross": 0,
@@ -1734,11 +1424,6 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
 
     console.log("Adding temp")
      console.log(tempBarMovement)
-    
-
-    setBarMovements(prev => (
-            [...prev,[...tempBarMovement]]
-    ));
 
 
     console.log("SquareColors")
@@ -1870,7 +1555,7 @@ function getPossibleArrows(){
         }
         
     }
-    console.log("New Combination")
+    console.log("New Combination",arrowCombination)
     console.log(tempArrowCombination)
     
   

@@ -1,5 +1,6 @@
 
 import arrowOllSet from "./data/arrowOllSet.js";
+//import arrowOllSet from "./data/arrowOllSet copy.js"
 import { ThemeContext } from './DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import "./index.css"
@@ -10,11 +11,50 @@ import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
 
+import { db } from './data/db.js';
+
+import { useLiveQuery } from "dexie-react-hooks";
+import {CornerPermutationPage} from "./ArrowDataGenerator.jsx"
+
 export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
-  
+
   const [groupSelected,setGroupSelected]=useState(7)
+
+  const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
+  const groupTable = {
+  0: "Cross",
+  1: "Dot",
+  2: "T Shape",
+  3: "C Shape",
+  4: "I Shape",
+  5: "P Shape",
+  6: "W Shape",
+  7: "Small L Shape",
+  8: "Small Lightning Bolt",
+  9: "Big Lightning Bolt",
+  10: "Square Shape",
+  11: "Fish Shape",
+  12: "Knight Move Shape",
+  13: "Awkward Shape",
+  14: "Corners Oriented"
+}
+
+  
+const allOlls = useLiveQuery(() => db.olls.toArray(), []);
+
+console.log(allOlls)
+const selectedGroupOlls = useLiveQuery(
+  () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
+  [groupSelected]
+);
+
+
+useEffect(() => {
+  altoverlayRefs.current = [];
+  setRefsReady(false);
+}, [selectedGroupOlls]);
 
   const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(false)
@@ -23,12 +63,8 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [lineWidth,setLineWidth]= useState(4)
   const altoverlayRefs = useRef([]);
   
-  const [difficultCenters,setDifficultCenters]=useState((Array.from({ length: arrowOllSet[groupSelected].length }, () => [])))
   const [barColorsFiltered,setBarColorsFiltered]=useState([])
-  
-  // let decreaserate=0.1
-  // let rescaledCubesize=200-(700-window.innerWidth)/2
-  // const [cubeSize,setCubeSize]=useState(window.innerWidth < 700 ? 200-(700-window.innerWidth)/2 : 200);
+
 const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
@@ -98,20 +134,7 @@ function useWindowWidth() {
 }
 const width = useWindowWidth();
 
-
-// useEffect(() => {
-//   const updateSize = () => {
-//     setCubeSize(window.innerWidth < 700 ?200-(700-window.innerWidth)/2:200)
-//   };
-
-//   window.addEventListener("resize", updateSize);
-//   return () => window.removeEventListener("resize", updateSize);
-// }, []);
-
-
 const Scale=13.1/0.15740740740740744/150*cubeSize
-
-
 
   const piecesMovementRef = useRef([]) // mirror for immediate reads
 
@@ -145,20 +168,9 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
       }
 let Centers= GetCentersPosition(cubeSize)
 
-let renderedCases = arrowOllSet[groupSelected];
-let totalRefs = renderedCases.length * CornerPermutations.length;
-useEffect(()=>{
-  renderedCases = arrowOllSet[groupSelected];
-  totalRefs = renderedCases.length * CornerPermutations.length;
-
-  setDifficultCenters((Array.from({ length: renderedCases.length }, () => [])))
-
-},[groupSelected])
-
-
 function GetCentersPosition(cubeSize){
 
-    //Cubesizes ranging from 100 to 400, incremented by 50
+    //Cubesizes ranging from 100 to 400, incremented by 50, manually verified on my laptop
     let EmpericalcoordOffset=[[5.3,0.5],[5.3,0],[5.3,-0.5],[5.3,-0.9],[6,-0.9],[6,-1.5],[6,-2.2]]
     
     let BetweenArray=[Math.floor((cubeSize-100)/50),Math.ceil((cubeSize-100)/50)]
@@ -187,14 +199,12 @@ function GetCentersPosition(cubeSize){
             Centers.push([x*(cubeSize/200)+xCoordOffset, y*(cubeSize/200)+yCoordOffset]);
         }
     }
-
     return Centers
 
 }
 
 function GetBarsIndices(OllIndex,PermIndex){
 
-  console.log("Indicess", OllIndex,PermIndex)
   let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
   
     if (!containerparent) {
@@ -387,10 +397,11 @@ function GetBarsIndices(OllIndex,PermIndex){
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
       maxdistance=maxdistance*10
+      //console.log("UpdatedOll",selectedGroupOlls[OllIndex].difficultCenters,colorIndexList[i],PermIndex);
       if(colorIndexList[i][0][2]!=colorIndexList[i][1][2]){
         distance=10000
       }
-      else if(difficultCenters[OllIndex].includes(colorIndexList[i][0][0])|| difficultCenters[OllIndex].includes(colorIndexList[i][1][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0][0])|| selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1][0])){
         distance=10000
       }
       else{
@@ -421,7 +432,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][0][2]!=colorIndexList[i][2][2]){
         distance=10000
       }
-      else if(difficultCenters[OllIndex].includes(colorIndexList[i][0][0]) ||difficultCenters[OllIndex].includes(colorIndexList[i][2][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0][0]) ||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2][0])){
         distance=10000
       }
       else{
@@ -449,7 +460,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
         distance=10000
       }
-      else if(difficultCenters[OllIndex].includes(colorIndexList[i][1][0])||difficultCenters[OllIndex].includes(colorIndexList[i][2][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1][0])||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2][0])){
         distance=10000
       }
       else{
@@ -1041,7 +1052,7 @@ useEffect(() => {
     }
   }
   }
-}, [refsReady]);
+}, [refsReady,selectedGroupOlls]);
 
 const setOverlayRef = (index) => (el) => {
   const rowIndex = Math.floor(index / 6);
@@ -1062,7 +1073,7 @@ const setOverlayRef = (index) => (el) => {
     }  
     );
 
-  if (allMounted) setRefsReady(true);
+  if (allMounted && (selectedGroupOlls?.length)) setRefsReady(true);
 };
 
 // compute overlayPaths after refs mount; run this AFTER setRefsReady becomes true
@@ -1085,7 +1096,7 @@ useLayoutEffect(() => {
 
   setOverlayPaths(paths);
   setPathCalculated(true);
-}, [refsReady, groupSelected, totalRefs,cubeSize]);
+}, [refsReady, groupSelected,cubeSize]);
 
 
 //Calculate inner outline
@@ -1201,16 +1212,18 @@ function centerOutLineInfo(IndexList){
 
 }
 
-function excludeCenters(e,OllIndex){
+function excludeCenters(e,OllIndex,oll){
   console.log(e)
   if(e.key=="Enter"){
       e.preventDefault()
-      verifyAndUpdateExcludeBarInput(e.target.value,OllIndex)
+      verifyAndUpdateExcludeBarInput(e.target.value,OllIndex,oll)
   }
     
 }
 
-function verifyAndUpdateExcludeBarInput(inputString,OllIndex){
+function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
+  console.log(oll,"Chanign")
+
   let testList=[]
   try{
     if(inputString.includes(",")){
@@ -1248,72 +1261,107 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex){
           throw new Error(`Invalid number: ${inputString[i]}`)
         }
       }
+      else{
+        testList=[]
+      }
     }
   }
   catch (error){
     console.error(error)
-    document.getElementById(`barExcludeCenters-${OllIndex}`).value=difficultCenters[OllIndex]
+    document.getElementById(`barExcludeCenters-${OllIndex}`).value=selectedGroupOlls[OllIndex].difficultCenters
     
   }
   console.log(testList)
 
-  const sortedOld = [...difficultCenters[OllIndex]].sort((a,b) => a-b);
+  const sortedOld = [...selectedGroupOlls[OllIndex].difficultCenters].sort((a,b) => a-b);
   const sortedNew = [...testList].sort((a,b) => a-b);
 
+  console.log(sortedOld,sortedNew)
   const isDifferent = sortedOld.length !== sortedNew.length || 
                       sortedOld.some((val, idx) => val !== sortedNew[idx]);
 
+  console.log(isDifferent)
   if (isDifferent) {
-    setDifficultCenters((prev) => {
-      const newCenters = [...prev];
-      newCenters[OllIndex] = testList;
-      return newCenters;
-    });
-    setRefsReady(false);
+    console.log("Updating testList")
+    updateDifficultCenters(oll,testList)
+    
   }
 }
 
+async function updateDifficultCenters(oll,newDifficultCenters){
+  let ollToChange= await db.olls.get(oll.id)
+  console.log("UpdatedCool",oll.id,newDifficultCenters)
+  if(!ollToChange){
+    return
+  }
+  await db.olls.update(oll.id, {difficultCenters:newDifficultCenters})
+  const updatedCount = await db.olls.update(oll.id, { difficultCenters: newDifficultCenters });
+console.log("Rows updated:", updatedCount);
+const updatedOll = await db.olls.get(oll.id);
+console.log("Updated record:", updatedOll);
+}
 
-function changeOllAlgEnterPressed(e,OllIndex){
-  console.log(e)
+
+function changeOllAlgEnterPressed(e,oll){
   if(e.key=="Enter"){
       e.preventDefault()
-      changeOllAlg(e.target.value,OllIndex)
+      changeOllAlg(e.target.value,oll)
   }
     
 }
 
-function changeOllAlg(inputString,OllIndex){
+function changeOllAlg(newAlg,oll){
 
-  console.log(inputString)
-  //setRefsReady(false);
-  
+  let updatedNewAlg= correctAlgString(newAlg)
+  console.log("GivenData",[updatedNewAlg,oll])
+  setChangedAlgArray([updatedNewAlg,oll,true])
 }
+
+function correctAlgString(inputstring){
+  //Remove whitespace
+  inputstring= inputstring.replace(/\s+/g, "");
+  let newinputstring=""
+
+  let oddSpacing=0
+  for (let i=0; i<inputstring.length;i++){
+    console.log(inputstring[i])
+    newinputstring+=inputstring[i]
+
+    if(inputstring[(i+1)%inputstring.length]!="'" &&inputstring[(i+1)%inputstring.length]!="2" ){
+      newinputstring+=" "
+    }
+
+  }
+  newinputstring=newinputstring.trim()
+  return newinputstring
+
+}
+
 
 return (
   
   <>
   
 
-  { (true) && (
+  { (true && selectedGroupOlls?.length) && (
     <div className="BarOllGridsCont">
 
     {
-    arrowOllSet[groupSelected].map((oll,i)=>(
+    selectedGroupOlls.map((oll,i)=>(
       <>
                           {(
                           <div>
 
-                          <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
+                          <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
                           
-                          arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
+                          selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
                           oll.name + " Version "+oll.algNumber:oll.name}</h2>
                           
                           
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
-                                if(i>=10){
+                                if(i>=1){
                                   return
                                 }
 
@@ -1416,7 +1464,7 @@ return (
                                         d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2]||""}
                                         fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || ""}
                                       stroke="rgba(22, 22, 22, 1)"
-                                      stroke-width="1"
+                                      strokeWidth="1"
                                     />
                                   </svg>
 
@@ -1478,10 +1526,10 @@ return (
           <label htmlFor={`barExcludeCenters-${i}`}>Do not include bars with:</label>
     </div>
     <div>
-   <input id={`barExcludeCenters-${i}`} className="barExcludeCentersInput" placeholder="Exclude centers, ex: 1,2,3" onKeyDown={ (e)=>(excludeCenters(e,i))}></input>
+   <input id={`barExcludeCenters-${i}`} className="barExcludeCentersInput" placeholder="Exclude centers, ex: 1,2,3" defaultValue={oll.difficultCenters.join(',')} onKeyDown={ (e)=>(excludeCenters(e,i,oll))}></input>
   <button className="barExcludeButtonSave" onClick={() => {
     const value = document.getElementById(`barExcludeCenters-${i}`).value;
-    verifyAndUpdateExcludeBarInput(value, i);
+    verifyAndUpdateExcludeBarInput(value, i,oll);
   }}> Save</button></div>
   </div>
                       
@@ -1491,10 +1539,10 @@ return (
    <label htmlFor={`barchangeOllAlg-${i}`}>Change alg:</label>
    </div>
    <div>
-   <input id={`barchangeOllAlg-${i}`} className="barExcludeCentersInput" placeholder="Enter new alg, ex: R U R' U' R U2 R'" onKeyDown={ (e)=>(changeOllAlgEnterPressed(e,i))}></input>
+   <input id={`barchangeOllAlg-${i}`} className="barExcludeCentersInput" placeholder="Enter new alg, ex: R U R' U R U2 R'" onKeyDown={ (e)=>(changeOllAlgEnterPressed(e,oll))}></input>
   <button className="barExcludeButtonSave" onClick={() => {
     const value = document.getElementById(`barchangeOllAlg-${i}`).value;
-    changeOllAlg(value, i);
+    changeOllAlg(value, oll);
   }}> Save</button> </div>
   </div>
                       </div>
@@ -1511,11 +1559,11 @@ return (
 
 
   {(false)&&
-    arrowOllSet[groupSelected].map((oll,i)=>(
+    selectedGroupOlls.map((oll,i)=>(
       <>
                           {(
                           <div>
-                          <h2>{arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%2].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
+                          <h2>{selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%2].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
@@ -1541,7 +1589,7 @@ return (
                       </div>
                       </div>
                           )}
-                    {(!oll.algNumber) &&(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%2].name)&&(
+                    {(!oll.algNumber) &&(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%2].name)&&(
                       <div>
                           <h2>{oll.name + " AUF ("+oll.altAUF[0]+ ") Version 1"}</h2>
                           <div className="OllGrid">
@@ -1567,6 +1615,14 @@ return (
                       </> 
     ))
   }
+  {console.log("Problemo",changedAlgArray)}
+  {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  && (<>
+        <CornerPermutationPage
+          newAlg={changedAlgArray[0]}
+          oll={changedAlgArray[1]}
+        />
+        </>
+      )}
 
   </>
 

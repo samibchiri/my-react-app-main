@@ -36,6 +36,9 @@ const arrowOllSet = [
     ],
     algs: "R U2' R' U' R U R' U' R U' R'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -208,6 +211,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U' R' U R U2 R'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -373,6 +379,9 @@ const arrowOllSet = [
     ],
     algs: "R U2' R2' U' R2 U' R2' U2' R",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -538,6 +547,9 @@ const arrowOllSet = [
     ],
     algs: "R2 D R' U2 R D' R' U2 R'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -703,6 +715,9 @@ const arrowOllSet = [
     ],
     algs: "R2 D' R U2 R' D R U2 R",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -868,6 +883,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U' r' F R F'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1033,6 +1051,9 @@ const arrowOllSet = [
     ],
     algs: "R U R D R' U' R D' R2",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1198,6 +1219,9 @@ const arrowOllSet = [
     ],
     algs: "x R' U R D' R' U' R D x'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1363,6 +1387,9 @@ const arrowOllSet = [
     ],
     algs: "R' F R B' R' F' R B",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1528,6 +1555,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' R U' R' U2 R",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1693,6 +1723,9 @@ const arrowOllSet = [
     ],
     algs: "R U2' R' U' R U' R'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -1858,6 +1891,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U2' R'",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2023,6 +2059,9 @@ const arrowOllSet = [
     ],
     algs: "R' U2 R U R' U R",
     group: "Cross",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2195,6 +2234,9 @@ const arrowOllSet = [
     ],
     algs: "R U2 R2' F R F' U2 R' F R F'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2360,6 +2402,9 @@ const arrowOllSet = [
     ],
     algs: "F R U R' U' F' f R U R' U' f'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2525,6 +2570,9 @@ const arrowOllSet = [
     ],
     algs: "r U r' U2 r U2 R' U2 R U' r'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2690,6 +2738,9 @@ const arrowOllSet = [
     ],
     algs: "f R U R' U' f' U' F R U R' U' F'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -2855,6 +2906,9 @@ const arrowOllSet = [
     ],
     algs: "r' R2 U R' U r U2 r' U M'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3020,6 +3074,9 @@ const arrowOllSet = [
     ],
     algs: "f R U R' U' f' U F R U R' U' F'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3185,6 +3242,9 @@ const arrowOllSet = [
     ],
     algs: "M U' r U2 r' U' R U' R' M'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3350,6 +3410,9 @@ const arrowOllSet = [
     ],
     algs: "r' U2 R U R' U r",
     group: "Square Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3515,6 +3578,9 @@ const arrowOllSet = [
     ],
     algs: "l' U2 L U L' U l",
     group: "Square Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3680,6 +3746,9 @@ const arrowOllSet = [
     ],
     algs: "r U2 R' U' R U' r'",
     group: "Square Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -3845,6 +3914,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U R U2 r'",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4010,6 +4082,9 @@ const arrowOllSet = [
     ],
     algs: "r' U' R U' R' U2 r",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4175,6 +4250,9 @@ const arrowOllSet = [
     ],
     algs: "l' U' L U' L' U2 l",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4340,6 +4418,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' R' F R2 U R' U' F'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4505,6 +4586,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R' F R F' R U2 R'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4670,6 +4754,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U R U' R' U' r' R U R U' R'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -4835,6 +4922,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U R' F R F' R U2 r'",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5000,6 +5090,9 @@ const arrowOllSet = [
     ],
     algs: "r' R2 U R' U R U2 R' U M'",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5165,6 +5258,9 @@ const arrowOllSet = [
     ],
     algs: "M' R' U' R U' R' U2 R U' R r'",
     group: "Small Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5330,6 +5426,9 @@ const arrowOllSet = [
     ],
     algs: "F U R U' R2 F' R U R U' R'",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5495,6 +5594,9 @@ const arrowOllSet = [
     ],
     algs: "r U' r' U' r U r' y' R' U R",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5660,6 +5762,9 @@ const arrowOllSet = [
     ],
     algs: "R' F R U R' F' R F U' F'",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5825,6 +5930,9 @@ const arrowOllSet = [
     ],
     algs: "r' U' r R' U' R U r' U r",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -5990,6 +6098,9 @@ const arrowOllSet = [
     ],
     algs: "l' U' l L' U' L U l' U l",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6155,6 +6266,9 @@ const arrowOllSet = [
     ],
     algs: "r U r' R U R' U' r U' r'",
     group: "Knight Move Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6320,6 +6434,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R' F R F' U2 R' F R F'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6485,6 +6602,9 @@ const arrowOllSet = [
     ],
     algs: "F R' F' R2 r' U R U' R' U' M'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6650,6 +6770,9 @@ const arrowOllSet = [
     ],
     algs: "R U2 R' R' F R F' U2 M' U R U' r'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6815,6 +6938,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -6980,6 +7106,9 @@ const arrowOllSet = [
     ],
     algs: "r' R U R U R' U' M' R' F R F'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -7166,6 +7295,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U' M2 U R U' R' U' M'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -7352,6 +7484,9 @@ const arrowOllSet = [
     ],
     algs: "r' R U R U R' U' M2 U R U' r'",
     group: "Dot",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -7517,6 +7652,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U' r' R U R U' R'",
     group: "Corners Oriented",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -7682,6 +7820,9 @@ const arrowOllSet = [
     ],
     algs: "r' R U R U R' U' R' F R F' r R'",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -7847,6 +7988,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' R U' R' F' U' F R U R'",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8012,6 +8156,9 @@ const arrowOllSet = [
     ],
     algs: "F U R U2 R' U' R U2 R' U' F'",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8177,6 +8324,9 @@ const arrowOllSet = [
     ],
     algs: "F R' F R2 U' R' U' R U R' F2",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8342,6 +8492,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' F U R U' R' F' R",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8507,6 +8660,9 @@ const arrowOllSet = [
     ],
     algs: "S R U R' U' R' F R f'",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8672,6 +8828,9 @@ const arrowOllSet = [
     ],
     algs: "L U F' U' L' U L F L'",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -8837,6 +8996,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' R' F R F'",
     group: "T Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9002,6 +9164,9 @@ const arrowOllSet = [
     ],
     algs: "R U R2 U' R' F R U R U' F'",
     group: "C Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9167,6 +9332,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' B' R' F R F' B",
     group: "C Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9332,6 +9500,9 @@ const arrowOllSet = [
     ],
     algs: "R U2 R' R' F R F' R U2 R'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9497,6 +9668,9 @@ const arrowOllSet = [
     ],
     algs: "L' U' L U' L' U L U L F' L' F",
     group: "W Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9662,6 +9836,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' F' U2 F U R U R'",
     group: "W Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9827,6 +10004,9 @@ const arrowOllSet = [
     ],
     algs: "F R' F' R U R U' R'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -9992,6 +10172,9 @@ const arrowOllSet = [
     ],
     algs: "F R U' R' U' R U R' F'",
     group: "Fish Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10157,6 +10340,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U' R' U' R' F R F'",
     group: "W Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10322,6 +10508,9 @@ const arrowOllSet = [
     ],
     algs: "L F' L' U' L U F U' L'",
     group: "Big Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10487,6 +10676,9 @@ const arrowOllSet = [
     ],
     algs: "F R U R' U' F' R' U' R U' R' U2 R",
     group: "Big Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10652,6 +10844,9 @@ const arrowOllSet = [
     ],
     algs: "R' F R U R' U' F' U R",
     group: "Big Lightning Bolt",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10817,6 +11012,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U2 R' F R U R' U' F'",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -10982,6 +11180,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' R U' R' U2 R F R U R' U' F'",
     group: "Awkward Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11147,6 +11348,9 @@ const arrowOllSet = [
     ],
     algs: "F' U' L' U L F",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11312,6 +11516,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' F R' F' R U R",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11477,6 +11684,9 @@ const arrowOllSet = [
     ],
     algs: "F U R U' R' F'",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11642,6 +11852,9 @@ const arrowOllSet = [
     ],
     algs: "f R U R' U' f'",
     group: "P Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11807,6 +12020,9 @@ const arrowOllSet = [
     ],
     algs: "F R U R' U' F'",
     group: "T Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -11972,6 +12188,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' R' F R F' U R",
     group: "C Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12137,6 +12356,9 @@ const arrowOllSet = [
     ],
     algs: "R' U' R' F R F' R' F R F' U R",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12302,6 +12524,9 @@ const arrowOllSet = [
     ],
     algs: "F' L' U' L U L' U' L U F",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12467,6 +12692,9 @@ const arrowOllSet = [
     ],
     algs: "F R U R' U' R U R' U' F'",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12632,6 +12860,9 @@ const arrowOllSet = [
     ],
     algs: "r U' r2 U r2 U r2 U' r",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12797,6 +13028,9 @@ const arrowOllSet = [
     ],
     algs: "r' U r2 U' r2 U' r2 U r'",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -12962,6 +13196,9 @@ const arrowOllSet = [
     ],
     algs: "f R U R' U' R U R' U' f'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13127,6 +13364,9 @@ const arrowOllSet = [
     ],
     algs: "F U R U' R' U R U' R' F'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13292,6 +13532,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U' y R U' R' F'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13457,6 +13700,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U R U' B U' B' R'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13622,6 +13868,9 @@ const arrowOllSet = [
     ],
     algs: "r' U2 R U R' U' R U R' U r",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13787,6 +14036,9 @@ const arrowOllSet = [
     ],
     algs: "l' U2 L U L' U' L U L' U l",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -13952,6 +14204,9 @@ const arrowOllSet = [
     ],
     algs: "r U2 R' U' R U R' U' R U' r'",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14117,6 +14372,9 @@ const arrowOllSet = [
     ],
     algs: "r U R' U R U' R' U R U2 r'",
     group: "Small L Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14289,6 +14547,9 @@ const arrowOllSet = [
     ],
     algs: "R U2 R2 U' R U' R' U2 F R F'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14461,6 +14722,9 @@ const arrowOllSet = [
     ],
     algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14633,6 +14897,9 @@ const arrowOllSet = [
     ],
     algs: "r' U' r U' R' U R U' R' U R r' U r",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14805,6 +15072,9 @@ const arrowOllSet = [
     ],
     algs: "r U r' U R U' R' U R U' R' r U' r'",
     group: "I Shape",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
@@ -14977,6 +15247,9 @@ const arrowOllSet = [
     ],
     algs: "R U R' U' M' U R U' r'",
     group: "Corners Oriented",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
     fullDiagCp: [
       [
         [
