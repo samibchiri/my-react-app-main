@@ -16,7 +16,67 @@ import { db } from './data/db.js';
 import { useLiveQuery } from "dexie-react-hooks";
 import {CornerPermutationPage} from "./ArrowDataGenerator.jsx"
 
-export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
+
+export function useWindowWidthLogic(cubeSize) {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  let newCubeSize
+  let newStrokeWidth
+  let newLineWidth
+
+  if (width<600){
+    let smallCubeSize=120
+    if(cubeSize!=smallCubeSize){
+      newCubeSize=120
+      newStrokeWidth=1
+      newLineWidth=3
+    }
+    
+  }
+  else if (width<900){
+    let mediumCubeSize=150
+    if(cubeSize!=mediumCubeSize){
+      newCubeSize=150
+      newStrokeWidth=1.2
+      newLineWidth=3.5
+    }
+  }
+  else if (width<1100){
+    let largeCubeSize=200
+    if(cubeSize!=largeCubeSize){
+      newCubeSize=200
+      newStrokeWidth=1.5
+      newLineWidth=4
+    }
+  }
+  else if (width<1500){
+    let mediumCubeSize=150
+    if(cubeSize!=mediumCubeSize){
+      newCubeSize=150
+      newStrokeWidth=1.2
+      newLineWidth=3.5
+    }
+  }
+  else{
+    let largeCubeSize=200
+    if(cubeSize!=largeCubeSize){
+      newCubeSize=200
+      newStrokeWidth=1.5
+      newLineWidth=4
+    } 
+  }
+
+  return [width,newCubeSize,newStrokeWidth,newLineWidth];
+}
+
+export function BarPersevationLogic({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
 
@@ -41,16 +101,6 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   14: "Corners Oriented"
 }
 
-  
-const allOlls = useLiveQuery(() => db.olls.toArray(), []);
-
-console.log(allOlls)
-const selectedGroupOlls = useLiveQuery(
-  () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
-  [groupSelected]
-);
-
-
 useEffect(() => {
   altoverlayRefs.current = [];
   setRefsReady(false);
@@ -71,68 +121,10 @@ const noMovementCenterRef = useRef(
 
 const [cubeSize,setCubeSize]=useState(200)
 
-
-
-function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (width<600){
-    let smallCubeSize=120
-    if(cubeSize!=smallCubeSize){
-      setCubeSize(120)
-      setStrokeWidth(1)
-      setLineWidth(3)
-      setRefsReady(false)
-    }
-    
-  }
-  else if (width<900){
-    let mediumCubeSize=150
-    if(cubeSize!=mediumCubeSize){
-      setCubeSize(150)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    }
-  }
-  else if (width<1100){
-    let largeCubeSize=200
-    if(cubeSize!=largeCubeSize){
-      setCubeSize(200)
-      setStrokeWidth(1.5)
-      setLineWidth(4)
-      setRefsReady(false)
-    }
-  }
-  else if (width<1500){
-    let mediumCubeSize=150
-    if(cubeSize!=mediumCubeSize){
-      setCubeSize(150)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    }
-  }
-  else{
-    let largeCubeSize=200
-    if(cubeSize!=largeCubeSize){
-      setCubeSize(200)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    } 
-  }
-
-  return width;
-}
-const width = useWindowWidth();
+let [width,newCubeSize,newStrokeWidth,newLineWidth] = useWindowWidthLogic();
+setCubeSize(newCubeSize)
+setStrokeWidth(newStrokeWidth)
+setLineWidth(newLineWidth)
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
@@ -1306,7 +1298,6 @@ function correctAlgString(inputstring){
   //Remove brackets () and []
   inputstring = inputstring.replace(/[()\[\]]/g, "");
 
-
   //Remove whitespace
   inputstring= inputstring.replace(/\s+/g, "");
   let newinputstring=""
@@ -1619,4 +1610,4 @@ return (
 
 }
 
-export default BarPersevation
+export default BarPersevationLogic
