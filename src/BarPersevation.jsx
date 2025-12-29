@@ -16,11 +16,20 @@ import { db } from './data/db.js';
 import { useLiveQuery } from "dexie-react-hooks";
 import {CornerPermutationPage} from "./ArrowDataGenerator.jsx"
 
+import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,sortPointsList,sortCenterLeftRight,isPositionLeft} from "./BarPersevationLogic.jsx"
+
 export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
 
   const [groupSelected,setGroupSelected]=useState(7)
+
+  const [cubeSize, setCubeSize] = useState(200);
+  const [strokeWidth, setStrokeWidth] = useState(1.5);
+  const [lineWidth, setLineWidth] = useState(4);
+  const [refsReady, setRefsReady] = useState(false);
+
+  const altoverlayRefs = useRef([]);
 
   const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
   const groupTable = {
@@ -56,12 +65,8 @@ useEffect(() => {
   setRefsReady(false);
 }, [selectedGroupOlls]);
 
-  const [refsReady, setRefsReady] = useState(false);
   const [pathCalculated,setPathCalculated]= useState(false)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
-  const [strokeWidth,setStrokeWidth]= useState(1.5)
-  const [lineWidth,setLineWidth]= useState(4)
-  const altoverlayRefs = useRef([]);
   
   const [barColorsFiltered,setBarColorsFiltered]=useState([])
 
@@ -69,70 +74,10 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
-const [cubeSize,setCubeSize]=useState(200)
+
+useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady);
 
 
-
-function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (width<600){
-    let smallCubeSize=120
-    if(cubeSize!=smallCubeSize){
-      setCubeSize(120)
-      setStrokeWidth(1)
-      setLineWidth(3)
-      setRefsReady(false)
-    }
-    
-  }
-  else if (width<900){
-    let mediumCubeSize=150
-    if(cubeSize!=mediumCubeSize){
-      setCubeSize(150)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    }
-  }
-  else if (width<1100){
-    let largeCubeSize=200
-    if(cubeSize!=largeCubeSize){
-      setCubeSize(200)
-      setStrokeWidth(1.5)
-      setLineWidth(4)
-      setRefsReady(false)
-    }
-  }
-  else if (width<1500){
-    let mediumCubeSize=150
-    if(cubeSize!=mediumCubeSize){
-      setCubeSize(150)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    }
-  }
-  else{
-    let largeCubeSize=200
-    if(cubeSize!=largeCubeSize){
-      setCubeSize(200)
-      setStrokeWidth(1.2)
-      setLineWidth(3.5)
-      setRefsReady(false)
-    } 
-  }
-
-  return width;
-}
-const width = useWindowWidth();
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
@@ -143,8 +88,8 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
   let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
-  //let CornerPermutations=["",F_Perm, "U2"+F_Perm   ,"U"+F_Perm,"U'"+F_Perm,Y_Perm]
-  let CornerPermutations=["","", "","","",""]
+  let CornerPermutations=["",T_Perm, "U2"+F_Perm   ,"U"+F_Perm,"U'"+F_Perm,Y_Perm]
+  //let CornerPermutations=["","", "","","",""]
   let PermTable=[0,5,1,2,3,4]
 
   let CpLocation=["Full","Diag","Left","Right","Front","Back"]
@@ -168,107 +113,16 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
       }
 let Centers= GetCentersPosition(cubeSize)
 
-function GetCentersPosition(cubeSize){
-
-    //Cubesizes ranging from 100 to 400, incremented by 50, manually verified on my laptop
-    let EmpericalcoordOffset=[[5.3,0.5],[5.3,0],[5.3,-0.5],[5.3,-0.9],[6,-0.9],[6,-1.5],[6,-2.2]]
-    
-    let BetweenArray=[Math.floor((cubeSize-100)/50),Math.ceil((cubeSize-100)/50)]
-
-    let LowerEnd=BetweenArray[0]
-    let UpperEnd=BetweenArray[1]
-    if(LowerEnd<0){
-      LowerEnd=0
-      UpperEnd=0
-    }
-    if(LowerEnd>=EmpericalcoordOffset.length-1 ||UpperEnd>=EmpericalcoordOffset.length-1){
-      LowerEnd=EmpericalcoordOffset.length-1
-      UpperEnd=EmpericalcoordOffset.length-1
-    }
-
-    let xCoordOffset=EmpericalcoordOffset[LowerEnd][0]/2+EmpericalcoordOffset[UpperEnd][0]/2
-    let yCoordOffset=EmpericalcoordOffset[LowerEnd][1]/2+EmpericalcoordOffset[UpperEnd][1]/2
-
-    const xCoords = [9, 39, 79.5, 120,150];
-    const yCoords = [10.5, 40, 81.5, 122.5, 153.5];
-
-    let Centers = [];
-
-    for (let y of yCoords) {
-        for (let x of xCoords) {
-            Centers.push([x*(cubeSize/200)+xCoordOffset, y*(cubeSize/200)+yCoordOffset]);
-        }
-    }
-    return Centers
-
-}
 
 function GetBarsIndices(OllIndex,PermIndex){
 
-  let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
-  
-    if (!containerparent) {
-      console.warn('GetBarsIndices: no ref for index', PermIndex);
-      return ["","red"]
-    }
-    let container= containerparent.querySelector("div")
-    let ContainerSvg = container.querySelector('svg');
-  if (!ContainerSvg) {
-    console.warn('GetBarsIndices: no svg inside container', container);
-    return ["","red"]
-  }
-  let ContainerSvgSquaresInside= ContainerSvg.querySelectorAll("g")[1]
-  let ContainerSvgSquaresInsideList= ContainerSvgSquaresInside.querySelectorAll("polygon")
+  console.log("GetAgainBar")
 
-  let ContainerSvgSquaresOutside= ContainerSvg.querySelectorAll("g")[2]
-  
-  let ContainerSvgSquaresOutsideList= ContainerSvgSquaresOutside.querySelectorAll("polygon")
-  let combinedSquaresList=[...ContainerSvgSquaresInsideList,...ContainerSvgSquaresOutsideList]
-  
-  combinedSquaresList=[...combinedSquaresList,...[0,0,0,0]]
-
-  let Remapping = [
-      [0,6],[1,7],[2,8],[3,11],[4,12],
-      [5,13],[6,16],[7,17],[8,18],[9,19],
-      [10,14],[11,9],[12,21],[13,22],[14,23],
-      [15,5],[16,10],[17,15],[18,3],[19,2],
-      [20,1],[21,24],[22,20],[23,4],[24,0]
-    ];
-  
-  //Store polygons as 5x5 grid
-  let newCombinedSquaresList=Array.from( {length:25}, ()=> 0)
-  combinedSquaresList.forEach((_,i)=>{
-      newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
-  })
-
-  //Put the color in newSquaresColors Array
-  let newSquaresColors= Array.from( {length:25}, ()=> 0)
-  newCombinedSquaresList.forEach((_,i)=>{
-    if (newCombinedSquaresList[i]!=0){
-        newSquaresColors[i]=newCombinedSquaresList[i].getAttribute("fill")
-    }
-    else{
-        newSquaresColors[i]=0
-    }
-        
-  })
+  let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
 
 
   let colorIndexList=[[],[],[],[],[]]
-  let colorList=[]
-  // for(let i=0;i<newSquaresColors.length;i++){
-  //   if(!colorList.includes(newSquaresColors[i])){
-  //     if(newSquaresColors[i]!=0){
-  //       colorList.push(newSquaresColors[i])
-  //     }
-      
-
-  //   }
-
-  // }
-
-  
-  colorList=["#00d800","orange","#1f51ff","red","yellow"]
+  let colorList=["#00d800","orange","#1f51ff","red","yellow"]
   let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(0, 71, 204, 1)","rgba(207, 1, 1, 1)","yellow"]
 
   if(PermIndex==0){
@@ -290,109 +144,38 @@ function GetBarsIndices(OllIndex,PermIndex){
   //Put information of each piece in colorIndexList
   //Every array in colorIndexList forms a side after doing OLL
   else{
-    for(let i=0;i<piecesMovementRef.current.length;i++){
-      for(let j=0;j<piecesMovementRef.current[i].length;j++){
-        
-        let currentIndex=piecesMovementRef.current[i][j][0]
-        let futureIndex=piecesMovementRef.current[i][j][1]
-
-        let color = newSquaresColors[currentIndex]
-        let Points=[]
-        for(let j=0;j<4;j++){
-          let tempPoints=newCombinedSquaresList[currentIndex].getAttribute("points").split(" ")
-          Points.push(tempPoints[j].split(","))
-          
-        }
-        colorIndexList[i].push([currentIndex,futureIndex,color,Points])
-      }
-    }
-  }
-
-  //Sorts colorIndexList on Center,PositionLeft,PositionRight
-  function sortCenterLeftRight(index,SquareColors){
-    let newIndex=index%10
-    let returnedvalue=0
-    if(newIndex<5){
-      if(newIndex%2==0){
-        return returnedvalue
-      }
-    }
-    else if (newIndex==7){
-      return returnedvalue
-    }
-    if (index==11 || index==13){
-      return returnedvalue
-    }
-
-    let PositionLeft=isPositionLeft(index,SquareColors)
-    if(PositionLeft){
-      returnedvalue=1
-    }
-    else{
-      returnedvalue=2
-    }
-    return returnedvalue
+    //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
+    colorIndexList=addInformationToColorIndexList(piecesMovementRef,newSquaresColors,newCombinedSquaresList,colorIndexList)
   }
 
    colorIndexList.forEach(list=>{
       list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
-      list.forEach(pointList=>{
-        let averagex=0
-        pointList[3].forEach(item=>{
-          
-          averagex+=item[0]/4
-        })
-        let averagey=0
-        pointList[3].forEach(item=>{
-          averagey+=item[1]/4
-        })
-        
-        //Store topleft topright bottom right bottomleft
-        let indextostore=[]
-        for(let i=0;i<4;i++){
-          let [x,y]=pointList[3][i]
-          
-          if(y<averagey &&x<averagex){
-            indextostore[i]=0
-          }
-          if(y<averagey &&x>averagex){
-            indextostore[i]=1
-          }
-          if(y>averagey &&x>averagex){
-            indextostore[i]=2
-          }
-          if(y>averagey &&x<averagex){
-            indextostore[i]=3
-          }
-        }
-        let TempPointsList=[...pointList[3]]
-        for(let i=0;i<4;i++){
-          pointList[3][indextostore[i]]=TempPointsList[i]
-        }
-      })
+
+      //Sort Points clockwise
+      list=sortPointsList(list)
     } 
   )
 
-  let newPath=Array.from({ length: 4 }, () =>
-  Array.from({ length: 3 }, () => [])
+  let ConnectingLines = Array.from({ length: 5 }, () =>(
+    {
+      connectCenters:[],
+      arrow:{
+        arrowPath:"",
+        arrowRotation:"",
+        arrowRotationCoordX:"",
+        arrowRotationCoordX:""
+      },
+      centerCircle:""
+    })
   );
-  let ConnectingLines = Array.from({ length: 5 }, () =>
-  Array.from({ length: 4 }, () => [])
-);
   let combinedColorList=Array.from({ length: 5 }, () => [])
   
-  //Store the Outside Outline of AllCenters
   for(let i=0;i<4;i++){
-    for(let j=0;j<colorIndexList[i].length;j++){
-        if(i!=4){
-          newPath[i][j]+=CalculateNewOutline(colorIndexList[i][j][3],strokeWidth,colorIndexList[i][j][0])
-        }
-    }
-    if(i<4){ //Not yellow 
       let distance
       let color
       let contrastingcolor
       let maxdistance=((Centers[6][0]-Centers[12][0])**2+(Centers[6][1]-Centers[12][1])**2)**(1/2)+1;
+      
       //Bars can be connected if they are close to each other, 
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
@@ -411,9 +194,12 @@ function GetBarsIndices(OllIndex,PermIndex){
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
         }
         contrastingcolor=combinedColorList[i][1]
-        distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
+        //ConnectCenters returns [path,angle,centerx2,centery2,distance,circlePath1]
         if(barColorsFiltered.includes(color)){
           distance=10000
+        }
+        else{
+          distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
         }
       }
       
@@ -424,7 +210,6 @@ function GetBarsIndices(OllIndex,PermIndex){
 
       if (distance<maxdistance){
       ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)
-      circlePath=ConnectingLines[i][1][5]
       Center1Used=true
       }
       
@@ -455,7 +240,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       Center2Used=true
       }
 
-
+  if (!Center1Used && !Center2Used){
       if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
         distance=10000
       }
@@ -475,57 +260,51 @@ function GetBarsIndices(OllIndex,PermIndex){
         }
       }
       if (distance<maxdistance){
-        if (!Center1Used && !Center2Used){
+        
           ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)
           Center3Used=true
-        }
       }
-      
-      if (!Center1Used|| !Center2Used){
-        circlePath=""
-      }
+    }
       
       ConnectingLines[i][2]=circlePath
       ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors,PermIndex)
       
       for(let j=0;j<3;j++){
-        let PrevIndex=colorIndexList[i][j][0]
+        let currentIndex=colorIndexList[i][j][0]
         let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
          
-        let distance=((Centers[PrevIndex][0]-Centers[NewIndex][0])**2+(Centers[PrevIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
-        let smalldistance=Math.abs(Centers[6][0]-Centers[12][0])*1.3
-        let xdifference=(Centers[PrevIndex][0]-Centers[NewIndex][0])
-        let ydifference=(Centers[PrevIndex][1]-Centers[NewIndex][1])
+        let distance=((Centers[currentIndex][0]-Centers[NewIndex][0])**2+(Centers[currentIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
+        let smalldistance=Math.abs(Centers[6][0]-Centers[12][0])*1.3 //1.3 so that cornerpieces that are close to each other are also included
+        let xdifference=(Centers[currentIndex][0]-Centers[NewIndex][0])
+        let ydifference=(Centers[currentIndex][1]-Centers[NewIndex][1])
         
       if(PermIndex==0){
       if(distance<smalldistance){ 
         if(xdifference>1){
-          noMovementCenterRef.current[PrevIndex][0]=-1
+          noMovementCenterRef.current[currentIndex][0]=-1
         }
         else if(xdifference<-1){
-          noMovementCenterRef.current[PrevIndex][0]=1
+          noMovementCenterRef.current[currentIndex][0]=1
         }
         else{
-          noMovementCenterRef.current[PrevIndex][0]=0
+          noMovementCenterRef.current[currentIndex][0]=0
         }
         if(ydifference>1){
-          noMovementCenterRef.current[PrevIndex][1]=1
+          noMovementCenterRef.current[currentIndex][1]=1
         }
         else if(ydifference<-1){
-          noMovementCenterRef.current[PrevIndex][1]=-1
+          noMovementCenterRef.current[currentIndex][1]=-1
         }
         else{
-          noMovementCenterRef.current[PrevIndex][1]=0
+          noMovementCenterRef.current[currentIndex][1]=0
         }
       }
       else{
-        noMovementCenterRef.current[PrevIndex][0]=false
-        noMovementCenterRef.current[PrevIndex][1]=false
+        noMovementCenterRef.current[currentIndex][0]=false
+        noMovementCenterRef.current[currentIndex][1]=false
       }
       }  
     }
-    }
-    
   }
   
   let [pathList,color]= centerOutLineInfo(colorIndexList)
@@ -538,14 +317,14 @@ function GetBarsIndices(OllIndex,PermIndex){
   let noMovementCenterCircle=[]
   for (let i=0;i<4;i++){
     for (let j=0;j<3;j++){
-      let PrevIndex=colorIndexList[i][j][0]
+      let currentIndex=colorIndexList[i][j][0]
       let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
-      if(noMovementCenterRef.current[PrevIndex][0]!==false){
-      finalPath[i]+=newPath[i][j]
+      if(noMovementCenterRef.current[currentIndex][0]!==false){
+      finalPath[i]+=CalculateNewOutline(colorIndexList[i][j][3],strokeWidth,colorIndexList[i][j][0])
       finalPath[i]+=pathList[i][j]
       
-      let changeX=noMovementCenterRef.current[PrevIndex][0]
-      let changeY=noMovementCenterRef.current[PrevIndex][1]
+      let changeX=noMovementCenterRef.current[currentIndex][0]
+      let changeY=noMovementCenterRef.current[currentIndex][1]
       let circleX
       let circleY
 
@@ -596,22 +375,22 @@ function GetBarsIndices(OllIndex,PermIndex){
 
       if(colorIndexList[i][j][0]%5>=1 &&colorIndexList[i][j][0]%5<=3){
         if(colorIndexList[i][j][0]>=5 &&colorIndexList[i][j][1]<=18){
-          if(noMovementCenterRef.current[PrevIndex][1]==1){
+          if(noMovementCenterRef.current[currentIndex][1]==1){
             circleY+=0.2/cubeSize*200
           }
-          else if(noMovementCenterRef.current[PrevIndex][1]==-1){
+          else if(noMovementCenterRef.current[currentIndex][1]==-1){
             circleY-=0/cubeSize*200
           }
-          if(noMovementCenterRef.current[PrevIndex][0]==1){
+          if(noMovementCenterRef.current[currentIndex][0]==1){
             circleX-=1/cubeSize*200
           }
-          if(noMovementCenterRef.current[PrevIndex]==-1){
+          if(noMovementCenterRef.current[currentIndex]==-1){
             circleX-=1.2/cubeSize*200
           }
         }
       }
 
-      if(noMovementCenterRef.current[PrevIndex][0]===0 &&noMovementCenterRef.current[PrevIndex][1]===0 ){
+      if(noMovementCenterRef.current[currentIndex][0]===0 &&noMovementCenterRef.current[currentIndex][1]===0 ){
         circleX=Centers[colorIndexList[i][j][0]][0]
         circleY=Centers[colorIndexList[i][j][0]][1]
         }
@@ -623,12 +402,13 @@ function GetBarsIndices(OllIndex,PermIndex){
       
         let radius=2/200*cubeSize
       let smallCirclePath=drawSmallCircle(circleX,circleY,radius)
-      //noMovementCenterCircle.push(smallCirclePath)
+      noMovementCenterCircle.push(smallCirclePath)
     }
     }
   }
 
   let stringNoMovementCircle=""
+  console.log("NoMovementCircle",noMovementCenterCircle)
   for (let i=0;i<noMovementCenterCircle.length;i++){
     stringNoMovementCircle+=noMovementCenterCircle[i]
   }
@@ -646,98 +426,6 @@ function drawSmallCircle(x,y,radius){
 
 }
 
-function isPositionLeft(Center1,SquareColors){
-      let PositionLeft=false
-      if (Center1==1){
-       if (SquareColors[6]=="yellow"){ //If it is position doesnt change
-           PositionLeft=false
-       }
-       else{
-        PositionLeft=true
-      }
-      }
-     
-      if(Center1==3){
-         if (SquareColors[8]=="yellow"){ //If it is position doesnt change
-          PositionLeft=true
-        
-      }
-    }
-    else if (Center1==5){
-      if (SquareColors[6]=="yellow"){
-        PositionLeft=true
-      }
-      else{
-        PositionLeft=false
-      }
-    }
-    else if (Center1==6){
-      if (SquareColors[1]=="yellow"){
-        PositionLeft=true
-      }
-    }
-    else if (Center1==8){
-      if (SquareColors[3]=="yellow"){
-        PositionLeft=false
-      }
-      else{
-        PositionLeft=true
-      }
-    }
-    else if (Center1==9){{
-      if (SquareColors[8]=="yellow"){
-        PositionLeft=false
-      }
-      else{
-        PositionLeft=true
-      }
-    }}
-
-    else if (Center1==15){
-      if (SquareColors[16]=="yellow"){
-        PositionLeft=false
-      }
-      else{
-        PositionLeft=true
-      }
-    }
-    else if (Center1==16){
-      if (SquareColors[21]=="yellow"){
-        PositionLeft=false
-      }
-      else{
-        PositionLeft=true
-      }
-    }
-    else if (Center1==8){
-      if (SquareColors[23]=="yellow"){
-        PositionLeft=true
-      }
-      else{
-        PositionLeft=false
-      }
-    }
-    else if (Center1==19){{
-      if (SquareColors[18]=="yellow"){
-        PositionLeft=true
-      }
-    }}
-    if (Center1==21){
-      if (SquareColors[16]=="yellow"){
-           PositionLeft=true
-      }
-    }
-    if(Center1==23){
-      if (SquareColors[18]=="yellow"){ 
-           PositionLeft=false
-      }
-      else{
-        PositionLeft=true
-      }
-    }
-      return PositionLeft
-    }
-
 function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Used,Center3Used,color,SquareColors,PermIndex){
   
   let Centers= GetCentersPosition(cubeSize)
@@ -747,13 +435,11 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
   let Center2
   let EndLocationIndex
 
-  function CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors){
+  function CenterNewPosition(PointsInfo,EndLocationIndex){
 
     Center1=PointsInfo[1][0]
     let NewCenter1
     let NewCenter2
-    let PositionLeft=isPositionLeft(Center1,SquareColors)
-
     if (EndLocationIndex==2){
       NewCenter1=3
       NewCenter2=1
@@ -770,7 +456,7 @@ function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Use
       NewCenter1=19
       NewCenter2=9
     }
-    return [NewCenter1,NewCenter2,EndLocationIndex,PositionLeft]
+    return [NewCenter1,NewCenter2]
   }
 
   let contrastingcolorlistIndex
@@ -1038,21 +724,6 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex,
   return [interceptx,y]
 }
 
-
-
-useEffect(() => {
-  if (!refsReady) return;
-  console.log("Starterror",altoverlayRefs.current)
-  for (let OllIndex = 0; OllIndex < altoverlayRefs.current.length; OllIndex++) {
-      for (let PermIndex = 0; PermIndex < altoverlayRefs.current[OllIndex].length; PermIndex++) {
-    const el = altoverlayRefs.current[OllIndex][PermIndex];
-    if (el) {
-      GetBarsIndices(OllIndex,PermIndex);
-    }
-  }
-  }
-}, [refsReady,selectedGroupOlls]);
-
 const setOverlayRef = (el,index)=> {
   const rowIndex = Math.floor(index / 6);
   const colIndex = index % 6;
@@ -1077,6 +748,8 @@ const setOverlayRef = (el,index)=> {
 
 // compute overlayPaths after refs mount; run this AFTER refsReady becomes true
 useLayoutEffect(() => {
+  console.log("UpdatedCubesize")
+  console.log("NewCubeSize",cubeSize)
   
   if (!refsReady) return;
   const paths = altoverlayRefs.current.map((algListRef, OllIndex) => {
@@ -1095,7 +768,7 @@ useLayoutEffect(() => {
 
   setOverlayPaths(paths);
   setPathCalculated(true);
-}, [refsReady, groupSelected,cubeSize]);
+}, [refsReady,selectedGroupOlls,cubeSize]);
 
 
 //Calculate inner outline
@@ -1306,7 +979,6 @@ function correctAlgString(inputstring){
   //Remove brackets () and []
   inputstring = inputstring.replace(/[()\[\]]/g, "");
 
-
   //Remove whitespace
   inputstring= inputstring.replace(/\s+/g, "");
   let newinputstring=""
@@ -1436,10 +1108,10 @@ return (
                                   {
                                   
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
-                                  <>                                
+                                  <>                             
                                     <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
                                   <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3]||""}
+                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][0]||""}
                                       fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "purple"}
                                     stroke="rgba(0, 0, 0, 1)"
                                       strokeWidth="1.5"

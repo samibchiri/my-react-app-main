@@ -171,7 +171,7 @@ useEffect(() => {
     // give CaseImage time to render
      const timeout = setTimeout(() => {
     getSquareColors();
-  }, 1000);
+  }, 10);
 
   return () => clearTimeout(timeout);
 }, [scramble]);
