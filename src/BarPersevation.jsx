@@ -16,7 +16,9 @@ import { db } from './data/db.js';
 import { useLiveQuery } from "dexie-react-hooks";
 import {CornerPermutationPage} from "./ArrowDataGenerator.jsx"
 
-import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,sortPointsList,sortCenterLeftRight,isPositionLeft} from "./BarPersevationLogic.jsx"
+import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,
+  sortPointsList,sortCenterLeftRight,isPositionLeft,Connect2Points,
+  CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./BarPersevationLogic.jsx"
 
 export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
@@ -125,28 +127,14 @@ function GetBarsIndices(OllIndex,PermIndex){
   let colorList=["#00d800","orange","#1f51ff","red","yellow"]
   let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(0, 71, 204, 1)","rgba(207, 1, 1, 1)","yellow"]
 
-  if(PermIndex==0){
-    for(let i=0;i<newSquaresColors.length;i++){
-      if(newSquaresColors[i]!=0){
-        let index= colorList.findIndex(x=> x==newSquaresColors[i])
-        let Points=[]
-        
-        for(let j=0;j<4;j++){
-          let tempPoints=newCombinedSquaresList[i].getAttribute("points").split(" ")
-          Points.push(tempPoints[j].split(","))
-          
-        }
-        
-        colorIndexList[index].push([i,"","",Points])
-      }
-    }
-  }
+
   //Put information of each piece in colorIndexList
   //Every array in colorIndexList forms a side after doing OLL
-  else{
-    //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
-    colorIndexList=addInformationToColorIndexList(piecesMovementRef,newSquaresColors,newCombinedSquaresList,colorIndexList)
-  }
+  
+  //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
+  //console.log("Current4".piecesMovementRef)
+  colorIndexList=addInformationToColorIndexList(piecesMovementRef,newSquaresColors,newCombinedSquaresList,colorIndexList)
+
 
    colorIndexList.forEach(list=>{
       list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
@@ -158,12 +146,12 @@ function GetBarsIndices(OllIndex,PermIndex){
 
   let ConnectingLines = Array.from({ length: 5 }, () =>(
     {
-      connectCenters:[],
+      ConnectedCenters:[[],[]],
       arrow:{
         arrowPath:"",
         arrowRotation:"",
         arrowRotationCoordX:"",
-        arrowRotationCoordX:""
+        arrowRotationCoordY:""
       },
       centerCircle:""
     })
@@ -180,26 +168,30 @@ function GetBarsIndices(OllIndex,PermIndex){
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
       maxdistance=maxdistance*10
-      if(colorIndexList[i][0][2]!=colorIndexList[i][1][2]){
+      console.log("Whatwasthas",colorIndexList[i])
+      if(colorIndexList[i].color!=colorIndexList[i].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0][0])|| selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0].currentIndex)|| selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1].currentIndex)){
         distance=10000
       }
       else{
-        color=colorIndexList[i][0][2]
+        color=colorIndexList[i][0].color
         //CombinedColorList contains the color and contrastcolor of each side, used for connecting centers and pointing arrows
         if(combinedColorList[i].length==0){
           let colorIndex=(colorList.findIndex(x=>x==color))
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
+                  console.log("whycolorwrong",combinedColorList,colorIndexList[i])
         }
         contrastingcolor=combinedColorList[i][1]
-        //ConnectCenters returns [path,angle,centerx2,centery2,distance,circlePath1]
+
+        //Connect2Centers returns [path,angle,centerx2,centery2,distance,circlePath1]
         if(barColorsFiltered.includes(color)){
           distance=10000
         }
         else{
-          distance=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)[4] 
+          let {centerx,centery,centerx2,centery2}=convert2CentersToCoordinates(colorIndexList[i][0].currentIndex,colorIndexList[i][1].currentIndex,cubeSize)
+          distance=CalculatePointsDistance(centerx,centery,centerx2,centery2)
         }
       }
       
@@ -209,7 +201,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       let Center3Used=false
 
       if (distance<maxdistance){
-      ConnectingLines[i][0]=ConnectCenters(colorIndexList[i],0,newSquaresColors,PermIndex,color)
+      ConnectingLines[i]["ConnectedCenters"][0]=Connect2Centers(colorIndexList[i],0,cubeSize,lineWidth)
       Center1Used=true
       }
       
@@ -226,16 +218,19 @@ function GetBarsIndices(OllIndex,PermIndex){
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
         }
         contrastingcolor=combinedColorList[i][1]
-        distance=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)[4]
+
+        let {centerx,centery,centerx2,centery2}=convert2CentersToCoordinates(colorIndexList[i][0].currentIndex,colorIndexList[i][2].currentIndex,cubeSize)
+        distance=CalculatePointsDistance(centerx,centery,centerx2,centery2)
+        
         if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
 
       if (distance<maxdistance){
-      ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],1,newSquaresColors,PermIndex,color)
+      ConnectingLines[i]["ConnectedCenters"][1]=Connect2Centers(colorIndexList[i],1,cubeSize,lineWidth)
       if (Center1Used){
-        circlePath=ConnectingLines[i][1][5]
+        circlePath=getCirclePath(colorIndexList[i][0].currentIndex,3/200*cubeSize,cubeSize)
       }
       Center2Used=true
       }
@@ -254,24 +249,24 @@ function GetBarsIndices(OllIndex,PermIndex){
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
         }
         contrastingcolor=combinedColorList[i][1]
-        distance=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)[4]
+        distance=Connect2Centers(colorIndexList[i],2,cubeSize,lineWidth)[4]
         if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
       if (distance<maxdistance){
         
-          ConnectingLines[i][1]=ConnectCenters(colorIndexList[i],2,newSquaresColors,PermIndex,color)
+          ConnectingLines[i]["ConnectedCenters"][1]=Connect2Centers(colorIndexList[i],2,cubeSize,lineWidth)
           Center3Used=true
       }
     }
       
-      ConnectingLines[i][2]=circlePath
-      ConnectingLines[i][3]=ArrowBarMovement(contrastingcolorList,colorIndexList[i],Center1Used,Center2Used,Center3Used,contrastingcolorList[i],newSquaresColors,PermIndex)
+      ConnectingLines[i]["centerCircle"]=circlePath
+      ConnectingLines[i]["arrow"]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,Center3Used,cubeSize)
       
       for(let j=0;j<3;j++){
-        let currentIndex=colorIndexList[i][j][0]
-        let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
+        let currentIndex=colorIndexList[i][j].currentIndex
+        let NewIndex=ConnectingLines[i]["arrow"][4+j]  //j=0 is center, j=1/2 are left/right centers
          
         let distance=((Centers[currentIndex][0]-Centers[NewIndex][0])**2+(Centers[currentIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
         let smalldistance=Math.abs(Centers[6][0]-Centers[12][0])*1.3 //1.3 so that cornerpieces that are close to each other are also included
@@ -317,10 +312,11 @@ function GetBarsIndices(OllIndex,PermIndex){
   let noMovementCenterCircle=[]
   for (let i=0;i<4;i++){
     for (let j=0;j<3;j++){
-      let currentIndex=colorIndexList[i][j][0]
-      let NewIndex=ConnectingLines[i][3][4+j]  //j=0 is center, j=1/2 are left/right centers
+      let currentIndex=colorIndexList[i][j].currentIndex
+      let centerPoints=colorIndexList[i][j].Points
+      let NewIndex=ConnectingLines[i]["arrow"][4+j]  //j=0 is center, j=1/2 are left/right centers
       if(noMovementCenterRef.current[currentIndex][0]!==false){
-      finalPath[i]+=CalculateNewOutline(colorIndexList[i][j][3],strokeWidth,colorIndexList[i][j][0])
+      finalPath[i]+=CalculateNewOutline(colorIndexList[i][j].Points,strokeWidth,currentIndex)
       finalPath[i]+=pathList[i][j]
       
       let changeX=noMovementCenterRef.current[currentIndex][0]
@@ -331,39 +327,39 @@ function GetBarsIndices(OllIndex,PermIndex){
       //[i][j][3] is array of point positions going from top left to top right to bottom right to bottom left
       if(changeX!==0 ||changeY!==0){
         if(changeX===0 &&changeY===1){
-          circleX=colorIndexList[i][j][3][0][0]/2+colorIndexList[i][j][3][1][0]/2
-          circleY=colorIndexList[i][j][3][1][1]
+          circleX=centerPoints[0][0]/2+centerPoints[1][0]/2
+          circleY=centerPoints[1][1]
         }
         if(changeX==1 &&changeY==1){
-          circleX=colorIndexList[i][j][3][1][0]
-          circleY=colorIndexList[i][j][3][1][1]
+          circleX=centerPoints[1][0]
+          circleY=centerPoints[1][1]
           
         }
         if(changeX==1 &&changeY==0){
-          circleX=colorIndexList[i][j][3][1][0]
-          circleY=colorIndexList[i][j][3][1][1]/2+colorIndexList[i][j][3][2][1]/2
+          circleX=centerPoints[1][0]
+          circleY=centerPoints[1][1]/2+centerPoints[2][1]/2
         }
         if(changeX==1 &&changeY==-1){
           
-          circleX=colorIndexList[i][j][3][2][0]
-          circleY=colorIndexList[i][j][3][2][1]
+          circleX=centerPoints[2][0]
+          circleY=centerPoints[2][1]
 
         }
         if(changeX==0 &&changeY==-1){
-          circleX=colorIndexList[i][j][3][2][0]/2+colorIndexList[i][j][3][3][0]/2
-          circleY=colorIndexList[i][j][3][2][1]
+          circleX=centerPoints[2][0]/2+centerPoints[3][0]/2
+          circleY=centerPoints[2][1]
         }
         if(changeX==-1 &&changeY==1){
-          circleX=colorIndexList[i][j][3][0][0]
-          circleY=colorIndexList[i][j][3][0][1]
+          circleX=centerPoints[0][0]
+          circleY=centerPoints[0][1]
         }
         if(changeX==-1 &&changeY==0){
-          circleX=colorIndexList[i][j][3][3][0]
-          circleY=colorIndexList[i][j][3][3][1]/2+colorIndexList[i][j][3][0][1]/2
+          circleX=centerPoints[3][0]
+          circleY=centerPoints[3][1]/2+centerPoints[0][1]/2
         }
         if(changeX==-1 &&changeY==-1){
-          circleX=colorIndexList[i][j][3][3][0]
-          circleY=colorIndexList[i][j][3][3][1]
+          circleX=centerPoints[3][0]
+          circleY=centerPoints[3][1]
         }
       }
       
@@ -391,8 +387,8 @@ function GetBarsIndices(OllIndex,PermIndex){
       }
 
       if(noMovementCenterRef.current[currentIndex][0]===0 &&noMovementCenterRef.current[currentIndex][1]===0 ){
-        circleX=Centers[colorIndexList[i][j][0]][0]
-        circleY=Centers[colorIndexList[i][j][0]][1]
+        circleX=Centers[colorIndexList[i][j].currentIndex][0]
+        circleY=Centers[colorIndexList[i][j].currentIndex][1]
         }
 
         if(changeX!=0 &&changeY!=0){
@@ -412,7 +408,23 @@ function GetBarsIndices(OllIndex,PermIndex){
   for (let i=0;i<noMovementCenterCircle.length;i++){
     stringNoMovementCircle+=noMovementCenterCircle[i]
   }
-  return [finalPath,colorList,ConnectingLines,stringNoMovementCircle,combinedColorList]
+
+  let allInformationDict={
+    centerOutLine:finalPath,
+    connectingLines:[],
+    arrow:[],
+    centerCircle:[],
+    noMovementCircle:stringNoMovementCircle,
+    combinedColorList:combinedColorList,
+
+  }
+  for (let i=0;i<ConnectingLines.length;i++){
+    allInformationDict["connectingLines"].push(ConnectingLines[i].ConnectedCenters)
+    allInformationDict["arrow"].push(ConnectingLines[i].arrow)
+    allInformationDict["centerCircle"].push(ConnectingLines[i].centerCircle)
+  }
+  console.log("Helpme14",ConnectingLines[i])
+  return allInformationDict
 
 }
 
@@ -426,173 +438,6 @@ function drawSmallCircle(x,y,radius){
 
 }
 
-function ArrowBarMovement(contrastingcolorList,PointsInfo,Center1Used,Center2Used,Center3Used,color,SquareColors,PermIndex){
-  
-  let Centers= GetCentersPosition(cubeSize)
-  let StartLocationX
-  let StartLocationY
-  let Center1
-  let Center2
-  let EndLocationIndex
-
-  function CenterNewPosition(PointsInfo,EndLocationIndex){
-
-    Center1=PointsInfo[1][0]
-    let NewCenter1
-    let NewCenter2
-    if (EndLocationIndex==2){
-      NewCenter1=3
-      NewCenter2=1
-    }
-    else if(EndLocationIndex==10){
-      NewCenter1=5
-      NewCenter2=15
-    }
-    else if (EndLocationIndex==22){
-      NewCenter1=21
-      NewCenter2=23
-    }
-    else if (EndLocationIndex==14){
-      NewCenter1=19
-      NewCenter2=9
-    }
-    return [NewCenter1,NewCenter2]
-  }
-
-  let contrastingcolorlistIndex
-  if (color==contrastingcolorList[0]){
-     EndLocationIndex=22
-     contrastingcolorlistIndex=0
-  }
-
-  if (color==contrastingcolorList[1]){
-     EndLocationIndex=14
-     contrastingcolorlistIndex=1
-  }
-
-  if (color==contrastingcolorList[2]){
-     EndLocationIndex=2
-     contrastingcolorlistIndex=2
-  }
-
-  if (color==contrastingcolorList[3]){
-    EndLocationIndex=10
-    contrastingcolorlistIndex=3
-  }
-  [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,SquareColors)
-
-  //Store where bar came from [prev,new] for all 3 pieces
-  if(PermIndex==0){
-    piecesMovementRef.current[contrastingcolorlistIndex]=[[PointsInfo[0][0],EndLocationIndex],[PointsInfo[1][0],Center1],[PointsInfo[2][0],Center2]]
-  }
-
-  let EndLocationX = Centers[EndLocationIndex][0]
-  let EndLocationY = Centers[EndLocationIndex][1]
-
-  if (Center1Used && Center2Used){
-    StartLocationX=Centers[PointsInfo[0][0]][0]
-    StartLocationY=Centers[PointsInfo[0][0]][1]
-    EndLocationX = Centers[EndLocationIndex][0]
-    EndLocationY = Centers[EndLocationIndex][1]
-  }
-  else if(Center1Used){
-    StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[1][0]][0])/2
-    StartLocationY=(Centers[PointsInfo[0][0]][1]+Centers[PointsInfo[1][0]][1])/2
-    EndLocationX += Centers[Center1][0]
-    EndLocationY += Centers[Center1][1]
-
-    EndLocationX=EndLocationX/2
-    EndLocationY=EndLocationY/2
-  }
-   else if(Center2Used){
-    StartLocationX=(Centers[PointsInfo[0][0]][0]+Centers[PointsInfo[2][0]][0])/2
-    StartLocationY=(Centers[PointsInfo[0][0]][1]+Centers[PointsInfo[2][0]][1])/2
-    EndLocationX += Centers[Center2][0]
-    EndLocationY += Centers[Center2][1]
-
-    EndLocationX=EndLocationX/2
-    EndLocationY=EndLocationY/2
-  }
-  else if(Center3Used){
-    StartLocationX=(Centers[PointsInfo[1][0]][0]+Centers[PointsInfo[2][0]][0])/2
-    StartLocationY=(Centers[PointsInfo[1][0]][1]+Centers[PointsInfo[2][0]][1])/2
-   
-    EndLocationX = Centers[EndLocationIndex][0]
-    EndLocationY = Centers[EndLocationIndex][1]
-  }
-  
-  let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,true);
-  if(!Center1Used && !Center2Used && !Center3Used){
-    pathArrow2=""
-    angle=""
-  }
-  if(Math.abs(StartLocationX-EndLocationX)<1 &&Math.abs(StartLocationY-EndLocationY)<1){
-     pathArrow2=""
-  }
-  return [pathArrow2,angle,centerx2,centery2,EndLocationIndex,Center1,Center2,color]
-}
-
-function Connect2Points(centerx,centery,centerx2,centery2,arrowTipBoolean){
-
-let Correction=(centery2-centery)>0? 90:-90
-let angle = Math.atan(-(centerx2 - centerx) / (centery2 - centery))*180/Math.PI;
-if (centery==centery2){
-    angle=0
-    Correction=0
-}
-if (centerx>centerx2 && centery==centery2){
-    [centerx, centerx2] = [centerx2, centerx];
-    let difference=centerx2-centerx
-    centerx-=difference
-    centerx2-=difference
-    Correction+=180
-}
-
-angle+=Correction
-
-
-let distance=((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)
-centerx=centerx2-((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)                               
-let pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx+lineWidth/2},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
-    
-if(arrowTipBoolean){
-  pathArrow2=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+2+lineWidth/2},${centery2} L ${centerx2-2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
-}
-return [pathArrow2,angle,centerx2,centery2,distance]
-}
-
-function ConnectCenters(PointsInfo,CenterIndex,newSquaresColors,PermIndex,color){
-
-  let PiecesIndex=[]
-  for(let i=0; i<PointsInfo.length;i++){
-    PiecesIndex.push(PointsInfo[i][0])
-  }
-  
-  Centers=GetCentersPosition(cubeSize)
-
-  let tempcenterx=Centers[PiecesIndex[(CenterIndex+1)%3]][0] //%3 So that no  error occurs 
-  let tempcentery=Centers[PiecesIndex[(CenterIndex+1)%3]][1]
-  let tempcenterx2=Centers[PiecesIndex[0]][0]
-  let tempcentery2=Centers[PiecesIndex[0]][1]
-  let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
-  
-  if(CenterIndex==2){
-     tempcenterx=Centers[PiecesIndex[1]][0] 
-     tempcentery=Centers[PiecesIndex[1]][1]
-     tempcenterx2=Centers[PiecesIndex[2]][0]
-     tempcentery2=Centers[PiecesIndex[2]][1];
-     [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2)
-    
-  }
-  
-  let circleRadius=3/200*cubeSize
-  
-  let midPointx1=Centers[PiecesIndex[0]][0]
-  let midPointy1=Centers[PiecesIndex[0]][1]
-  let circlePath1=`M ${midPointx1+circleRadius},${midPointy1} A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1-circleRadius},${midPointy1}
-                                                              A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1+circleRadius},${midPointy1}`    
-  return [path,angle,centerx2,centery2,distance,circlePath1]
-}
 
 //Calculate Outer Outline
 function CalculateNewOutline(PointList,strokeWidth,index){
@@ -766,6 +611,8 @@ useLayoutEffect(() => {
     });
   })
 
+  console.log("ThisIsPaths",paths)
+
   setOverlayPaths(paths);
   setPathCalculated(true);
 }, [refsReady,selectedGroupOlls,cubeSize]);
@@ -789,7 +636,7 @@ function centerOutLineInfo(IndexList){
   for (let i=0;i<4;i++){ // Color
      for (let j=0;j<Points[i].length;j++){ //Center
     
-    let TempPointsList=IndexList[i][j][3]
+    let TempPointsList=IndexList[i][j].Points
     let tempTempPointsList=[]
     for(let k=0;k<TempPointsList.length;k++){
       let xCoord=TempPointsList[k][0]
@@ -1054,7 +901,7 @@ return (
                                   <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[0]?.[i] || ""}
+                                      d={overlayPaths[OllIndex][PermIndex]?.centerOutLine?.[i] || ""}
                                       //fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "black"}
                                       fill={"rgba(248, 246, 246, 1)"}
                                       fillRule="evenodd"
@@ -1068,7 +915,7 @@ return (
                                 <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
       
                                   <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[3]||""}
+                                      d={overlayPaths[OllIndex][PermIndex]?.noMovementCircle||""}
                                       fill={"black"}
                                       stroke="rgba(255, 255, 255, 1)"
                                       strokeWidth="0.5"
@@ -1088,15 +935,15 @@ return (
                                   <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
                                     
                                     <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][0] || ""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][0] || "black"}
+                                      d={overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].linePath || ""}
+                                      fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][0] || "black"}
                                       
                                       stroke="rgba(44, 44, 44, 1)"
                                       strokeWidth="1"
                                       strokeLinejoin="round"
                                       
                                       
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][1] || "0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][j][3] ||"0"})`}
+                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"})`}
                                     />
                                     
                                 </svg>
@@ -1108,22 +955,24 @@ return (
                                   {
                                   
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
-                                  <>                             
+                                  <>     
+                                  {console.log("Arrow?",overlayPaths[OllIndex][PermIndex])}                        
                                     <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
                                   <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][0]||""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "purple"}
+                                      d={overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowPath||""}
+                                      fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][1] || "purple"}
                                     stroke="rgba(0, 0, 0, 1)"
                                       strokeWidth="1.5"
                                       strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][1] || "0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][2] ||"0"} ${overlayPaths[OllIndex][PermIndex]?.[2]?.[i][3][3] ||"0"})`}
+                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotationCoordY ||"0"})`}
                                   />
                                   
                                 </svg>
+                                {console.log("Centercircle",overlayPaths[OllIndex][PermIndex])}
                                  <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
                                     <path
-                                        d={overlayPaths[OllIndex][PermIndex]?.[2]?.[i][2]||""}
-                                        fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || ""}
+                                        d={overlayPaths[OllIndex][PermIndex]?.centerCircle?.[i]||""}
+                                        fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][1] || ""}
                                       stroke="rgba(22, 22, 22, 1)"
                                       strokeWidth="1"
                                     />

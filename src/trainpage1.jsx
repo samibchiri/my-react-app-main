@@ -38,8 +38,8 @@ function Trainpage() {
     const {darkMode}= useContext(ThemeContext)
     const [caseClicked,setCaseClicked]= useState(false)
     const [buttonClicked,setButtonClicked]= useState(false)
-    const [cpClicked,setCpClicked]=useState(false)
-    const [barClicked,setBarClicked]=useState(true)
+    const [cpClicked,setCpClicked]=useState(true)
+    const [barClicked,setBarClicked]=useState(false)
     const buttonStyle = {
     width: "85%",
     height: "15vh",

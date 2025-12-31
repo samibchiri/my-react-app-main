@@ -1,4 +1,3 @@
-
 import { ThemeContext } from './DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
 import "./index.css"
@@ -171,13 +170,7 @@ useEffect(() => {
 
     // give CaseImage time to render
      const timeout = setTimeout(() => {
-    
-    newCombinedSquaresList= getSquaresInfo();
-    // if(scrambleIndex.current==0){
-    //     console.log("SquaresColors",newCombinedSquaresList)
-    //     piecesMovementGen(newCombinedSquaresList)
-    // }
-    squaresColors=getSquaresColors(newCombinedSquaresList)
+    getSquareColors();
   }, 10);
 
   return () => clearTimeout(timeout);
@@ -1273,7 +1266,7 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
 
 
 
-     function getSquaresInfo(){
+     function getSquareColors(){
          const containerParent = overlayRef.current;
     let container= containerParent.querySelector("div")
     let containerSvg= container.querySelector("svg")
@@ -1299,8 +1292,17 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
     combinedSquaresList.forEach((_,i)=>{
         newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
     })
-    return newCombinedSquaresList
     //console.log(newCombinedSquaresList)
+    let newSquaresColors=new Array(25).fill(0);
+    newCombinedSquaresList.forEach((_,i)=>{
+        if (newCombinedSquaresList[i]!=0){
+             newSquaresColors[i]=newCombinedSquaresList[i].getAttribute("fill")
+        }
+        else{
+            newSquaresColors[i]=0
+        }
+       
+    })
 
    
 
@@ -1438,23 +1440,6 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
     
 }
 
-function getSquaresColors(newCombinedSquaresList){
-    let newSquaresColors=new Array(25).fill(0);
-    newCombinedSquaresList.forEach((_,i)=>{
-        if (newCombinedSquaresList[i]!=0){
-             newSquaresColors[i]=newCombinedSquaresList[i].getAttribute("fill")
-        }
-        else{
-            newSquaresColors[i]=0
-        }
-       
-    })
-
-    flushSync(() => {
-    setSquaresColors(newSquaresColors)
-    })
-}
-
 
 //console.log(squaresColors)
 
@@ -1479,7 +1464,7 @@ function getPossibleArrows(){
       }
     });
     for (let colorindex=0 ;colorindex<4;colorindex++){
-        
+
      for (let i = 0; i < NewPriority.length; i++) {
         let index = NewPriority[i];
         //console.log("Indeces")

@@ -76,6 +76,7 @@ export function GetCentersPosition(cubeSize){
       UpperEnd=EmpericalcoordOffset.length-1
     }
 
+    console.log("Whatgoeswrong",cubeSize,LowerEnd,UpperEnd,EmpericalcoordOffset[1])
     let xCoordOffset=EmpericalcoordOffset[LowerEnd][0]*(1-(cubeSize%50)/50)+EmpericalcoordOffset[UpperEnd][0]*(cubeSize%50)/50
     let yCoordOffset=EmpericalcoordOffset[LowerEnd][1]*(1-(cubeSize%50)/50)+EmpericalcoordOffset[UpperEnd][1]*(cubeSize%50)/50
 
@@ -159,13 +160,18 @@ export function addInformationToColorIndexList(piecesMovementRef,newSquaresColor
           Points.push(tempPoints[j].split(","))
           
         }
-        colorIndexList[i].push([currentIndex,futureIndex,color,Points])
+        let tempColorIndexDict={
+          currentIndex:i,
+          futureIndex:futureIndex,
+          color:color,
+          Points:Points
+        }
+        colorIndexList[i].push(tempColorIndexDict)
       }
     }
+    console.log("Current2",colorIndexList,piecesMovementRef)
   return colorIndexList
 }
-
-
 
 export function isPositionLeft(Center1,SquareColors){
       let PositionLeft=false
@@ -287,22 +293,23 @@ export function sortCenterLeftRight(index,SquareColors){
   }
 
 
-export function sortPointsList(list){
-  list.forEach(pointList=>{
+export function sortPointsList(colorIndexList){
+  console.log("Sort4",colorIndexList)
+  colorIndexList.forEach(list=>{
         let averagex=0
-        pointList[3].forEach(item=>{
+        list.Points.forEach(item=>{
           
           averagex+=item[0]/4
         })
         let averagey=0
-        pointList[3].forEach(item=>{
+        list.Points.forEach(item=>{
           averagey+=item[1]/4
         })
         
         //Store topleft topright bottom right bottomleft
         let indextostore=[]
         for(let i=0;i<4;i++){
-          let [x,y]=pointList[3][i]
+          let [x,y]=list.Points[i]
           
           if(y<averagey &&x<averagex){
             indextostore[i]=0
@@ -317,14 +324,263 @@ export function sortPointsList(list){
             indextostore[i]=3
           }
         }
-        let TempPointsList=[...pointList[3]]
+        let TempPointsList=[...list.Points]
         for(let i=0;i<4;i++){
-          pointList[3][indextostore[i]]=TempPointsList[i]
+          list.Points[indextostore[i]]=TempPointsList[i]
         }
       })
-    return list
+      console.log("Sort5",colorIndexList)
+    return colorIndexList
 }
 
-export function piecesMovement(){
+
+export function Connect2Points(centerx,centery,centerx2,centery2,lineWidth,arrowTipBoolean){
+
+  let Correction=(centery2-centery)>0? 90:-90
+  let angle = Math.atan(-(centerx2 - centerx) / (centery2 - centery))*180/Math.PI;
+  if (centery==centery2){
+      angle=0
+      Correction=0
+  }
+  if (centerx>centerx2 && centery==centery2){
+      [centerx, centerx2] = [centerx2, centerx];
+      let difference=centerx2-centerx
+      centerx-=difference
+      centerx2-=difference
+      Correction+=180
+  }
+
+  angle+=Correction
+
+  let distance= CalculatePointsDistance(centerx,centery,centerx2,centery2)
+  centerx=centerx2-distance //Calculate position of centerx such that distance between centerx and centerx2 is total line lenght                    
+  let path
+
+  if(arrowTipBoolean){
+    //Path of pointing arrow
+    path= pointingArrowPath(centerx,centerx2,centery2,lineWidth)  
+  }
+  else{
+    //Path of line connecting centers
+    path=linePath(centerx,centerx2,centery2,lineWidth)
+  }
+  return [path,angle,centerx2,centery2,distance]
+  }
+
+
+export function CalculatePointsDistance(centerx,centery,centerx2,centery2){
+
+  let distance= ((centerx-centerx2)**2+(centery-centery2)**2)**(1/2)
+  return distance
 
 }
+export function pointingArrowPath(centerx,centerx2,centery2,lineWidth){
+  let pathArrow=`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2-3-lineWidth/2} L ${centerx2+2+lineWidth/2},${centery2} L ${centerx2-2-lineWidth/2},${centery2+3+lineWidth/2} L ${centerx2-2-lineWidth/2},${centery2+lineWidth/2} L ${centerx},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+  return pathArrow
+}
+
+export function linePath(centerx,centerx2,centery2,lineWidth){
+  let linePath =`M ${centerx-lineWidth/2},${centery2} Q ${centerx-lineWidth/2},${centery2-lineWidth/2} ${centerx},${centery2-lineWidth/2} L ${centerx},${centery2-lineWidth/2} L ${centerx2-lineWidth/2},${centery2-lineWidth/2}  Q ${centerx2},${centery2-lineWidth/2} ${centerx2},${centery2} L ${centerx2},${centery2}  Q ${centerx2},${centery2+lineWidth/2} ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx2-lineWidth/2},${centery2+lineWidth/2} L ${centerx+lineWidth/2},${centery2+lineWidth/2} Q ${centerx-lineWidth/2},${centery2+lineWidth/2} ${centerx-lineWidth/2},${centery2} Z`
+  return linePath
+}
+
+export function convert2CentersToCoordinates(Center1,Center2,cubeSize){
+    let Centers=GetCentersPosition(cubeSize)
+    let centerx= Centers[Center1][0]
+    let centery= Centers[Center1][1]
+    let centerx2= Centers[Center2][0]
+    let centery2= Centers[Center2][1]
+  
+    return {centerx,centery,centerx2,centery2}
+}
+
+
+export function Connect2Centers(PointsInfo,CenterIndex,cubeSize,lineWidth ){
+
+  console.log("PointsINfo",PointsInfo)
+  let PiecesIndex=[]
+  for(let i=0; i<PointsInfo.length;i++){
+    PiecesIndex.push(PointsInfo[i].currentIndex)
+  }
+  
+  let Centers=GetCentersPosition(cubeSize)
+
+  let tempcenterx=Centers[PiecesIndex[(CenterIndex+1)%3]][0] //%3 So that no  error occurs 
+  let tempcentery=Centers[PiecesIndex[(CenterIndex+1)%3]][1]
+  let tempcenterx2=Centers[PiecesIndex[0]][0]
+  let tempcentery2=Centers[PiecesIndex[0]][1]
+  let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2,lineWidth)
+  
+  if(CenterIndex==2){
+     tempcenterx=Centers[PiecesIndex[1]][0] 
+     tempcentery=Centers[PiecesIndex[1]][1]
+     tempcenterx2=Centers[PiecesIndex[2]][0]
+     tempcentery2=Centers[PiecesIndex[2]][1];
+     [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2,lineWidth)
+    
+  }
+
+  let tempConnectingLinesDict={
+    linePath:path,
+    lineRotation:angle,
+    lineRotationCoordX:centerx2,
+    lineRotationCoordX:centery2
+  }
+  
+
+  return tempConnectingLinesDict
+}
+
+
+
+export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,cubeSize){
+  
+  let Centers= GetCentersPosition(cubeSize)
+  let StartLocationX
+  let StartLocationY
+  let Center1
+  let Center2
+  let EndLocationIndex=PointsInfo[0].futureIndex
+
+  let EndLocationX = Centers[EndLocationIndex][0]
+  let EndLocationY = Centers[EndLocationIndex][1]
+
+  if (Center1Used && Center2Used){
+    StartLocationX=Centers[PointsInfo[0].currentIndex][0]
+    StartLocationY=Centers[PointsInfo[0].currentIndex][1]
+    EndLocationX = Centers[EndLocationIndex][0]
+    EndLocationY = Centers[EndLocationIndex][1]
+  }
+  else if(Center1Used){
+    //Average X and average Y coordinate
+    StartLocationX=(Centers[PointsInfo[0].currentIndex][0]+Centers[PointsInfo[1].currentIndex][0])/2
+    StartLocationY=(Centers[PointsInfo[0].currentIndex][1]+Centers[PointsInfo[1].currentIndex][1])/2
+    EndLocationX += Centers[Center1][0]
+    EndLocationY += Centers[Center1][1]
+
+    EndLocationX=EndLocationX/2
+    EndLocationY=EndLocationY/2
+  }
+   else if(Center2Used){
+    StartLocationX=(Centers[PointsInfo[0].currentIndex][0]+Centers[PointsInfo[2].currentIndex][0])/2
+    StartLocationY=(Centers[PointsInfo[0].currentIndex][1]+Centers[PointsInfo[2].currentIndex][1])/2
+    EndLocationX += Centers[Center2][0]
+    EndLocationY += Centers[Center2][1]
+
+    EndLocationX=EndLocationX/2
+    EndLocationY=EndLocationY/2
+  }
+  else if(Center3Used){
+    StartLocationX=(Centers[PointsInfo[1].currentIndex][0]+Centers[PointsInfo[2].currentIndex][0])/2
+    StartLocationY=(Centers[PointsInfo[1].currentIndex][1]+Centers[PointsInfo[2].currentIndex][1])/2
+   
+    EndLocationX = Centers[EndLocationIndex][0]
+    EndLocationY = Centers[EndLocationIndex][1]
+  }
+  
+  let [pathArrow2,angle,centerx2,centery2,distance]=Connect2Points(StartLocationX,StartLocationY,EndLocationX,EndLocationY,lineWidth,true);
+  if(!Center1Used && !Center2Used && !Center3Used){
+    pathArrow2=""
+    angle=""
+  }
+  if(Math.abs(StartLocationX-EndLocationX)<1 &&Math.abs(StartLocationY-EndLocationY)<1){
+     pathArrow2=""
+  }
+  let tempArrowDict={
+    arrowPath:pathArrow2,
+    arrowRotation:angle,
+    arrowRotationCoordX:centerx2,
+    arrowRotationCoordY:centery2
+  }
+  return tempArrowDict
+}
+
+export function getCirclePath(Center,circleRadius,cubeSize){
+
+  let Centers=GetCentersPosition(cubeSize)
+  
+  let midPointx1=Centers[Center][0]
+  let midPointy1=Centers[Center][1]
+  let circlePath=`M ${midPointx1+circleRadius},${midPointy1} A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1-circleRadius},${midPointy1}
+                                                              A ${circleRadius},${circleRadius} 0 1 1 ${midPointx1+circleRadius},${midPointy1}`    
+  return circlePath
+
+}
+
+export function piecesMovementGen(newSquaresColors){
+
+  let Center1
+  let Center2
+  let EndLocationIndex
+  let piecesMovement=[[],[],[],[],[]]
+
+  let colorIndexList=[[],[],[],[],[]]
+  let colorList= ["#00d800","orange","#1f51ff","red","yellow"]
+
+  for(let i=0;i<newSquaresColors.length;i++){
+      if(newSquaresColors[i]!=0){
+        let index= colorList.findIndex(x=> x==newSquaresColors[i])
+        let Points=[]
+        
+        for(let j=0;j<4;j++){
+          let tempPoints=newCombinedSquaresList[i].getAttribute("points").split(" ")
+          Points.push(tempPoints[j].split(","))
+          
+        }
+
+        let tempColorIndexDict={
+          currentIndex:i,
+          futureIndex:"",
+          color:"",
+          Points:Points
+        }
+        colorIndexList[index].push(tempColorIndexDict)
+      }
+    }
+
+  colorToEndLocationIndexDict={
+    "#00d800": 22,
+    "orange":14,
+    "#1f51ff":2,
+    "red":10
+  }
+
+  for(i in colorIndexList){
+    EndLocationIndex=colorToEndLocationIndexDict[colorIndexList[i].color]
+    
+    [Center1,Center2]=CenterNewPosition(colorIndexList[i],EndLocationIndex,SquareColors)
+
+  //Store where bar came from [prev,new] for all 3 pieces
+    console.log("Addtopiecesmovementref",[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2][0],Center2]])
+    piecesMovement[index]=[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]]
+  
+  }
+
+  console.log("FinalpiecesMovement",piecesMovement)
+
+}
+
+function CenterNewPosition(PointsInfo,EndLocationIndex,index){
+
+  Center1=PointsInfo[1].currentIndex
+  let NewCenter1
+  let NewCenter2
+  if (EndLocationIndex==2){
+    NewCenter1=3
+    NewCenter2=1
+  }
+  else if(EndLocationIndex==10){
+    NewCenter1=5
+    NewCenter2=15
+  }
+  else if (EndLocationIndex==22){
+    NewCenter1=21
+    NewCenter2=23
+  }
+  else if (EndLocationIndex==14){
+    NewCenter1=19
+    NewCenter2=9
+  }
+  return [NewCenter1,NewCenter2]
+}
+
