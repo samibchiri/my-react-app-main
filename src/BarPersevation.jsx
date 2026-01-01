@@ -58,7 +58,7 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   
 const allOlls = useLiveQuery(() => db.olls.toArray(), []);
 
-console.log(allOlls)
+
 // const selectedGroupOlls = useLiveQuery(
 //   () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
 //   [groupSelected]
@@ -95,9 +95,6 @@ const noMovementCenterRef = useRef(
 
 
 useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,cubeSize);
-
-console.log("NewCubeSize",cubeSize,strokeWidth,lineWidth,refsReady)
-
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
@@ -139,10 +136,7 @@ function GetBarsIndices(OllIndex,PermIndex){
   console.log("Rerenders",rerenderRef)
   rerenderRef.current+=1
 
-  console.log("GetAgainBar1",altoverlayRefs)
-
   let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
-    console.log("GetAgainBar1.2")
 
   let colorIndexList=[[],[],[],[],[]]
   let colorList=["#00d800","orange","#1f51ff","red","yellow"]
@@ -153,12 +147,9 @@ function GetBarsIndices(OllIndex,PermIndex){
   //Every array in colorIndexList forms a side after doing OLL
   
   //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
-  //console.log("Current4".piecesMovementRef)
-  console.log("CurrentOLL",selectedGroupOlls[OllIndex])
 
   colorIndexList=addInformationToColorIndexList(selectedGroupOlls[OllIndex].piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList)
 
-  console.log("CurrentcolorIndexList",colorIndexList)
 
    colorIndexList.forEach(list=>{
       list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
@@ -167,7 +158,6 @@ function GetBarsIndices(OllIndex,PermIndex){
       list=sortPointsList(list)
     } 
   )
-  console.log("GetAgainBar1.5")
 
   let ConnectingLines = Array.from({ length: 5 }, () =>(
     {
@@ -183,7 +173,7 @@ function GetBarsIndices(OllIndex,PermIndex){
   );
   let combinedColorList=Array.from({ length: 5 }, () => [])
   
-  console.log("GetAgainBar2")
+
   for(let i=0;i<4;i++){
       let distance
       let color
@@ -194,7 +184,6 @@ function GetBarsIndices(OllIndex,PermIndex){
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
       maxdistance=maxdistance*10
-      console.log("Whatwasthas",colorIndexList[i])
       if(colorIndexList[i][0].color!=colorIndexList[i][1].color){
         distance=10000
       }
@@ -207,7 +196,6 @@ function GetBarsIndices(OllIndex,PermIndex){
         if(combinedColorList[i].length==0){
           let colorIndex=(colorList.findIndex(x=>x==color))
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
-                  console.log("whycolorwrong",combinedColorList,colorIndexList[i])
         }
         contrastingcolor=combinedColorList[i][1]
 
@@ -235,7 +223,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][0].color!=colorIndexList[i][2].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0][0]) ||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0].currentIndex) ||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2].currentIndex)){
         distance=10000
       }
       else{
@@ -282,9 +270,7 @@ function GetBarsIndices(OllIndex,PermIndex){
           distance=10000
         }
       }
-        console.log("GetAgainBar3",Center1Used,Center2Used,PermIndex,i)
-        console.log("GetAgainBar3Data",colorIndexList[i],distance,barColorsFiltered,selectedGroupOlls[OllIndex].difficultCenters)
-      
+
       if (distance<maxdistance){
         
           ConnectingLines[i]["ConnectedCenters"][1]=Connect2Centers(colorIndexList[i],2,cubeSize,lineWidth)
@@ -292,11 +278,9 @@ function GetBarsIndices(OllIndex,PermIndex){
       }
     }
 
-      console.log("PreArrow",colorIndexList[i],Center1Used,Center2Used,Center3Used,PermIndex)
       ConnectingLines[i]["centerCircle"]=circlePath
       ConnectingLines[i]["arrow"]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,Center3Used,cubeSize,lineWidth)
-      
-      console.log("Output",ConnectingLines[i]["arrow"])
+
       for(let j=0;j<3;j++){
         let currentIndex=colorIndexList[i][j].currentIndex
         let NewIndex=colorIndexList[i][j].futureIndex //j=0 is center, j=1/2 are left/right centers
@@ -334,8 +318,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       }  
     }
   }
-  
-  console.log("GetAgainBar4")
+
   let [pathList,color]= centerOutLineInfo(colorIndexList)
 
   color=newSquaresColors[PermIndex]
@@ -436,10 +419,9 @@ function GetBarsIndices(OllIndex,PermIndex){
     }
     }
   }
-  console.log("GetAgainBar5")
 
   let stringNoMovementCircle=""
-  console.log("NoMovementCircle",noMovementCenterCircle)
+
   for (let i=0;i<noMovementCenterCircle.length;i++){
     stringNoMovementCircle+=noMovementCenterCircle[i]
   }
@@ -458,7 +440,6 @@ function GetBarsIndices(OllIndex,PermIndex){
     allInformationDict["arrow"].push(ConnectingLines[i].arrow)
     allInformationDict["centerCircle"].push(ConnectingLines[i].centerCircle)
   }
-  console.log("NewAllInformationDict",allInformationDict)
 
   return allInformationDict
 
@@ -633,16 +614,14 @@ const setOverlayRef = (el,index)=> {
 
 // compute overlayPaths after refs mount; run this AFTER refsReady becomes true
 useLayoutEffect(() => {
-  console.log("UpdatedCubesize")
-  console.log("NewCubeSize",cubeSize)
-  
+
   if (!refsReady) return;
   const paths = altoverlayRefs.current.map((algListRef, OllIndex) => {
     return algListRef.map((_,PermIndex)=>{
 
       try {
         const result = GetBarsIndices(OllIndex,PermIndex); 
-        console.log("Resulting outcome",result,OllIndex,PermIndex)
+
         return result || ["","none"];
         
       } catch (err) {
@@ -652,7 +631,6 @@ useLayoutEffect(() => {
     });
   })
 
-  console.log("ThisIsPaths",paths)
 
   setOverlayPaths(paths);
   setPathCalculated(true);
@@ -674,8 +652,6 @@ function centerOutLineInfo(IndexList){
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
 
-
-  console.log("CenteroutlineWeird")
   for (let i=0;i<4;i++){ // Color
      for (let j=0;j<Points[i].length;j++){ //Center
     
@@ -761,7 +737,6 @@ function centerOutLineInfo(IndexList){
 }
 
 function excludeCenters(e,OllIndex,oll){
-  console.log(e)
   if(e.key=="Enter"){
       e.preventDefault()
       verifyAndUpdateExcludeBarInput(e.target.value,OllIndex,oll)
@@ -770,13 +745,11 @@ function excludeCenters(e,OllIndex,oll){
 }
 
 function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
-  console.log(oll,"Chanign")
 
   let testList=[]
   try{
     if(inputString.includes(",")){
       inputString=inputString.split(",")
-      console.log(inputString)
       for(let i=0;i<inputString.length;i++){   
         if(inputString[i]!=""){
           let intInputString=parseInt(inputString[i])
@@ -819,18 +792,16 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
     document.getElementById(`barExcludeCenters-${OllIndex}`).value=selectedGroupOlls[OllIndex].difficultCenters
     
   }
-  console.log(testList)
 
   const sortedOld = [...selectedGroupOlls[OllIndex].difficultCenters].sort((a,b) => a-b);
   const sortedNew = [...testList].sort((a,b) => a-b);
 
-  console.log(sortedOld,sortedNew)
+
   const isDifferent = sortedOld.length !== sortedNew.length || 
                       sortedOld.some((val, idx) => val !== sortedNew[idx]);
 
-  console.log(isDifferent)
+
   if (isDifferent) {
-    console.log("Updating testList")
     updateDifficultCenters(oll,testList)
     
   }
@@ -838,7 +809,6 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
 
 async function updateDifficultCenters(oll,newDifficultCenters){
   let ollToChange= await db.olls.get(oll.id)
-  console.log("UpdatedCool",oll.id,newDifficultCenters)
   if(!ollToChange){
     return
   }
@@ -861,7 +831,6 @@ function changeOllAlgEnterPressed(e,oll){
 function changeOllAlg(newAlg,oll){
 
   let updatedNewAlg= correctAlgString(newAlg)
-  console.log("GivenData",[updatedNewAlg,oll])
   setChangedAlgArray([updatedNewAlg,oll,true])
 }
 
@@ -875,7 +844,6 @@ function correctAlgString(inputstring){
 
   let oddSpacing=0
   for (let i=0; i<inputstring.length;i++){
-    console.log(inputstring[i])
     newinputstring+=inputstring[i]
 
     if(inputstring[(i+1)%inputstring.length]!="'" &&inputstring[(i+1)%inputstring.length]!="2" ){
@@ -907,12 +875,13 @@ return (
                           
                           selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
                           oll.name + " Version "+oll.algNumber:oll.name}</h2>
+                          <h3>{selectedGroupOlls[i].algs}</h3>
                           
                           
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
-                                if(i>=1){
+                                if(i>=19){
                                   return
                                 }
 
@@ -1167,7 +1136,6 @@ return (
                       </> 
     ))
   }
-  {console.log("Problemo",changedAlgArray)}
   {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  && (<>
         <CornerPermutationPage
           newAlg={changedAlgArray[0]}
