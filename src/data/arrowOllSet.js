@@ -4,34 +4,86 @@ const arrowOllSet = [
     name: "OLL 21",
     ollNumber: 21,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "U",
-      "U'"
+      "U"
     ],
     barMovements: [
       [
-        "Full",
         "Full"
       ],
       [
-        "Back",
-        "Front"
-      ],
-      [
-        "Front",
         "Back"
       ],
       [
-        "Left",
-        "Right"
+        "Front"
       ],
       [
-        "Right",
         "Left"
       ],
       [
-        "Diag",
+        "Right"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "R U2' R' U' R U R' U' R U' R'",
@@ -179,34 +231,86 @@ const arrowOllSet = [
     name: "OLL 21",
     ollNumber: 21,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
-      "U",
-      "U'"
+      "U"
     ],
     barMovements: [
       [
-        "Full",
         "Full"
       ],
       [
-        "Back",
-        "Front"
-      ],
-      [
-        "Front",
         "Back"
       ],
       [
-        "Left",
-        "Right"
+        "Front"
       ],
       [
-        "Right",
         "Left"
       ],
       [
-        "Diag",
+        "Right"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U' R' U R U2 R'",
@@ -354,27 +458,71 @@ const arrowOllSet = [
     name: "OLL 22",
     ollNumber: 22,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          10,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          21,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          22,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          19,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          2,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R U2' R2' U' R2 U' R2' U2' R",
@@ -522,6 +670,7 @@ const arrowOllSet = [
     name: "OLL 23",
     ollNumber: 23,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -543,6 +692,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          19,
+          15
+        ]
       ]
     ],
     algs: "R2 D R' U2 R D' R' U2 R'",
@@ -690,6 +897,7 @@ const arrowOllSet = [
     name: "OLL 23",
     ollNumber: 23,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -711,6 +919,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          15,
+          15
+        ]
       ]
     ],
     algs: "R2 D' R U2 R' D R U2 R",
@@ -858,6 +1124,7 @@ const arrowOllSet = [
     name: "OLL 24",
     ollNumber: 24,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -879,6 +1146,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "r U R' U' r' F R F'",
@@ -1026,6 +1351,7 @@ const arrowOllSet = [
     name: "OLL 24",
     ollNumber: 24,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -1047,6 +1373,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          6,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          15,
+          15
+        ]
       ]
     ],
     algs: "R U R D R' U' R D' R2",
@@ -1194,6 +1578,7 @@ const arrowOllSet = [
     name: "OLL 25",
     ollNumber: 25,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -1215,6 +1600,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          1,
+          15
+        ]
       ]
     ],
     algs: "x R' U R D' R' U' R D x'",
@@ -1362,6 +1805,7 @@ const arrowOllSet = [
     name: "OLL 25",
     ollNumber: 25,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -1383,6 +1827,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          1,
+          15
+        ]
       ]
     ],
     algs: "R' F R B' R' F' R B",
@@ -1530,6 +2032,7 @@ const arrowOllSet = [
     name: "OLL 26",
     ollNumber: 26,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -1551,6 +2054,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          14,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          22,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "R' U' R U' R' U2 R",
@@ -1698,6 +2259,7 @@ const arrowOllSet = [
     name: "OLL 26",
     ollNumber: 26,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -1719,6 +2281,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          3,
+          21
+        ],
+        [
+          6,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          9,
+          15
+        ]
       ]
     ],
     algs: "R U2' R' U' R U' R'",
@@ -1866,6 +2486,7 @@ const arrowOllSet = [
     name: "OLL 27",
     ollNumber: 27,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -1887,6 +2508,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          15,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U2' R'",
@@ -2034,6 +2713,7 @@ const arrowOllSet = [
     name: "OLL 27",
     ollNumber: 27,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -2055,6 +2735,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          10,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          22,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "R' U2 R U R' U R",
@@ -2202,34 +2940,71 @@ const arrowOllSet = [
     name: "OLL 1",
     ollNumber: 1,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "",
-      "U2"
+      null
     ],
     barMovements: [
       [
-        "Full",
-        "Diag"
-      ],
-      [
-        "Left",
-        "Left"
-      ],
-      [
-        "Right",
-        "Right"
-      ],
-      [
-        "Front",
-        "Back"
-      ],
-      [
-        "Back",
-        "Front"
-      ],
-      [
-        "Diag",
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "R U2 R2' F R F' U2 R' F R F'",
@@ -2377,6 +3152,7 @@ const arrowOllSet = [
     name: "OLL 2",
     ollNumber: 2,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -2398,6 +3174,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "F R U R' U' F' f R U R' U' f'",
@@ -2545,6 +3379,7 @@ const arrowOllSet = [
     name: "OLL 2",
     ollNumber: 2,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -2566,6 +3401,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "r U r' U2 r U2 R' U2 R U' r'",
@@ -2713,6 +3606,7 @@ const arrowOllSet = [
     name: "OLL 3",
     ollNumber: 3,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -2734,6 +3628,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          3,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          7,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          21,
+          1
+        ]
+      ],
+      [
+        [
+          11,
+          10
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "f R U R' U' f' U' F R U R' U' F'",
@@ -2881,6 +3833,7 @@ const arrowOllSet = [
     name: "OLL 3",
     ollNumber: 3,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -2902,6 +3855,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          19,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "r' R2 U R' U r U2 r' U M'",
@@ -3049,6 +4060,7 @@ const arrowOllSet = [
     name: "OLL 4",
     ollNumber: 4,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -3070,6 +4082,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          1,
+          21
+        ],
+        [
+          16,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          15,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          6,
+          15
+        ]
       ]
     ],
     algs: "f R U R' U' f' U F R U R' U' F'",
@@ -3217,6 +4287,7 @@ const arrowOllSet = [
     name: "OLL 4",
     ollNumber: 4,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -3238,6 +4309,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          8,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          16,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "M U' r U2 r' U' R U' R' M'",
@@ -3385,6 +4514,7 @@ const arrowOllSet = [
     name: "OLL 5",
     ollNumber: 5,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -3406,6 +4536,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "r' U2 R U R' U r",
@@ -3553,6 +4741,7 @@ const arrowOllSet = [
     name: "OLL 5",
     ollNumber: 5,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -3574,6 +4763,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "l' U2 L U L' U l",
@@ -3721,27 +4968,71 @@ const arrowOllSet = [
     name: "OLL 6",
     ollNumber: 6,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          3,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          16,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          18,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          14,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          9,
+          15
+        ]
       ]
     ],
     algs: "r U2 R' U' R U' r'",
@@ -3889,27 +5180,71 @@ const arrowOllSet = [
     name: "OLL 7",
     ollNumber: 7,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          10,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          15,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          2,
+          2
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          19,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "r U R' U R U2 r'",
@@ -4057,6 +5392,7 @@ const arrowOllSet = [
     name: "OLL 8",
     ollNumber: 8,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -4078,6 +5414,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "r' U' R U' R' U2 r",
@@ -4225,6 +5619,7 @@ const arrowOllSet = [
     name: "OLL 8",
     ollNumber: 8,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -4246,6 +5641,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          6,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "l' U' L U' L' U2 l",
@@ -4393,27 +5846,71 @@ const arrowOllSet = [
     name: "OLL 9",
     ollNumber: 9,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          8,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          17,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          16,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "R U R' U' R' F R2 U R' U' F'",
@@ -4561,6 +6058,7 @@ const arrowOllSet = [
     name: "OLL 10",
     ollNumber: 10,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -4582,6 +6080,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          18,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          7,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          19,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R' F R F' R U2 R'",
@@ -4729,6 +6285,7 @@ const arrowOllSet = [
     name: "OLL 10",
     ollNumber: 10,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -4750,6 +6307,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          15,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "r U R' U R U' R' U' r' R U R U' R'",
@@ -4897,6 +6512,7 @@ const arrowOllSet = [
     name: "OLL 11",
     ollNumber: 11,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -4918,6 +6534,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          18,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          19,
+          15
+        ]
       ]
     ],
     algs: "r U R' U R' F R F' R U2 r'",
@@ -5065,6 +6739,7 @@ const arrowOllSet = [
     name: "OLL 11",
     ollNumber: 11,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -5086,6 +6761,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          19,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "r' R2 U R' U R U2 R' U M'",
@@ -5233,27 +6966,71 @@ const arrowOllSet = [
     name: "OLL 12",
     ollNumber: 12,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          8,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          1,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          16,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          17,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "M' R' U' R U' R' U2 R U' R r'",
@@ -5401,6 +7178,7 @@ const arrowOllSet = [
     name: "OLL 13",
     ollNumber: 13,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -5422,6 +7200,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "F U R U' R2 F' R U R U' R'",
@@ -5569,6 +7405,7 @@ const arrowOllSet = [
     name: "OLL 13",
     ollNumber: 13,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -5590,6 +7427,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "r U' r' U' r U r' y' R' U R",
@@ -5737,27 +7632,71 @@ const arrowOllSet = [
     name: "OLL 14",
     ollNumber: 14,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          23,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          6,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          14,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          16,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "R' F R U R' F' R F U' F'",
@@ -5905,6 +7844,7 @@ const arrowOllSet = [
     name: "OLL 15",
     ollNumber: 15,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -5926,6 +7866,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          14,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "r' U' r R' U' R U r' U r",
@@ -6073,6 +8071,7 @@ const arrowOllSet = [
     name: "OLL 15",
     ollNumber: 15,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -6094,6 +8093,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          21,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          19,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "l' U' l L' U' L U l' U l",
@@ -6241,27 +8298,71 @@ const arrowOllSet = [
     name: "OLL 16",
     ollNumber: 16,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          3,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          16,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          18,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          9,
+          15
+        ]
       ]
     ],
     algs: "r U r' R U R' U' r U' r'",
@@ -6409,6 +8510,7 @@ const arrowOllSet = [
     name: "OLL 17",
     ollNumber: 17,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -6430,6 +8532,64 @@ const arrowOllSet = [
       ],
       [
         "Front"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          8,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      [
+        [
+          7,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          13,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R' F R F' U2 R' F R F'",
@@ -6577,6 +8737,7 @@ const arrowOllSet = [
     name: "OLL 17",
     ollNumber: 17,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -6598,6 +8759,64 @@ const arrowOllSet = [
       ],
       [
         "Front"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          3,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "F R' F' R2 r' U R U' R' U' M'",
@@ -6745,6 +8964,7 @@ const arrowOllSet = [
     name: "OLL 18",
     ollNumber: 18,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -6766,6 +8986,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "R U2 R' R' F R F' U2 M' U R U' r'",
@@ -6913,6 +9191,7 @@ const arrowOllSet = [
     name: "OLL 18",
     ollNumber: 18,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -6934,6 +9213,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
@@ -7081,27 +9418,71 @@ const arrowOllSet = [
     name: "OLL 19",
     ollNumber: 19,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          9,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          18,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          13,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          1,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          7,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "r' R U R U R' U' M' R' F R F'",
@@ -7249,48 +9630,86 @@ const arrowOllSet = [
     name: "OLL 20",
     ollNumber: 20,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "",
-      "U",
-      "U'",
-      "U2"
+      ""
     ],
     barMovements: [
       [
-        "Full",
-        "Full",
-        "Full",
         "Full"
       ],
       [
-        "Right",
-        "Front",
-        "Back",
-        "Left"
-      ],
-      [
-        "Left",
-        "Back",
-        "Front",
         "Right"
       ],
       [
-        "Back",
-        "Right",
-        "Left",
-        "Front"
+        "Left"
       ],
       [
-        "Front",
-        "Left",
-        "Right",
         "Back"
       ],
       [
-        "Diag",
-        "Diag",
-        "Diag",
+        "Front"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          15
+        ]
       ]
     ],
     algs: "r U R' U' M2 U R U' R' U' M'",
@@ -7438,48 +9857,86 @@ const arrowOllSet = [
     name: "OLL 20",
     ollNumber: 20,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
-      "",
-      "U",
-      "U'",
-      "U2"
+      ""
     ],
     barMovements: [
       [
-        "Full",
-        "Full",
-        "Full",
         "Full"
       ],
       [
-        "Right",
-        "Front",
-        "Back",
-        "Left"
-      ],
-      [
-        "Left",
-        "Back",
-        "Front",
         "Right"
       ],
       [
-        "Back",
-        "Right",
-        "Left",
-        "Front"
+        "Left"
       ],
       [
-        "Front",
-        "Left",
-        "Right",
         "Back"
       ],
       [
-        "Diag",
-        "Diag",
-        "Diag",
+        "Front"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          9,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "r' R U R U R' U' M2 U R U' r'",
@@ -7627,27 +10084,71 @@ const arrowOllSet = [
     name: "OLL 28",
     ollNumber: 28,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          23,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          2,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          9,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          17,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          1,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          15,
+          15
+        ]
       ]
     ],
     algs: "r U R' U' r' R U R U' R'",
@@ -7795,6 +10296,7 @@ const arrowOllSet = [
     name: "OLL 29",
     ollNumber: 29,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -7816,6 +10318,64 @@ const arrowOllSet = [
       ],
       [
         "Front"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          9,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "r' R U R U R' U' R' F R F' r R'",
@@ -7963,6 +10523,7 @@ const arrowOllSet = [
     name: "OLL 29",
     ollNumber: 29,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -7984,6 +10545,64 @@ const arrowOllSet = [
       ],
       [
         "Front"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "R U R' U' R U' R' F' U' F R U R'",
@@ -8131,6 +10750,7 @@ const arrowOllSet = [
     name: "OLL 30",
     ollNumber: 30,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -8152,6 +10772,64 @@ const arrowOllSet = [
       ],
       [
         "Right"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          6,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "F U R U2 R' U' R U2 R' U' F'",
@@ -8299,6 +10977,7 @@ const arrowOllSet = [
     name: "OLL 30",
     ollNumber: 30,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -8320,6 +10999,64 @@ const arrowOllSet = [
       ],
       [
         "Back"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          1,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          6,
+          15
+        ]
       ]
     ],
     algs: "F R' F R2 U' R' U' R U R' F2",
@@ -8467,27 +11204,71 @@ const arrowOllSet = [
     name: "OLL 31",
     ollNumber: 31,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          23,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          5,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          11,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          2,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "R' U' F U R U' R' F' R",
@@ -8635,6 +11416,7 @@ const arrowOllSet = [
     name: "OLL 32",
     ollNumber: 32,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -8656,6 +11438,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          22,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "S R U R' U' R' F R f'",
@@ -8803,6 +11643,7 @@ const arrowOllSet = [
     name: "OLL 32",
     ollNumber: 32,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -8824,6 +11665,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          15,
+          15
+        ]
       ]
     ],
     algs: "L U F' U' L' U L F L'",
@@ -8971,27 +11870,71 @@ const arrowOllSet = [
     name: "OLL 33",
     ollNumber: 33,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          23,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          16,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          9,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "R U R' U' R' F R F'",
@@ -9139,6 +12082,7 @@ const arrowOllSet = [
     name: "OLL 34",
     ollNumber: 34,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -9160,6 +12104,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "R U R2 U' R' F R U R U' F'",
@@ -9307,6 +12309,7 @@ const arrowOllSet = [
     name: "OLL 34",
     ollNumber: 34,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -9328,6 +12331,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "R U R' U' B' R' F R F' B",
@@ -9475,27 +12536,71 @@ const arrowOllSet = [
     name: "OLL 35",
     ollNumber: 35,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          3,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          7,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          23,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          11,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          16,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          14,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          1,
+          15
+        ]
       ]
     ],
     algs: "R U2 R' R' F R F' R U2 R'",
@@ -9643,6 +12748,7 @@ const arrowOllSet = [
     name: "OLL 36",
     ollNumber: 36,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -9664,6 +12770,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          8,
+          15
+        ]
       ]
     ],
     algs: "L' U' L U' L' U L U L F' L' F",
@@ -9811,6 +12975,7 @@ const arrowOllSet = [
     name: "OLL 36",
     ollNumber: 36,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -9832,6 +12997,64 @@ const arrowOllSet = [
       ],
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          16,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          15,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          22,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "R U R' U' F' U2 F U R U R'",
@@ -9979,6 +13202,7 @@ const arrowOllSet = [
     name: "OLL 37",
     ollNumber: 37,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -10000,6 +13224,64 @@ const arrowOllSet = [
       ],
       [
         "Right"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          16,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "F R' F' R U R U' R'",
@@ -10147,6 +13429,7 @@ const arrowOllSet = [
     name: "OLL 37",
     ollNumber: 37,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -10168,6 +13451,64 @@ const arrowOllSet = [
       ],
       [
         "Right"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          5,
+          19
+        ],
+        [
+          23,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          16,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          3,
+          15
+        ]
       ]
     ],
     algs: "F R U' R' U' R U R' F'",
@@ -10315,27 +13656,71 @@ const arrowOllSet = [
     name: "OLL 38",
     ollNumber: 38,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          5,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          9,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          10,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          15,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          2,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U' R' U' R' F R F'",
@@ -10483,6 +13868,7 @@ const arrowOllSet = [
     name: "OLL 39",
     ollNumber: 39,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -10504,6 +13890,64 @@ const arrowOllSet = [
       ],
       [
         "Back"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          15,
+          15
+        ]
       ]
     ],
     algs: "L F' L' U' L U F U' L'",
@@ -10651,6 +14095,7 @@ const arrowOllSet = [
     name: "OLL 39",
     ollNumber: 39,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -10672,6 +14117,64 @@ const arrowOllSet = [
       ],
       [
         "Front"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          9,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "F R U R' U' F' R' U' R U' R' U2 R",
@@ -10819,27 +14322,71 @@ const arrowOllSet = [
     name: "OLL 40",
     ollNumber: 40,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          17,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          23,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          1,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          10,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          8,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          7,
+          10
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "R' F R U R' U' F' U R",
@@ -10987,27 +14534,71 @@ const arrowOllSet = [
     name: "OLL 41",
     ollNumber: 41,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          8,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          23,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          10,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          15,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          2,
+          10
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U2 R' F R U R' U' F'",
@@ -11155,27 +14746,71 @@ const arrowOllSet = [
     name: "OLL 42",
     ollNumber: 42,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          9,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          13,
+          14
+        ],
+        [
+          3,
+          19
+        ],
+        [
+          19,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          10,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          18,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          22,
+          10
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          1,
+          15
+        ]
       ]
     ],
     algs: "R' U' R U' R' U2 R F R U R' U' F'",
@@ -11323,6 +14958,7 @@ const arrowOllSet = [
     name: "OLL 43",
     ollNumber: 43,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -11344,6 +14980,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "F' U' L' U L F",
@@ -11491,6 +15185,7 @@ const arrowOllSet = [
     name: "OLL 43",
     ollNumber: 43,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -11512,6 +15207,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          14,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          11,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "R' U' F R' F' R U R",
@@ -11659,6 +15412,7 @@ const arrowOllSet = [
     name: "OLL 44",
     ollNumber: 44,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -11680,6 +15434,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          15,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          1,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "F U R U' R' F'",
@@ -11827,6 +15639,7 @@ const arrowOllSet = [
     name: "OLL 44",
     ollNumber: 44,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -11848,6 +15661,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          21,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          6,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          1
+        ]
+      ],
+      [
+        [
+          22,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "f R U R' U' f'",
@@ -11995,27 +15866,71 @@ const arrowOllSet = [
     name: "OLL 45",
     ollNumber: 45,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          21,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          17,
+          14
+        ],
+        [
+          16,
+          19
+        ],
+        [
+          6,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          14,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          9,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          23,
+          15
+        ]
       ]
     ],
     algs: "F R U R' U' F'",
@@ -12163,27 +16078,71 @@ const arrowOllSet = [
     name: "OLL 46",
     ollNumber: 46,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          15,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          22,
+          14
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          1,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          3,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          13,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R' U' R' F R F' U R",
@@ -12331,6 +16290,7 @@ const arrowOllSet = [
     name: "OLL 47",
     ollNumber: 47,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -12352,6 +16312,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          14,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          11,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "R' U' R' F R F' R' F R F' U R",
@@ -12499,6 +16517,7 @@ const arrowOllSet = [
     name: "OLL 47",
     ollNumber: 47,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -12520,6 +16539,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "F' L' U' L U L' U' L U F",
@@ -12667,27 +16744,71 @@ const arrowOllSet = [
     name: "OLL 48",
     ollNumber: 48,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          19,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          2,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          17,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          6,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          10,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "F R U R' U' R U R' U' F'",
@@ -12835,27 +16956,71 @@ const arrowOllSet = [
     name: "OLL 49",
     ollNumber: 49,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          2,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          21,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          11,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          19,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          17,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "r U' r2 U r2 U r2 U' r",
@@ -13003,27 +17168,71 @@ const arrowOllSet = [
     name: "OLL 50",
     ollNumber: 50,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      ""
+      null
     ],
     barMovements: [
       [
         "Full"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          9,
+          21
+        ],
+        [
+          6,
+          23
+        ]
       ],
       [
-        "Left"
+        [
+          14,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          21,
+          9
+        ]
       ],
       [
-        "Right"
+        [
+          22,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          19,
+          1
+        ]
       ],
       [
-        "Front"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Diag"
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "r' U r2 U' r2 U' r2 U r'",
@@ -13171,6 +17380,7 @@ const arrowOllSet = [
     name: "OLL 51",
     ollNumber: 51,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -13192,6 +17402,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          10,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          14,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "f R U R' U' R U R' U' f'",
@@ -13339,6 +17607,7 @@ const arrowOllSet = [
     name: "OLL 51",
     ollNumber: 51,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -13360,6 +17629,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "F U R U' R' U R U' R' F'",
@@ -13507,6 +17834,7 @@ const arrowOllSet = [
     name: "OLL 52",
     ollNumber: 52,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -13528,6 +17856,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          5,
+          23
+        ]
+      ],
+      [
+        [
+          2,
+          14
+        ],
+        [
+          6,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          11,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          22,
+          10
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U' y R U' R' F'",
@@ -13675,6 +18061,7 @@ const arrowOllSet = [
     name: "OLL 52",
     ollNumber: 52,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       ""
     ],
@@ -13696,6 +18083,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          16,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          15,
+          19
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      [
+        [
+          11,
+          10
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R U R' U R U' B U' B' R'",
@@ -13843,6 +18288,7 @@ const arrowOllSet = [
     name: "OLL 53",
     ollNumber: 53,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -13864,6 +18310,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          7,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "r' U2 R U R' U' R U R' U r",
@@ -14011,6 +18515,7 @@ const arrowOllSet = [
     name: "OLL 53",
     ollNumber: 53,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U2"
     ],
@@ -14032,6 +18537,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "l' U2 L U L' U' L U L' U l",
@@ -14179,6 +18742,7 @@ const arrowOllSet = [
     name: "OLL 54",
     ollNumber: 54,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
       "U"
     ],
@@ -14200,6 +18764,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          13,
+          22
+        ],
+        [
+          15,
+          21
+        ],
+        [
+          19,
+          23
+        ]
+      ],
+      [
+        [
+          10,
+          14
+        ],
+        [
+          8,
+          19
+        ],
+        [
+          18,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      [
+        [
+          17,
+          10
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          16,
+          15
+        ]
       ]
     ],
     algs: "r U2 R' U' R U R' U' R U' r'",
@@ -14347,6 +18969,7 @@ const arrowOllSet = [
     name: "OLL 54",
     ollNumber: 54,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
       "U'"
     ],
@@ -14368,6 +18991,64 @@ const arrowOllSet = [
       ],
       [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          2,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "r U R' U R U' R' U R U2 r'",
@@ -14515,34 +19196,86 @@ const arrowOllSet = [
     name: "OLL 55",
     ollNumber: 55,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "U",
-      "U'"
+      "U"
     ],
     barMovements: [
       [
-        "Front",
-        "Back"
+        "Front"
       ],
       [
-        "Full",
         "Full"
       ],
       [
-        "Diag",
         "Diag"
       ],
       [
-        "Left",
-        "Right"
-      ],
-      [
-        "Right",
         "Left"
       ],
       [
-        "Back",
-        "Front"
+        "Right"
+      ],
+      [
+        "Back"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          11,
+          22
+        ],
+        [
+          23,
+          21
+        ],
+        [
+          6,
+          23
+        ]
+      ],
+      [
+        [
+          13,
+          14
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          22,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          21,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          18,
+          15
+        ]
       ]
     ],
     algs: "R U2 R2 U' R U' R' U2 F R F'",
@@ -14690,34 +19423,86 @@ const arrowOllSet = [
     name: "OLL 55",
     ollNumber: 55,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
-      "U",
-      "U'"
+      "U"
     ],
     barMovements: [
       [
-        "Left",
         "Left"
       ],
       [
-        "Back",
-        "Front"
-      ],
-      [
-        "Front",
         "Back"
       ],
       [
-        "Diag",
-        "Full"
+        "Front"
       ],
       [
-        "Full",
         "Diag"
       ],
       [
-        "Right",
+        "Full"
+      ],
+      [
         "Right"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          16,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          15,
+          19
+        ],
+        [
+          19,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          18,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          5,
+          15
+        ]
       ]
     ],
     algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
@@ -14865,34 +19650,86 @@ const arrowOllSet = [
     name: "OLL 56",
     ollNumber: 56,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "",
-      "U2"
+      ""
     ],
     barMovements: [
       [
-        "Full",
         "Full"
       ],
       [
-        "Left",
-        "Right"
-      ],
-      [
-        "Right",
         "Left"
       ],
       [
-        "Front",
-        "Back"
+        "Right"
       ],
       [
-        "Back",
         "Front"
       ],
       [
-        "Diag",
+        "Back"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          14,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          7,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          17,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "r' U' r U' R' U R U' R' U R r' U r",
@@ -15040,34 +19877,86 @@ const arrowOllSet = [
     name: "OLL 56",
     ollNumber: 56,
     algNumber: 1,
+    differentAUF: [],
     altAUF: [
-      "",
-      "U2"
+      ""
     ],
     barMovements: [
       [
-        "Full",
         "Full"
       ],
       [
-        "Left",
-        "Right"
-      ],
-      [
-        "Right",
         "Left"
       ],
       [
-        "Front",
-        "Back"
+        "Right"
       ],
       [
-        "Back",
         "Front"
       ],
       [
-        "Diag",
+        "Back"
+      ],
+      [
         "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          16,
+          21
+        ],
+        [
+          18,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          23,
+          19
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          21,
+          15
+        ]
       ]
     ],
     algs: "r U r' U R U' R' U R U' R' r U' r'",
@@ -15215,37 +20104,316 @@ const arrowOllSet = [
     name: "OLL 57",
     ollNumber: 57,
     algNumber: 0,
+    differentAUF: [],
     altAUF: [
-      "U",
-      "U'"
+      "U"
     ],
     barMovements: [
       [
-        "Full",
         "Full"
       ],
       [
-        "Back",
-        "Front"
-      ],
-      [
-        "Front",
         "Back"
       ],
       [
-        "Left",
-        "Right"
+        "Front"
       ],
       [
-        "Right",
         "Left"
       ],
       [
-        "Diag",
+        "Right"
+      ],
+      [
         "Diag"
       ]
     ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          9,
+          9
+        ]
+      ],
+      [
+        [
+          14,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          10,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    ],
     algs: "R U R' U' M' U R U' r'",
+    group: "Corners Oriented",
+    difficultCenters: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
+    fullDiagCp: [
+      [
+        [
+          9,
+          15,
+          "opp",
+          21,
+          23,
+          "same",
+          1000
+        ],
+        [
+          9,
+          15,
+          "opp",
+          21,
+          23,
+          "opp",
+          1000
+        ]
+      ]
+    ],
+    leftRightCp: [
+      [
+        [
+          19,
+          21,
+          "opp",
+          9,
+          19,
+          "opp",
+          61
+        ],
+        [
+          19,
+          21,
+          "opp",
+          9,
+          19,
+          "same",
+          61
+        ]
+      ]
+    ],
+    frontBackCp: [
+      [
+        [
+          9,
+          23,
+          "opp",
+          21,
+          23,
+          "same",
+          41
+        ],
+        [
+          9,
+          23,
+          "opp",
+          21,
+          23,
+          "opp",
+          41
+        ]
+      ]
+    ],
+    SameOpp: [
+      [
+        [
+          [
+            21,
+            23,
+            "same",
+            9,
+            19,
+            "same",
+            65
+          ],
+          [
+            21,
+            23,
+            "opp",
+            9,
+            19,
+            "opp",
+            65
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            9,
+            19,
+            "opp",
+            19,
+            21,
+            "opp",
+            96
+          ],
+          [
+            9,
+            19,
+            "same",
+            19,
+            21,
+            "opp",
+            96
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            21,
+            23,
+            "same",
+            9,
+            21,
+            "opp",
+            75
+          ],
+          [
+            21,
+            23,
+            "opp",
+            9,
+            21,
+            "same",
+            75
+          ]
+        ]
+      ]
+    ]
+  },
+  {
+    id: "OLL 57-1",
+    name: "OLL 57",
+    ollNumber: 57,
+    algNumber: 1,
+    differentAUF: [],
+    altAUF: [
+      "U"
+    ],
+    barMovements: [
+      [
+        "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          22,
+          22
+        ],
+        [
+          21,
+          21
+        ],
+        [
+          23,
+          23
+        ]
+      ],
+      [
+        [
+          11,
+          14
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          9,
+          9
+        ]
+      ],
+      [
+        [
+          13,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          2,
+          10
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    ],
+    algs: "R U' R' S' R U R' S ",
     group: "Corners Oriented",
     difficultCenters: [],
     groupRecUsed: true,

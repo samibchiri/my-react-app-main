@@ -63,7 +63,11 @@ const [scramble, setScramble] = useState("");
 const [chosenAlg,setChosenAlg]= useState(null)
 
 const [altscramble,setAltScramble] = useState(Array(4).fill("null"));
-const [AUF,setAUF]=useState([])
+const [allAltAUF,setAllAltAUF]=useState([])
+const [allAUF,setAllAUF]=useState([])
+const [barMovements,setBarMovements]=useState([])
+const [piecesMovement,setPiecesMovement]=useState([])
+
 
 const [arrowCombinationSorted,setArrowCombinationSorted]= useState(false)
 const [arrowDone,setArrowDone]=useState(false)
@@ -84,7 +88,7 @@ const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
     let algIndexRef=useRef(0)
 
     let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
-    let allAUF=["","U'","U","U2"]
+    let allAUFPerm=["","U'","U","U2"]
     const ScrambleVisualizerDetails={
     id: "oll",
     title: "OLL",
@@ -92,6 +96,15 @@ const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
     view: "plan",
     stage:"cross",
     numCases: 57,
+  }
+
+  let BarPositionDict={
+    0:"Full",
+    1:"Left",
+    2:"Right",
+    3:"Front",
+    4:"Back",
+    5:"Diag"
   }
 
   let pathArrow1="M 37,37 L 117,37 L 117,33 L 127,39 L 117,43 L 117,41 L 37,41 37,45 27,39 37,33 Z"
@@ -128,26 +141,35 @@ useEffect(() => {
     }
     console.log("NewAlg5",currentalg,chosenAlg,algIndexRef.current,scrambleIndex.current)
     setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
-
     let alg1=currentalg.algs[0]
     let alg2=currentalg.algs[1]
+    console.log("cpAlgs",alg1,"",alg2)
     if(alg2==undefined){
-        alg2=alg1
-    }
-    
-    if(algIndexRef.current==1){
-        alg1=currentalg.algs[1]
-        alg2=currentalg.algs[0]
-    }
-    alg2=Inverse(alg2)
-    
-    //Search for angle in which alternative oll should be performed
-    setAltScramble(
+        setAltScramble(
         new Array(4).fill("").map((_,i)=>
-            alg2+allAUF[i] +alg1+
-            CornerPermutations[scrambleIndex.current]
-        )
-    );
+            ""
+        ));
+    }
+    
+    else{
+        if(algIndexRef.current==1){
+            alg1=currentalg.algs[1]
+            alg2=currentalg.algs[0]
+        }
+        alg2=Inverse(alg2)
+
+        
+        
+        //Search for angle in which alternative oll should be performed
+        setAltScramble(
+            new Array(4).fill("").map((_,i)=>
+                alg2+allAUFPerm[i] +alg1+
+                CornerPermutations[scrambleIndex.current]
+            )
+        );
+    }
+    
+    
 
     
 }, [chosenAlg]);
@@ -172,12 +194,19 @@ useEffect(() => {
     // give CaseImage time to render
      const timeout = setTimeout(() => {
     
-    newCombinedSquaresList= getSquaresInfo();
+    let newCombinedSquaresList= getSquaresInfo();
     // if(scrambleIndex.current==0){
     //     console.log("SquaresColors",newCombinedSquaresList)
     //     piecesMovementGen(newCombinedSquaresList)
     // }
-    squaresColors=getSquaresColors(newCombinedSquaresList)
+    let newSquaresColors =getSquaresColors(newCombinedSquaresList)
+    console.log("GoPiecesMovement",scrambleIndex.current==0)
+    if(scrambleIndex.current==0){
+        let piecesMovement= piecesMovementGen(newSquaresColors,newCombinedSquaresList);
+        console.log("piecesMovementGen",piecesMovement)
+        setPiecesMovement(piecesMovement)
+    }
+    getAltHeadlightsMovement()
   }, 10);
 
   return () => clearTimeout(timeout);
@@ -205,28 +234,63 @@ useEffect(() => {
             currentalg=ollCaseSet.cases[algRef.current]
         }
         setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
+        //setScramble(currentalg.algs[algIndexRef.current])
+
         
-        let alg1=currentalg.algs[0]
-        let alg2=currentalg.algs[1]
-        if(alg2==undefined){
-            alg2=alg1
-        }
+        //if(scrambleIndex.current==1){
 
-        if(algIndexRef.current==1){
-            alg1=currentalg.algs[1]
-            alg2=currentalg.algs[0]
-        }
-        alg2=Inverse(alg2)
+            let alg1=currentalg.algs[0]
+            let alg2=currentalg.algs[1]
+            if(alg2==undefined){
+                setAltScramble(
+                new Array(4).fill("").map((_,i)=>
+                    ""
+                ));
+            }
+            else{
+                if(algIndexRef.current==1){
+                    alg1=currentalg.algs[1]
+                    alg2=currentalg.algs[0]
+                }
+                alg2=Inverse(alg2)
+                
+                setAltScramble(
+                new Array(4).fill("").map((_,i)=>
+                    alg2+allAUFPerm[i] +alg1+
+                    CornerPermutations[scrambleIndex.current]
+                ));
+            }
+            
+        //}
+        // if(scrambleIndex.current==2){
 
-        setAltScramble(
-        new Array(4).fill("").map((_,i)=>
-            alg2+allAUF[i] +alg1+
-            CornerPermutations[scrambleIndex.current]
-        )
-    );
+        //     let alg1=currentalg.algs[algIndexRef.current]
+        //     let alg2=currentalg.algs[algIndexRef.current]
+        //     if(alg2==undefined){
+        //         setAltScramble(
+        //         new Array(4).fill("").map((_,i)=>
+        //             ""
+        //         ));
+        //     }
+        //     else{
+        //         alg2=Inverse(alg2)
+                
+        //         setAltScramble(
+        //         new Array(4).fill("").map((_,i)=>
+        //             alg2+allAUFPerm[i] +alg1+
+        //             CornerPermutations[scrambleIndex.current]
+        //         ));
+        //     }
+            
+        // }
     }
     
 }, [arrowCombination]);
+
+function getAUFsOf2Algs(alg1,alg2){
+
+}
+
 
 useEffect(()=>{
     if(arrowDone==true){
@@ -445,8 +509,8 @@ function EasyRecognition(){
   
     if(!chosenAlg){
 
-   
-    if(algRef.current+1<ollCaseSet.cases.length){
+   //Continue if it isnt the last alg
+    if(algRef.current+1<ollCaseSet.cases.length || ollCaseSet.cases[algRef.current].algs[algIndexRef.current+1]){
         if(algIndexRef.current==1){
             algIndexRef.current=0
             algRef.current+=1
@@ -464,6 +528,7 @@ function EasyRecognition(){
         }
 
 
+    
     setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current])
 
     let alg1=ollCaseSet.cases[algRef.current].algs[0]
@@ -477,10 +542,12 @@ function EasyRecognition(){
     }
     alg2=Inverse(alg2)
       
-    setAUF([])
+    setAllAltAUF([])
+    setAllAUF([])
+    setBarMovements([])
     setAltScramble(
         new Array(4).fill("").map((_,i)=>
-            alg2+allAUF[i] +alg1+
+            alg2+allAUFPerm[i] +alg1+
             CornerPermutations[scrambleIndex.current] 
         )
     );
@@ -1082,6 +1149,7 @@ function GroupRecognition(){
     
     console.log(`Algref, ${algIndexRef.current}`)
     console.log(algRef.current)
+    console.log("altAUFallAltAUF",allAltAUF)
     
     
 
@@ -1092,8 +1160,10 @@ function GroupRecognition(){
             name:ollCaseSet.cases[algRef.current].name,
             ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
             algNumber:algIndexRef.current,
-            altAUF:AUF,
-            barMovements:[],
+            differentAUF:allAUF,
+            altAUF:allAltAUF,
+            barMovements:barMovements,
+            piecesMovement:piecesMovement,
             algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
             group:ollCaseSet.cases[algRef.current].group,
             difficultCenters:[],
@@ -1118,6 +1188,7 @@ function GroupRecognition(){
             groupdict["group"]=oll.group
 
         }
+        console.log("TempBarMovementsFinished",barMovements)
     }
     catch(error){
         console.error(error)
@@ -1267,97 +1338,12 @@ useEffect(()=>{
 // },[arrowCombination])
 
 
-
+let tempBarMovement=[]
  const overlayRef = useRef(null);
 const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
 
 
-
-     function getSquaresInfo(){
-         const containerParent = overlayRef.current;
-    let container= containerParent.querySelector("div")
-    let containerSvg= container.querySelector("svg")
-    let containerSvgSquaresInside= containerSvg.querySelectorAll("g")[1]
-    let containerSvgSquaresInsideList= containerSvgSquaresInside.querySelectorAll("polygon")
-    //console.log(containerSvgSquaresInsideList)
-    
-    let containerSvgSquaresOutside= containerSvg.querySelectorAll("g")[2]
-     let containerSvgSquaresOutsideList= containerSvgSquaresOutside.querySelectorAll("polygon")
-    
-     let combinedSquaresList=[...containerSvgSquaresInsideList,...containerSvgSquaresOutsideList]
-    combinedSquaresList=[...combinedSquaresList,...[0,0,0,0]]
-     //console.log(combinedSquaresList)
-    let Remapping = [
-  [0,6],[1,7],[2,8],[3,11],[4,12],
-  [5,13],[6,16],[7,17],[8,18],[9,19],
-  [10,14],[11,9],[12,21],[13,22],[14,23],
-  [15,5],[16,10],[17,15],[18,3],[19,2],
-  [20,1],[21,24],[22,20],[23,4],[24,0]
-];
-    let newCombinedSquaresList=new Array(25).fill(0);
-    //console.log(newCombinedSquaresList)
-    combinedSquaresList.forEach((_,i)=>{
-        newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
-    })
-    return newCombinedSquaresList
-    //console.log(newCombinedSquaresList)
-
-   
-
-    let tempBarMovement=[]
-    for(let i=0;i<4;i++){
-        console.log(altoverlayRefs)
-    const containerParent = altoverlayRefs.current[i];
-    let altContainer= containerParent.querySelector("div")
-    let altContainerSvg= altContainer.querySelector("svg")
-    let altContainerSvgSquaresInside= altContainerSvg.querySelectorAll("g")[1]
-    let altContainerSvgSquaresInsideList= altContainerSvgSquaresInside.querySelectorAll("polygon")
-    //console.log(containerSvgSquaresInsideList)
-     let altContainerSvgSquaresOutside= altContainerSvg.querySelectorAll("g")[2]
-     let altContainerSvgSquaresOutsideList= altContainerSvgSquaresOutside.querySelectorAll("polygon")
-    
-    
-   let containsOnlyYellow=true
-    
-//    console.log(altContainer)
-//    console.log(altContainerSvg)
-//    console.log(altContainerSvgSquaresInside)
-//    console.log(altContainerSvgSquaresInsideList)
-    //console.log(`Index: ${i}`)
-    
-
-    
-     altContainerSvgSquaresInsideList.forEach((item)=>{
-        if(item.getAttribute("fill")=="yellow"){
-            
-        }
-        else{
-            //console.log(`Not Yellow, ${item.getAttribute("fill")}`)
-            containsOnlyYellow=false
-        }
-        
-     })
-     if(containsOnlyYellow){
-        console.log()
-        console.log()
-        console.log()
-        console.log()
-        console.log(`Index: ${i}`)
-        if(scrambleIndex.current==0){
-
-        
-        let aufIndex=i
-        if(aufIndex==1){
-            aufIndex=2
-        }
-        else if(aufIndex==2){
-            aufIndex=1
-        }
-        console.log("CHangeAUF")
-        setAUF(prev=>[...prev,allAUF[aufIndex]])
-    }
-        
-        function getHeadlights(svgSquaresOutsideList){
+    function getHeadlights(svgSquaresOutsideList){
             console.log("SVGOutside")
            
             let LeftTrue=false
@@ -1395,48 +1381,137 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
             else{
                 ReturnedValue="Diag"
             }
-            console.log(ReturnedValue)
+            console.log("ReturnedHeadlightsValue",ReturnedValue)
             return ReturnedValue
         }
-         
-        // for(let i=0;i<barMovements.length;i++){
-        //     tempBarMovement[i]=barMovements[i]
-        // }
-        // tempBarMovement[scrambleIndex.current].push(getHeadlights(altContainerSvgSquaresOutsideList))
-        // setBarMovements(tempBarMovement)
-        // console.log(`ScrambleIndex: ${scrambleIndex.current}`)
-        // console.log(`THe problem:, ${JSON.stringify(tempBarMovement)}`)
-        tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
-        // setBarMovements(tempBarMovement)
-        // console.log(`ScrambleIndex: ${scrambleIndex.current}`)
-        // console.log(`THe problem:, ${JSON.stringify(tempBarMovement)}`)
 
-    }
+     function getSquaresInfo(){
+         const containerParent = overlayRef.current;
+    let container= containerParent.querySelector("div")
+    let containerSvg= container.querySelector("svg")
+    let containerSvgSquaresInside= containerSvg.querySelectorAll("g")[1]
+    let containerSvgSquaresInsideList= containerSvgSquaresInside.querySelectorAll("polygon")
+    //console.log(containerSvgSquaresInsideList)
     
-    }
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-    console.log()
-
-    console.log("Adding temp")
-     console.log(tempBarMovement)
-
-
-    console.log("SquareColors")
-    console.log(newSquaresColors)
+    let containerSvgSquaresOutside= containerSvg.querySelectorAll("g")[2]
+     let containerSvgSquaresOutsideList= containerSvgSquaresOutside.querySelectorAll("polygon")
     
-    flushSync(() => {
-    setSquaresColors(newSquaresColors)
+     let combinedSquaresList=[...containerSvgSquaresInsideList,...containerSvgSquaresOutsideList]
+    combinedSquaresList=[...combinedSquaresList,...[0,0,0,0]]
+     //console.log(combinedSquaresList)
+    let Remapping = [
+  [0,6],[1,7],[2,8],[3,11],[4,12],
+  [5,13],[6,16],[7,17],[8,18],[9,19],
+  [10,14],[11,9],[12,21],[13,22],[14,23],
+  [15,5],[16,10],[17,15],[18,3],[19,2],
+  [20,1],[21,24],[22,20],[23,4],[24,0]
+];
+    let newCombinedSquaresList=new Array(25).fill(0);
+    //console.log(newCombinedSquaresList)
+    combinedSquaresList.forEach((_,i)=>{
+        newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
     })
-
-     
-
-
-    //Get effect of alt overlay algs
-    
+    return newCombinedSquaresList
 }
+
+
+function getAltHeadlightsMovement(){
+    
+    let containsOnlyYellowFound=false
+    if(altscramble[0]!=""){
+    for(let i=0;i<4;i++){
+        console.log(altoverlayRefs)
+        const containerParent = altoverlayRefs.current[i];
+        let altContainer= containerParent.querySelector("div")
+        let altContainerSvg= altContainer.querySelector("svg")
+        let altContainerSvgSquaresInside= altContainerSvg.querySelectorAll("g")[1]
+        let altContainerSvgSquaresInsideList= altContainerSvgSquaresInside.querySelectorAll("polygon")
+        //console.log(containerSvgSquaresInsideList)
+        let altContainerSvgSquaresOutside= altContainerSvg.querySelectorAll("g")[2]
+        let altContainerSvgSquaresOutsideList= altContainerSvgSquaresOutside.querySelectorAll("polygon")
+        
+        
+        let containsOnlyYellow=true
+            
+        altContainerSvgSquaresInsideList.forEach((item)=>{
+            if(item.getAttribute("fill")=="yellow"){
+                
+            }
+            else{
+                //console.log(`Not Yellow, ${item.getAttribute("fill")}`)
+                containsOnlyYellow=false
+            }
+            
+        })
+        if(containsOnlyYellow){
+            if(!containsOnlyYellowFound){
+                containsOnlyYellowFound=true
+            
+            
+            console.log(altscramble)
+            //if(scrambleIndex.current==1){
+                
+            console.log(`ReturnPassedIndex: ${[algRef.current,algIndexRef.current,i]}`)
+            
+                let aufIndex=i
+                if(aufIndex==1){
+                    aufIndex=2
+                }
+                else if(aufIndex==2){
+                    aufIndex=1
+                }
+                console.log("CHangeAUF")
+                setAllAltAUF([allAUFPerm[aufIndex]])
+                    
+           // }
+            // if(scrambleIndex.current==2){
+            //         let aufIndex=i
+            //         if(aufIndex==1){
+            //             aufIndex=2
+            //         }
+            //         else if(aufIndex==2){
+            //             aufIndex=1
+            //         }
+            //         console.log("CHangeAUF")
+            //         setAllAUF(prev=>[...prev,allAUFPerm[aufIndex]])
+                
+                
+            // }
+            console.log("Check")
+            
+            tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
+                setBarMovements(prev => (
+                [...prev,[...tempBarMovement]]
+            ));
+            if(scrambleIndex.current==0 && tempBarMovement[0]!=BarPositionDict[0]){
+                console.log("CP Found",algRef.current,tempBarMovement,BarPositionDict[0],scrambleIndex.current)
+            }
+            // for(let i=0;i<barMovements.length;i++){
+            //     tempBarMovement[i]=barMovements[i]
+            // }
+            // tempBarMovement[scrambleIndex.current].push(getHeadlights(altContainerSvgSquaresOutsideList))
+            // setBarMovements(tempBarMovement)
+            // console.log(`ScrambleIndex: ${scrambleIndex.current}`)
+            // console.log(`THe problem:, ${JSON.stringify(tempBarMovement)}`)
+            // setBarMovements(tempBarMovement)
+            // console.log(`ScrambleIndex: ${scrambleIndex.current}`)
+            // console.log(`THe problem:, ${JSON.stringify(tempBarMovement)}`)
+            }
+        }
+
+        
+
+        //Log how bars move when using alternate alg
+        // console.log("TempBarMovementsPushed",i)
+        // tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
+    }
+    console.log("TempBarMovements",tempBarMovement,barMovements)
+    }
+     else{
+        console.log("NoAlt",ollCaseSet.cases[algRef.current])
+        setAllAltAUF([null])
+    }
+}   
 
 function getSquaresColors(newCombinedSquaresList){
     let newSquaresColors=new Array(25).fill(0);
@@ -1453,6 +1528,7 @@ function getSquaresColors(newCombinedSquaresList){
     flushSync(() => {
     setSquaresColors(newSquaresColors)
     })
+    return newSquaresColors
 }
 
 
@@ -1665,7 +1741,6 @@ if(arrowCombination.length<6){
                 
             </div>
         </div>
-
 
 
 

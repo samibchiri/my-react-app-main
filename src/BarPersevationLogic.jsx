@@ -16,42 +16,70 @@ import { db } from './data/db.js';
 import { useLiveQuery } from "dexie-react-hooks";
 import {CornerPermutationPage} from "./ArrowDataGenerator.jsx"
 
+import { flushSync } from 'react-dom';
 
-export function useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady) {
-  const [width, setWidth] = useState(window.innerWidth);
-
+export function useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,altoverlayRefs) {
+  
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
+  const handleResize = () =>
+    resizeStates(setCubeSize, setStrokeWidth, setLineWidth, setRefsReady);
 
+
+    handleResize()
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+
   }, []);
 
-  useEffect(() => {
-    if (width < 600) {
-      setCubeSize(120);
-      setStrokeWidth(1);
-      setLineWidth(3);
-    } else if (width < 900) {
-      setCubeSize(150);
-      setStrokeWidth(1.2);
-      setLineWidth(3.5);
-    } else if (width < 1100) {
-      setCubeSize(200);
-      setStrokeWidth(1.5);
-      setLineWidth(4);
-    } else if (width < 1500) {
-      setCubeSize(150);
-      setStrokeWidth(1.2);
-      setLineWidth(3.5);
-    } else {
-      setCubeSize(200);
-      setStrokeWidth(1.5);
-      setLineWidth(4);
+  function resizeStates(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,cubeSize){
+    let sizeIndex
+    let cubeSizes=[120,150,200] 
+    let strokeWidths=[1,1.2,1.5] 
+    let lineWidths=[3,3.5,4]
+
+    let width=window.innerWidth
+    
+    let stateChanged=true
+
+    if (width < 600) { 
+      sizeIndex=0
+      if(cubeSize==cubeSizes[0]){
+        stateChanged=false
+      }
+    } 
+    else if (width < 900) { 
+      sizeIndex=1
+      if(cubeSize==cubeSizes[1]){
+        stateChanged=false
+      }
+    } 
+    else if (width < 1100) { 
+      sizeIndex=2
+      if(cubeSize==cubeSizes[2]){
+        stateChanged=false
+      }
+    } 
+    else if (width < 1500) { 
+      sizeIndex=0
+      if(cubeSize==cubeSizes[0]){
+        stateChanged=false
+      }
+    } 
+    else { 
+      sizeIndex=1
+      if(cubeSize==cubeSizes[1]){
+        stateChanged=false
+      }
+    } 
+
+    if(stateChanged){
+      setCubeSize(cubeSizes[sizeIndex])
+      setStrokeWidth(strokeWidths[sizeIndex])
+      setLineWidth(lineWidths[sizeIndex])
+      setRefsReady(false)
     }
 
-    setRefsReady(false)
-  }, [width]);
+  }
 
   return {};
 }
@@ -145,13 +173,13 @@ export function getCubeColors(altoverlayRefs,OllIndex,PermIndex){
   return {newSquaresColors,newCombinedSquaresList}
 }
 
-export function addInformationToColorIndexList(piecesMovementRef,newSquaresColors,newCombinedSquaresList,colorIndexList){
+export function addInformationToColorIndexList(piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList){
   
-  for(let i=0;i<piecesMovementRef.current.length;i++){
-      for(let j=0;j<piecesMovementRef.current[i].length;j++){
+  for(let i=0;i<piecesMovement.length;i++){
+      for(let j=0;j<piecesMovement[i].length;j++){
         
-        let currentIndex=piecesMovementRef.current[i][j][0]
-        let futureIndex=piecesMovementRef.current[i][j][1]
+        let currentIndex=piecesMovement[i][j][0]
+        let futureIndex=piecesMovement[i][j][1]
 
         let color = newSquaresColors[currentIndex]
         let Points=[]
@@ -161,7 +189,7 @@ export function addInformationToColorIndexList(piecesMovementRef,newSquaresColor
           
         }
         let tempColorIndexDict={
-          currentIndex:i,
+          currentIndex:currentIndex,
           futureIndex:futureIndex,
           color:color,
           Points:Points
@@ -169,7 +197,7 @@ export function addInformationToColorIndexList(piecesMovementRef,newSquaresColor
         colorIndexList[i].push(tempColorIndexDict)
       }
     }
-    console.log("Current2",colorIndexList,piecesMovementRef)
+    console.log("Current2",colorIndexList,piecesMovement)
   return colorIndexList
 }
 
@@ -397,7 +425,7 @@ export function convert2CentersToCoordinates(Center1,Center2,cubeSize){
 
 export function Connect2Centers(PointsInfo,CenterIndex,cubeSize,lineWidth ){
 
-  console.log("PointsINfo",PointsInfo)
+  
   let PiecesIndex=[]
   for(let i=0; i<PointsInfo.length;i++){
     PiecesIndex.push(PointsInfo[i].currentIndex)
@@ -411,6 +439,7 @@ export function Connect2Centers(PointsInfo,CenterIndex,cubeSize,lineWidth ){
   let tempcentery2=Centers[PiecesIndex[0]][1]
   let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2,lineWidth)
   
+  console.log("NewEndPoints",centerx2,centery2)
   if(CenterIndex==2){
      tempcenterx=Centers[PiecesIndex[1]][0] 
      tempcentery=Centers[PiecesIndex[1]][1]
@@ -424,16 +453,15 @@ export function Connect2Centers(PointsInfo,CenterIndex,cubeSize,lineWidth ){
     linePath:path,
     lineRotation:angle,
     lineRotationCoordX:centerx2,
-    lineRotationCoordX:centery2
+    lineRotationCoordY:centery2
   }
-  
 
   return tempConnectingLinesDict
 }
 
 
 
-export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,cubeSize){
+export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,cubeSize,lineWidth){
   
   let Centers= GetCentersPosition(cubeSize)
   let StartLocationX
@@ -445,6 +473,7 @@ export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,
   let EndLocationX = Centers[EndLocationIndex][0]
   let EndLocationY = Centers[EndLocationIndex][1]
 
+  console.log("ArrowMovement",PointsInfo)
   if (Center1Used && Center2Used){
     StartLocationX=Centers[PointsInfo[0].currentIndex][0]
     StartLocationY=Centers[PointsInfo[0].currentIndex][1]
@@ -455,17 +484,18 @@ export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,
     //Average X and average Y coordinate
     StartLocationX=(Centers[PointsInfo[0].currentIndex][0]+Centers[PointsInfo[1].currentIndex][0])/2
     StartLocationY=(Centers[PointsInfo[0].currentIndex][1]+Centers[PointsInfo[1].currentIndex][1])/2
-    EndLocationX += Centers[Center1][0]
-    EndLocationY += Centers[Center1][1]
+    EndLocationX = Centers[PointsInfo[0].futureIndex][0]+Centers[PointsInfo[1].futureIndex][0]
+    EndLocationY = Centers[PointsInfo[0].futureIndex][1]+ Centers[PointsInfo[1].futureIndex][1]
 
     EndLocationX=EndLocationX/2
     EndLocationY=EndLocationY/2
+    
   }
    else if(Center2Used){
     StartLocationX=(Centers[PointsInfo[0].currentIndex][0]+Centers[PointsInfo[2].currentIndex][0])/2
     StartLocationY=(Centers[PointsInfo[0].currentIndex][1]+Centers[PointsInfo[2].currentIndex][1])/2
-    EndLocationX += Centers[Center2][0]
-    EndLocationY += Centers[Center2][1]
+    EndLocationX = Centers[PointsInfo[0].futureIndex][0]+Centers[PointsInfo[2].futureIndex][0]
+    EndLocationY = Centers[PointsInfo[0].futureIndex][1]+Centers[PointsInfo[2].futureIndex][1]
 
     EndLocationX=EndLocationX/2
     EndLocationY=EndLocationY/2
@@ -507,12 +537,12 @@ export function getCirclePath(Center,circleRadius,cubeSize){
 
 }
 
-export function piecesMovementGen(newSquaresColors){
+export function piecesMovementGen(newSquaresColors,newCombinedSquaresList){
 
   let Center1
   let Center2
   let EndLocationIndex
-  let piecesMovement=[[],[],[],[],[]]
+  let piecesMovement=[[],[],[],[]]
 
   let colorIndexList=[[],[],[],[],[]]
   let colorList= ["#00d800","orange","#1f51ff","red","yellow"]
@@ -531,38 +561,49 @@ export function piecesMovementGen(newSquaresColors){
         let tempColorIndexDict={
           currentIndex:i,
           futureIndex:"",
-          color:"",
+          color:colorList[index],
           Points:Points
         }
         colorIndexList[index].push(tempColorIndexDict)
       }
     }
 
-  colorToEndLocationIndexDict={
+  colorIndexList.forEach(list=>{
+      list.sort((a,b)=>(sortCenterLeftRight(a.currentIndex,newSquaresColors)-sortCenterLeftRight(b.currentIndex,newSquaresColors)))
+
+      //Sort Points clockwise
+      list=sortPointsList(list)
+    } 
+  )
+  console.log("SortedColorList",colorIndexList)
+
+  let colorToEndLocationIndexDict={
     "#00d800": 22,
     "orange":14,
     "#1f51ff":2,
     "red":10
   }
 
-  for(i in colorIndexList){
-    EndLocationIndex=colorToEndLocationIndexDict[colorIndexList[i].color]
+  //Not including yellow
+  for(let i=0;i<4;i++){
+    let PointsInfo=colorIndexList[i]
+    EndLocationIndex=colorToEndLocationIndexDict[PointsInfo[0].color]
+    console.log("EndIndex",colorIndexList,EndLocationIndex,PointsInfo[0].color)
     
-    [Center1,Center2]=CenterNewPosition(colorIndexList[i],EndLocationIndex,SquareColors)
+    let [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,newSquaresColors)
 
   //Store where bar came from [prev,new] for all 3 pieces
-    console.log("Addtopiecesmovementref",[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2][0],Center2]])
-    piecesMovement[index]=[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]]
+    console.log("Addtopiecesmovementref",[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]])
+    piecesMovement[i]=[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]]
   
   }
 
   console.log("FinalpiecesMovement",piecesMovement)
-
+  return piecesMovement
 }
 
 function CenterNewPosition(PointsInfo,EndLocationIndex,index){
 
-  Center1=PointsInfo[1].currentIndex
   let NewCenter1
   let NewCenter2
   if (EndLocationIndex==2){

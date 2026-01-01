@@ -2,7 +2,7 @@
 import arrowOllSet from "./data/arrowOllSet.js";
 //import arrowOllSet from "./data/arrowOllSet copy.js"
 import { ThemeContext } from './DarkThemeContext.jsx';
-import React, { use, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
+import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
@@ -31,7 +31,10 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
   const [lineWidth, setLineWidth] = useState(4);
   const [refsReady, setRefsReady] = useState(false);
 
+
+  
   const altoverlayRefs = useRef([]);
+  const rerenderRef = useRef(0);
 
   const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
   const groupTable = {
@@ -56,16 +59,30 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
 const allOlls = useLiveQuery(() => db.olls.toArray(), []);
 
 console.log(allOlls)
-const selectedGroupOlls = useLiveQuery(
+// const selectedGroupOlls = useLiveQuery(
+//   () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
+//   [groupSelected]
+// );
+
+const selectedGroupOllsRaw = useLiveQuery(
   () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
   [groupSelected]
 );
 
+const selectedGroupOlls = useMemo(
+  () => selectedGroupOllsRaw ?? [],
+  [JSON.stringify(selectedGroupOllsRaw)]
+);
+
+
 
 useEffect(() => {
   altoverlayRefs.current = [];
-  setRefsReady(false);
-}, [selectedGroupOlls]);
+  if(refsReady){
+    setRefsReady(false);
+  }
+
+}, [selectedGroupOlls,cubeSize]);
 
   const [pathCalculated,setPathCalculated]= useState(false)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
@@ -77,8 +94,9 @@ const noMovementCenterRef = useRef(
 );
 
 
-useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady);
+useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,cubeSize);
 
+console.log("NewCubeSize",cubeSize,strokeWidth,lineWidth,refsReady)
 
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
@@ -90,7 +108,7 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
   let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
-  let CornerPermutations=["",T_Perm, "U2"+F_Perm   ,"U"+F_Perm,"U'"+F_Perm,Y_Perm]
+  let CornerPermutations=["",T_Perm, "U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
   //let CornerPermutations=["","", "","","",""]
   let PermTable=[0,5,1,2,3,4]
 
@@ -117,11 +135,14 @@ let Centers= GetCentersPosition(cubeSize)
 
 
 function GetBarsIndices(OllIndex,PermIndex){
+  
+  console.log("Rerenders",rerenderRef)
+  rerenderRef.current+=1
 
-  console.log("GetAgainBar")
+  console.log("GetAgainBar1",altoverlayRefs)
 
   let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
-
+    console.log("GetAgainBar1.2")
 
   let colorIndexList=[[],[],[],[],[]]
   let colorList=["#00d800","orange","#1f51ff","red","yellow"]
@@ -133,8 +154,11 @@ function GetBarsIndices(OllIndex,PermIndex){
   
   //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
   //console.log("Current4".piecesMovementRef)
-  colorIndexList=addInformationToColorIndexList(piecesMovementRef,newSquaresColors,newCombinedSquaresList,colorIndexList)
+  console.log("CurrentOLL",selectedGroupOlls[OllIndex])
 
+  colorIndexList=addInformationToColorIndexList(selectedGroupOlls[OllIndex].piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList)
+
+  console.log("CurrentcolorIndexList",colorIndexList)
 
    colorIndexList.forEach(list=>{
       list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
@@ -143,6 +167,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       list=sortPointsList(list)
     } 
   )
+  console.log("GetAgainBar1.5")
 
   let ConnectingLines = Array.from({ length: 5 }, () =>(
     {
@@ -158,6 +183,7 @@ function GetBarsIndices(OllIndex,PermIndex){
   );
   let combinedColorList=Array.from({ length: 5 }, () => [])
   
+  console.log("GetAgainBar2")
   for(let i=0;i<4;i++){
       let distance
       let color
@@ -169,7 +195,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       //Bars with hard to see pieces can be excluded with difficultCenters Array
       maxdistance=maxdistance*10
       console.log("Whatwasthas",colorIndexList[i])
-      if(colorIndexList[i].color!=colorIndexList[i].color){
+      if(colorIndexList[i][0].color!=colorIndexList[i][1].color){
         distance=10000
       }
       else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0].currentIndex)|| selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1].currentIndex)){
@@ -204,15 +230,16 @@ function GetBarsIndices(OllIndex,PermIndex){
       ConnectingLines[i]["ConnectedCenters"][0]=Connect2Centers(colorIndexList[i],0,cubeSize,lineWidth)
       Center1Used=true
       }
+
       
-      if(colorIndexList[i][0][2]!=colorIndexList[i][2][2]){
+      if(colorIndexList[i][0].color!=colorIndexList[i][2].color){
         distance=10000
       }
       else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0][0]) ||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2][0])){
         distance=10000
       }
       else{
-        color=colorIndexList[i][0][2]
+        color=colorIndexList[i][0].color
         if(combinedColorList[i].length==0){
           let colorIndex=(colorList.findIndex(x=>x==color))
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
@@ -226,7 +253,6 @@ function GetBarsIndices(OllIndex,PermIndex){
           distance=10000
         }
       }
-
       if (distance<maxdistance){
       ConnectingLines[i]["ConnectedCenters"][1]=Connect2Centers(colorIndexList[i],1,cubeSize,lineWidth)
       if (Center1Used){
@@ -236,37 +262,44 @@ function GetBarsIndices(OllIndex,PermIndex){
       }
 
   if (!Center1Used && !Center2Used){
-      if(colorIndexList[i][1][2]!=colorIndexList[i][2][2]){
+      if(colorIndexList[i][1].color!=colorIndexList[i][2].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1][0])||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2][0])){
+      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1].currentIndex)||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2].currentIndex)){
         distance=10000
       }
       else{
-        color=colorIndexList[i][1][2]
+        color=colorIndexList[i][1].color
         if(combinedColorList[i].length==0){
           let colorIndex=(colorList.findIndex(x=>x==color))
           combinedColorList[i].push(colorList[colorIndex],contrastingcolorList[colorIndex])
         }
         contrastingcolor=combinedColorList[i][1]
-        distance=Connect2Centers(colorIndexList[i],2,cubeSize,lineWidth)[4]
+        let {centerx,centery,centerx2,centery2}=convert2CentersToCoordinates(colorIndexList[i][1].currentIndex,colorIndexList[i][2].currentIndex,cubeSize)
+        distance=CalculatePointsDistance(centerx,centery,centerx2,centery2)
+        
         if(barColorsFiltered.includes(color)){
           distance=10000
         }
       }
+        console.log("GetAgainBar3",Center1Used,Center2Used,PermIndex,i)
+        console.log("GetAgainBar3Data",colorIndexList[i],distance,barColorsFiltered,selectedGroupOlls[OllIndex].difficultCenters)
+      
       if (distance<maxdistance){
         
           ConnectingLines[i]["ConnectedCenters"][1]=Connect2Centers(colorIndexList[i],2,cubeSize,lineWidth)
           Center3Used=true
       }
     }
-      
+
+      console.log("PreArrow",colorIndexList[i],Center1Used,Center2Used,Center3Used,PermIndex)
       ConnectingLines[i]["centerCircle"]=circlePath
-      ConnectingLines[i]["arrow"]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,Center3Used,cubeSize)
+      ConnectingLines[i]["arrow"]=ArrowBarMovement(colorIndexList[i],Center1Used,Center2Used,Center3Used,cubeSize,lineWidth)
       
+      console.log("Output",ConnectingLines[i]["arrow"])
       for(let j=0;j<3;j++){
         let currentIndex=colorIndexList[i][j].currentIndex
-        let NewIndex=ConnectingLines[i]["arrow"][4+j]  //j=0 is center, j=1/2 are left/right centers
+        let NewIndex=colorIndexList[i][j].futureIndex //j=0 is center, j=1/2 are left/right centers
          
         let distance=((Centers[currentIndex][0]-Centers[NewIndex][0])**2+(Centers[currentIndex][1]-Centers[NewIndex][1])**2)**(1/2)+1;
         let smalldistance=Math.abs(Centers[6][0]-Centers[12][0])*1.3 //1.3 so that cornerpieces that are close to each other are also included
@@ -302,6 +335,7 @@ function GetBarsIndices(OllIndex,PermIndex){
     }
   }
   
+  console.log("GetAgainBar4")
   let [pathList,color]= centerOutLineInfo(colorIndexList)
 
   color=newSquaresColors[PermIndex]
@@ -402,6 +436,7 @@ function GetBarsIndices(OllIndex,PermIndex){
     }
     }
   }
+  console.log("GetAgainBar5")
 
   let stringNoMovementCircle=""
   console.log("NoMovementCircle",noMovementCenterCircle)
@@ -423,7 +458,8 @@ function GetBarsIndices(OllIndex,PermIndex){
     allInformationDict["arrow"].push(ConnectingLines[i].arrow)
     allInformationDict["centerCircle"].push(ConnectingLines[i].centerCircle)
   }
-  console.log("Helpme14",ConnectingLines[i])
+  console.log("NewAllInformationDict",allInformationDict)
+
   return allInformationDict
 
 }
@@ -588,7 +624,11 @@ const setOverlayRef = (el,index)=> {
     }  
     );
 
-  if (allMounted && (selectedGroupOlls?.length)) setRefsReady(true);
+  if (allMounted && (selectedGroupOlls?.length)){
+    if(!refsReady){
+      setRefsReady(true);
+    }
+  } 
 };
 
 // compute overlayPaths after refs mount; run this AFTER refsReady becomes true
@@ -604,6 +644,7 @@ useLayoutEffect(() => {
         const result = GetBarsIndices(OllIndex,PermIndex); 
         console.log("Resulting outcome",result,OllIndex,PermIndex)
         return result || ["","none"];
+        
       } catch (err) {
         console.error('GetBarsIndices error for idx',OllIndex ,PermIndex, err)
         return ["","none"];
@@ -633,6 +674,8 @@ function centerOutLineInfo(IndexList){
   let StartingPointx=Centers[12][0]
   let StartingPointy=Centers[12][1]
 
+
+  console.log("CenteroutlineWeird")
   for (let i=0;i<4;i++){ // Color
      for (let j=0;j<Points[i].length;j++){ //Center
     
@@ -644,8 +687,8 @@ function centerOutLineInfo(IndexList){
       xCoord=StartingPointx+xCoord*Scale
       yCoord=StartingPointy+yCoord*Scale
 
-      if(IndexList[i][j][0]%5>=1 &&IndexList[i][j][0]%5<=3){
-        if(IndexList[i][j][0]>=5 &&IndexList[i][j][0]<=18){
+      if(IndexList[i][j].currentIndex%5>=1 &&IndexList[i][j].currentIndex%5<=3){
+        if(IndexList[i][j].currentIndex>=5 &&IndexList[i][j].currentIndex<=18){
           if(k==0){
             xCoord-=0.5
             yCoord-=0.5
@@ -667,7 +710,7 @@ function centerOutLineInfo(IndexList){
       tempTempPointsList.push([xCoord,yCoord])
     }
     Points[i][j]=tempTempPointsList
-    if(IndexList[i][j][0]%20<5||IndexList[i][j][0]%5==0||IndexList[i][j][0]%5==4){
+    if(IndexList[i][j].currentIndex%20<5||IndexList[i][j].currentIndex%5==0||IndexList[i][j].currentIndex%5==4){
 
   let [x1,y1]=tempTempPointsList[0]
   let [x2,y2]=tempTempPointsList[1]
@@ -700,16 +743,16 @@ function centerOutLineInfo(IndexList){
     CentersOutlinePath[i].push([])
      }
   }
-  for(let k=0;k<5;k++){
-  for(let i=0;i<Points[k].length;i++){
+  for(let i=0;i<5;i++){
+  for(let j=0;j<Points[i].length;j++){
     pointsPath=""
-    for(let j=1;j<4;j++){
-      pointsPath+=" L "+ Points[k][i][j][0]+","+Points[k][i][j][1]+""
-      if(Points[k][i][j][0]==undefined||Points[k][i][j][0]==undefined){
+    for(let k=1;k<4;k++){
+      pointsPath+=" L "+ Points[i][j][k][0]+","+Points[i][j][k][1]+""
+      if(Points[i][j][k][0]==undefined||Points[i][j][k][0]==undefined){
       }
     }
     pointsPath+=" Z"
-    CentersOutlinePath[k][i]+=`M ${Points[k][i][0][0]},${Points[k][i][0][1]} ${pointsPath} `
+    CentersOutlinePath[i][j]+=`M ${Points[i][j][0][0]},${Points[i][j][0][1]} ${pointsPath} `
   }}
   
 
@@ -943,7 +986,7 @@ return (
                                       strokeLinejoin="round"
                                       
                                       
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"})`}
+                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordY ||"0"})`}
                                     />
                                     
                                 </svg>
@@ -955,8 +998,7 @@ return (
                                   {
                                   
                                 Array.from({ length: 5 }, (_, i) => i).map(i => (
-                                  <>     
-                                  {console.log("Arrow?",overlayPaths[OllIndex][PermIndex])}                        
+                                  <>                            
                                     <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
                                   <path
                                       d={overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowPath||""}
@@ -968,7 +1010,7 @@ return (
                                   />
                                   
                                 </svg>
-                                {console.log("Centercircle",overlayPaths[OllIndex][PermIndex])}
+                               
                                  <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
                                     <path
                                         d={overlayPaths[OllIndex][PermIndex]?.centerCircle?.[i]||""}
