@@ -133,11 +133,56 @@ let Centers= GetCentersPosition(cubeSize)
 
 function GetBarsIndices(OllIndex,PermIndex){
   
-  console.log("Rerenders",rerenderRef)
+  //console.log("Rerenders",rerenderRef)
   rerenderRef.current+=1
 
-  let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
+  //let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
+  let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
+  
+    if (!containerparent) {
+      console.warn('GetBarsIndices: no ref for index', PermIndex);
+      return ["","red"]
+    }
+    let container= containerparent.querySelector("div")
+    let ContainerSvg = container.querySelector('svg');
+  if (!ContainerSvg) {
+    console.warn('GetBarsIndices: no svg inside container', container);
+    return ["","red"]
+  }
+  let ContainerSvgSquaresInside= ContainerSvg.querySelectorAll("g")[1]
+  let ContainerSvgSquaresInsideList= ContainerSvgSquaresInside.querySelectorAll("polygon")
+  //console.log(containerSvgSquaresInsideList)
+  let ContainerSvgSquaresOutside= ContainerSvg.querySelectorAll("g")[2]
+  
+  let ContainerSvgSquaresOutsideList= ContainerSvgSquaresOutside.querySelectorAll("polygon")
+  //console.log(ContainerSvgSquaresOutsideList[0].getAttribute("points").split(" "))
+  let combinedSquaresList=[...ContainerSvgSquaresInsideList,...ContainerSvgSquaresOutsideList]
+  combinedSquaresList=[...combinedSquaresList,...[0,0,0,0]]
+  let Remapping = [
+      [0,6],[1,7],[2,8],[3,11],[4,12],
+      [5,13],[6,16],[7,17],[8,18],[9,19],
+      [10,14],[11,9],[12,21],[13,22],[14,23],
+      [15,5],[16,10],[17,15],[18,3],[19,2],
+      [20,1],[21,24],[22,20],[23,4],[24,0]
+    ];
+  let newCombinedSquaresList=Array.from( {length:25}, ()=> 0)
+  //console.log(newCombinedSquaresList)
+  combinedSquaresList.forEach((_,i)=>{
+      newCombinedSquaresList[Remapping[i][1]]=combinedSquaresList[i]
+  })
+    let newSquaresColors= Array.from( {length:25}, ()=> 0)
+  newCombinedSquaresList.forEach((_,i)=>{
+    if (newCombinedSquaresList[i]!=0){
+        newSquaresColors[i]=newCombinedSquaresList[i].getAttribute("fill")
+    }
+    else{
+        newSquaresColors[i]=0
+    }
+        
+  })
 
+  //console.log(newSquaresColors)
+  
   let colorIndexList=[[],[],[],[],[]]
   let colorList=["#00d800","orange","#1f51ff","red","yellow"]
   let contrastingcolorList=["rgba(13, 139, 13, 1)","rgba(255, 128, 1, 1)","rgba(0, 71, 204, 1)","rgba(207, 1, 1, 1)","yellow"]
@@ -830,8 +875,15 @@ function changeOllAlgEnterPressed(e,oll){
 
 function changeOllAlg(newAlg,oll){
 
-  let updatedNewAlg= correctAlgString(newAlg)
-  setChangedAlgArray([updatedNewAlg,oll,true])
+//  let updatedNewAlg= correctAlgString(newAlg)
+
+  if(newAlg!=oll.algs){
+    setChangedAlgArray([newAlg,oll,true])
+  }
+  else{
+    setChangedAlgArray([newAlg,oll,false])
+  }
+  
 }
 
 function correctAlgString(inputstring){
@@ -843,7 +895,7 @@ function correctAlgString(inputstring){
   let newinputstring=""
 
   let oddSpacing=0
-  for (let i=0; i<inputstring.length;i++){
+  for (let i=0; i<inputstring.length;i++){s
     newinputstring+=inputstring[i]
 
     if(inputstring[(i+1)%inputstring.length]!="'" &&inputstring[(i+1)%inputstring.length]!="2" ){
@@ -854,6 +906,11 @@ function correctAlgString(inputstring){
   newinputstring=newinputstring.trim()
   return newinputstring
 
+}
+
+function invalidAlgWarning(){
+  console.warn("Invalid Alg")
+  setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false])
 }
 
 
@@ -867,8 +924,9 @@ return (
 
     {
     selectedGroupOlls.map((oll,i)=>(
-      <>
-                          {(
+      
+       <div key={oll.id}>
+                          {(i<=1 &&
                           <div>
 
                           <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
@@ -1069,7 +1127,7 @@ return (
                       </div>
                       
                           )}
-                      </> 
+                      </div>
     ))}
     <div>
 
@@ -1081,7 +1139,7 @@ return (
 
   {(false)&&
     selectedGroupOlls.map((oll,i)=>(
-      <>
+      <div key={oll.id}>
                           {(
                           <div>
                           <h2>{selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%2].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
@@ -1133,15 +1191,20 @@ return (
                       </div>
                       </div>
                       )}    
-                      </> 
+                      </div>
     ))
   }
-  {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  && (<>
+  {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
+    && (<>
+    {console.log("NewPage")}
         <CornerPermutationPage
+          key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
           newAlg={changedAlgArray[0]}
           oll={changedAlgArray[1]}
+          onError={() => invalidAlgWarning()}
         />
         </>
+        
       )}
 
   </>

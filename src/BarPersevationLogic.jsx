@@ -94,7 +94,6 @@ export function GetCentersPosition(cubeSize){
     let LowerEnd=BetweenArray[0]
     let UpperEnd=BetweenArray[1]
 
-    console.log(cubeSize)
     if(LowerEnd<0){
       LowerEnd=0
       UpperEnd=0
@@ -104,7 +103,7 @@ export function GetCentersPosition(cubeSize){
       UpperEnd=EmpericalcoordOffset.length-1
     }
 
-    console.log("Whatgoeswrong",cubeSize,LowerEnd,UpperEnd,EmpericalcoordOffset[1])
+
     let xCoordOffset=EmpericalcoordOffset[LowerEnd][0]*(1-(cubeSize%50)/50)+EmpericalcoordOffset[UpperEnd][0]*(cubeSize%50)/50
     let yCoordOffset=EmpericalcoordOffset[LowerEnd][1]*(1-(cubeSize%50)/50)+EmpericalcoordOffset[UpperEnd][1]*(cubeSize%50)/50
 
@@ -123,14 +122,19 @@ export function GetCentersPosition(cubeSize){
 }
 
 export function getCubeColors(altoverlayRefs,OllIndex,PermIndex){
+    
     let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
-  
+    
+ 
     if (!containerparent) {
       console.warn('GetBarsIndices: no ref for index', PermIndex);
       return ["","red"]
     }
     let container= containerparent.querySelector("div")
+       console.log("NoSVGAltoverlay",altoverlayRefs.current,containerparent,OllIndex)
     let ContainerSvg = container.querySelector('svg');
+    console.log(container)
+    console.log(ContainerSvg)
   if (!ContainerSvg) {
     console.warn('GetBarsIndices: no svg inside container', container);
     return ["","red"]
@@ -197,7 +201,6 @@ export function addInformationToColorIndexList(piecesMovement,newSquaresColors,n
         colorIndexList[i].push(tempColorIndexDict)
       }
     }
-    console.log("Current2",colorIndexList,piecesMovement)
   return colorIndexList
 }
 
@@ -322,7 +325,6 @@ export function sortCenterLeftRight(index,SquareColors){
 
 
 export function sortPointsList(colorIndexList){
-  console.log("Sort4",colorIndexList)
   colorIndexList.forEach(list=>{
         let averagex=0
         list.Points.forEach(item=>{
@@ -357,7 +359,6 @@ export function sortPointsList(colorIndexList){
           list.Points[indextostore[i]]=TempPointsList[i]
         }
       })
-      console.log("Sort5",colorIndexList)
     return colorIndexList
 }
 
@@ -439,7 +440,6 @@ export function Connect2Centers(PointsInfo,CenterIndex,cubeSize,lineWidth ){
   let tempcentery2=Centers[PiecesIndex[0]][1]
   let [path,angle,centerx2,centery2,distance]= Connect2Points(tempcenterx,tempcentery,tempcenterx2,tempcentery2,lineWidth)
   
-  console.log("NewEndPoints",centerx2,centery2)
   if(CenterIndex==2){
      tempcenterx=Centers[PiecesIndex[1]][0] 
      tempcentery=Centers[PiecesIndex[1]][1]
@@ -473,7 +473,6 @@ export function ArrowBarMovement(PointsInfo,Center1Used,Center2Used,Center3Used,
   let EndLocationX = Centers[EndLocationIndex][0]
   let EndLocationY = Centers[EndLocationIndex][1]
 
-  console.log("ArrowMovement",PointsInfo)
   if (Center1Used && Center2Used){
     StartLocationX=Centers[PointsInfo[0].currentIndex][0]
     StartLocationY=Centers[PointsInfo[0].currentIndex][1]
@@ -544,7 +543,7 @@ export function piecesMovementGen(newSquaresColors,newCombinedSquaresList){
   let EndLocationIndex
   let piecesMovement=[[],[],[],[]]
 
-  let colorIndexList=[[],[],[],[],[]]
+  let colorIndexList=[[],[],[],[],[],[]]
   let colorList= ["#00d800","orange","#1f51ff","red","yellow"]
 
   for(let i=0;i<newSquaresColors.length;i++){
@@ -575,7 +574,6 @@ export function piecesMovementGen(newSquaresColors,newCombinedSquaresList){
       list=sortPointsList(list)
     } 
   )
-  console.log("SortedColorList",colorIndexList)
 
   let colorToEndLocationIndexDict={
     "#00d800": 22,
@@ -585,20 +583,18 @@ export function piecesMovementGen(newSquaresColors,newCombinedSquaresList){
   }
 
   //Not including yellow
+  console.log(colorIndexList)
   for(let i=0;i<4;i++){
     let PointsInfo=colorIndexList[i]
     EndLocationIndex=colorToEndLocationIndexDict[PointsInfo[0].color]
-    console.log("EndIndex",colorIndexList,EndLocationIndex,PointsInfo[0].color)
-    
+
     let [Center1,Center2]=CenterNewPosition(PointsInfo,EndLocationIndex,newSquaresColors)
 
   //Store where bar came from [prev,new] for all 3 pieces
-    console.log("Addtopiecesmovementref",[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]])
     piecesMovement[i]=[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]]
   
   }
 
-  console.log("FinalpiecesMovement",piecesMovement)
   return piecesMovement
 }
 
