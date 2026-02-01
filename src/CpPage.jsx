@@ -7,6 +7,9 @@ import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import ollCaseSet from "./data/ollCaseSet.js";
+import CpRecOverlay from "./CpOverlay.jsx"
+import OllCaseFilter from "./OllCaseFilter.jsx";
+import OllGroupSelector from "./OllGroupSelect.jsx";
 import { db } from './data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
@@ -406,26 +409,21 @@ function getSameOppInfo(oll,index,arrowNumber,cubeSize){
     let rotation=getEasyRotation(Center1,Center2,cubeSize)
     let pathArrow=getEasyPath(Center1,Center2,cubeSize)
 
-    return [rotation,pathArrow,color,arrowTipCoord]
+    let sameOppInfoDict={
+        path:pathArrow,
+        color:color,
+        rotation:rotation,
+        rotateX:arrowTipCoord[0],
+        rotateY:arrowTipCoord[1],
+
+    }
+    return sameOppInfoDict
 
 
 
 }
 
-function AddItemToQuickSelect(i){
 
-    if(ollSelectList.includes(i)
-    ){
-        setOllSelectList(prev =>prev.filter(item=>
-        item!=i
-    ))
-        
-    }
-    else{
-        setOllSelectList(prev=>[...prev,i])
-    }
-    
-}
 // let FirstGroupCase=[]
 // let Groups=[... new Set(ollCaseSet.cases.map(alg=>alg.group))]
 // Groups.map(group=>{
@@ -444,69 +442,28 @@ useEffect(() => {
 
     return (
         <>
-        {(groupSelected==null) &&(
-            
-            <div className="OllGroupOptionsGrid">
-            {arrowOllSet.map((_,i)=> (
-                <div className="OllGroupOptionsItem" onClick={()=>setGroupSelected(i)}>
-                <h2 className="GroupItemName">{arrowOllSet[i][0].group}</h2>
-                    
-                    <CaseImage
-                    size={80}
-                    alg={arrowOllSet[i][0].algs}
-                    caseSetDetails={ollCaseSet.details}
-                    ></CaseImage>
-                </div>
-            ) )}
-            </div>
-            
-        )}
+        {groupSelected == null && (
+            <OllGroupSelector
+                arrowOllSet={arrowOllSet}
+                caseDetails={ollCaseSet.details}
+                onSelectGroup={setGroupSelected}
+            />
+            )}
 
-    
-         { (groupSelected!=null) && (
-            <>
-           
-            <div className="OllQuickSelectCont"> 
-                 <div style={{height:"50px", alignItems:"center",position:"absolute",top:"-35px",left:"0px", display:"inline-block"}} className='col p-0 justify-content-start '>
-                <button
-                onClick={() => {setGroupSelected(null), setOllSelectList([])}}
-                className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                style={{
-                    ...BackButtonstyle,
-                    
-                    "--bs-border-style": "solid",
-                    "--bs-border-color": "white",
-                    
-                }}
-                >
-                Back
-                </button>
-            </div>
-            <div className="OllItemQuickSelect">{
-                arrowOllSet[groupSelected].map((oll,i)=>{
-                    if(oll.algNumber!=0){
-                        return null
-                    }
-                        
-                    return (
-                    <>
-                    
-                    
-                    <div className={`OllQuickSelectItem ${ollSelectList.includes(oll.name.split(" ")[1]) ? "selected" : ""}`}  onClick={()=>AddItemToQuickSelect(oll.name.split(" ")[1])}>
-                        <CaseImage
-                        size={100}
-                        alg={oll.algs}
-                        caseSetDetails={ollCaseSet.details}
-                        ></CaseImage>
-                   </div>
-                    
-                   </>
-                   )
-                })
-            }
-                 </div>
-            </div>
-            </>
+
+            {groupSelected != null && (
+            <OllCaseFilter
+                groupSelected={groupSelected}
+                setGroupSelected={setGroupSelected}
+                arrowOllSet={arrowOllSet}
+                ollSelectList={ollSelectList}
+                setOllSelectList={setOllSelectList}
+                caseDetails={ollCaseSet.details}
+                darkMode={darkMode}
+                BackButtonstyle={BackButtonstyle}
+                
+            />
+
         )}
             
             { (groupSelected!=null) && (
@@ -517,7 +474,7 @@ useEffect(() => {
                 
                 (
                     <>
-                    
+            
                     <div>
                     {/* <h2>{oll.name}</h2> */}
                     <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
@@ -541,7 +498,7 @@ useEffect(() => {
                         ></CaseImage>
 
                         
-                        <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
+                        {/* <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -569,7 +526,28 @@ useEffect(() => {
                         
                             }
                             
-                        </div>
+                        </div> */}
+                        <CpRecOverlay
+                            cubeSize={cubeSize}
+                            arrowsInfo={[
+                                {
+                                path: getPath(oll, PermTable[j], 0, cubeSize),
+                                color: GetColor(oll, PermTable[j], 0),
+                                rotation: getRotation(oll, PermTable[j], 0, cubeSize),
+                                rotateX: getArrowTipCoord(oll, PermTable[j], 0, cubeSize)[0],
+                                rotateY: getArrowTipCoord(oll, PermTable[j], 0, cubeSize)[1],
+                                },
+                                {
+                                path: getPath(oll, PermTable[j], 1, cubeSize),
+                                color: GetColor(oll, PermTable[j], 1),
+                                rotation: getRotation(oll, PermTable[j], 1, cubeSize),
+                                rotateX: getArrowTipCoord(oll, PermTable[j], 1, cubeSize)[0],
+                                rotateY: getArrowTipCoord(oll, PermTable[j], 1, cubeSize)[1],
+                                },
+                            ]}
+                            />
+
+
                         </div>
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
@@ -589,6 +567,7 @@ useEffect(() => {
                           
                           arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
                           oll.name + " Version "+oll.algNumber:oll.name +" Version 0"}</h2>
+                    
                     <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
@@ -604,7 +583,7 @@ useEffect(() => {
                             caseSetDetails={ScrambleVisualizerDetails}
                             co="40"
                         ></CaseImage>
-                        <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
+                        {/* <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -632,7 +611,26 @@ useEffect(() => {
                         
                             }
                             
-                        </div>
+                        </div> */}
+                        <CpRecOverlay
+                            cubeSize={cubeSize}
+                            arrowsInfo={[
+                                {
+                                path: getSameOppInfo(oll,PermTable[j],0,cubeSize).path,
+                                color: getSameOppInfo(oll,PermTable[j],0,cubeSize).color,
+                                rotation: getSameOppInfo(oll,PermTable[j],0,cubeSize).rotation,
+                                rotateX: getSameOppInfo(oll,PermTable[j],0,cubeSize).rotateX,
+                                rotateY: getSameOppInfo(oll,PermTable[j],0,cubeSize).rotateY,
+                                },
+                                {
+                                path: getSameOppInfo(oll,PermTable[j],1,cubeSize).path,
+                                color: getSameOppInfo(oll,PermTable[j],1,cubeSize).color,
+                                rotation: getSameOppInfo(oll,PermTable[j],1,cubeSize).rotation,
+                                rotateX: getSameOppInfo(oll,PermTable[j],1,cubeSize).rotateX,
+                                rotateY: getSameOppInfo(oll,PermTable[j],1,cubeSize).rotateY,
+                                },
+                            ]}
+                            />
                         </div>
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             

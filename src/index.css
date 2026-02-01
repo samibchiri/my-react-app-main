@@ -592,7 +592,6 @@ th{
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr  1fr 1fr;
   column-gap: min(50px,5vw);
-  height:85vh;
 }
 
 

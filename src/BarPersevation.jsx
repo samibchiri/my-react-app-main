@@ -1,12 +1,15 @@
 
-import arrowOllSet from "./data/arrowOllSet.js";
-//import arrowOllSet from "./data/arrowOllSet copy.js"
+//import arrowOllSet from "./data/arrowOllSet.js";
+
+import arrowOllSet from "./data/arrowOllSet copy.js"
 import { ThemeContext } from './DarkThemeContext.jsx';
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import "./index.css"
 import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import ollCaseSet from "./data/ollCaseSet.js";
+import OllCaseFilter from "./OllCaseFilter.jsx";
+import OllGroupSelector from "./OllGroupSelect.jsx";
 import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
@@ -24,7 +27,8 @@ export function BarPersevation({algGroup,testedAlgs,setButtonClicked,setCaseClic
 
 
 
-  const [groupSelected,setGroupSelected]=useState(7)
+  const [groupSelected,setGroupSelected]=useState(0)
+  const [ollSelectList,setOllSelectList]=useState([])
 
   const [cubeSize, setCubeSize] = useState(200);
   const [strokeWidth, setStrokeWidth] = useState(1.5);
@@ -64,9 +68,12 @@ const allOlls = useLiveQuery(() => db.olls.toArray(), []);
 //   [groupSelected]
 // );
 
-const selectedGroupOllsRaw = useLiveQuery(
-  () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
-  [groupSelected]
+const selectedGroupOllsRaw = useLiveQuery(()=>{
+    if (groupSelected === null) {
+      return [];
+    }
+    return db.olls.where("group").equals(groupTable[groupSelected]).toArray();
+  },[groupSelected]
 );
 
 const selectedGroupOlls = useMemo(
@@ -493,9 +500,6 @@ function GetBarsIndices(OllIndex,PermIndex){
 function drawSmallCircle(x,y,radius){
   let circlePath=`M ${x+radius},${y} A ${radius},${radius} 0 1 1 ${x-radius},${y} A ${radius},${radius} 0 1 1 ${x+radius},${y} Z `
  
-  if(!(x>-1000)){
-    return ""
-  }
   return circlePath
 
 }
@@ -916,15 +920,39 @@ return (
   
   <>
   
+  {groupSelected == null && (
+      <OllGroupSelector
+          arrowOllSet={arrowOllSet}
+          caseDetails={ollCaseSet.details}
+          onSelectGroup={setGroupSelected}
+      />
+      )}
 
-  { (true && selectedGroupOlls?.length) && (
+
+      {groupSelected != null && (
+        
+      <OllCaseFilter
+          groupSelected={groupSelected}
+          setGroupSelected={setGroupSelected}
+          arrowOllSet={arrowOllSet}
+          ollSelectList={ollSelectList}
+          setOllSelectList={setOllSelectList}
+          caseDetails={ollCaseSet.details}
+          darkMode={darkMode}
+          BackButtonstyle={BackButtonstyle}
+          
+      />
+
+  )}
+
+  { (groupSelected != null) && (
     <div className="BarOllGridsCont">
 
     {
     selectedGroupOlls.map((oll,i)=>(
       
        <div key={oll.id}>
-                          {(i<=1 &&
+                          {(i<=100 && (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&
                           <div>
 
                           <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||

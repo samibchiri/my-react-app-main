@@ -8,6 +8,8 @@ import { flushSync } from 'react-dom';
 import ollCaseSet from "./data/ollCaseSet.js";
 import { db } from "./data/db";
 import {piecesMovementGen}  from "./BarPersevationLogic.jsx"
+import OllCaseFilter from "./OllCaseFilter.jsx";
+import OllGroupSelector from "./OllGroupSelect.jsx";
 
 
 //Function to invert the oll alg
