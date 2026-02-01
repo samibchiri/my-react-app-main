@@ -203,7 +203,7 @@ useEffect(() => {
     let newSquaresColors =getSquaresColors(newCombinedSquaresList)
     if (newSquaresColors && newSquaresColors.includes("white")) {
         console.log("Stopping CornerPermutationPage because it contains white");
-        if (onError) onError();  // notify parent
+        if (onError) onError("Not an OLL");  // notify parent
         return;                   // stop further updates
         
     }
@@ -1376,7 +1376,9 @@ function getAltHeadlightsMovement(){
         // tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
     }
     if (!containsOnlyYellowFound){
-        
+        console.log("Stopping CornerPermutationPage because it doesn't solve the oll");
+        if (onError) onError("Invalid OLL");  // notify parent
+        return;                   // stop further updates
     }
     console.log("TempBarMovements",tempBarMovementRef.current,barMovements)
     }

@@ -869,6 +869,8 @@ function changeOllAlgEnterPressed(e,oll){
   if(e.key=="Enter"){
       e.preventDefault()
       changeOllAlg(e.target.value,oll)
+      console.log("EnterPressed")
+      e.target.value = "";
   }
     
 }
@@ -908,10 +910,6 @@ function correctAlgString(inputstring){
 
 }
 
-function invalidAlgWarning(){
-  console.warn("Invalid Alg")
-  setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false])
-}
 
 
 return (
@@ -1122,6 +1120,7 @@ return (
   <button className="barExcludeButtonSave" onClick={() => {
     const value = document.getElementById(`barchangeOllAlg-${i}`).value;
     changeOllAlg(value, oll);
+    document.getElementById(`barchangeOllAlg-${i}`).value=""
   }}> Save</button> </div>
   </div>
                       </div>
@@ -1201,7 +1200,11 @@ return (
           key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
           newAlg={changedAlgArray[0]}
           oll={changedAlgArray[1]}
-          onError={() => invalidAlgWarning()}
+          onError={(errorMessage) => {
+          console.warn("CornerPermutation error:", errorMessage);
+
+          setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false]);
+        }}
         />
         </>
         
