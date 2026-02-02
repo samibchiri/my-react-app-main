@@ -3,7 +3,7 @@
 import arrowOllSet from "../../data/arrowOllSet copy.js"
 import { ThemeContext } from '../../DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
-import './styling/index.css'
+import '../../styling/index.css'
 import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import ollCaseSet from "../../data/ollCaseSet.js";
