@@ -1,10 +1,22 @@
 import CaseImage from "./cubing/cubeImage.jsx";
+import { ThemeContext } from './DarkThemeContext.jsx';
+import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 
-export default function OllCaseFilter({groupSelected,setGroupSelected,arrowOllSet,ollSelectList,setOllSelectList,darkMode,BackButtonstyle,caseDetails}) {
+export default function OllCaseFilter({groupSelected,setGroupSelected,arrowOllSet,ollSelectList,setOllSelectList,caseDetails}) {
 
 
+    const BackButtonstyle={
+        width: "75px",
+        height: "40px",
+        alignItems:"center",
+        fontWeight:"bold",
+        borderWidth:"2px",
 
-    console.log("Herre",ollSelectList)
+      }
+
+    const {darkMode}= useContext(ThemeContext)
+
+    console.log("Herre",BackButtonstyle)
     if (groupSelected == null) {
         return null; // stop execution here
     }
@@ -26,8 +38,7 @@ export default function OllCaseFilter({groupSelected,setGroupSelected,arrowOllSe
     
   return (
     <>
-     <div className="OllQuickSelectCont"> 
-            <div style={{height:"50px", alignItems:"center",position:"absolute",top:"-35px",left:"0px", display:"inline-block"}} className='col p-0 justify-content-start '>
+    <div style={{height:"50px", alignItems:"center",position:"absolute",top:"100px",left:"50px", display:"inline-block"}} className='col p-0 justify-content-start '>
         <button
         onClick={() => {setGroupSelected(null), setOllSelectList([])}}
         className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
@@ -42,6 +53,8 @@ export default function OllCaseFilter({groupSelected,setGroupSelected,arrowOllSe
         Back
         </button>
     </div>
+     <div className="OllQuickSelectCont"> 
+            
     <div className="OllItemQuickSelect">{
         arrowOllSet[groupSelected].map((oll,i)=>{
             if(oll.algNumber!=0){

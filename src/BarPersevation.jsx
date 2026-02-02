@@ -127,14 +127,6 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
     }
     const {darkMode}= useContext(ThemeContext)
     
-      const BackButtonstyle={
-        width: "75px",
-        height: "40px",
-        alignItems:"center",
-        fontWeight:"bold",
-        borderWidth:"2px",
-
-      }
 let Centers= GetCentersPosition(cubeSize)
 
 
@@ -938,9 +930,7 @@ return (
           ollSelectList={ollSelectList}
           setOllSelectList={setOllSelectList}
           caseDetails={ollCaseSet.details}
-          darkMode={darkMode}
-          BackButtonstyle={BackButtonstyle}
-          
+
       />
 
   )}
@@ -950,11 +940,10 @@ return (
 
     {
     selectedGroupOlls.map((oll,i)=>(
-      
-       <div key={oll.id}>
-                          {(i<=100 && (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&
+      <>
+            {(i<=100 && (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&     
+              <div id="ContY" key={oll.id}>
                           <div>
-
                           <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
                           
                           selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
@@ -1153,8 +1142,10 @@ return (
   </div>
                       </div>
                       
+                          </div>
                           )}
-                      </div>
+                      
+                      </>
     ))}
     <div>
 
