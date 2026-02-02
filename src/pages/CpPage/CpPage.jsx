@@ -1,16 +1,16 @@
 
 //import arrowOllSet from "./data/arrowOllSet.js";
-import arrowOllSet from "./data/arrowOllSet copy.js"
-import { ThemeContext } from './DarkThemeContext.jsx';
+import arrowOllSet from "../../data/arrowOllSet copy.js"
+import { ThemeContext } from '../../DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
-import "./index.css"
-import { FaIcon } from './fontAwesome.js';
-import CaseImage from "./cubing/cubeImage.jsx";
-import ollCaseSet from "./data/ollCaseSet.js";
-import CpRecOverlay from "./CpOverlay.jsx"
-import OllCaseFilter from "./OllCaseFilter.jsx";
-import OllGroupSelector from "./OllGroupSelect.jsx";
-import { db } from './data/db.js';
+import './styling/index.css'
+import { FaIcon } from '../../assets/fontAwesome.js';
+import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
+import ollCaseSet from "../../data/ollCaseSet.js";
+import CpRecOverlay from "../../assetsGeneration/CpOverlay.jsx"
+import OllCaseFilter from "../../components/Oll/OllCaseFilter.jsx";
+import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
+import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 

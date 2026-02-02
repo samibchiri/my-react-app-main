@@ -1,13 +1,13 @@
 
 import { ThemeContext } from './DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
-import "./index.css"
+import './styling/index.css'
 import { FaIcon } from './fontAwesome';
-import CaseImage from "./cubing/cubeImage.jsx";
+import CaseImage from "./components/Oll/cubing/cubeImage.jsx";
 import Stopwatch from './Stopwatch.jsx';
 
 
-function TestPage({testedAlgs,setButtonClicked,setCaseClicked}){
+function AlgTrainerPage({testedAlgs,setButtonClicked,setCaseClicked}){
 
 
     const TestBackClick=()=>{
@@ -661,4 +661,4 @@ function TestPage({testedAlgs,setButtonClicked,setCaseClicked}){
     )
 }
 
-export default TestPage
+export default AlgTrainerPage

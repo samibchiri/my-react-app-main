@@ -1,39 +1,36 @@
 import React, { use, useContext, useEffect, useState } from "react";
-import NavBar from './NavBar.jsx';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import CaseImage from "./cubing/cubeImage.jsx";
+import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import { FaChevronRight,FaChevronDown } from 'react-icons/fa';
-import TestPage from './TestPage.jsx'
-import CornerPermutationPage from './CpPage.jsx'
+import CornerPermutationPage from '../CpPage/CpPage.jsx'
 //import CornerPermutationPage from './ArrowDataGenerator.jsx'
-import BarPersevation from './BarPersevation.jsx'
-import cpllCaseSet from "./data/cpllCaseSet.js";
-import eollCaseSet from "./data/eollCaseSet.js";
-import epllCaseSet from "./data/epllCaseSet.js";
-import f2lCaseSet from "./data/f2l1CaseSet.js";
-import ocllCaseSet from "./data/ocllCaseSet.js";
-import ollCaseSet from "./data/ollCaseSet.js";
-import pllCaseSet from "./data/pllCaseSet.js";
-import tsleCaseSet from "./data/tsleCaseSet.js";
-import ttllCaseSet from "./data/ttllCaseSet.js";
+import BarPersevation from '../BarPersevationPage/BarPersevationPage.jsx'
+import cpllCaseSet from "../../data/cpllCaseSet.js";
+import eollCaseSet from "../../data/eollCaseSet.js";
+import epllCaseSet from "../../data/epllCaseSet.js";
+import f2lCaseSet from "../../data/f2l1CaseSet.js";
+import ocllCaseSet from "../../data/ocllCaseSet.js";
+import ollCaseSet from "../../data/ollCaseSet.js";
+import pllCaseSet from "../../data/pllCaseSet.js";
+import tsleCaseSet from "../../data/tsleCaseSet.js";
+import ttllCaseSet from "../../data/ttllCaseSet.js";
 
 // Bootstrap CSS fir-st
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { FaIcon } from './fontAwesome.js';
+import { FaIcon } from '../../assets/fontAwesome.js';
 
 // Your custom CSS after Bootstrap
-import './index.css';
-import './App.css';
+import '../../styling/index.css'
+import '../../styling/App.css';
 
 import ShowAlgCard from "./cardPopUp.jsx";
-import { ThemeContext } from './DarkThemeContext.jsx';
+import { ThemeContext } from '../../DarkThemeContext.jsx';
 
-import useWindowDimensions from "./hooks/useWindowDimensions.jsx";
+import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
+import AlgTrainerPage from "../AlgTrainerPage/AlgTrainerPage.jsx";
 
 
-export default function HomePage() {
+export default function TrainSelectPage() {
 
     const {darkMode}= useContext(ThemeContext)
     const [caseClicked,setCaseClicked]= useState(false)
@@ -43,6 +40,7 @@ export default function HomePage() {
     const buttonStyle = {
     width: "85%",
     height: "15vh",
+    minHeight:"100px",
     color: darkMode ? "#ffffffff" : "#000000ff", // dark text for light grey, white text for dark
 
     
@@ -240,7 +238,7 @@ const TestButtonClick=()=>{
             
         <div className='row'>
             {AllCases.map((caseItem,i)=>(
-                <div key={i} style={{maxWidth:"1200px"}} className='col-12 col-md-6 mb-3 d-flex justify-content-center'>
+                <div key={i} style={{maxWidth:"1200px",minHeight:"100px"}} className='col-12 col-md-6 mb-3 d-flex justify-content-center'>
                 <button onClick={()=>{handleAlgCaseSetClicked(caseItem)}} className={`m-2 border btn-block btn ${darkMode? "btn-dark":"btn-primary"}`} style={buttonStyle}>
                     <div style={{display:"flex", flexDirection:"row", alignItems:"center"}} >
                         <div>
@@ -535,7 +533,7 @@ const TestButtonClick=()=>{
         buttonClicked && (
             <>
     
-            <TestPage testedAlgs={selectedAlg} setButtonClicked={setButtonClicked} setCaseClicked={setCaseClicked}/>
+            <AlgTrainerPage testedAlgs={selectedAlg} setButtonClicked={setButtonClicked} setCaseClicked={setCaseClicked}/>
             </>
         )
     }

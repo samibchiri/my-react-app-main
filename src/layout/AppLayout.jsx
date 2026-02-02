@@ -1,15 +1,16 @@
 import NavBar from './NavBar.jsx'
-import './index.css'
+import './styling/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import './index.css'
+import '../styling/index.css'
 import './App.css'
-import { ThemeContext } from './DarkThemeContext.jsx'
+import { ThemeContext } from '../DarkThemeContext.jsx'
 import React, { useEffect, useState } from "react"
-import Trainpage from './HomePage.jsx'
-import {seedDatabaseIfEmpty} from './data/db.js'
+import { Outlet } from "react-router-dom"
+import HomePage from './pages/HomePage.jsx'
+import {seedDatabaseIfEmpty} from '../data/db.js'
 
-function App() {
+function AppLayout() {
   const [darkMode, setDarkMode] = useState(true)
 
   function toggleDarkMode() {
@@ -31,10 +32,10 @@ function App() {
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <NavBar />
-      <Trainpage/>
+      <Outlet/>
       
     </ThemeContext.Provider>
   )
 }
 
-export default App
+export default AppLayout

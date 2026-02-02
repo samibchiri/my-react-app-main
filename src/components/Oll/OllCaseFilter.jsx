@@ -1,5 +1,5 @@
 import CaseImage from "./cubing/cubeImage.jsx";
-import { ThemeContext } from './DarkThemeContext.jsx';
+import { ThemeContext } from '../../DarkThemeContext.jsx';
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 
 export default function OllCaseFilter({groupSelected,setGroupSelected,arrowOllSet,ollSelectList,setOllSelectList,caseDetails}) {
