@@ -143,7 +143,7 @@ const [AlgGroups, setAlgGroups] = useState([]);
     }
     else{
          return {...prev, [group]: !prev[group]}
-    };
+    }
     
     })
    

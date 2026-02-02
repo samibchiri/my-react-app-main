@@ -1,10 +1,9 @@
-import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
-import ollCaseSet from "../../data/ollCaseSet.js";
-import { Modal, Button } from "react-bootstrap";
-import './styling/index.css'
-import './PopUp.css';
-import React, { use, useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react"; // removed 'use'
+import { Modal } from "react-bootstrap";
 import { FaIcon } from '../../assets/fontAwesome.js';
+import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
+import "../../styling/index.css";
+import '../../styling/PopUp.css';
 
 function ShowAlgCard({alg,onClose,AlgCasesSet}){
     console.log("Showing Card")

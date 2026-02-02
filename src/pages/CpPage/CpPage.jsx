@@ -1,8 +1,8 @@
 
 //import arrowOllSet from "./data/arrowOllSet.js";
-import arrowOllSet from "../../data/arrowOllSet copy.js"
+import arrowOllSet from "../../data/arrowOllSet.js"
 import { ThemeContext } from '../../DarkThemeContext.jsx';
-import React, { use, useContext,useRef, useEffect, useState } from "react";
+import React, { useContext,useRef, useEffect, useState } from "react";
 import '../../styling/index.css'
 import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
@@ -13,6 +13,7 @@ import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
 import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
+
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 

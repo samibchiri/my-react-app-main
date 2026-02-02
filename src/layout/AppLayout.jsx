@@ -1,14 +1,13 @@
-import NavBar from './NavBar.jsx'
-import './styling/index.css'
+// @ts-check
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import '../styling/index.css'
-import './App.css'
-import { ThemeContext } from '../DarkThemeContext.jsx'
 import React, { useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
-import HomePage from './pages/HomePage.jsx'
-import {seedDatabaseIfEmpty} from '../data/db.js'
+import { ThemeContext } from '../DarkThemeContext.jsx'
+import { seedDatabaseIfEmpty } from '../data/db.js'
+import '../styling/App.css'
+import '../styling/index.css'
+import NavBar from './NavBar.jsx'
 
 function AppLayout() {
   const [darkMode, setDarkMode] = useState(true)
@@ -20,20 +19,20 @@ function AppLayout() {
   useEffect(() => {
     document.body.className = darkMode ? "text-white" : "text-dark";
     document.body.style.backgroundColor = darkMode ? "#191d21" : "#f8f9fa";
-    document.body.style.paddingTop ="60px"
+    document.body.style.paddingTop = "60px"
   }, [darkMode])
 
   useEffect(() => {
     seedDatabaseIfEmpty();
   }, []);
 
-  
+
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <NavBar />
-      <Outlet/>
-      
+      <Outlet />
+
     </ThemeContext.Provider>
   )
 }

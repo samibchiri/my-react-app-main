@@ -410,11 +410,11 @@ function EasyRecognition(){
             }
            
              if(tempset.size==6){
-                let setToArray = Array.from(tempset).map(JSON.parse);;
+                let setToArray = Array.from(tempset).map(JSON.parse);
                 PossibleCombination.push(setToArray)
              }
              if(allCombSet.size==6){
-                let setToArray = Array.from(allCombSet).map(JSON.parse);;
+                let setToArray = Array.from(allCombSet).map(JSON.parse);
                 AllCombination.push(setToArray)
              }
                 }
