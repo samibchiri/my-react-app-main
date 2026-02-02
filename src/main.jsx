@@ -4,18 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import CornerPermutationPage from './CpPage.jsx'
 import BarPersevation from './BarPersevation.jsx'
-import NotFoundPage from '../PageNotFound.jsx'
+import BarTrainer from './BarTrainer.jsx'
+import NotFoundPage from './NotFoundPage.jsx'
 import {Navigate,createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-const router = createBrowserRouter([
-  {path: "/", element: <Navigate to="/train" replace />}, //Redirect to train
-  { path: '/train', element: <App /> }, 
-  { path: "/cp", element: <CornerPermutationPage /> },
-  { path: "/barpersevation", element: <BarPersevation /> },
+import { router } from "./Router.jsx";
 
-  { path: '*', element: <NotFoundPage /> },
-  
-])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

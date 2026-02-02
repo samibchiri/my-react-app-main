@@ -6,7 +6,7 @@ import './index.css'
 import './App.css'
 import { ThemeContext } from './DarkThemeContext.jsx'
 import React, { useEffect, useState } from "react"
-import Trainpage from './trainpage1.jsx'
+import Trainpage from './HomePage.jsx'
 import {seedDatabaseIfEmpty} from './data/db.js'
 
 function App() {

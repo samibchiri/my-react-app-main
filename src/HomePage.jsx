@@ -21,7 +21,7 @@ import ttllCaseSet from "./data/ttllCaseSet.js";
 // Bootstrap CSS fir-st
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { FaIcon } from './fontAwesome';
+import { FaIcon } from './fontAwesome.js';
 
 // Your custom CSS after Bootstrap
 import './index.css';
@@ -30,10 +30,10 @@ import './App.css';
 import ShowAlgCard from "./cardPopUp.jsx";
 import { ThemeContext } from './DarkThemeContext.jsx';
 
-import useWindowDimensions from "./hooks/useWindowDimensions";
+import useWindowDimensions from "./hooks/useWindowDimensions.jsx";
 
 
-function Trainpage() {
+export default function HomePage() {
 
     const {darkMode}= useContext(ThemeContext)
     const [caseClicked,setCaseClicked]= useState(false)
@@ -541,5 +541,3 @@ const TestButtonClick=()=>{
     }
     </>
 }
-
-export default Trainpage
