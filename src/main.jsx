@@ -6,7 +6,7 @@ import CornerPermutationPage from './pages/CpPage/CpPage.jsx'
 import BarPersevation from './pages/BarPersevationPage/BarPersevationPage.jsx'
 import BarTrainer from './pages/BarTrainerPage/BarTrainer.jsx'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
-import {Navigate,createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {Navigate, RouterProvider } from 'react-router-dom'
 
 import { router } from "./Router.jsx";
 

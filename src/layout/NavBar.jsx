@@ -1,5 +1,4 @@
 import reactLogo from '../assets/react.svg';
-import viteLogo from '../vite.svg';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -30,7 +29,7 @@ function NavBar() {
           {darkMode ? (
             <img src={reactLogo} className="svg-inline--fa fa-moon fa-lg" alt="React logo" />
           ) : (
-            <img src={viteLogo} alt="Vite logo" />
+            <img src={reactLogo} alt="React logo" />
           )}
         </button>
       </div>}

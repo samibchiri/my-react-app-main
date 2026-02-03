@@ -1,6 +1,6 @@
 
 //import arrowOllSet from "./data/arrowOllSet.js";
-import arrowOllSet from "../../data/arrowOllSet.js"
+import arrowOllSet from "../../data/arrowOllSet copy.js"
 import { ThemeContext } from '../../DarkThemeContext.jsx';
 import React, { useContext,useRef, useEffect, useState } from "react";
 import '../../styling/index.css'
@@ -18,6 +18,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
+ 
 // const allOlls = useLiveQuery(() => db.olls.toArray(), []);
 // const changeOll = async (event)=>{
 //     event.preventDefault()

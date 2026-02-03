@@ -1235,4 +1235,4 @@ return (
 
 }
 
-export default BarPersevation
+export default BarPersevationPage
