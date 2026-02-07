@@ -2,6 +2,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import AppLayout from './layout/AppLayout.jsx'
 import HomePage from "./pages/HomePage/HomePage.jsx";
+import AlgTrainerPage from "./pages/AlgTrainerPage/AlgTrainerPage.jsx"
 import TrainPage from "./pages/TrainSelectPage/TrainSelectPage.jsx";
 import CornerPermutationPage from "./pages/CpPage/CpPage.jsx";
 import BarPersevationPage from "./pages/BarPersevationPage/BarPersevationPage.jsx";
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
         path: "train",
         children: [
           { index: true, element: <HomePage /> },
-          { path: "alg", element: <TrainPage /> },
+          { path: "alg", element: <AlgTrainerPage /> },
           { path: "cp", element: <CpTrainer/> },
           { path: "bar", element: <BarTrainer /> },
         ],
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <CornerPermutationPage /> },
           { path: "cp", element: <CornerPermutationPage /> },
-          { path: "bar", element: <BarTrainer /> },
+          { path: "bar", element: <BarPersevationPage /> },
         ],
       },
 

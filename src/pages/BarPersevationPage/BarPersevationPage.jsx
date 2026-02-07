@@ -26,7 +26,7 @@ import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,ge
 export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
-
+  console.log("HEhh")
   const [groupSelected,setGroupSelected]=useState(0)
   const [ollSelectList,setOllSelectList]=useState([])
 
@@ -855,9 +855,17 @@ async function updateDifficultCenters(oll,newDifficultCenters){
   }
   await db.olls.update(oll.id, {difficultCenters:newDifficultCenters})
   const updatedCount = await db.olls.update(oll.id, { difficultCenters: newDifficultCenters });
-console.log("Rows updated:", updatedCount);
 const updatedOll = await db.olls.get(oll.id);
-console.log("Updated record:", updatedOll);
+}
+
+async function updateDifficultColors(oll,newDifficultColors){
+  let ollToChange= await db.olls.get(oll.id)
+  if(!ollToChange){
+    return
+  }
+  await db.olls.update(oll.id, {difficultColors:newDifficultColors})
+  const updatedCount = await db.olls.update(oll.id, { difficultColors: newDifficultColors });
+const updatedOll = await db.olls.get(oll.id);
 }
 
 

@@ -135,12 +135,12 @@ useEffect(() => {
 //Initialize scramble
 useEffect(() => {
     let currentalg={}
-    currentalg["algs"]=[chosenAlg,oll.algs]
-    console.log("NewCurrentAlg",currentalg)
     if (chosenAlg ==null){
         currentalg=ollCaseSet.cases[algRef.current]
     }
     else{
+        currentalg["algs"]=[chosenAlg,oll.algs]
+        console.log("NewCurrentAlg",currentalg)
         scrambleIndex.current=0
     }
     
@@ -214,7 +214,7 @@ useEffect(() => {
         setPiecesMovement(piecesMovement)
     }
     getAltHeadlightsMovement()
-  }, 100);
+  }, 10);
 
   return () => clearTimeout(timeout);
 }, [scramble]);
@@ -235,9 +235,12 @@ useEffect(() => {
     if (scrambleIndex.current + 1 < CornerPermutations.length) {
         scrambleIndex.current += 1
         let currentalg={}
-        currentalg["algs"]=[chosenAlg,oll.algs]
+        
         if (chosenAlg ==null){
             currentalg=ollCaseSet.cases[algRef.current]
+        }
+        else{
+            currentalg["algs"]=[chosenAlg,oll.algs]
         }
         setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
         //setScramble(currentalg.algs[algIndexRef.current])
@@ -1048,6 +1051,7 @@ function GroupRecognition(){
             algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
             group:ollCaseSet.cases[algRef.current].group,
             difficultCenters:[],
+            difficultColors:[],
             groupRecUsed:true,
             sameOppUsed:true,
             // fullDiagCp:[...FirstPairOppTrueList,FirstPairSameTrueList,FirstPairBothTrueList],
@@ -1124,35 +1128,46 @@ useEffect(() => {
         }
     }
   if (algRef.current+1 === ollCaseSet.cases.length) {
-    // const groupTable = {
-    // "Cross": 0,
-    // "Dot": 1,
-    // "T Shape": 2,
-    // "C Shape": 3,
-    // "I Shape": 4,
-    // "P Shape": 5,
-    // "W Shape": 6,
-    // "Small L Shape": 7,
-    // "Small Lightning Bolt": 8,
-    // "Big Lightning Bolt": 9,
-    // "Square Shape": 10,
-    // "Fish Shape": 11,
-    // "Knight Move Shape": 12,
-    // "Awkward Shape": 13,
-    // "Corners Oriented": 14,
-    // }
-    // let groupedArray =Array.from({length:15},()=>[])
+    const groupTable = {
+    "Cross": 0,
+    "Dot": 1,
+    "T Shape": 2,
+    "C Shape": 3,
+    "I Shape": 4,
+    "P Shape": 5,
+    "W Shape": 6,
+    "Small L Shape": 7,
+    "Small Lightning Bolt": 8,
+    "Big Lightning Bolt": 9,
+    "Square Shape": 10,
+    "Fish Shape": 11,
+    "Knight Move Shape": 12,
+    "Awkward Shape": 13,
+    "Corners Oriented": 14,
+    }
+    let groupedArray =Array.from({length:15},()=>[])
         
-    // jsonArrowsToExport.forEach((OllAlg)=>{    
-    //     groupedArray[groupTable[OllAlg.group]].push(OllAlg)
-    //     groupedArray.forEach(group => group.sort((a,b)=>parseInt(a.group.split(" ")[1])-parseInt(b.group.split(" ")[1])))
-    // })
-    
+    jsonArrowsToExport.forEach(ollAlg => {
+    const index = groupTable[ollAlg.group];
+    if (index !== undefined) {
+        groupedArray[index].push(ollAlg);
+    }
+    });
+
+    // sort each group once
+    groupedArray.forEach(group => {
+    group.sort(
+        (a, b) =>
+        parseInt(a.group.split(" ")[1]) -
+        parseInt(b.group.split(" ")[1])
+    );
+    });
+        
 
     //Important!
     console.log(
     "const arrowOllSet = " +
-    JSON.stringify(jsonArrowsToExport, null, 2)
+    JSON.stringify(groupedArray, null, 2)
         .replace(/"([^"]+)":/g, '$1:') + 
     ";\n\nexport default arrowOllSet;"
     );

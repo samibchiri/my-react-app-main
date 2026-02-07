@@ -1,8 +1,8 @@
 
-//import arrowOllSet from "./data/arrowOllSet.js";
-import arrowOllSet from "../../data/arrowOllSet copy.js"
+import arrowOllSet from "../../data/arrowOllSet.js";
+//import arrowOllSet from "../../data/arrowOllSet copy.js"
 import { ThemeContext } from '../../DarkThemeContext.jsx';
-import React, { useContext,useRef, useEffect, useState } from "react";
+import React, { useMemo, useContext,useRef, useEffect, useState } from "react";
 import '../../styling/index.css'
 import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
@@ -13,6 +13,7 @@ import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
 import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
+
 
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
@@ -49,6 +50,20 @@ const {darkMode}= useContext(ThemeContext)
 
   }
 
+  const selectedGroupOllsRaw = useLiveQuery(()=>{
+      if (groupSelected === null) {
+        return [];
+      }
+      return db.olls.where("group").equals(groupTable[groupSelected]).toArray();
+    },[groupSelected]
+  );
+  
+  const selectedGroupOlls = useMemo(
+    () => selectedGroupOllsRaw ?? [],
+    [JSON.stringify(selectedGroupOllsRaw)]
+  );
+  
+  
 const groupTable = {
   0: "Cross",
   1: "Dot",
@@ -471,7 +486,7 @@ useEffect(() => {
             { (groupSelected!=null) && (
                 <div className="CpOllGridsCont">
                     {
-                arrowOllSet[groupSelected].map((oll,i)=>
+                selectedGroupOlls.map((oll,i)=>
                 (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&
                 
                 (
@@ -479,9 +494,9 @@ useEffect(() => {
             
                     <div>
                     {/* <h2>{oll.name}</h2> */}
-                    <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
+                    <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
                                               
-                                              arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
+                                              selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
                                               oll.name + " Version "+oll.algNumber:oll.name+" Version 0"}</h2>
                     
                     <div className="OllGrid">
@@ -565,9 +580,9 @@ useEffect(() => {
                 
                     <div>
                     {/* <h2>{oll.name}</h2> */}
-                    <h2>{(arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i+1)%arrowOllSet[groupSelected].length].name||
+                    <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
                           
-                          arrowOllSet[groupSelected][i].name==arrowOllSet[groupSelected][(i-1+arrowOllSet[groupSelected].length)%arrowOllSet[groupSelected].length].name)?
+                          selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
                           oll.name + " Version "+oll.algNumber:oll.name +" Version 0"}</h2>
                     
                     <div className="OllGrid">
@@ -657,7 +672,7 @@ useEffect(() => {
 
 
         {/* { (groupSelected!=null) && (
-                arrowOllSet[groupSelected].map((oll,i)=>
+                selectedGroupOlls.map((oll,i)=>
                 (
                     <div>
                     <h2>{oll.name}</h2>
@@ -718,7 +733,7 @@ useEffect(() => {
             } */}
 {/* 
             { (groupSelected!=null) && (
-                arrowOllSet[groupSelected].map((oll,i)=>
+                selectedGroupOlls.map((oll,i)=>
                 (i==0) &&(
                     <div>
                     <h2>{oll.name}</h2>

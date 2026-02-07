@@ -30,8 +30,8 @@ export default function HomePage() {
     const [cpClicked, setCpClicked] = useState(false)
     const [barClicked, setBarClicked] = useState(false)
     const buttonStyle = {
-        width: "85%",
-        height: "15vh",
+        width: "80%",
+        height: "120px",
         minHeight: "100px",
         color: darkMode ? "#ffffffff" : "#000000ff", // dark text for light grey, white text for dark
 
@@ -62,34 +62,42 @@ export default function HomePage() {
     const navigate = useNavigate();
 
 
-    const { xs } = useWindowDimensions();
+    const { width,xs } = useWindowDimensions();
     const cubeImageSize = xs ? "100" : "120";
 
     const TrainCategories = [
     { label: "Alg Trainer", route: "/train/alg" },
-    { label: "Labs", route: "/labs" },
-
+    
     { label: "CP Recognition", route: "/recognition/cp" },
     { label: "CP Trainer", route: "/train/cp" },
 
     { label: "Bar Recognition", route: "/recognition/bar" },
     { label: "Bar Trainer", route: "/train/bar" },
+    
+    { label: "Labs", route: "/labs" },
+    { label: "My Algs", route: "/labs" },
     ];
     
     return <>
 
-        <div className='container'>
+        <div className='container-fluid'>
             <h2 className=''>Choose what you want to practice</h2>
 
             <div className='row'>
                 {TrainCategories.map((caseItem, i) => (
-                    <div key={2} style={{ maxWidth: "1200px", minHeight: "100px" }} className='col-12 col-md-6 mb-3 d-flex justify-content-center'>
-                        <button  onClick={() => navigate(caseItem.route)} className={`m-2 border btn-block btn ${darkMode ? "btn-dark" : "btn-primary"}`} style={buttonStyle}>
+                    <div key={2} style={{ maxWidth: "1200px", minHeight: "100px" }} 
+                    className={`${i==0? " col-sm-12":" col-sm-6"} col-12 mb-3 d-flex justify-content-center`}>
+                        <h2>{xs}</h2>
+                        <button  onClick={() => navigate(caseItem.route)} className={`m-2 border btn-block btn ${darkMode ? "btn-dark" : "btn-primary"}`} style={{...buttonStyle, width:`${(i==0 &&width>=576)?"40%":"80%"}`}}>
+                           {(width<1000 &&width>=576)? <div className='col'>
+                                    <h2>{caseItem.label}</h2>
+                                </div>
+                                :
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }} >
                                 <div>
                                     <CaseImage
                                         size={80}
-                                        alg={"RUR'U'RU2R'"}
+                                        alg={"RUR'URU2R'"}
                                         caseSetDetails={ollCaseSet.details}
                                     ></CaseImage>
                                 </div >
@@ -105,6 +113,7 @@ export default function HomePage() {
                                 </div>
 
                             </div>
+                            }
                         </button>
                     </div>
                 ))}

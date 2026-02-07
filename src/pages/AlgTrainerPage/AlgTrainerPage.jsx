@@ -4,7 +4,7 @@ import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 
 import TestPage from '../TestPage/TestPage.jsx';
 import CornerPermutationPage from '../CpPage/CpPage.jsx';
-//import CornerPermutationPage from './ArrowDataGenerator.jsx'
+//import CornerPermutationPage from '../../dataGeneration/ArrowDataGenerator.jsx'
 import cpllCaseSet from "../../data/cpllCaseSet.js";
 import eollCaseSet from "../../data/eollCaseSet.js";
 import epllCaseSet from "../../data/epllCaseSet.js";
@@ -26,6 +26,7 @@ import '../../styling/index.css';
 import { ThemeContext } from '../../DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
 
+import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 
 export default function AlgTrainerPage() {
@@ -35,6 +36,8 @@ export default function AlgTrainerPage() {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [cpClicked, setCpClicked] = useState(false)
     const [barClicked, setBarClicked] = useState(false)
+    const navigate = useNavigate();
+    
     const buttonStyle = {
         width: "85%",
         height: "15vh",
@@ -66,6 +69,8 @@ export default function AlgTrainerPage() {
     }
 
     const [selectedCaseSet, setSelectedCaseSet] = useState(null)
+
+    let AllCases = [cpllCaseSet, eollCaseSet, epllCaseSet, f2lCaseSet, ocllCaseSet, ollCaseSet, pllCaseSet]
 
     let dCrossShown = true
 
@@ -149,7 +154,7 @@ export default function AlgTrainerPage() {
 
 
     const AreAllAlgsChecked = () => {
-
+        if (!AlgCasesSet) return false;
         return AlgCasesSet.cases.every(alg => selectedAlg.includes(alg))
 
     }
@@ -207,13 +212,35 @@ export default function AlgTrainerPage() {
 
     }
 
+    const handleBackClicked = ()=>{
+        if (!caseClicked){
+            navigate("/train")
 
+        }
+        setCaseClicked(!caseClicked); 
+        setButtonClicked(false)
+    }
 
-
-
-    let AllCases = [cpllCaseSet, eollCaseSet, epllCaseSet, f2lCaseSet, ocllCaseSet, ollCaseSet, pllCaseSet]
 
     return <>
+
+        <div style={{ height: "50px", alignItems: "center" }} className='col p-0 justify-content-start d-flex'>
+            <button
+                onClick={() => { handleBackClicked()}}
+                className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+                style={{
+                    ...BackButtonstyle,
+
+                    "--bs-border-style": "solid",
+                    "--bs-border-color": "white",
+                    "--bs-btn-hover-border-color": "red",
+                    "--bs-btn-focus-border-color": "red",
+                    "--bs-btn-active-border-color": "red",
+                }}
+            >
+                Back
+            </button>
+        </div>
 
         {
             cpClicked && (
@@ -272,28 +299,12 @@ export default function AlgTrainerPage() {
 
 
 
-        {caseClicked && (
+        {caseClicked  && (
+            
             <>
 
-                <div className='container '>
+                <div className='container-fluid '>
                     <div className='row align-items-center'>
-                        <div style={{ height: "50px", alignItems: "center" }} className='col p-0 justify-content-start d-flex'>
-                            <button
-                                onClick={() => { setCaseClicked(!caseClicked); setButtonClicked(false) }}
-                                className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                                style={{
-                                    ...BackButtonstyle,
-
-                                    "--bs-border-style": "solid",
-                                    "--bs-border-color": "white",
-                                    "--bs-btn-hover-border-color": "red",
-                                    "--bs-btn-focus-border-color": "red",
-                                    "--bs-btn-active-border-color": "red",
-                                }}
-                            >
-                                Back
-                            </button>
-                        </div>
                         <div className='col justify-content-end d-flex p-0'>
                             <button className={`${darkMode ? "dark-learn-btn" : "light-learn-btn"} m-1 btn btn-info `} disabled={DissableLearnBtn()} type='button'>
                                 Learn
@@ -307,9 +318,9 @@ export default function AlgTrainerPage() {
 
                     </div>
 
-                    <table className="text-center table table-sm" style={{ "--bs-table-color-state": darkMode ? "#ffffffff" : "#000000ff", "--bs-table-bg": "transparent" }} role="table">
+                    <table className="text-center table table-sm" style={{minWidth:"470px", tableLayout:"fixed", "--bs-table-color-state": darkMode ? "#ffffffff" : "#000000ff", "--bs-table-bg": "transparent" }} role="table">
                         <thead className='trainTableHeader'>
-                            <tr style={{ height: "80px" }} role="row" >
+                            <tr style={{ width:"80px", height: "80px" }} role="row" >
                                 <th className='align-middle' role="columnheader">
                                     <div>
                                         Group
@@ -320,32 +331,12 @@ export default function AlgTrainerPage() {
                                         Case
                                     </div>
                                 </th>
-                                <th className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                <th style={{minWidth:"100px"}} className='d-none d-md-table-cell align-middle' role="columnheader">
                                     <div>
                                         Name
                                     </div>
                                 </th>
-                                <th className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                    <div>
-                                        <FaIcon icon="spinner" />
-                                    </div>
-                                </th>
-                                <th className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                    <div>
-                                        Good
-                                    </div>
-                                </th>
-                                <th className='align-middle' role="columnheader">
-                                    <div>
-                                        Ok
-                                    </div>
-                                </th>
-                                <th className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                    <div>
-                                        Bad
-                                    </div>
-                                </th>
-                                <th className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                <th className=' d-sm-table-cell align-middle' role="columnheader">
                                     <div>
                                         Time
                                     </div>
@@ -358,11 +349,6 @@ export default function AlgTrainerPage() {
                                 <th className='align-middle' role="columnheader">
                                     <div>
                                         Num Solves
-                                    </div>
-                                </th>
-                                <th className='align-middle' role="columnheader">
-                                    <div>
-                                        Status
                                     </div>
                                 </th>
                                 <th style={{ textAlign: "center", verticalAlign: "middle" }}>
@@ -385,7 +371,7 @@ export default function AlgTrainerPage() {
                                     <>
 
                                         <tr className={`CasesGroupTableRow ${darkMode ? "darkGroupRow" : "lightGroupRow"} trainTableRow`} role="row" >
-                                            <td style={{ minWidth: "180px" }} onClick={(() => toggleGroup(group))} className='align-middle' role="columnheader">
+                                            <td onClick={(() => toggleGroup(group))} className='align-middle' role="columnheader">
                                                 {group}
                                                 {!openGroups[group] ? <FaChevronRight style={{ marginLeft: '8px' }} /> : <FaChevronDown style={{ marginLeft: '8px' }} />}
                                             </td>
@@ -401,32 +387,17 @@ export default function AlgTrainerPage() {
                                                 )}
 
                                             </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                            <td className='d-none d-md-table-cell align-middle' role="columnheader">
+                                                
+                                            </td>
+                                            <td className=' d-sm-table-cell align-middle' role="columnheader">
                                                 Hey
                                             </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                            <td className=' d-sm-table-cell align-middle' role="columnheader">
                                                 Hey
                                             </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Item6
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
-                                            </td>
-                                            <td className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                Hey
+                                            <td className=' d-sm-table-cell align-middle' role="columnheader">
+                                                Item9
                                             </td>
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                                                 <input
@@ -459,47 +430,24 @@ export default function AlgTrainerPage() {
                                                                 ></CaseImage>
                                                             </div>
                                                         </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-md-table-cell align-middle' role="columnheader">
                                                             <div>
                                                                 {alg.name}
                                                             </div>
                                                         </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                                        <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
                                                             <div>
                                                                 Item2
                                                             </div>
                                                         </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                                        <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
                                                             <div>
                                                                 Item3
                                                             </div>
                                                         </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='align-middle' role="columnheader">
-                                                            <div>
-                                                                Item4
-                                                            </div>
-                                                        </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-sm-table-cell align-middle' role="columnheader">
+                                                        <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
                                                             <div>
                                                                 Item5
-                                                            </div>
-                                                        </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-sm-table-cell align-middle' role="columnheader">
-                                                            Item 6
-                                                        </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='align-middle' role="columnheader">
-                                                            <div>
-                                                                Item7
-                                                            </div>
-                                                        </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='align-middle' role="columnheader">
-                                                            <div>
-                                                                Item8
-                                                            </div>
-                                                        </td>
-                                                        <td onClick={() => { handleAlgCardShown(alg) }} className='align-middle' role="columnheader">
-                                                            <div>
-                                                                Item9
                                                             </div>
                                                         </td>
                                                         <td>
