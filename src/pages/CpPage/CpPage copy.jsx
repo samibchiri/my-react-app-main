@@ -26,7 +26,7 @@ function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClic
 //     const newOll= 
 // }
 
-const [groupSelected,setGroupSelected]=useState(null)
+const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
 
 const ScrambleVisualizerDetails={

@@ -43,7 +43,7 @@ async function UpdateOll(oll_id,newdata){
 
 
 
-export function CornerPermutationPage({newAlg,oll,setCaseClicked,onError }){
+export function ArrowDataGenerator({newAlg,oll,setCaseClicked,onError }){
 
 // oll={}
 // oll["id"]="OLL 57-0"
@@ -81,6 +81,7 @@ const [tempArrowSet, setTempArrowSet] = useState(new Set());
 const [possibleArrowCombination, setPossibleArrowCombination] = useState(new Set());
 
 const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
+const originalAlg=useRef()
 
 
 
@@ -88,7 +89,7 @@ const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
     let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
     
-    let algRef=useRef(0)
+    let algRef=useRef(55)
     let algIndexRef=useRef(0)
 
     let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
@@ -193,6 +194,7 @@ useEffect(() => {
     setCenteryList([]);
     setCentery2List([]);
     setArrowColor([]);
+    tempBarMovementRef.current=[]
 
     // give CaseImage time to render
      const timeout = setTimeout(() => {
@@ -1037,6 +1039,8 @@ function GroupRecognition(){
     SecondPairSameOppTrueList=SortAndShortenPenaltiesList(SecondPairSameOppTrueList)
     ThirdPairSameOppTrueList=SortAndShortenPenaltiesList(ThirdPairSameOppTrueList)
     
+    console.log("GoOrder")
+    let order= getOrder(piecesMovement,squaresColors)
     
     try{
         groupdict ={
@@ -1128,46 +1132,46 @@ useEffect(() => {
         }
     }
   if (algRef.current+1 === ollCaseSet.cases.length) {
-    const groupTable = {
-    "Cross": 0,
-    "Dot": 1,
-    "T Shape": 2,
-    "C Shape": 3,
-    "I Shape": 4,
-    "P Shape": 5,
-    "W Shape": 6,
-    "Small L Shape": 7,
-    "Small Lightning Bolt": 8,
-    "Big Lightning Bolt": 9,
-    "Square Shape": 10,
-    "Fish Shape": 11,
-    "Knight Move Shape": 12,
-    "Awkward Shape": 13,
-    "Corners Oriented": 14,
-    }
-    let groupedArray =Array.from({length:15},()=>[])
+    // const groupTable = {
+    // "Cross": 0,
+    // "Dot": 1,
+    // "T Shape": 2,
+    // "C Shape": 3,
+    // "I Shape": 4,
+    // "P Shape": 5,
+    // "W Shape": 6,
+    // "Small L Shape": 7,
+    // "Small Lightning Bolt": 8,
+    // "Big Lightning Bolt": 9,
+    // "Square Shape": 10,
+    // "Fish Shape": 11,
+    // "Knight Move Shape": 12,
+    // "Awkward Shape": 13,
+    // "Corners Oriented": 14,
+    // }
+    // let groupedArray =Array.from({length:15},()=>[])
         
-    jsonArrowsToExport.forEach(ollAlg => {
-    const index = groupTable[ollAlg.group];
-    if (index !== undefined) {
-        groupedArray[index].push(ollAlg);
-    }
-    });
+    // jsonArrowsToExport.forEach(ollAlg => {
+    // const index = groupTable[ollAlg.group];
+    // if (index !== undefined) {
+    //     groupedArray[index].push(ollAlg);
+    // }
+    // });
 
-    // sort each group once
-    groupedArray.forEach(group => {
-    group.sort(
-        (a, b) =>
-        parseInt(a.group.split(" ")[1]) -
-        parseInt(b.group.split(" ")[1])
-    );
-    });
+    // // sort each group once
+    // groupedArray.forEach(group => {
+    // group.sort(
+    //     (a, b) =>
+    //     parseInt(a.group.split(" ")[1]) -
+    //     parseInt(b.group.split(" ")[1])
+    // );
+    // });
         
 
     //Important!
     console.log(
     "const arrowOllSet = " +
-    JSON.stringify(groupedArray, null, 2)
+    JSON.stringify(jsonArrowsToExport, null, 2)
         .replace(/"([^"]+)":/g, '$1:') + 
     ";\n\nexport default arrowOllSet;"
     );
@@ -1190,7 +1194,53 @@ useEffect(()=>{
 
     
 },[arrowCombinationSorted])
-    
+
+function getOrder(piecesMovement,squaresColors){
+
+    const excluded = new Set([0, 4, 20, 24]);
+
+    let values = Array.from({ length: 25 }, (_, i) => i)
+    .filter(v => !excluded.has(v));
+    values= values.filter(v=>squaresColors[v]!="yellow")
+
+    const valueSet= new Set(values)
+    console.log("OrderValues",piecesMovement,squaresColors);
+    let currentPiecesIndex= piecesMovement.flat(2).filter((value,index,array)=>index%2==0)
+    let futurePiecesIndex= piecesMovement.flat(2).filter((value,index,array)=>index%2==1)
+    currentPiecesIndex=currentPiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
+    futurePiecesIndex=futurePiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
+    console.log("NewOrderLists",currentPiecesIndex,futurePiecesIndex)
+    let orderList= Array.from({ length: 12 }, (_, i) => [])
+
+    console.log("NewOrder",orderList)
+    let cycleCount=0
+    while (valueSet.size>0&&cycleCount<13){
+        console.log("OrderSets",valueSet,cycleCount,valueSet.size)
+        let newStart= [...valueSet][0]
+        let newStartIndex= currentPiecesIndex.findIndex(center => center==newStart)
+        let nextCenter= futurePiecesIndex[newStartIndex]
+        let nextCenterIndex =currentPiecesIndex.findIndex(center => center==nextCenter)
+
+        valueSet.delete(newStart)
+        orderList[cycleCount].push(newStart)
+        let innerLoopCount=0
+        console.log("PreOrderMovement",newStart,nextCenter,nextCenterIndex)
+        while (nextCenterIndex!=newStartIndex && innerLoopCount<13){
+            nextCenter= futurePiecesIndex[nextCenterIndex]
+            console.log("OrderMovement",currentPiecesIndex[nextCenterIndex],nextCenter)
+            nextCenterIndex =currentPiecesIndex.findIndex(center => center==nextCenter)
+            valueSet.delete(nextCenter)
+            
+            orderList[cycleCount].push(nextCenter)
+            innerLoopCount+=1
+        }
+        cycleCount+=1
+    }
+
+
+    console.log("getOrderDone",orderList)
+
+}
 
 useEffect(()=>{
     if (tempArrowSet.size === 6) {
@@ -1661,4 +1711,4 @@ if(arrowCombination.length<6){
 
 }
 
-export default CornerPermutationPage
+export default ArrowDataGenerator

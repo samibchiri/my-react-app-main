@@ -26,6 +26,7 @@ import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,ge
 export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
+  console.log("HEhh")
   const [groupSelected,setGroupSelected]=useState(0)
   const [ollSelectList,setOllSelectList]=useState([])
 
@@ -627,20 +628,14 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex,
 }
 
 const setOverlayRef = (el,index)=> {
+  const rowIndex = Math.floor(index / 6);
+  const colIndex = index % 6;
 
-  if(testedAlgs){
-
+  if (!altoverlayRefs.current[rowIndex]) {
+    altoverlayRefs.current[rowIndex] = Array.from({length:6}, ()=> null);
   }
-  else{
-      const rowIndex = Math.floor(index / 6);
-      const colIndex = index % 6;
 
-      if (!altoverlayRefs.current[rowIndex]) {
-        altoverlayRefs.current[rowIndex] = Array.from({length:6}, ()=> null);
-      }
-
-      altoverlayRefs.current[rowIndex][colIndex] = el;
-  }
+  altoverlayRefs.current[rowIndex][colIndex] = el;
 
   // Check if ALL refs are mounted
   const allMounted =
@@ -967,7 +962,7 @@ return (
                           <div className="OllGrid">
                               
                               {CornerPermutations.map((_,j)=>{
-                                if(j>=1 && testedAlgs){
+                                if(i>=19){
                                   return
                                 }
 
@@ -1228,7 +1223,7 @@ return (
   {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
     && (<>
     {console.log("NewPage")}
-        <CornerPermutationPage
+        <ArrowDataGenerator
           key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
           newAlg={changedAlgArray[0]}
           oll={changedAlgArray[1]}

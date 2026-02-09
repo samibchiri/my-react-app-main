@@ -10,8 +10,8 @@ import CpTrainer from './pages/CpTrainerPage/CpTrainerPage.jsx'
 import BarTrainer from "./pages/BarTrainerPage/BarTrainer.jsx";
 import LabsPage from "./pages/LabsPage/LabsPage.jsx";
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
-
-
+import BarOverlay from "./pages/BarPersevationPage/SingleBarOverlay.jsx";
+import { ArrowDataGenerator } from "./dataGeneration/ArrowDataGenerator.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
           { index: true, element: <HomePage /> },
           { path: "alg", element: <AlgTrainerPage /> },
           { path: "cp", element: <CpTrainer/> },
-          { path: "bar", element: <BarTrainer /> },
+          { path: "bar", element: <ArrowDataGenerator /> },
         ],
       },
 
@@ -38,7 +38,12 @@ export const router = createBrowserRouter([
         ],
       },
 
-      { path: "labs", element: <LabsPage /> },
+      { path: "labs", element: <BarOverlay
+                                  
+                                  ollAlg=""
+                                  pllAlg= "x R2 F R F' R U2 r' U r U2x'" 
+                                  ollId= "OLL 23-0"
+                                  /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

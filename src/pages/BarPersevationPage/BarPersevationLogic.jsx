@@ -14,7 +14,7 @@ import { SiTrueup } from "react-icons/si";
 import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
-import {CornerPermutationPage} from "../../dataGeneration/ArrowDataGenerator.jsx"
+import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 
 import { flushSync } from 'react-dom';
 
@@ -216,10 +216,12 @@ export function isPositionLeft(Center1,SquareColors){
       }
      
       if(Center1==3){
-         if (SquareColors[8]=="yellow"){ //If it is position doesnt change
+        if (SquareColors[8]=="yellow"){ //If it is position doesnt change
           PositionLeft=true
-        
-      }
+        }
+        else{
+          PositionLeft=false
+        }
     }
     else if (Center1==5){
       if (SquareColors[6]=="yellow"){
@@ -235,19 +237,19 @@ export function isPositionLeft(Center1,SquareColors){
       }
     }
     else if (Center1==8){
-      if (SquareColors[3]=="yellow"){
-        PositionLeft=false
+      if (SquareColors[9]=="yellow"){
+        PositionLeft=true
       }
       else{
-        PositionLeft=true
+        PositionLeft=false
       }
     }
     else if (Center1==9){{
-      if (SquareColors[8]=="yellow"){
-        PositionLeft=false
+      if (SquareColors[3]=="yellow"){
+        PositionLeft=true
       }
       else{
-        PositionLeft=true
+        PositionLeft=false
       }
     }}
 
@@ -267,7 +269,7 @@ export function isPositionLeft(Center1,SquareColors){
         PositionLeft=true
       }
     }
-    else if (Center1==8){
+    else if (Center1==18){
       if (SquareColors[23]=="yellow"){
         PositionLeft=true
       }
@@ -293,13 +295,15 @@ export function isPositionLeft(Center1,SquareColors){
         PositionLeft=true
       }
     }
+    console.log("PositionLeft",Center1,PositionLeft)
       return PositionLeft
   }
 
 
 //Sorts colorIndexList on Center,PositionLeft,PositionRight
 export function sortCenterLeftRight(index,SquareColors){
-    let newIndex=index%10
+  console.log("sortCenterLeftRight",index,SquareColors)  
+  let newIndex=index%10
     let returnedvalue=0
     if(newIndex<5){
       if(newIndex%2==0){
@@ -592,7 +596,7 @@ export function piecesMovementGen(newSquaresColors,newCombinedSquaresList){
 
   //Store where bar came from [prev,new] for all 3 pieces
     piecesMovement[i]=[[PointsInfo[0].currentIndex,EndLocationIndex],[PointsInfo[1].currentIndex,Center1],[PointsInfo[2].currentIndex,Center2]]
-  
+    console.log("PiecesMovement",piecesMovement[i])
   }
 
   return piecesMovement
