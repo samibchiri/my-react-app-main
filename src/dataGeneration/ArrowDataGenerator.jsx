@@ -89,7 +89,7 @@ const originalAlg=useRef()
     let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
     
-    let algRef=useRef(55)
+    let algRef=useRef(0)
     let algIndexRef=useRef(0)
 
     let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
@@ -216,6 +216,9 @@ useEffect(() => {
         setPiecesMovement(piecesMovement)
     }
     getAltHeadlightsMovement()
+    if(algIndexRef.current==0){
+        setBarMovements([["Full"],["Back"],["Front"],["Left"],["Right"],["Diag"]])
+    }
   }, 10);
 
   return () => clearTimeout(timeout);
@@ -522,6 +525,8 @@ function EasyRecognition(){
 
    //Continue if it isnt the last alg
     if(algRef.current+1<ollCaseSet.cases.length || ollCaseSet.cases[algRef.current].algs[algIndexRef.current+1]){
+    //if(algRef.current+1<0 || ollCaseSet.cases[algRef.current].algs[algIndexRef.current+1]){
+     
         if(algIndexRef.current==1){
             algIndexRef.current=0
             algRef.current+=1
@@ -1040,7 +1045,7 @@ function GroupRecognition(){
     ThirdPairSameOppTrueList=SortAndShortenPenaltiesList(ThirdPairSameOppTrueList)
     
     console.log("GoOrder")
-    let order= getOrder(piecesMovement,squaresColors)
+    let finalOrder= getOrder(piecesMovement,squaresColors)
     
     try{
         groupdict ={
@@ -1052,6 +1057,9 @@ function GroupRecognition(){
             altAUF:allAltAUF,
             barMovements:barMovements,
             piecesMovement:piecesMovement,
+            order:finalOrder,
+            algSpeed:null,
+            algTps:null,
             algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
             group:ollCaseSet.cases[algRef.current].group,
             difficultCenters:[],
@@ -1195,26 +1203,75 @@ useEffect(()=>{
     
 },[arrowCombinationSorted])
 
+function addYellowMovementToPiecesMovement(currentPiecesIndex,futurePiecesIndex,squaresColors){
+    
+    let closestYellowUp={
+        1:6,
+        2:7,
+        3:8,
+        5:6,
+        9:8,
+        10:11,
+        14:13,
+        15:16,
+        19:18,
+        21:16,
+        22:17,
+        23:18
+    }
+
+    console.log("Squarecol",currentPiecesIndex,futurePiecesIndex,squaresColors)
+    for (let i=0; i<squaresColors.length;i++){
+        let closeToYellowIndex
+        let newYellowIndex
+        if (squaresColors[i]=="yellow"){
+            if (i!=12){
+                if (i==5 ||i==10||i==13|| i==15){
+                    closeToYellowIndex=currentPiecesIndex.findIndex(center => center==i+1)
+                    newYellowIndex=closestYellowUp[futurePiecesIndex[closeToYellowIndex]]
+                }
+                if (i==9 ||i==11||i==16||i==14|| i==19){
+                    closeToYellowIndex=currentPiecesIndex.findIndex(center => center==i-1)
+                    newYellowIndex=closestYellowUp[futurePiecesIndex[closeToYellowIndex]]
+                }
+                if ( i==1 || i==2||i==3||i==16 || i==17||i==18){
+                    closeToYellowIndex=currentPiecesIndex.findIndex(center => center==i+5)
+                    newYellowIndex=closestYellowUp[futurePiecesIndex[closeToYellowIndex]]
+                }
+                if (i==6||i==7||i==8|| i==21||i==22||i==23){
+                    closeToYellowIndex=currentPiecesIndex.findIndex(center => center==i-5)
+                    newYellowIndex=closestYellowUp[futurePiecesIndex[closeToYellowIndex]]
+                }
+            console.log("CurrentYellow",i,closeToYellowIndex,currentPiecesIndex,futurePiecesIndex,closeToYellowIndex,newYellowIndex);
+            currentPiecesIndex.push(i)
+            futurePiecesIndex.push(newYellowIndex);
+            }            
+        }
+    }
+    return [currentPiecesIndex,futurePiecesIndex]
+}
+
 function getOrder(piecesMovement,squaresColors){
 
     const excluded = new Set([0, 4, 20, 24]);
 
     let values = Array.from({ length: 25 }, (_, i) => i)
     .filter(v => !excluded.has(v));
-    values= values.filter(v=>squaresColors[v]!="yellow")
 
     const valueSet= new Set(values)
     console.log("OrderValues",piecesMovement,squaresColors);
+
     let currentPiecesIndex= piecesMovement.flat(2).filter((value,index,array)=>index%2==0)
     let futurePiecesIndex= piecesMovement.flat(2).filter((value,index,array)=>index%2==1)
-    currentPiecesIndex=currentPiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
-    futurePiecesIndex=futurePiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
-    console.log("NewOrderLists",currentPiecesIndex,futurePiecesIndex)
-    let orderList= Array.from({ length: 12 }, (_, i) => [])
+    // currentPiecesIndex=currentPiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
+    // futurePiecesIndex=futurePiecesIndex.filter((value,index,array)=>squaresColors[index]!="yellow")
+    console.log("NewOrderLists",currentPiecesIndex,futurePiecesIndex);
+    [currentPiecesIndex,futurePiecesIndex]=addYellowMovementToPiecesMovement(currentPiecesIndex,futurePiecesIndex,squaresColors)
+    let orderList= Array.from({ length: 25 }, (_, i) => [])
 
-    console.log("NewOrder",orderList)
+    console.log("NewOrder",currentPiecesIndex,currentPiecesIndex)
     let cycleCount=0
-    while (valueSet.size>0&&cycleCount<13){
+    while (valueSet.size>0&&cycleCount<25){
         console.log("OrderSets",valueSet,cycleCount,valueSet.size)
         let newStart= [...valueSet][0]
         let newStartIndex= currentPiecesIndex.findIndex(center => center==newStart)
@@ -1222,7 +1279,12 @@ function getOrder(piecesMovement,squaresColors){
         let nextCenterIndex =currentPiecesIndex.findIndex(center => center==nextCenter)
 
         valueSet.delete(newStart)
+        console.log("OrderMovementPushStart",newStart,cycleCount,orderList[cycleCount])
         orderList[cycleCount].push(newStart)
+        if(newStart!=nextCenter &&nextCenter){
+            orderList[cycleCount].push(nextCenter)
+            valueSet.delete(nextCenter)
+        }
         let innerLoopCount=0
         console.log("PreOrderMovement",newStart,nextCenter,nextCenterIndex)
         while (nextCenterIndex!=newStartIndex && innerLoopCount<13){
@@ -1231,7 +1293,10 @@ function getOrder(piecesMovement,squaresColors){
             nextCenterIndex =currentPiecesIndex.findIndex(center => center==nextCenter)
             valueSet.delete(nextCenter)
             
-            orderList[cycleCount].push(nextCenter)
+            console.log("OrderMovementPush",nextCenter,cycleCount,orderList[cycleCount])
+            if(newStart!=nextCenter){
+                orderList[cycleCount].push(nextCenter)
+            }
             innerLoopCount+=1
         }
         cycleCount+=1
@@ -1239,7 +1304,36 @@ function getOrder(piecesMovement,squaresColors){
 
 
     console.log("getOrderDone",orderList)
+    let cycleLengths=[]
+    for (let i=0;i<orderList.length;i++){
+        if(orderList[i].length>1){
+            cycleLengths.push(orderList[i].length)
+        }
+    }
+    console.log("CycleLengths",cycleLengths)
+    let order= lcm(cycleLengths)
+    console.log("OrderFound",order)
+    return order
+}
 
+function gcd(a, b) {
+    console.log("GCD",a,b)
+  while (b !== 0) {
+    console.log("GcdAlg",a,b,a%b);
+    [a, b] = [b, a % b];
+  }
+  console.log("ReturnGCD",a)
+  return a;
+}
+function lcm(cycleLengths){
+    let last_a=cycleLengths[0]
+    console.log("GcdLcmCycleLength",cycleLengths)
+    for (let i=0;i<cycleLengths.length-1;i++){
+        let b=cycleLengths[i+1]
+        console.log("GcdLcm",last_a,b)
+        last_a= Math.abs(last_a*b)/gcd(last_a,b)
+    }
+    return last_a
 }
 
 useEffect(()=>{
@@ -1417,7 +1511,7 @@ function getAltHeadlightsMovement(){
             console.log("Check")
             
             tempBarMovementRef.current.push(getHeadlights(altContainerSvgSquaresOutsideList))
-                setBarMovements(prev => (
+            setBarMovements(prev => (
                 [...prev,[...tempBarMovementRef.current]]
             ));
             if(scrambleIndex.current==0 && tempBarMovementRef.current[0]!=BarPositionDict[0]){

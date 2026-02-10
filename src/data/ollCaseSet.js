@@ -19,7 +19,7 @@ const ollCaseSet = {
         "U2 B L2 D2 F2 D' F2 D' L2 B2 U B",
         "U2 B L2 F2 D2 F D2 B' L2 F2 U2 F'",
       ],
-      algs: ["R U2' R' U' R U R' U' R U' R'", "R U R' U R U' R' U R U2 R'"],
+      algs: ["R U2' R' U' R U R' U' R U' R'", "F R U R' U' R U R' U' R U R' U' F'"],
     },
     {
       id: "1b730f56-333a-4c70-8996-300ba86d0a27",
@@ -796,7 +796,7 @@ const ollCaseSet = {
         "R' L' F' U2 F R' L D' F2 D R2 U",
         "R' L' F' L2 F R L' U' L2 U L2 U",
       ],
-      algs: ["R U R' U' M' U R U' r'","R U' R' S' R U R' S "],
+      algs: ["R U R' U' M' U R U' r'"],
     },
   ],
 };

@@ -6,7 +6,7 @@ const arrowOllSet = [
     algNumber: 0,
     differentAUF: [],
     altAUF: [
-      "U"
+      ""
     ],
     barMovements: [
       [
@@ -86,6 +86,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2' R' U' R U R' U' R U' R'",
     group: "Cross",
     difficultCenters: [],
@@ -234,17 +237,11 @@ const arrowOllSet = [
     algNumber: 1,
     differentAUF: [],
     altAUF: [
-      "U"
+      ""
     ],
     barMovements: [
       [
-        "Full"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Front"
+        "Diag"
       ],
       [
         "Left"
@@ -253,7 +250,13 @@ const arrowOllSet = [
         "Right"
       ],
       [
-        "Diag"
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Full"
       ]
     ],
     piecesMovement: [
@@ -263,58 +266,61 @@ const arrowOllSet = [
           22
         ],
         [
-          16,
+          18,
           21
         ],
         [
-          18,
+          16,
           23
         ]
       ],
       [
         [
-          2,
+          14,
           14
         ],
         [
-          23,
+          15,
           19
         ],
         [
-          3,
+          5,
           9
         ]
       ],
       [
         [
-          10,
+          2,
           2
         ],
         [
-          8,
+          6,
           3
         ],
         [
-          6,
+          8,
           1
         ]
       ],
       [
         [
-          14,
+          10,
           10
         ],
         [
-          1,
+          9,
           5
         ],
         [
-          21,
+          19,
           15
         ]
       ]
     ],
-    algs: "R U R' U R U' R' U R U2 R'",
+    order: 2,
+    algSpeed: null,
+    algTps: null,
+    algs: "F R U R' U' R U R' U' R U R' U' F'",
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -346,21 +352,21 @@ const arrowOllSet = [
       [
         [
           16,
-          23,
-          "opp",
-          6,
-          16,
-          "opp",
-          3
-        ],
-        [
-          16,
-          23,
+          19,
           "opp",
           6,
           16,
           "same",
-          3
+          13
+        ],
+        [
+          16,
+          19,
+          "opp",
+          6,
+          16,
+          "opp",
+          13
         ]
       ]
     ],
@@ -368,21 +374,21 @@ const arrowOllSet = [
       [
         [
           8,
-          23,
+          19,
           "opp",
           6,
           8,
           "opp",
-          3
+          13
         ],
         [
           8,
-          23,
+          19,
           "opp",
           6,
           8,
           "same",
-          3
+          13
         ]
       ]
     ],
@@ -414,19 +420,19 @@ const arrowOllSet = [
           [
             6,
             16,
-            "opp",
+            "same",
             8,
             18,
-            "same",
+            "opp",
             0
           ],
           [
             6,
             16,
-            "same",
+            "opp",
             8,
             18,
-            "opp",
+            "same",
             0
           ]
         ]
@@ -467,6 +473,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -527,6 +548,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2' R2' U' R2 U' R2' U2' R",
     group: "Cross",
     difficultCenters: [],
@@ -679,13 +703,7 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
-      ],
-      [
-        "Left"
-      ],
-      [
-        "Right"
+        "Full"
       ],
       [
         "Back"
@@ -694,7 +712,13 @@ const arrowOllSet = [
         "Front"
       ],
       [
-        "Full"
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -755,6 +779,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R2 D R' U2 R D' R' U2 R'",
     group: "Cross",
     difficultCenters: [],
@@ -983,6 +1010,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R2 D' R U2 R' D R U2 R",
     group: "Cross",
     difficultCenters: [],
@@ -1211,6 +1241,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U' r' F R F'",
     group: "Cross",
     difficultCenters: [],
@@ -1439,6 +1472,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R D R' U' R D' R2",
     group: "Cross",
     difficultCenters: [],
@@ -1594,16 +1630,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Left"
-      ],
-      [
-        "Right"
+        "Back"
       ],
       [
         "Front"
       ],
       [
-        "Back"
+        "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -1667,6 +1703,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "x R' U R D' R' U' R D x'",
     group: "Cross",
     difficultCenters: [],
@@ -1895,6 +1934,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R' F R B' R' F' R B",
     group: "Cross",
     difficultCenters: [],
@@ -2123,6 +2165,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' R U' R' U2 R",
     group: "Cross",
     difficultCenters: [],
@@ -2351,6 +2396,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2' R' U' R U' R'",
     group: "Cross",
     difficultCenters: [],
@@ -2506,16 +2554,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -2579,6 +2627,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R U2' R'",
     group: "Cross",
     difficultCenters: [],
@@ -2807,6 +2858,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U2 R U R' U R",
     group: "Cross",
     difficultCenters: [],
@@ -2960,6 +3014,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -3020,6 +3089,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 18,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2 R2' F R F' U2 R' F R F'",
     group: "Dot",
     difficultCenters: [],
@@ -3175,16 +3247,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -3248,6 +3320,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "F R U R' U' F' f R U R' U' f'",
     group: "Dot",
     difficultCenters: [],
@@ -3476,6 +3551,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 2,
+    algSpeed: null,
+    algTps: null,
     algs: "r U r' U2 r U2 R' U2 R U' r'",
     group: "Dot",
     difficultCenters: [],
@@ -3631,16 +3709,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -3704,6 +3782,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "f R U R' U' f' U' F R U R' U' F'",
     group: "Dot",
     difficultCenters: [],
@@ -3932,6 +4013,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "r' R2 U R' U r U2 r' U M'",
     group: "Dot",
     difficultCenters: [],
@@ -4087,16 +4171,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -4160,6 +4244,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "f R U R' U' f' U F R U R' U' F'",
     group: "Dot",
     difficultCenters: [],
@@ -4388,6 +4475,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "M U' r U2 r' U' R U' R' M'",
     group: "Dot",
     difficultCenters: [],
@@ -4543,16 +4633,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -4616,6 +4706,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U2 R U R' U r",
     group: "Square Shape",
     difficultCenters: [],
@@ -4844,6 +4937,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "l' U2 L U L' U l",
     group: "Square Shape",
     difficultCenters: [],
@@ -4997,6 +5093,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -5057,6 +5168,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U2 R' U' R U' r'",
     group: "Square Shape",
     difficultCenters: [],
@@ -5210,6 +5324,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -5270,6 +5399,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U R U2 r'",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -5425,16 +5557,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -5498,6 +5630,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U' R U' R' U2 r",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -5726,6 +5861,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "l' U' L U' L' U2 l",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -5879,6 +6017,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -5939,6 +6092,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 9,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' R' F R2 U R' U' F'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -6091,13 +6247,7 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
-      ],
-      [
-        "Left"
-      ],
-      [
-        "Right"
+        "Full"
       ],
       [
         "Back"
@@ -6106,7 +6256,13 @@ const arrowOllSet = [
         "Front"
       ],
       [
-        "Full"
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -6167,6 +6323,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R' F R F' R U2 R'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -6395,6 +6554,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U R U' R' U' r' R U R U' R'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -6547,7 +6709,7 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
+        "Full"
       ],
       [
         "Back"
@@ -6556,13 +6718,13 @@ const arrowOllSet = [
         "Front"
       ],
       [
-        "Right"
-      ],
-      [
         "Left"
       ],
       [
-        "Full"
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -6623,6 +6785,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U R' F R F' R U2 r'",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -6851,6 +7016,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "r' R2 U R' U R U2 R' U M'",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -7004,6 +7172,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -7064,6 +7247,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "M' R' U' R U' R' U2 R U' R r'",
     group: "Small Lightning Bolt",
     difficultCenters: [],
@@ -7216,13 +7402,13 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
-      ],
-      [
-        "Front"
+        "Full"
       ],
       [
         "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
@@ -7231,7 +7417,7 @@ const arrowOllSet = [
         "Right"
       ],
       [
-        "Full"
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -7292,6 +7478,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 9,
+    algSpeed: null,
+    algTps: null,
     algs: "F U R U' R2 F' R U R U' R'",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -7520,6 +7709,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "r U' r' U' r U r' y' R' U R",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -7673,6 +7865,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -7733,6 +7940,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R' F R U R' F' R F U' F'",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -7888,16 +8098,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -7961,6 +8171,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U' r R' U' R U r' U r",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -8189,6 +8402,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "l' U' l L' U' L U l' U l",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -8342,6 +8558,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -8402,6 +8633,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U r' R U R' U' r U' r'",
     group: "Knight Move Shape",
     difficultCenters: [],
@@ -8554,22 +8788,22 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
+        "Full"
+      ],
+      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
       ],
       [
+        "Right"
+      ],
+      [
         "Diag"
-      ],
-      [
-        "Full"
-      ],
-      [
-        "Front"
       ]
     ],
     piecesMovement: [
@@ -8630,6 +8864,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 18,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R' F R F' U2 R' F R F'",
     group: "Dot",
     difficultCenters: [],
@@ -8858,6 +9095,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "F R' F' R2 r' U R U' R' U' M'",
     group: "Dot",
     difficultCenters: [],
@@ -9010,13 +9250,13 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
-      ],
-      [
-        "Front"
+        "Full"
       ],
       [
         "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
@@ -9025,7 +9265,7 @@ const arrowOllSet = [
         "Right"
       ],
       [
-        "Full"
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -9086,6 +9326,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2 R' R' F R F' U2 M' U R U' r'",
     group: "Dot",
     difficultCenters: [],
@@ -9314,6 +9557,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
     group: "Dot",
     difficultCenters: [],
@@ -9467,6 +9713,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -9527,6 +9788,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "r' R U R U R' U' M' R' F R F'",
     group: "Dot",
     difficultCenters: [],
@@ -9682,16 +9946,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -9755,6 +10019,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U' M2 U R U' R' U' M'",
     group: "Dot",
     difficultCenters: [],
@@ -9983,6 +10250,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "r' R U R U R' U' M2 U R U' r'",
     group: "Dot",
     difficultCenters: [],
@@ -10136,6 +10406,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -10196,6 +10481,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U' r' R U R U' R'",
     group: "Corners Oriented",
     difficultCenters: [],
@@ -10348,22 +10636,22 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
+        "Full"
+      ],
+      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
       ],
       [
+        "Right"
+      ],
+      [
         "Diag"
-      ],
-      [
-        "Full"
-      ],
-      [
-        "Front"
       ]
     ],
     piecesMovement: [
@@ -10424,6 +10712,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "r' R U R U R' U' R' F R F' r R'",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -10652,6 +10943,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' R U' R' F' U' F R U R'",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -10804,22 +11098,22 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Left"
-      ],
-      [
-        "Front"
+        "Full"
       ],
       [
         "Back"
       ],
       [
-        "Full"
+        "Front"
       ],
       [
-        "Diag"
+        "Left"
       ],
       [
         "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -10880,6 +11174,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "F U R U2 R' U' R U2 R' U' F'",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -11108,6 +11405,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "F R' F R2 U' R' U' R U R' F2",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -11261,6 +11561,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -11321,6 +11636,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' F U R U' R' F' R",
     group: "P Shape",
     difficultCenters: [],
@@ -11476,16 +11794,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -11549,6 +11867,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "S R U R' U' R' F R f'",
     group: "P Shape",
     difficultCenters: [],
@@ -11777,6 +12098,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "L U F' U' L' U L F L'",
     group: "P Shape",
     difficultCenters: [],
@@ -11930,6 +12254,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -11990,6 +12329,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' R' F R F'",
     group: "T Shape",
     difficultCenters: [],
@@ -12145,16 +12487,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Left"
-      ],
-      [
-        "Right"
+        "Back"
       ],
       [
         "Front"
       ],
       [
-        "Back"
+        "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -12218,6 +12560,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R2 U' R' F R U R U' F'",
     group: "C Shape",
     difficultCenters: [],
@@ -12446,6 +12791,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' B' R' F R F' B",
     group: "C Shape",
     difficultCenters: [],
@@ -12599,6 +12947,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -12659,6 +13022,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2 R' R' F R F' R U2 R'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -12811,13 +13177,7 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Diag"
-      ],
-      [
-        "Left"
-      ],
-      [
-        "Right"
+        "Full"
       ],
       [
         "Back"
@@ -12826,7 +13186,13 @@ const arrowOllSet = [
         "Front"
       ],
       [
-        "Full"
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -12887,6 +13253,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "L' U' L U' L' U L U L F' L' F",
     group: "W Shape",
     difficultCenters: [],
@@ -13115,6 +13484,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' F' U2 F U R U R'",
     group: "W Shape",
     difficultCenters: [],
@@ -13267,13 +13639,7 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Left"
-      ],
-      [
         "Full"
-      ],
-      [
-        "Diag"
       ],
       [
         "Back"
@@ -13282,7 +13648,13 @@ const arrowOllSet = [
         "Front"
       ],
       [
+        "Left"
+      ],
+      [
         "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -13343,6 +13715,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "F R' F' R U R U' R'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -13571,6 +13946,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "F R U' R' U' R U R' F'",
     group: "Fish Shape",
     difficultCenters: [],
@@ -13724,6 +14102,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -13784,6 +14177,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R U' R' U' R' F R F'",
     group: "W Shape",
     difficultCenters: [],
@@ -13936,6 +14332,12 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
+        "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
         "Front"
       ],
       [
@@ -13946,12 +14348,6 @@ const arrowOllSet = [
       ],
       [
         "Diag"
-      ],
-      [
-        "Full"
-      ],
-      [
-        "Back"
       ]
     ],
     piecesMovement: [
@@ -14012,6 +14408,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "L F' L' U' L U F U' L'",
     group: "Big Lightning Bolt",
     difficultCenters: [],
@@ -14240,6 +14639,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "F R U R' U' F' R' U' R U' R' U2 R",
     group: "Big Lightning Bolt",
     difficultCenters: [],
@@ -14393,6 +14795,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -14453,6 +14870,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "R' F R U R' U' F' U R",
     group: "Big Lightning Bolt",
     difficultCenters: [],
@@ -14606,6 +15026,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -14666,6 +15101,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R U2 R' F R U R' U' F'",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -14819,6 +15257,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -14879,6 +15332,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' R U' R' U2 R F R U R' U' F'",
     group: "Awkward Shape",
     difficultCenters: [],
@@ -15034,16 +15490,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Left"
-      ],
-      [
-        "Right"
+        "Back"
       ],
       [
         "Front"
       ],
       [
-        "Back"
+        "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -15107,6 +15563,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "F' U' L' U L F",
     group: "P Shape",
     difficultCenters: [],
@@ -15335,6 +15794,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' F R' F' R U R",
     group: "P Shape",
     difficultCenters: [],
@@ -15490,16 +15952,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -15563,6 +16025,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "F U R U' R' F'",
     group: "P Shape",
     difficultCenters: [],
@@ -15791,6 +16256,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "f R U R' U' f'",
     group: "P Shape",
     difficultCenters: [],
@@ -15944,6 +16412,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -16004,6 +16487,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "F R U R' U' F'",
     group: "T Shape",
     difficultCenters: [],
@@ -16157,6 +16643,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -16217,6 +16718,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' R' F R F' U R",
     group: "C Shape",
     difficultCenters: [],
@@ -16372,16 +16876,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Left"
-      ],
-      [
-        "Right"
+        "Back"
       ],
       [
         "Front"
       ],
       [
-        "Back"
+        "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -16445,6 +16949,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R' U' R' F R F' R' F R F' U R",
     group: "Small L Shape",
     difficultCenters: [],
@@ -16673,6 +17180,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "F' L' U' L U L' U' L U F",
     group: "Small L Shape",
     difficultCenters: [],
@@ -16826,6 +17336,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -16886,6 +17411,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "F R U R' U' R U R' U' F'",
     group: "Small L Shape",
     difficultCenters: [],
@@ -17039,6 +17567,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -17099,6 +17642,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r U' r2 U r2 U r2 U' r",
     group: "Small L Shape",
     difficultCenters: [],
@@ -17252,6 +17798,21 @@ const arrowOllSet = [
     barMovements: [
       [
         "Full"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Left"
+      ],
+      [
+        "Right"
+      ],
+      [
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -17312,6 +17873,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U r2 U' r2 U' r2 U r'",
     group: "Small L Shape",
     difficultCenters: [],
@@ -17467,16 +18031,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -17540,6 +18104,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "f R U R' U' R U R' U' f'",
     group: "I Shape",
     difficultCenters: [],
@@ -17768,6 +18335,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "F U R U' R' U R U' R' F'",
     group: "I Shape",
     difficultCenters: [],
@@ -17923,16 +18493,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Front"
-      ],
-      [
         "Back"
       ],
       [
-        "Right"
+        "Front"
       ],
       [
         "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -17996,6 +18566,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 12,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R U' y R U' R' F'",
     group: "I Shape",
     difficultCenters: [],
@@ -18224,6 +18797,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 6,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U R U' B U' B' R'",
     group: "I Shape",
     difficultCenters: [],
@@ -18379,16 +18955,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Right"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
       ],
       [
-        "Back"
-      ],
-      [
-        "Front"
+        "Right"
       ],
       [
         "Diag"
@@ -18452,6 +19028,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U2 R U R' U' R U R' U r",
     group: "Small L Shape",
     difficultCenters: [],
@@ -18680,6 +19259,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "l' U2 L U L' U' L U L' U l",
     group: "Small L Shape",
     difficultCenters: [],
@@ -18908,6 +19490,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r U2 R' U' R U R' U' R U' r'",
     group: "Small L Shape",
     difficultCenters: [],
@@ -19136,6 +19721,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r U R' U R U' R' U R U2 r'",
     group: "Small L Shape",
     difficultCenters: [],
@@ -19288,13 +19876,13 @@ const arrowOllSet = [
     ],
     barMovements: [
       [
-        "Front"
-      ],
-      [
         "Full"
       ],
       [
-        "Diag"
+        "Back"
+      ],
+      [
+        "Front"
       ],
       [
         "Left"
@@ -19303,7 +19891,7 @@ const arrowOllSet = [
         "Right"
       ],
       [
-        "Back"
+        "Diag"
       ]
     ],
     piecesMovement: [
@@ -19364,6 +19952,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 18,
+    algSpeed: null,
+    algTps: null,
     algs: "R U2 R2 U' R U' R' U2 F R F'",
     group: "I Shape",
     difficultCenters: [],
@@ -19592,6 +20183,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 4,
+    algSpeed: null,
+    algTps: null,
     algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
     group: "I Shape",
     difficultCenters: [],
@@ -19747,16 +20341,16 @@ const arrowOllSet = [
         "Full"
       ],
       [
-        "Left"
-      ],
-      [
-        "Right"
+        "Back"
       ],
       [
         "Front"
       ],
       [
-        "Back"
+        "Left"
+      ],
+      [
+        "Right"
       ],
       [
         "Diag"
@@ -19820,6 +20414,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r' U' r U' R' U R U' R' U R r' U r",
     group: "I Shape",
     difficultCenters: [],
@@ -20048,6 +20645,9 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "r U r' U R U' R' U R U' R' r U' r'",
     group: "I Shape",
     difficultCenters: [],
@@ -20196,7 +20796,7 @@ const arrowOllSet = [
     algNumber: 0,
     differentAUF: [],
     altAUF: [
-      "U"
+      null
     ],
     barMovements: [
       [
@@ -20276,235 +20876,10 @@ const arrowOllSet = [
         ]
       ]
     ],
+    order: 3,
+    algSpeed: null,
+    algTps: null,
     algs: "R U R' U' M' U R U' r'",
-    group: "Corners Oriented",
-    difficultCenters: [],
-    difficultColors: [],
-    groupRecUsed: true,
-    sameOppUsed: true,
-    fullDiagCp: [
-      [
-        [
-          9,
-          15,
-          "opp",
-          21,
-          23,
-          "same",
-          1000
-        ],
-        [
-          9,
-          15,
-          "opp",
-          21,
-          23,
-          "opp",
-          1000
-        ]
-      ]
-    ],
-    leftRightCp: [
-      [
-        [
-          19,
-          21,
-          "opp",
-          9,
-          19,
-          "opp",
-          61
-        ],
-        [
-          19,
-          21,
-          "opp",
-          9,
-          19,
-          "same",
-          61
-        ]
-      ]
-    ],
-    frontBackCp: [
-      [
-        [
-          9,
-          23,
-          "opp",
-          21,
-          23,
-          "same",
-          41
-        ],
-        [
-          9,
-          23,
-          "opp",
-          21,
-          23,
-          "opp",
-          41
-        ]
-      ]
-    ],
-    SameOpp: [
-      [
-        [
-          [
-            21,
-            23,
-            "same",
-            9,
-            19,
-            "same",
-            65
-          ],
-          [
-            21,
-            23,
-            "opp",
-            9,
-            19,
-            "opp",
-            65
-          ]
-        ]
-      ],
-      [
-        [
-          [
-            9,
-            19,
-            "opp",
-            19,
-            21,
-            "opp",
-            96
-          ],
-          [
-            9,
-            19,
-            "same",
-            19,
-            21,
-            "opp",
-            96
-          ]
-        ]
-      ],
-      [
-        [
-          [
-            21,
-            23,
-            "same",
-            9,
-            21,
-            "opp",
-            75
-          ],
-          [
-            21,
-            23,
-            "opp",
-            9,
-            21,
-            "same",
-            75
-          ]
-        ]
-      ]
-    ]
-  },
-  {
-    id: "OLL 57-1",
-    name: "OLL 57",
-    ollNumber: 57,
-    algNumber: 1,
-    differentAUF: [],
-    altAUF: [
-      "U"
-    ],
-    barMovements: [
-      [
-        "Full"
-      ],
-      [
-        "Back"
-      ],
-      [
-        "Front"
-      ],
-      [
-        "Left"
-      ],
-      [
-        "Right"
-      ],
-      [
-        "Diag"
-      ]
-    ],
-    piecesMovement: [
-      [
-        [
-          22,
-          22
-        ],
-        [
-          21,
-          21
-        ],
-        [
-          23,
-          23
-        ]
-      ],
-      [
-        [
-          11,
-          14
-        ],
-        [
-          19,
-          19
-        ],
-        [
-          9,
-          9
-        ]
-      ],
-      [
-        [
-          13,
-          2
-        ],
-        [
-          3,
-          3
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      [
-        [
-          2,
-          10
-        ],
-        [
-          5,
-          5
-        ],
-        [
-          15,
-          15
-        ]
-      ]
-    ],
-    algs: "R U' R' S' R U R' S ",
     group: "Corners Oriented",
     difficultCenters: [],
     difficultColors: [],

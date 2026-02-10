@@ -12,6 +12,7 @@ import LabsPage from "./pages/LabsPage/LabsPage.jsx";
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
 import BarOverlay from "./pages/BarPersevationPage/SingleBarOverlay.jsx";
 import { ArrowDataGenerator } from "./dataGeneration/ArrowDataGenerator.jsx";
+
 export const router = createBrowserRouter([
   {
     path: "/",
