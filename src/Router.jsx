@@ -9,6 +9,7 @@ import BarPersevationPage from "./pages/BarPersevationPage/BarPersevationPage.js
 import CpTrainer from './pages/CpTrainerPage/CpTrainerPage.jsx'
 import BarTrainer from "./pages/BarTrainerPage/BarTrainer.jsx";
 import LabsPage from "./pages/LabsPage/LabsPage.jsx";
+import MyAlgsPage from "./pages/MyAlgsPage/MyAlgsPage.jsx";
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
 import BarOverlay from "./pages/BarPersevationPage/SingleBarOverlay.jsx";
 import { ArrowDataGenerator } from "./dataGeneration/ArrowDataGenerator.jsx";
@@ -39,13 +40,14 @@ export const router = createBrowserRouter([
         ],
       },
 
-      { path: "labs", element: <BarOverlay
-                                  
-                                  ollAlg=""
-                                  pllAlg= "x R2 F R F' R U2 r' U r U2x'" 
-                                  ollId= "OLL 23-0"
-                                  /> },
+      { path: "labs", element: <MyAlgsPage/>},
       { path: "*", element: <NotFoundPage /> },
+      // <BarOverlay
+                                  
+      //                             ollAlg=""
+      //                             pllAlg= "x R2 F R F' R U2 r' U r U2x'" 
+      //                             ollId= "OLL 23-0"
+      //                             /> 
     ],
   },
 ]);
