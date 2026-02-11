@@ -143,7 +143,8 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                     caseSetDetails={AlgCasesSet.details}
                 ></CaseImage>
                 <div className="popUpContainer">
-                    <table className="popUpTable text-center table table-sm">
+                    <table className="popUpTable text-center">
+                        <tbody>
                         <tr className="popUpRow">
                             <th>
                                 Name
@@ -186,19 +187,18 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                 !editClick1 &&
                             <td className="PopUpTd2" onDoubleClick={()=>{setEditClick1((prev)=>!prev)}}>
                                 {editedAlg1[editedAlg1.length - 1]}
-                                
                             </td>
                             }
                            
                             {
                             editClick1 &&
                             <td className="PopUpTd2">
-                                <textarea onKeyDown={SaveInput1} ref={InputAlg1} wrap="soft"  rows="2" id="PopUpInputAlg1" placeholder="Enter Algorithm"></textarea>
+                                <input type="text" onKeyDown={SaveInput1} ref={InputAlg1} wrap="soft"  rows="2" id="PopUpInputAlg1" placeholder="Enter Algorithm"/>
 
                             </td>
                            
                             }
-                            <td >
+                            <td className="PopUpTd3" >
                                 <div id="buttonSaveAndCopy1">
 
                                 <button className="PopUpCopyButton" onClick={() => {
@@ -228,7 +228,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                 }
                                 {editClick2 &&
                                 <td className="PopUpTd2">
-                                    <textarea onKeyDown={SaveInput2} ref={InputAlg2} wrap="hard" rows="2" id="PopUpInputAlg2" placeholder="Enter Algorithm"></textarea>
+                                    <input type="text" onKeyDown={SaveInput2} ref={InputAlg2} wrap="hard" rows="2" id="PopUpInputAlg2" placeholder="Enter Algorithm"/>
                                 </td>
                                 }
                             
@@ -250,7 +250,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                  </div>
                             </td>
                         </tr>
-
+                        </tbody>
                     </table>
                 </div>
             </Modal.Body>

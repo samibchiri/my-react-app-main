@@ -87,6 +87,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2' R' U' R U R' U' R U' R'",
@@ -318,6 +319,7 @@ const arrowOllSet = [
       ]
     ],
     order: 2,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U R' U' R U R' U' R U R' U' F'",
@@ -549,6 +551,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2' R2' U' R2 U' R2' U2' R",
@@ -780,6 +783,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R2 D R' U2 R D' R' U2 R'",
@@ -1011,6 +1015,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R2 D' R U2 R' D R U2 R",
@@ -1242,6 +1247,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U' r' F R F'",
@@ -1473,6 +1479,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R D R' U' R D' R2",
@@ -1704,6 +1711,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "x R' U R D' R' U' R D x'",
@@ -1935,6 +1943,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' F R B' R' F' R B",
@@ -2166,6 +2175,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' R U' R' U2 R",
@@ -2397,6 +2407,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2' R' U' R U' R'",
@@ -2628,6 +2639,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R U2' R'",
@@ -2859,6 +2871,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U2 R U R' U R",
@@ -3090,6 +3103,7 @@ const arrowOllSet = [
       ]
     ],
     order: 18,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2 R2' F R F' U2 R' F R F'",
@@ -3321,6 +3335,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U R' U' F' f R U R' U' f'",
@@ -3552,6 +3567,7 @@ const arrowOllSet = [
       ]
     ],
     order: 2,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U r' U2 r U2 R' U2 R U' r'",
@@ -3783,6 +3799,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "f R U R' U' f' U' F R U R' U' F'",
@@ -4014,6 +4031,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' R2 U R' U r U2 r' U M'",
@@ -4245,6 +4263,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "f R U R' U' f' U F R U R' U' F'",
@@ -4476,6 +4495,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "M U' r U2 r' U' R U' R' M'",
@@ -4707,6 +4727,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U2 R U R' U r",
@@ -4938,6 +4959,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "l' U2 L U L' U l",
@@ -5169,6 +5191,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U2 R' U' R U' r'",
@@ -5400,6 +5423,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U R U2 r'",
@@ -5631,6 +5655,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U' R U' R' U2 r",
@@ -5862,6 +5887,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "l' U' L U' L' U2 l",
@@ -6093,6 +6119,7 @@ const arrowOllSet = [
       ]
     ],
     order: 9,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' R' F R2 U R' U' F'",
@@ -6324,6 +6351,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R' F R F' R U2 R'",
@@ -6555,6 +6583,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U R U' R' U' r' R U R U' R'",
@@ -6786,6 +6815,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U R' F R F' R U2 r'",
@@ -7017,6 +7047,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' R2 U R' U R U2 R' U M'",
@@ -7248,6 +7279,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "M' R' U' R U' R' U2 R U' R r'",
@@ -7479,6 +7511,7 @@ const arrowOllSet = [
       ]
     ],
     order: 9,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F U R U' R2 F' R U R U' R'",
@@ -7710,6 +7743,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U' r' U' r U r' y' R' U R",
@@ -7941,6 +7975,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' F R U R' F' R F U' F'",
@@ -8172,6 +8207,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U' r R' U' R U r' U r",
@@ -8403,6 +8439,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "l' U' l L' U' L U l' U l",
@@ -8634,6 +8671,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U r' R U R' U' r U' r'",
@@ -8865,6 +8903,7 @@ const arrowOllSet = [
       ]
     ],
     order: 18,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R' F R F' U2 R' F R F'",
@@ -9096,6 +9135,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R' F' R2 r' U R U' R' U' M'",
@@ -9327,6 +9367,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2 R' R' F R F' U2 M' U R U' r'",
@@ -9558,6 +9599,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
@@ -9789,6 +9831,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' R U R U R' U' M' R' F R F'",
@@ -10020,6 +10063,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U' M2 U R U' R' U' M'",
@@ -10251,6 +10295,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' R U R U R' U' M2 U R U' r'",
@@ -10482,6 +10527,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U' r' R U R U' R'",
@@ -10713,6 +10759,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' R U R U R' U' R' F R F' r R'",
@@ -10944,6 +10991,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' R U' R' F' U' F R U R'",
@@ -11175,6 +11223,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F U R U2 R' U' R U2 R' U' F'",
@@ -11406,6 +11455,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R' F R2 U' R' U' R U R' F2",
@@ -11637,6 +11687,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' F U R U' R' F' R",
@@ -11868,6 +11919,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "S R U R' U' R' F R f'",
@@ -12099,6 +12151,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "L U F' U' L' U L F L'",
@@ -12330,6 +12383,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' R' F R F'",
@@ -12561,6 +12615,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R2 U' R' F R U R U' F'",
@@ -12792,6 +12847,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' B' R' F R F' B",
@@ -13023,6 +13079,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2 R' R' F R F' R U2 R'",
@@ -13254,6 +13311,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "L' U' L U' L' U L U L F' L' F",
@@ -13485,6 +13543,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' F' U2 F U R U R'",
@@ -13716,6 +13775,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R' F' R U R U' R'",
@@ -13947,6 +14007,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U' R' U' R U R' F'",
@@ -14178,6 +14239,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R U' R' U' R' F R F'",
@@ -14409,6 +14471,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "L F' L' U' L U F U' L'",
@@ -14640,6 +14703,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U R' U' F' R' U' R U' R' U2 R",
@@ -14871,6 +14935,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' F R U R' U' F' U R",
@@ -15102,6 +15167,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R U2 R' F R U R' U' F'",
@@ -15333,6 +15399,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' R U' R' U2 R F R U R' U' F'",
@@ -15564,6 +15631,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F' U' L' U L F",
@@ -15795,6 +15863,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' F R' F' R U R",
@@ -16026,6 +16095,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F U R U' R' F'",
@@ -16257,6 +16327,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "f R U R' U' f'",
@@ -16488,6 +16559,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U R' U' F'",
@@ -16719,6 +16791,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' R' F R F' U R",
@@ -16950,6 +17023,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' U' R' F R F' R' F R F' U R",
@@ -17181,6 +17255,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F' L' U' L U L' U' L U F",
@@ -17412,6 +17487,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F R U R' U' R U R' U' F'",
@@ -17643,6 +17719,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U' r2 U r2 U r2 U' r",
@@ -17874,6 +17951,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U r2 U' r2 U' r2 U r'",
@@ -18105,6 +18183,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "f R U R' U' R U R' U' f'",
@@ -18336,6 +18415,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "F U R U' R' U R U' R' F'",
@@ -18567,6 +18647,7 @@ const arrowOllSet = [
       ]
     ],
     order: 12,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R U' y R U' R' F'",
@@ -18798,6 +18879,7 @@ const arrowOllSet = [
       ]
     ],
     order: 6,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U R U' B U' B' R'",
@@ -19029,6 +19111,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U2 R U R' U' R U R' U r",
@@ -19260,6 +19343,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "l' U2 L U L' U' L U L' U l",
@@ -19491,6 +19575,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U2 R' U' R U R' U' R U' r'",
@@ -19722,6 +19807,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U R' U R U' R' U R U2 r'",
@@ -19953,6 +20039,7 @@ const arrowOllSet = [
       ]
     ],
     order: 18,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U2 R2 U' R U' R' U2 F R F'",
@@ -20184,6 +20271,7 @@ const arrowOllSet = [
       ]
     ],
     order: 4,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
@@ -20415,6 +20503,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r' U' r U' R' U R U' R' U R r' U r",
@@ -20646,6 +20735,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "r U r' U R U' R' U R U' R' r U' r'",
@@ -20877,6 +20967,7 @@ const arrowOllSet = [
       ]
     ],
     order: 3,
+    algAttemptCount: null,
     algSpeed: null,
     algTps: null,
     algs: "R U R' U' M' U R U' r'",

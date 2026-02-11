@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; // removed 'use'
+import React, {useEffect, useContext, useState } from "react"; // removed 'use'
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 
@@ -28,6 +28,9 @@ import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
 
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
+
+import { useLiveQuery } from "dexie-react-hooks";
+import {db} from '../../data/db.js';
 
 export default function MyAlgsPage() {
 
@@ -70,6 +73,40 @@ export default function MyAlgsPage() {
 
     const [selectedCaseSet, setSelectedCaseSet] = useState(null)
 
+    const allOlls = useLiveQuery(() => db.olls.toArray(), []);
+    
+    const [groupedOlls, setGroupedOlls] = useState({});
+    const [openGroups, setOpenGroups] = useState({});
+
+    const [selectedAlg, setSelectedAlg] = useState([])
+
+    useEffect(() => {
+        if (!allOlls) return;
+
+        const sorted = [...allOlls].sort(
+            (a, b) => a.ollNumber - b.ollNumber
+        );
+
+        const grouped = sorted.reduce((acc, oll) => {
+            if (!acc[oll.group]) {
+                acc[oll.group] = [];
+            }
+            acc[oll.group].push(oll);
+            return acc;
+        }, {});
+
+        setGroupedOlls(grouped);
+
+    }, [allOlls]);
+
+    const toggleGroup = (group) => {
+        setOpenGroups(prev => ({
+            ...prev,
+            [group]: !prev[group]
+        }));
+    };
+
+
     let AllCases = [cpllCaseSet, eollCaseSet, epllCaseSet, f2lCaseSet, ocllCaseSet, ollCaseSet, pllCaseSet]
 
     let dCrossShown = true
@@ -77,6 +114,12 @@ export default function MyAlgsPage() {
     const { xs } = useWindowDimensions();
     const cubeImageSize = xs ? "100" : "120";
 
+    const [AlgGroups, setAlgGroups] = useState([]);
+
+    const handleBackClicked = ()=>{
+       
+        navigate("/train")
+    }
 
 
     return <>
@@ -98,5 +141,151 @@ export default function MyAlgsPage() {
                 Back
             </button>
         </div>
+        <table className="text-center table table-sm" style={{minWidth:"470px", tableLayout:"fixed", "--bs-table-color-state": darkMode ? "#ffffffff" : "#000000ff", "--bs-table-bg": "transparent" }} role="table">
+            <thead className='trainTableHeader'>
+                <tr style={{ width:"80px", height: "80px" }} role="row" >
+                    <th className='align-middle' role="columnheader">
+                        <div>
+                            Group
+                        </div>
+                    </th>
+                    <th className='align-middle' role="columnheader">
+                        <div>
+                            Case
+                        </div>
+                    </th>
+                    <th style={{minWidth:"100px"}} className='d-none d-md-table-cell align-middle' role="columnheader">
+                        <div>
+                            Name
+                        </div>
+                    </th>
+                    <th className=' d-sm-table-cell align-middle' role="columnheader">
+                        <div>
+                            Time
+                        </div>
+                    </th>
+                    <th className='align-middle' role="columnheader">
+                        <div>
+                            Tps
+                        </div>
+                    </th>
+                    <th className='align-middle' role="columnheader">
+                        <div>
+                            Num Solves
+                        </div>
+                    </th>
+                    <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody style={{ borderTop: "4px solid #343a40" }} >
+
+
+                {Object.keys(groupedOlls).map(group => {
+                    const FirstGroupCase = ollCaseSet.cases.find(alg => (
+                        alg.group == group
+                    ))
+
+
+
+                    return (
+                        <>
+
+                            <tr className={`CasesGroupTableRow ${darkMode ? "darkGroupRow" : "lightGroupRow"} trainTableRow`} role="row" >
+                                <td onClick={(() => toggleGroup(group))} className='align-middle' role="columnheader">
+                                    {group}
+                                    {!openGroups[group] ? <FaChevronRight style={{ marginLeft: '8px' }} /> : <FaChevronDown style={{ marginLeft: '8px' }} />}
+                                </td>
+                                <td>
+                                    {FirstGroupCase && (
+                                        <div>
+                                            <CaseImage
+                                                size={80}
+                                                alg={FirstGroupCase.algs[0]}
+                                                caseSetDetails={ollCaseSet.details}
+                                            ></CaseImage>
+                                        </div>
+                                    )}
+
+                                </td>
+                                <td className='d-none d-md-table-cell align-middle' role="columnheader">
+                                    
+                                </td>
+                                <td className=' d-sm-table-cell align-middle' role="columnheader">
+                                    Hey
+                                </td>
+                                <td className=' d-sm-table-cell align-middle' role="columnheader">
+                                    Hey
+                                </td>
+                                <td className=' d-sm-table-cell align-middle' role="columnheader">
+                                    Item9
+                                </td>
+                                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                                    
+                                </td>
+
+
+                            </tr>
+                            {ollCaseSet.cases.map(alg => {
+                                return (
+
+
+                                    alg.group == group && openGroups[group] &&
+                                    <>
+
+                                        <tr className={`${darkMode ? "darkRow" : "lightRow"} CasesAlgTableRow ${dCrossShown ? "" : "d-none"}`} role="row" >
+                                            <td onClick={() => { handleAlgCardShown(alg) }}>
+
+                                            </td>
+                                            <td onClick={() => { handleAlgCardShown(alg) }} className='align-middle' role="columnheader">
+                                                <div>
+                                                    <CaseImage
+                                                        size={80}
+                                                        alg={alg.algs[0]}
+                                                        caseSetDetails={ollCaseSet.details}
+                                                    ></CaseImage>
+                                                </div>
+                                            </td>
+                                            <td onClick={() => { handleAlgCardShown(alg) }} className='d-none d-md-table-cell align-middle' role="columnheader">
+                                                <div>
+                                                    {alg.name}
+                                                </div>
+                                            </td>
+                                            <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
+                                                <div>
+                                                    Item2
+                                                </div>
+                                            </td>
+                                            <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
+                                                <div>
+                                                    Item3
+                                                </div>
+                                            </td>
+                                            <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
+                                                <div>
+                                                    Item5
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button>
+                                                    Change Alg
+                                                </button>
+                                            </td>
+
+
+                                        </tr>
+                                    </>
+                                )
+                            })}
+
+                        </>
+                    )
+                }
+                )}
+
+
+            </tbody>
+        </table>
     </>
 }

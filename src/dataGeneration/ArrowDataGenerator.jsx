@@ -1058,6 +1058,7 @@ function GroupRecognition(){
             barMovements:barMovements,
             piecesMovement:piecesMovement,
             order:finalOrder,
+            algAttemptCount:null,
             algSpeed:null,
             algTps:null,
             algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
