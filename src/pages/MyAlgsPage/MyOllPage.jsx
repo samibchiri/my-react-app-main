@@ -32,7 +32,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 import { useLiveQuery } from "dexie-react-hooks";
 import {db} from '../../data/db.js';
 
-export default function MyAlgsPage() {
+export default function MyOllPage() {
 
     const { darkMode } = useContext(ThemeContext)
     const [caseClicked, setCaseClicked] = useState(false)
@@ -127,14 +127,8 @@ export default function MyAlgsPage() {
     const [AlgGroups, setAlgGroups] = useState([]);
 
     const handleBackClicked = ()=>{
-       
-        if(!selectedCaseSet){
-            navigate("/train")
-        }
-        else{
-            setSelectedCaseSet(null)
-        }
-        
+
+        navigate("/myAlgs")
     }
 
     const handleAlgCardShown = (alg) => {
@@ -162,9 +156,8 @@ export default function MyAlgsPage() {
         ]
 
     
-
-    return <>
-
+return(
+    <>
         <div style={{ height: "50px", alignItems: "center" }} className='col p-0 justify-content-start d-flex'>
             <button
                 onClick={() => { handleBackClicked()}}
@@ -183,61 +176,6 @@ export default function MyAlgsPage() {
             </button>
         </div>
 
-        {!selectedCaseSet && (
-                    <>
-                        <div className='container'>
-                            <h2 className=''>Which alg set do you want to see?</h2>
-        
-                            <div className='row'>
-                                {AlgSets.map((caseItem, i) => (
-                                    <div key={i} style={{ maxWidth: "1200px", minHeight: "100px" }} className='col-12 col-md-6 mb-3 d-flex justify-content-center'>
-                                        <button onClick={() => { handleAlgCaseSetClicked(caseItem) }} className={`m-2 border btn-block btn ${darkMode ? "btn-dark" : "btn-primary"}`} style={buttonStyle}>
-                                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }} >
-                                                {
-                                                caseItem.title=="Oll"?
-                                                <div>
-                                                    <CaseImage
-                                                        size={80}
-                                                        alg={caseItem.algs}
-                                                        caseSetDetails={pllCaseSet.details}
-                                                    ></CaseImage>
-                                                </div>:
-                                                <button id="myAlgsTrash" className='TestButton'>
-                                                    <FaIcon icon="trash" style={{color:"white",fontSize:"20px"}} />
-                                                </button>
-
-                                                }
-                                                <div className='col'>
-                                                    <h2>{caseItem.title}</h2>
-                                                </div>
-                                                {
-                                                caseItem.algs?
-                                                <div>
-                                                    <CaseImage
-                                                        size={80}
-                                                        alg={ollCaseSet.algs}
-                                                        caseSetDetails={pllCaseSet.details}
-                                                    ></CaseImage>
-                                                </div>:
-                                                <button id="myAlgsTrash" className='TestButton'>
-                                                    <FaIcon icon="trash" style={{color:"white",fontSize:"20px"}} />
-                                                </button>
-
-                                                }
-                                               
-        
-                                            </div>
-                                        </button>
-                                    </div>
-                                ))}
-        
-                            </div>
-                        </div>
-        
-                    </>)}
-         {selectedCaseSet=="Osll" && (
-         <>
-        
         <table className="text-center table table-sm" style={{minWidth:"470px", tableLayout:"fixed", "--bs-table-color-state": darkMode ? "#ffffffff" : "#000000ff", "--bs-table-bg": "transparent" }} role="table">
             <thead className='trainTableHeader'>
                 <tr style={{ width:"80px", height: "80px" }} role="row" >
@@ -273,9 +211,10 @@ export default function MyAlgsPage() {
                     </th>
                     <th className='align-middle' role="columnheader">
                         <div>
-                            Expected value
+                            Alt Cp change
                         </div>
                     </th>
+
                     <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                         
                     </th>
@@ -379,7 +318,7 @@ export default function MyAlgsPage() {
                                             </td>
                                             <td style={{verticalAlign: "middle"}}>
                                                 <button className="ResetToDefaultButton" onClick={() => { resetToDefault(alg) }}>
-                                                    Reset to default
+                                                    Reset
                                                 </button>
                                             </td>
 
@@ -400,6 +339,5 @@ export default function MyAlgsPage() {
 
         {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} onClose={() => setShowPopUpCard([])} AlgCasesSet={ollCaseSet} />}
         
-        </>)}
-    </>
-}
+        </>)
+    }

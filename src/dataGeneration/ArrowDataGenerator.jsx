@@ -1047,6 +1047,7 @@ function GroupRecognition(){
     console.log("GoOrder")
     let finalOrder= getOrder(piecesMovement,squaresColors)
     
+    console.log("GetScramble",ollCaseSet.cases[algRef.current])
     try{
         groupdict ={
             id:ollCaseSet.cases[algRef.current].name+"-"+algIndexRef.current,
@@ -1061,7 +1062,8 @@ function GroupRecognition(){
             algAttemptCount:null,
             algSpeed:null,
             algTps:null,
-            algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
+            algs:[ollCaseSet.cases[algRef.current].algs[algIndexRef.current]],
+            scrambles:ollCaseSet.cases[algRef.current].scrambles,
             group:ollCaseSet.cases[algRef.current].group,
             difficultCenters:[],
             difficultColors:[],

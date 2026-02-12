@@ -768,3 +768,29 @@ g polygon{
   width:50px;
   height:30px;
 }
+
+
+.ResetToDefaultButton{
+  background-color: rgb(40, 40, 40);
+  
+  text-align: center;
+  border-radius: 5px;
+  color:white;
+  font-size: 1rem;
+  font-weight: 600;
+  border:2px solid rgb(255, 255, 255);
+  width:60px;
+  height:35px;
+}
+
+.ResetToDefaultButton:hover{
+  background-color: rgb(31, 31, 31);
+  border:2px solid rgba(255, 255, 255, 0.868);
+  transform: scale(1.05);
+  transition: transform 0.5s, background-color 0.3s, border 0.3s;
+}
+
+#myAlgsTrash{
+  border:1.5px solid white;
+  border-radius: 5px;
+}

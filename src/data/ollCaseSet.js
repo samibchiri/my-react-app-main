@@ -298,7 +298,7 @@ const ollCaseSet = {
         "L F' R2 B' F' D' F D B R2 F L'",
         "B L2 B' L2 F U2 F' U' B' R' U R B",
       ],
-      algs: ["R' F R U R' F' R F U' F'"],
+      algs: ["R' F R U R' F' R F U' F'","F' U' L' U2 L U L' U' L F"],
     },
     {
       id: "dfe6bca9-6924-4f21-871a-1f2c7f287fc3",

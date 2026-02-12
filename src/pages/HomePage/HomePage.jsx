@@ -75,7 +75,7 @@ export default function HomePage() {
     { label: "Bar Trainer", route: "/train/bar" },
     
     { label: "Labs", route: "/labs" },
-    { label: "My Algs", route: "/labs" },
+    { label: "My Algs", route: "/myAlgs" },
     ];
     
     return <>

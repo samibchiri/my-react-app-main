@@ -10,6 +10,7 @@ import CpTrainer from './pages/CpTrainerPage/CpTrainerPage.jsx'
 import BarTrainer from "./pages/BarTrainerPage/BarTrainer.jsx";
 import LabsPage from "./pages/LabsPage/LabsPage.jsx";
 import MyAlgsPage from "./pages/MyAlgsPage/MyAlgsPage.jsx";
+import MyOllPage from "./pages/MyAlgsPage/MyOllPage.jsx"
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
 import BarOverlay from "./pages/BarPersevationPage/SingleBarOverlay.jsx";
 import { ArrowDataGenerator } from "./dataGeneration/ArrowDataGenerator.jsx";
@@ -40,7 +41,12 @@ export const router = createBrowserRouter([
         ],
       },
 
-      { path: "labs", element: <MyAlgsPage/>},
+      { path: "labs", element: <LabsPage/>},
+      { path: "myAlgs",
+          children:[
+            {index: true, element: <MyAlgsPage/>},
+            { path: "oll", element: <MyOllPage/>}
+          ] },
       { path: "*", element: <NotFoundPage /> },
       // <BarOverlay
                                   

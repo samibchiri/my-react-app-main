@@ -6,8 +6,7 @@ import "../../styling/index.css";
 import '../../styling/PopUp.css';
 
 function ShowAlgCard({alg,onClose,AlgCasesSet}){
-    console.log("Showing Card")
-    console.log(alg)
+    console.log("Showing Card",alg)
 
     useEffect(()=>{
         if(editClick2 && InputAlg2.current){

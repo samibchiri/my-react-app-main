@@ -90,7 +90,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R' U' R U R' U' R U' R'",
+    algs: [
+      "R U2' R' U' R U R' U' R U' R'"
+    ],
+    scrambles: [
+      "U2 R B2 D2 L2 D' L2 D' B2 R2 U R",
+      "F2 L B2 L' F2 U2 F2 R D2 R' F2 U",
+      "U2 B L2 D2 F2 D' F2 D' L2 B2 U B",
+      "U2 B L2 F2 D2 F D2 B' L2 F2 U2 F'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -322,7 +330,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' R U R' U' R U R' U' F'",
+    algs: [
+      "F R U R' U' R U R' U' R U R' U' F'"
+    ],
+    scrambles: [
+      "U2 R B2 D2 L2 D' L2 D' B2 R2 U R",
+      "F2 L B2 L' F2 U2 F2 R D2 R' F2 U",
+      "U2 B L2 D2 F2 D' F2 D' L2 B2 U B",
+      "U2 B L2 F2 D2 F D2 B' L2 F2 U2 F'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -554,7 +570,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R2' U' R2 U' R2' U2' R",
+    algs: [
+      "R U2' R2' U' R2 U' R2' U2' R"
+    ],
+    scrambles: [
+      "R' F2 R U2 R U2 R' F2 U' R U' R'",
+      "F R2 F' U2 F' U2 F R2 U F' U F",
+      "U2 L U2 L' R U' B2 U' B2 U B2 R'",
+      "F' U' F U' R2 F' U2 F U2 F R2 F'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -786,7 +810,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R2 D R' U2 R D' R' U2 R'",
+    algs: [
+      "R2 D R' U2 R D' R' U2 R'"
+    ],
+    scrambles: [
+      "L' U2 L2 F2 D2 R2 D' R2 D' F2 L' U",
+      "U2 B' U2 B2 L2 D2 F2 D' F2 D' L2 B'",
+      "L U2 L2 B2 D2 R2 D R2 D B2 L U",
+      "U2 F U2 F2 L2 D2 B2 D B2 D L2 F"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -1018,7 +1050,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R2 D' R U2 R' D R U2 R",
+    algs: [
+      "R2 D' R U2 R' D R U2 R"
+    ],
+    scrambles: [
+      "L' U2 L2 F2 D2 R2 D' R2 D' F2 L' U",
+      "U2 B' U2 B2 L2 D2 F2 D' F2 D' L2 B'",
+      "L U2 L2 B2 D2 R2 D R2 D B2 L U",
+      "U2 F U2 F2 L2 D2 B2 D B2 D L2 F"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -1250,7 +1290,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' r' F R F'",
+    algs: [
+      "r U R' U' r' F R F'"
+    ],
+    scrambles: [
+      "R2 D2 L' F2 R U2 R' F2 D2 R' B2 R'",
+      "R' U' R U R B2 R' B2 L U2 L' U2",
+      "U' L U L' U' R' U2 R B2 L' B2 L",
+      "U' L' U' L U R U2 R' F2 L F2 L'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -1482,7 +1530,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R D R' U' R D' R2",
+    algs: [
+      "R U R D R' U' R D' R2"
+    ],
+    scrambles: [
+      "R2 D2 L' F2 R U2 R' F2 D2 R' B2 R'",
+      "R' U' R U R B2 R' B2 L U2 L' U2",
+      "U' L U L' U' R' U2 R B2 L' B2 L",
+      "U' L' U' L U R U2 R' F2 L F2 L'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -1714,7 +1770,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "x R' U R D' R' U' R D x'",
+    algs: [
+      "x R' U R D' R' U' R D x'"
+    ],
+    scrambles: [
+      "L U2 L' B2 R B2 R' U' R' U R U'",
+      "U2 B' R2 B R2 F' U2 F U B U' B'",
+      "B U2 B' R2 F R2 F' U' F' U F U",
+      "U2 B U2 B' R2 F R2 F' U' F' U F"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -1946,7 +2010,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R B' R' F' R B",
+    algs: [
+      "R' F R B' R' F' R B"
+    ],
+    scrambles: [
+      "L U2 L' B2 R B2 R' U' R' U R U'",
+      "U2 B' R2 B R2 F' U2 F U B U' B'",
+      "B U2 B' R2 F R2 F' U' F' U F U",
+      "U2 B U2 B' R2 F R2 F' U' F' U F"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -2178,7 +2250,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R U' R' U2 R",
+    algs: [
+      "R' U' R U' R' U2 R"
+    ],
+    scrambles: [
+      "U2 L2 B2 R D2 R D R' D R' B2 L2",
+      "U2 B' U2 B2 U2 B2 U' B2 U' B2 U B",
+      "F U F2 U' F2 U' F2 U2 F2 U2 F' U2",
+      "U R2 F2 D L' B2 L D' F2 R' U2 R'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -2410,7 +2490,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R' U' R U' R'",
+    algs: [
+      "R U2' R' U' R U' R'"
+    ],
+    scrambles: [
+      "U2 L2 B2 R D2 R D R' D R' B2 L2",
+      "U2 B' U2 B2 U2 B2 U' B2 U' B2 U B",
+      "F U F2 U' F2 U' F2 U2 F2 U2 F' U2",
+      "U R2 F2 D L' B2 L D' F2 R' U2 R'"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -2642,7 +2730,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U2' R'",
+    algs: [
+      "R U R' U R U2' R'"
+    ],
+    scrambles: [
+      "U2 L U2 L B2 D R' F2 R D' B2 L2",
+      "B' U' B2 U B2 U B2 U2 B2 U2 B U2",
+      "B2 R2 B' U2 B' U' B U' B R2 B2 U",
+      "U2 L2 B2 L' U2 L' U' L U' L B2 L2"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -2874,7 +2970,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U2 R U R' U R",
+    algs: [
+      "R' U2 R U R' U R"
+    ],
+    scrambles: [
+      "U2 L U2 L B2 D R' F2 R D' B2 L2",
+      "B' U' B2 U B2 U B2 U2 B2 U2 B U2",
+      "B2 R2 B' U2 B' U' B U' B R2 B2 U",
+      "U2 L2 B2 L' U2 L' U' L U' L B2 L2"
+    ],
     group: "Cross",
     difficultCenters: [],
     difficultColors: [],
@@ -3106,7 +3210,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R2' F R F' U2 R' F R F'",
+    algs: [
+      "R U2 R2' F R F' U2 R' F R F'"
+    ],
+    scrambles: [
+      "L' B' U R' U R B L U2 F' L2 F L2 B' U2 B",
+      "B2 R2 F' D2 F L2 R2 F U' F' U L B' U2 L2 B'",
+      "F2 R2 F U2 L2 B' D2 B2 L B' U L F R U R'",
+      "R U2 R F2 U2 F2 R F2 R F' R2 F2 R U2 F2 R2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -3338,7 +3450,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F' f R U R' U' f'",
+    algs: [
+      "F R U R' U' F' f R U R' U' f'"
+    ],
+    scrambles: [
+      "L' U2 F2 D2 R2 B' R2 D2 F L F U L' U L U",
+      "L U2 F' L2 F2 U2 F' L2 F' L F' U R U' R' F2",
+      "F R' F' R' U2 F R' F' R2 F2 U' F2 D R2 D' R2",
+      "B2 D B2 U' B2 D2 R2 D R B R' U2 R' B' R' B2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -3570,7 +3690,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' U2 r U2 R' U2 R U' r'",
+    algs: [
+      "r U r' U2 r U2 R' U2 R U' r'"
+    ],
+    scrambles: [
+      "L' U2 F2 D2 R2 B' R2 D2 F L F U L' U L U",
+      "L U2 F' L2 F2 U2 F' L2 F' L F' U R U' R' F2",
+      "F R' F' R' U2 F R' F' R2 F2 U' F2 D R2 D' R2",
+      "B2 D B2 U' B2 D2 R2 D R B R' U2 R' B' R' B2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -3802,7 +3930,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f' U' F R U R' U' F'",
+    algs: [
+      "f R U R' U' f' U' F R U R' U' F'"
+    ],
+    scrambles: [
+      "F2 L2 R2 B' R2 B' D2 B R' D' F D' B F' L2 F2",
+      "D2 F2 R2 F' U2 B' R2 F R' D' F D' F2 L2 B F'",
+      "R2 B2 L' D2 L2 R F2 L F' D' L D' R2 B2 L R'",
+      "R B' R2 B R2 F' U2 F U2 R' B U L U' L' B'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -4034,7 +4170,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R2 U R' U r U2 r' U M'",
+    algs: [
+      "r' R2 U R' U r U2 r' U M'"
+    ],
+    scrambles: [
+      "F2 L2 R2 B' R2 B' D2 B R' D' F D' B F' L2 F2",
+      "D2 F2 R2 F' U2 B' R2 F R' D' F D' F2 L2 B F'",
+      "R2 B2 L' D2 L2 R F2 L F' D' L D' R2 B2 L R'",
+      "R B' R2 B R2 F' U2 F U2 R' B U L U' L' B'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -4266,7 +4410,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f' U F R U R' U' F'",
+    algs: [
+      "f R U R' U' f' U F R U R' U' F'"
+    ],
+    scrambles: [
+      "B L2 D' B U2 B2 D L' B2 U2 B' L2 B2 U2 B U2",
+      "B L2 D' B D2 F2 D R F' R2 F' D2 B' L2 B' U2",
+      "F2 U2 R U2 L' B2 U2 R F2 R' B' L D2 R2 F R",
+      "L' B' U' B U L F R' F2 R F2 L' U2 L U2 F'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -4498,7 +4650,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "M U' r U2 r' U' R U' R' M'",
+    algs: [
+      "M U' r U2 r' U' R U' R' M'"
+    ],
+    scrambles: [
+      "B L2 D' B U2 B2 D L' B2 U2 B' L2 B2 U2 B U2",
+      "B L2 D' B D2 F2 D R F' R2 F' D2 B' L2 B' U2",
+      "F2 U2 R U2 L' B2 U2 R F2 R' B' L D2 R2 F R",
+      "L' B' U' B U L F R' F2 R F2 L' U2 L U2 F'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -4730,7 +4890,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U2 R U R' U r",
+    algs: [
+      "r' U2 R U R' U r"
+    ],
+    scrambles: [
+      "F' U2 F R2 B L' B L B2 R2",
+      "R2 F2 L F L' F R2 B U2 B'",
+      "F' L' U' L U L' B L' B' L2 F",
+      "U2 F' U2 F R2 B L' B L B2 R2"
+    ],
     group: "Square Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -4962,7 +5130,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U2 L U L' U l",
+    algs: [
+      "l' U2 L U L' U l"
+    ],
+    scrambles: [
+      "F' U2 F R2 B L' B L B2 R2",
+      "R2 F2 L F L' F R2 B U2 B'",
+      "F' L' U' L U L' B L' B' L2 F",
+      "U2 F' U2 F R2 B L' B L B2 R2"
+    ],
     group: "Square Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -5194,7 +5370,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U2 R' U' R U' r'",
+    algs: [
+      "r U2 R' U' R U' r'"
+    ],
+    scrambles: [
+      "F U2 F' L2 B' R B' R' B2 L2",
+      "R2 B2 L' B' L B' R2 F' U2 F",
+      "F2 L2 B L2 F L F' L B' L2 F2",
+      "B2 R2 F R2 B R B' R F' R2 B2"
+    ],
     group: "Square Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -5426,7 +5610,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U2 r'",
+    algs: [
+      "r U R' U R U2 r'"
+    ],
+    scrambles: [
+      "L F U' R U' R2 F' L F2 R F2 L2",
+      "B2 R F R' F' B R' F R2 F' R2 B",
+      "R2 F L F' R L' F' R U2 L' U2 L",
+      "U2 L U2 L' U2 B' U2 B U L U L'"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -5658,7 +5850,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' R U' R' U2 r",
+    algs: [
+      "r' U' R U' R' U2 r"
+    ],
+    scrambles: [
+      "R' F2 R U2 L' U L2 F L' F U F2",
+      "B' R2 B U2 F' U F2 R F' R U R2",
+      "U2 F' U2 F U2 R U2 R' U' F' U' F",
+      "L2 F' R' F R L' F R' F2 R F2 L'"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -5890,7 +6090,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U' L U' L' U2 l",
+    algs: [
+      "l' U' L U' L' U2 l"
+    ],
+    scrambles: [
+      "R' F2 R U2 L' U L2 F L' F U F2",
+      "B' R2 B U2 F' U F2 R F' R U R2",
+      "U2 F' U2 F U2 R U2 R' U' F' U' F",
+      "L2 F' R' F R L' F R' F2 R F2 L'"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -6122,7 +6330,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R' F R2 U R' U' F'",
+    algs: [
+      "R U R' U' R' F R2 U R' U' F'"
+    ],
+    scrambles: [
+      "U B2 R2 B' L F' L F L2 B R2 B2",
+      "U F2 L2 F' R B' R B R2 F L2 F2",
+      "B L2 F2 D2 F D2 L B' L2 F L' U",
+      "U' L2 B2 L' F R' F R F2 L B2 L2"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -6354,7 +6570,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R' F R F' R U2 R'",
+    algs: [
+      "R U R' U R' F R F' R U2 R'"
+    ],
+    scrambles: [
+      "U2 L F2 R2 D2 R D2 F' R F2 L' F",
+      "R' U2 R2 U R2 F' U F R2 U' R' U2",
+      "U2 B L2 F2 D2 F D2 L' F L2 B' L",
+      "B L2 D' B2 U' R' U' R B2 D L' B'"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -6586,7 +6810,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U' R' U' r' R U R U' R'",
+    algs: [
+      "r U R' U R U' R' U' r' R U R U' R'"
+    ],
+    scrambles: [
+      "U2 L F2 R2 D2 R D2 F' R F2 L' F",
+      "R' U2 R2 U R2 F' U F R2 U' R' U2",
+      "U2 B L2 F2 D2 F D2 L' F L2 B' L",
+      "B L2 D' B2 U' R' U' R B2 D L' B'"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -6818,7 +7050,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R' F R F' R U2 r'",
+    algs: [
+      "r U R' U R' F R F' R U2 r'"
+    ],
+    scrambles: [
+      "U L F' L2 B L' D2 F' D2 F2 L2 B'",
+      "U' B2 R2 F R' B R' B' R2 F' R2 B2",
+      "L2 B2 L' U2 L' U2 L2 B2 L B L B'",
+      "F R' F2 L F' D2 R' D2 R2 F2 L' U2"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -7050,7 +7290,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R2 U R' U R U2 R' U M'",
+    algs: [
+      "r' R2 U R' U R U2 R' U M'"
+    ],
+    scrambles: [
+      "U L F' L2 B L' D2 F' D2 F2 L2 B'",
+      "U' B2 R2 F R' B R' B' R2 F' R2 B2",
+      "L2 B2 L' U2 L' U2 L2 B2 L B L B'",
+      "F R' F2 L F' D2 R' D2 R2 F2 L' U2"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -7282,7 +7530,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "M' R' U' R U' R' U2 R U' R r'",
+    algs: [
+      "M' R' U' R U' R' U2 R U' R r'"
+    ],
+    scrambles: [
+      "U B L' B L' F2 R' D2 R F2 L2 B2",
+      "B2 L2 B R2 F R F' R B' L2 B2 U",
+      "U F R' F R' B2 L' D2 L B2 R2 F2",
+      "U B' R B2 L' B D2 R D2 R2 B2 L"
+    ],
     group: "Small Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -7514,7 +7770,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R2 F' R U R U' R'",
+    algs: [
+      "F U R U' R2 F' R U R U' R'"
+    ],
+    scrambles: [
+      "B D' R2 D U L U' L' D' R2 D B'",
+      "F R2 U R' U R F R' F' U2 R2 F'",
+      "L2 B2 R B2 L B' R2 U' R U' B L",
+      "F2 L2 B L2 F L' B2 U' B U' L F"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -7746,7 +8010,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U' r' U' r U r' y' R' U R",
+    algs: [
+      "r U' r' U' r U r' y' R' U R"
+    ],
+    scrambles: [
+      "B D' R2 D U L U' L' D' R2 D B'",
+      "F R2 U R' U R F R' F' U2 R2 F'",
+      "L2 B2 R B2 L B' R2 U' R U' B L",
+      "F2 L2 B L2 F L' B2 U' B U' L F"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -7978,7 +8250,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R' F' R F U' F'",
+    algs: [
+      "R' F R U R' F' R F U' F'"
+    ],
+    scrambles: [
+      "R' F2 U' F U' F' R' F R U2 F2 R",
+      "U2 B U2 B2 U' R D' R D R2 U B",
+      "L F' R2 B' F' D' F D B R2 F L'",
+      "B L2 B' L2 F U2 F' U' B' R' U R B"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -8210,7 +8490,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' r R' U' R U r' U r",
+    algs: [
+      "r' U' r R' U' R U r' U r"
+    ],
+    scrambles: [
+      "U2 F' U' F2 R U R' F2 U F2 U2 F'",
+      "U2 R' U' R2 B U B' R2 U R2 U2 R'",
+      "R' U2 R B2 L' B' L2 U L' U' B' U'",
+      "B' U2 R2 F' U' F U R U' R U2 B"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -8442,7 +8730,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U' l L' U' L U l' U l",
+    algs: [
+      "l' U' l L' U' L U l' U l"
+    ],
+    scrambles: [
+      "U2 F' U' F2 R U R' F2 U F2 U2 F'",
+      "U2 R' U' R2 B U B' R2 U R2 U2 R'",
+      "R' U2 R B2 L' B' L2 U L' U' B' U'",
+      "B' U2 R2 F' U' F U R U' R U2 B"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -8674,7 +8970,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' R U R' U' r U' r'",
+    algs: [
+      "r U r' R U R' U' r U' r'"
+    ],
+    scrambles: [
+      "U F U F2 L' U' L F2 U' F2 U2 F",
+      "R U2 R' F2 L F L2 U' L U F U",
+      "U2 F U F2 L' U' L F2 U' F2 U2 F",
+      "R D2 U' L2 U B L2 D2 R2 F U' R"
+    ],
     group: "Knight Move Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -8906,7 +9210,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R' F R F' U2 R' F R F'",
+    algs: [
+      "R U R' U R' F R F' U2 R' F R F'"
+    ],
+    scrambles: [
+      "B2 R2 F2 L D2 L' F2 R2 B R' F' U' F U' R B",
+      "L U F U2 R U' R2 F' R F2 L' U2 L U2 F2 L'",
+      "R2 B2 R2 U2 B' U2 B' F2 D2 F L' F2 D2 B' R' F'",
+      "U2 L' B' R' U' R U' R2 U2 B' R2 B U2 R2 B L"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -9138,7 +9450,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F' R2 r' U R U' R' U' M'",
+    algs: [
+      "F R' F' R2 r' U R U' R' U' M'"
+    ],
+    scrambles: [
+      "B2 R2 F2 L D2 L' F2 R2 B R' F' U' F U' R B",
+      "L U F U2 R U' R2 F' R F2 L' U2 L U2 F2 L'",
+      "R2 B2 R2 U2 B' U2 B' F2 D2 F L' F2 D2 B' R' F'",
+      "U2 L' B' R' U' R U' R2 U2 B' R2 B U2 R2 B L"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -9370,7 +9690,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R' R' F R F' U2 M' U R U' r'",
+    algs: [
+      "R U2 R' R' F R F' U2 M' U R U' r'"
+    ],
+    scrambles: [
+      "F R2 B2 U' F2 D L2 B2 D2 B L B' D F2 U F'",
+      "F L2 F' R2 F L2 F' R' U2 B U' L U' L' B' R'",
+      "F R2 B' D2 B R2 B2 R2 D2 F' R' B R2 U2 R B",
+      "L' B' R' U' R U' B U2 D' R2 D L2 D' R2 D L'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -9602,7 +9930,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
+    algs: [
+      "r U R' U R U2 r' r' U' R U' R' U2 r"
+    ],
+    scrambles: [
+      "F R2 B2 U' F2 D L2 B2 D2 B L B' D F2 U F'",
+      "F L2 F' R2 F L2 F' R' U2 B U' L U' L' B' R'",
+      "F R2 B' D2 B R2 B2 R2 D2 F' R' B R2 U2 R B",
+      "L' B' R' U' R U' B U2 D' R2 D L2 D' R2 D L'"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -9834,7 +10170,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' M' R' F R F'",
+    algs: [
+      "r' R U R U R' U' M' R' F R F'"
+    ],
+    scrambles: [
+      "F' L2 B L2 B2 D2 B U2 L B' D2 F R B' R B2",
+      "B L F2 U2 L F2 L' U2 F2 U' F U' F' L' B' U2",
+      "L' B' R2 U2 B' R2 B U2 R2 U R' U R B L U'",
+      "B2 R2 F D2 B' U2 B D2 B R' F2 U2 B F' R2 F2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -10066,7 +10410,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' M2 U R U' R' U' M'",
+    algs: [
+      "r U R' U' M2 U R U' R' U' M'"
+    ],
+    scrambles: [
+      "F2 D' R2 B2 U' L2 B2 F2 U B' F' R B F' U2 R2",
+      "L2 F2 R2 D L2 B2 R2 F2 U' L' R B U2 B2 L R'",
+      "D B2 D L2 U B2 U B2 U L R B D2 F2 L R'",
+      "B2 D R2 F2 U L2 B2 F2 U' B F R' B F' U2 R2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -10298,7 +10650,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' M2 U R U' r'",
+    algs: [
+      "r' R U R U R' U' M2 U R U' r'"
+    ],
+    scrambles: [
+      "F2 D' R2 B2 U' L2 B2 F2 U B' F' R B F' U2 R2",
+      "L2 F2 R2 D L2 B2 R2 F2 U' L' R B U2 B2 L R'",
+      "D B2 D L2 U B2 U B2 U L R B D2 F2 L R'",
+      "B2 D R2 F2 U L2 B2 F2 U' B F R' B F' U2 R2"
+    ],
     group: "Dot",
     difficultCenters: [],
     difficultColors: [],
@@ -10530,7 +10890,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' r' R U R U' R'",
+    algs: [
+      "r U R' U' r' R U R U' R'"
+    ],
+    scrambles: [
+      "U2 B2 D' R2 D B F' R' U2 R B F",
+      "F2 D' L2 D F2 L R B U2 B' L' R'",
+      "U F2 D R2 D' B F' R U2 R' B' F'",
+      "U L2 D F2 D' L' R F U2 F' L' R'"
+    ],
     group: "Corners Oriented",
     difficultCenters: [],
     difficultColors: [],
@@ -10762,7 +11130,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' R' F R F' r R'",
+    algs: [
+      "r' R U R U R' U' R' F R F' r R'"
+    ],
+    scrambles: [
+      "U' R2 B2 R F' U' F U R' B2 R2",
+      "B L F' L' B' L2 F L2 B' U2 B",
+      "U B2 L2 B R' U' R U B' L2 B2",
+      "F R B' R' F' R2 B R2 F' U2 F"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -10994,7 +11370,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R U' R' F' U' F R U R'",
+    algs: [
+      "R U R' U' R U' R' F' U' F R U R'"
+    ],
+    scrambles: [
+      "U' R2 B2 R F' U' F U R' B2 R2",
+      "B L F' L' B' L2 F L2 B' U2 B",
+      "U B2 L2 B R' U' R U B' L2 B2",
+      "F R B' R' F' R2 B R2 F' U2 F"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -11226,7 +11610,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U2 R' U' R U2 R' U' F'",
+    algs: [
+      "F U R U2 R' U' R U2 R' U' F'"
+    ],
+    scrambles: [
+      "U R2 F2 R' B U B' U' R F2 R2",
+      "F' L' B L F L2 B' L2 F U2 F'",
+      "U' L2 B2 L' F U F' U' L B2 L2",
+      "U2 R2 F2 R' B U B' U' R F2 R2"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -11458,7 +11850,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F R2 U' R' U' R U R' F2",
+    algs: [
+      "F R' F R2 U' R' U' R U R' F2"
+    ],
+    scrambles: [
+      "U R2 F2 R' B U B' U' R F2 R2",
+      "F' L' B L F L2 B' L2 F U2 F'",
+      "U' L2 B2 L' F U F' U' L B2 L2",
+      "U2 R2 F2 R' B U B' U' R F2 R2"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -11690,7 +12090,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' F U R U' R' F' R",
+    algs: [
+      "R' U' F U R U' R' F' R"
+    ],
+    scrambles: [
+      "U' L2 B2 R B' D' B D R' B2 L2",
+      "U' R2 F2 L F' D' F D L' F2 R2",
+      "F' U2 F U2 L F R' F' L' R U",
+      "U2 L' U2 L U2 B L F' L' B' F"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -11922,7 +12330,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "S R U R' U' R' F R f'",
+    algs: [
+      "S R U R' U' R' F R f'"
+    ],
+    scrambles: [
+      "U2 L2 F2 R' F D F' D' R F2 L2",
+      "U2 L U2 L' U2 F' L' B L B' F",
+      "U' F2 R2 B' R D R' D' B R2 F2",
+      "L2 R2 B D2 B' L' R F2 L' F' R"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -12154,7 +12570,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L U F' U' L' U L F L'",
+    algs: [
+      "L U F' U' L' U L F L'"
+    ],
+    scrambles: [
+      "U2 L2 F2 R' F D F' D' R F2 L2",
+      "U2 L U2 L' U2 F' L' B L B' F",
+      "U' F2 R2 B' R D R' D' B R2 F2",
+      "L2 R2 B D2 B' L' R F2 L' F' R"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -12386,7 +12810,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R' F R F'",
+    algs: [
+      "R U R' U' R' F R F'"
+    ],
+    scrambles: [
+      "R' B' R2 B R' U' R2 U R2 U'",
+      "B R B2 R' B U B2 U' B2 U'",
+      "R' B' R2 B R' U' R2 U R2 U",
+      "F L F2 L' F U F2 U' F2 U"
+    ],
     group: "T Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -12618,7 +13050,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R2 U' R' F R U R U' F'",
+    algs: [
+      "R U R2 U' R' F R U R U' F'"
+    ],
+    scrambles: [
+      "U F2 L2 F' U R U' R' F L2 F2",
+      "U' F2 R2 B' D R D' R' B R2 F2",
+      "U' F2 R2 F U' L' U L F' R2 F2",
+      "U L2 F2 R' D F D' F' R F2 L2"
+    ],
     group: "C Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -12850,7 +13290,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' B' R' F R F' B",
+    algs: [
+      "R U R' U' B' R' F R F' B"
+    ],
+    scrambles: [
+      "U F2 L2 F' U R U' R' F L2 F2",
+      "U' F2 R2 B' D R D' R' B R2 F2",
+      "U' F2 R2 F U' L' U L F' R2 F2",
+      "U L2 F2 R' D F D' F' R F2 L2"
+    ],
     group: "C Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -13082,7 +13530,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R' R' F R F' R U2 R'",
+    algs: [
+      "R U2 R' R' F R F' R U2 R'"
+    ],
+    scrambles: [
+      "U R' F L F2 R' L B D2 B' R2 L2",
+      "L2 U' L2 U' L U F U' F' L U L2",
+      "U F R' B' R2 F B' L' D2 L F2 B2",
+      "B' R F R2 F B' L D2 L' F2 B2 U2"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -13314,7 +13770,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L' U' L U' L' U L U L F' L' F",
+    algs: [
+      "L' U' L U' L' U L U L F' L' F"
+    ],
+    scrambles: [
+      "B' U2 B L2 F' L2 B L F L' B'",
+      "R' F R2 B' R F' R2 B2 U2 B' U2",
+      "L' U2 L F2 R' F2 L F R F' L'",
+      "U' R' F R2 B' R F' R2 B2 U2 B'"
+    ],
     group: "W Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -13546,7 +14010,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' F' U2 F U R U R'",
+    algs: [
+      "R U R' U' F' U2 F U R U R'"
+    ],
+    scrambles: [
+      "B' U2 B L2 F' L2 B L F L' B'",
+      "R' F R2 B' R F' R2 B2 U2 B' U2",
+      "L' U2 L F2 R' F2 L F R F' L'",
+      "U' R' F R2 B' R F' R2 B2 U2 B'"
+    ],
     group: "W Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -13778,7 +14250,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F' R U R U' R'",
+    algs: [
+      "F R' F' R U R U' R'"
+    ],
+    scrambles: [
+      "R2 U' F2 D' F2 U F D R F' U' R",
+      "D F2 R2 U R2 D' F2 L' B L2 B' L'",
+      "D' B2 R2 U' R2 D B2 L F' L2 F L",
+      "B2 U' R2 D' R2 U R D B R' U' B"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -14010,7 +14490,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U' R' U' R U R' F'",
+    algs: [
+      "F R U' R' U' R U R' F'"
+    ],
+    scrambles: [
+      "R2 U' F2 D' F2 U F D R F' U' R",
+      "D F2 R2 U R2 D' F2 L' B L2 B' L'",
+      "D' B2 R2 U' R2 D B2 L F' L2 F L",
+      "B2 U' R2 D' R2 U R D B R' U' B"
+    ],
     group: "Fish Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -14242,7 +14730,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' R' U' R' F R F'",
+    algs: [
+      "R U R' U R U' R' U' R' F R F'"
+    ],
+    scrambles: [
+      "L U2 L' B2 R B2 L' B' R' B L",
+      "U' B L' B2 R B' R' B2 L2 U2 L'",
+      "U2 F' U2 F2 U R U' R' F2 U F",
+      "U L F' L2 B L' F L2 B2 U2 B"
+    ],
     group: "W Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -14474,7 +14970,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L F' L' U' L U F U' L'",
+    algs: [
+      "L F' L' U' L U F U' L'"
+    ],
+    scrambles: [
+      "U2 B F' U' L' U L U B' U' F",
+      "R' U2 B L2 D F2 D' L2 B' U' R",
+      "U2 B' F U' R' U R U F' U' B",
+      "B' R2 D2 L' F L D R' D B R'"
+    ],
     group: "Big Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -14706,7 +15210,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F' R' U' R U' R' U2 R",
+    algs: [
+      "F R U R' U' F' R' U' R U' R' U2 R"
+    ],
+    scrambles: [
+      "U2 B F' U' L' U L U B' U' F",
+      "R' U2 B L2 D F2 D' L2 B' U' R",
+      "U2 B' F U' R' U R U F' U' B",
+      "B' R2 D2 L' F L D R' D B R'"
+    ],
     group: "Big Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -14938,7 +15450,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R' U' F' U R",
+    algs: [
+      "R' F R U R' U' F' U R"
+    ],
+    scrambles: [
+      "F' U2 F U R U B U B' R' U'",
+      "R U2 F' L2 D' B2 D L2 F U R'",
+      "F' U' F L F' L' U F U2 F U2 F'",
+      "R L F R2 F' R L2 U R2 U' R2 L"
+    ],
     group: "Big Lightning Bolt",
     difficultCenters: [],
     difficultColors: [],
@@ -15170,7 +15690,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U2 R' F R U R' U' F'",
+    algs: [
+      "R U R' U R U2 R' F R U R' U' F'"
+    ],
+    scrambles: [
+      "U2 L' R2 D B' D' L R2 F' U F",
+      "F R2 F2 U2 R' U' R U' F2 R2 F'",
+      "U2 F R2 D R' U R D' R2 U' F'",
+      "U2 L2 R' D F' D' L2 R B' U B"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -15402,7 +15930,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R U' R' U2 R F R U R' U' F'",
+    algs: [
+      "R' U' R U' R' U2 R F R U R' U' F'"
+    ],
+    scrambles: [
+      "U2 B2 F D' R D B2 F' L U' L'",
+      "U2 L2 R D' B D L2 R' F U' F'",
+      "B' R2 B2 U2 R U R' U B2 R2 B U'",
+      "U B' R2 B2 U2 R U R' U B2 R2 B"
+    ],
     group: "Awkward Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -15634,7 +16170,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F' U' L' U L F",
+    algs: [
+      "F' U' L' U L F"
+    ],
+    scrambles: [
+      "L' U2 L2 F2 R' F' R F2 L' F U",
+      "U2 L' U2 L2 F2 R' F' R F2 L' F",
+      "U F2 D' B L B' D F2 R U' R'",
+      "F' U2 F' R2 B' R' B R2 F2 R U'"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -15866,7 +16410,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' F R' F' R U R",
+    algs: [
+      "R' U' F R' F' R U R"
+    ],
+    scrambles: [
+      "L' U2 L2 F2 R' F' R F2 L' F U",
+      "U2 L' U2 L2 F2 R' F' R F2 L' F",
+      "U F2 D' B L B' D F2 R U' R'",
+      "F' U2 F' R2 B' R' B R2 F2 R U'"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -16098,7 +16650,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R' F'",
+    algs: [
+      "F U R U' R' F'"
+    ],
+    scrambles: [
+      "B U2 B R2 F R F' R2 B2 R' U",
+      "U2 L U2 L2 B2 R B R' B2 L B'",
+      "U2 L' U2 L2 F2 R' F L' F2 R F'",
+      "R U2 R F2 L F L' F2 R2 F' U"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -16330,7 +16890,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f'",
+    algs: [
+      "f R U R' U' f'"
+    ],
+    scrambles: [
+      "B U2 B R2 F R F' R2 B2 R' U",
+      "U2 L U2 L2 B2 R B R' B2 L B'",
+      "U2 L' U2 L2 F2 R' F L' F2 R F'",
+      "R U2 R F2 L F L' F2 R2 F' U"
+    ],
     group: "P Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -16562,7 +17130,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F'",
+    algs: [
+      "F R U R' U' F'"
+    ],
+    scrambles: [
+      "B U2 B2 R2 D' R' D R' B2 U2 B'",
+      "R2 F2 R' U B U' B R F2 R' B2 R'",
+      "L2 F2 L U' B' U B' L' F2 L B2 L",
+      "B2 R2 B' U L U' L B R2 B' L2 B'"
+    ],
     group: "T Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -16794,7 +17370,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R' F R F' U R",
+    algs: [
+      "R' U' R' F R F' U R"
+    ],
+    scrambles: [
+      "U2 F U2 L U' R U L' U2 R' F'",
+      "L U F' U' L' U L2 F L2 B' U2 B",
+      "R' U' F U R U' R2 F' R2 B U2 B'",
+      "F U R' U' F' U F2 R F2 L' U2 L"
+    ],
     group: "C Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -17026,7 +17610,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R' F R F' R' F R F' U R",
+    algs: [
+      "R' U' R' F R F' R' F R F' U R"
+    ],
+    scrambles: [
+      "R2 B2 R F2 R' B2 R D' F' D F' R2 U' R'",
+      "L D2 B' D2 F L2 B2 U' B2 U2 F' U' B2 L",
+      "L U L2 D U2 F2 D' F L2 F2 L2 F' U2 L",
+      "F R2 D2 B2 D' B2 D' R2 F L F L' U F"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -17258,7 +17850,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F' L' U' L U L' U' L U F",
+    algs: [
+      "F' L' U' L U L' U' L U F"
+    ],
+    scrambles: [
+      "R2 B2 R F2 R' B2 R D' F' D F' R2 U' R'",
+      "L D2 B' D2 F L2 B2 U' B2 U2 F' U' B2 L",
+      "L U L2 D U2 F2 D' F L2 F2 L2 F' U2 L",
+      "F R2 D2 B2 D' B2 D' R2 F L F L' U F"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -17490,7 +18090,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' R U R' U' F'",
+    algs: [
+      "F R U R' U' R U R' U' F'"
+    ],
+    scrambles: [
+      "F U2 F2 D2 U B2 U' L' B2 D2 F2 R' F' U'",
+      "U' B' R2 F2 R' B R2 U2 R U2 R' F2 U2 R",
+      "F' U2 F2 U F2 U F2 U' F' U' F' L F L'",
+      "R U2 R2 U2 B2 R' B2 U' L U' F R F' L'"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -17722,7 +18330,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U' r2 U r2 U r2 U' r",
+    algs: [
+      "r U' r2 U r2 U r2 U' r"
+    ],
+    scrambles: [
+      "R2 D L2 F2 R2 U B R2 F2 R' B' L2 B2 R'",
+      "B L' B2 L B2 R' U2 R U' L U' L' B' U",
+      "B2 D F2 R2 B2 U L B2 R2 B' L' F2 L2 B'",
+      "B U2 B' R2 F R2 B' R2 F' R U' R U B"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -17954,7 +18570,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U r2 U' r2 U' r2 U r'",
+    algs: [
+      "r' U r2 U' r2 U' r2 U r'"
+    ],
+    scrambles: [
+      "F2 D F2 L2 B2 U L B2 L2 F' L' F2 R2 F'",
+      "R' F2 L2 R' B2 L2 U R F' R F' L2 D L2",
+      "F' L' U' L F U' R2 F' U2 F U2 F R2 F'",
+      "B U2 B' R2 F R2 F' R U2 R' U' F' U' F"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -18186,7 +18810,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' R U R' U' f'",
+    algs: [
+      "f R U R' U' R U R' U' f'"
+    ],
+    scrambles: [
+      "F' R D2 R' U2 R D2 R' U L' U L F U'",
+      "R' U' F' U L F' R2 U2 R' L2 U2 L' F2 L2",
+      "U R' U2 R2 B' D B' L2 U' L2 U B2 D' R'",
+      "U F U2 F2 L D' L B2 U B2 U' L2 D F"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -18418,7 +19050,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R' U R U' R' F'",
+    algs: [
+      "F U R U' R' U R U' R' F'"
+    ],
+    scrambles: [
+      "F' R D2 R' U2 R D2 R' U L' U L F U'",
+      "R' U' F' U L F' R2 U2 R' L2 U2 L' F2 L2",
+      "U R' U2 R2 B' D B' L2 U' L2 U B2 D' R'",
+      "U F U2 F2 L D' L B2 U B2 U' L2 D F"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -18650,7 +19290,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' y R U' R' F'",
+    algs: [
+      "R U R' U R U' y R U' R' F'"
+    ],
+    scrambles: [
+      "F R' F R F2 L U2 L2 U' L2 U' L2 U L",
+      "B L B' U F U F' L' U2 L2 U2 L' U2 L'",
+      "B' U2 L U2 L' B2 R B' U B' U' R' U B",
+      "L' U2 F U2 F' L2 B L' U L' U' B' U L"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -18882,7 +19530,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' B U' B' R'",
+    algs: [
+      "R U R' U R U' B U' B' R'"
+    ],
+    scrambles: [
+      "F R' F R F2 L U2 L2 U' L2 U' L2 U L",
+      "B L B' U F U F' L' U2 L2 U2 L' U2 L'",
+      "B' U2 L U2 L' B2 R B' U B' U' R' U B",
+      "L' U2 F U2 F' L2 B L' U L' U' B' U L"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -19114,7 +19770,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U2 R U R' U' R U R' U r",
+    algs: [
+      "r' U2 R U R' U' R U R' U r"
+    ],
+    scrambles: [
+      "F R2 B2 D2 B' F2 U2 F' L' B2 D2 F2 R B",
+      "R' F2 R' B2 L D2 F2 L2 B' L B2 R2 B U",
+      "R B U B' U' L D2 L' U2 L D2 L' U2 R'",
+      "F R' F' R U R U R2 U' R2 U' R2 U2 R"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -19346,7 +20010,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U2 L U L' U' L U L' U l",
+    algs: [
+      "l' U2 L U L' U' L U L' U l"
+    ],
+    scrambles: [
+      "F R2 B2 D2 B' F2 U2 F' L' B2 D2 F2 R B",
+      "R' F2 R' B2 L D2 F2 L2 B' L B2 R2 B U",
+      "R B U B' U' L D2 L' U2 L D2 L' U2 R'",
+      "F R' F' R U R U R2 U' R2 U' R2 U2 R"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -19578,7 +20250,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U2 R' U' R U R' U' R U' r'",
+    algs: [
+      "r U2 R' U' R U R' U' R U' r'"
+    ],
+    scrambles: [
+      "R' F2 D' L2 D' L2 D2 F2 R U2 R' F R F'",
+      "L U2 L2 U' B D' B' U B2 D B2 L2 U2 L'",
+      "R B R2 L U L' U F R2 F' R2 U2 B' R",
+      "L' B' U' B U' R B2 R B2 R' U2 L U2 R'"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -19810,7 +20490,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U' R' U R U2 r'",
+    algs: [
+      "r U R' U R U' R' U R U2 r'"
+    ],
+    scrambles: [
+      "R' F2 D' L2 D' L2 D2 F2 R U2 R' F R F'",
+      "L U2 L2 U' B D' B' U B2 D B2 L2 U2 L'",
+      "R B R2 L U L' U F R2 F' R2 U2 B' R",
+      "L' B' U' B U' R B2 R B2 R' U2 L U2 R'"
+    ],
     group: "Small L Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -20042,7 +20730,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R2 U' R U' R' U2 F R F'",
+    algs: [
+      "R U2 R2 U' R U' R' U2 F R F'"
+    ],
+    scrambles: [
+      "U2 F R U2 R' F' B L2 U' L2 U L2 U B'",
+      "L F' L' B U B' U R2 F R2 U2 F2 U2 F'",
+      "U2 R' U2 R B2 L' B' L U2 B' U' B U' B'",
+      "R B2 L2 B' D F' D' B D2 F D2 L2 B2 R'"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -20274,7 +20970,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
+    algs: [
+      "R' F R U R U' R2 F' R2 U' R' U R U R'"
+    ],
+    scrambles: [
+      "U2 F R U2 R' F' B L2 U' L2 U L2 U B'",
+      "L F' L' B U B' U R2 F R2 U2 F2 U2 F'",
+      "U2 R' U2 R B2 L' B' L U2 B' U' B U' B'",
+      "R B2 L2 B' D F' D' B D2 F D2 L2 B2 R'"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -20506,7 +21210,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' r U' R' U R U' R' U R r' U r",
+    algs: [
+      "r' U' r U' R' U R U' R' U R r' U r"
+    ],
+    scrambles: [
+      "F' D' L2 U B2 U' B2 L' D L' F2 U2 F' U2",
+      "B U L U' L F' L2 B' L2 F L2 B' U2 B",
+      "F' R U2 F2 L F2 L' U' B U' B' F2 R' F'",
+      "R U B U' B' R F2 R' B2 R F2 R' B2 R'"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -20738,7 +21450,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' U R U' R' U R U' R' r U' r'",
+    algs: [
+      "r U r' U R U' R' U R U' R' r U' r'"
+    ],
+    scrambles: [
+      "F' D' L2 U B2 U' B2 L' D L' F2 U2 F' U2",
+      "B U L U' L F' L2 B' L2 F L2 B' U2 B",
+      "F' R U2 F2 L F2 L' U' B U' B' F2 R' F'",
+      "R U B U' B' R F2 R' B2 R F2 R' B2 R'"
+    ],
     group: "I Shape",
     difficultCenters: [],
     difficultColors: [],
@@ -20970,7 +21690,15 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' M' U R U' r'",
+    algs: [
+      "R U R' U' M' U R U' r'"
+    ],
+    scrambles: [
+      "R L F U2 F' R' L D F2 D' L2 U",
+      "R' L' F' U2 F R' L D' F2 D R2 U'",
+      "R' L' F' U2 F R' L D' F2 D R2 U",
+      "R' L' F' L2 F R L' U' L2 U L2 U"
+    ],
     group: "Corners Oriented",
     difficultCenters: [],
     difficultColors: [],
