@@ -2,7 +2,7 @@
 //import arrowOllSet from "./data/arrowOllSet.js";
 
 import arrowOllSet from "../../data/arrowOllSet copy.js"
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import '../../styling/index.css'
 import { FaIcon } from '../../assets/fontAwesome.js';

@@ -1,5 +1,5 @@
 
-import { ThemeContext } from './DarkThemeContext.jsx';
+import { ThemeContext } from './context/DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
 import './styling/index.css'
 import { FaIcon } from './fontAwesome';

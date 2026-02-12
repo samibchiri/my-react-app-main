@@ -1,13 +1,17 @@
-// @ts-check
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import React, { useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
-import { ThemeContext } from '../DarkThemeContext.jsx'
+import { ThemeContext } from '../context/DarkThemeContext.jsx'
+import { OllProvider } from '../context/OllContext.jsx';
+
+
 import { seedDatabaseIfEmpty } from '../data/db.js'
 import '../styling/App.css'
 import '../styling/index.css'
 import NavBar from './NavBar.jsx'
+
 
 function AppLayout() {
   const [darkMode, setDarkMode] = useState(true)

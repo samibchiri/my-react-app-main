@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import Stopwatch from '../../components/Train/Stopwatch.jsx';

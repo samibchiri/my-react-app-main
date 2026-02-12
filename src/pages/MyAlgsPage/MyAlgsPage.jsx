@@ -23,7 +23,7 @@ import { FaIcon } from '../../assets/fontAwesome.js';
 import '../../styling/App.css';
 import '../../styling/index.css';
 
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
 
 import { useNavigate } from "react-router-dom";

@@ -15,7 +15,7 @@ import { FaIcon } from '../../assets/fontAwesome.js';
 import '../../styling/App.css';
 import '../../styling/index.css';
 
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 

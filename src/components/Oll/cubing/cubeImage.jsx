@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useContext } from "react";
 import _ from "lodash";
 
 
-import { ThemeContext } from '../../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../../context/DarkThemeContext.jsx';
 
 
 

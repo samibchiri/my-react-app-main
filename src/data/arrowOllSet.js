@@ -8166,7 +8166,7 @@ const arrowOllSet = [
     algNumber: 0,
     differentAUF: [],
     altAUF: [
-      null
+      ""
     ],
     barMovements: [
       [
@@ -8372,6 +8372,246 @@ const arrowOllSet = [
             16,
             "opp",
             33
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            16,
+            19,
+            "same",
+            8,
+            16,
+            "opp",
+            44
+          ],
+          [
+            16,
+            19,
+            "opp",
+            8,
+            16,
+            "opp",
+            44
+          ]
+        ]
+      ]
+    ]
+  },
+  {
+    id: "OLL 14-1",
+    name: "OLL 14",
+    ollNumber: 14,
+    algNumber: 1,
+    differentAUF: [],
+    altAUF: [
+      ""
+    ],
+    barMovements: [
+      [
+        "Right"
+      ],
+      [
+        "Full"
+      ],
+      [
+        "Diag"
+      ],
+      [
+        "Front"
+      ],
+      [
+        "Back"
+      ],
+      [
+        "Left"
+      ]
+    ],
+    piecesMovement: [
+      [
+        [
+          7,
+          22
+        ],
+        [
+          1,
+          21
+        ],
+        [
+          8,
+          23
+        ]
+      ],
+      [
+        [
+          17,
+          14
+        ],
+        [
+          9,
+          19
+        ],
+        [
+          16,
+          9
+        ]
+      ],
+      [
+        [
+          10,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          23,
+          1
+        ]
+      ],
+      [
+        [
+          14,
+          10
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          6,
+          15
+        ]
+      ]
+    ],
+    order: 4,
+    algAttemptCount: null,
+    algSpeed: null,
+    algTps: null,
+    algs: [
+      "F' U' L' U2 L U L' U' L F"
+    ],
+    scrambles: [
+      "R' F2 U' F U' F' R' F R U2 F2 R",
+      "U2 B U2 B2 U' R D' R D R2 U B",
+      "L F' R2 B' F' D' F D B R2 F L'",
+      "B L2 B' L2 F U2 F' U' B' R' U R B"
+    ],
+    group: "Knight Move Shape",
+    difficultCenters: [],
+    difficultColors: [],
+    groupRecUsed: true,
+    sameOppUsed: true,
+    fullDiagCp: [
+      [
+        [
+          6,
+          16,
+          "opp",
+          16,
+          19,
+          "opp",
+          13
+        ],
+        [
+          6,
+          16,
+          "opp",
+          16,
+          19,
+          "same",
+          13
+        ]
+      ]
+    ],
+    leftRightCp: [
+      [
+        [
+          6,
+          8,
+          "opp",
+          8,
+          19,
+          "opp",
+          13
+        ],
+        [
+          6,
+          8,
+          "opp",
+          8,
+          19,
+          "same",
+          13
+        ]
+      ]
+    ],
+    frontBackCp: [
+      [
+        [
+          8,
+          16,
+          "opp",
+          8,
+          19,
+          "opp",
+          19
+        ],
+        [
+          8,
+          16,
+          "opp",
+          8,
+          19,
+          "same",
+          19
+        ]
+      ]
+    ],
+    SameOpp: [
+      [
+        [
+          [
+            16,
+            19,
+            "opp",
+            6,
+            16,
+            "opp",
+            33
+          ],
+          [
+            16,
+            19,
+            "same",
+            6,
+            16,
+            "opp",
+            33
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            8,
+            19,
+            "opp",
+            6,
+            8,
+            "opp",
+            48
+          ],
+          [
+            8,
+            19,
+            "same",
+            6,
+            8,
+            "opp",
+            48
           ]
         ]
       ],

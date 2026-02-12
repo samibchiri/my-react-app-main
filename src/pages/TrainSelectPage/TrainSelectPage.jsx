@@ -24,7 +24,7 @@ import '../../styling/index.css'
 import '../../styling/App.css';
 
 import ShowAlgCard from "./cardPopUp.jsx";
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 import AlgTrainerPage from "../AlgTrainerPage/AlgTrainerPage.jsx";

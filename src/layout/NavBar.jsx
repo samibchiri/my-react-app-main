@@ -3,7 +3,7 @@ import reactLogo from '../assets/react.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { useContext } from "react";
-import { ThemeContext } from '../DarkThemeContext.jsx';
+import { ThemeContext } from '../context/DarkThemeContext.jsx';
 import '../styling/index.css';
 
 

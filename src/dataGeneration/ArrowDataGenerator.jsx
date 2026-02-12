@@ -1,5 +1,5 @@
 
-import { ThemeContext } from '../DarkThemeContext.jsx';
+import { ThemeContext } from '../context/DarkThemeContext.jsx';
 import React, { use, useContext,useRef, useEffect, useState } from "react";
 import '../styling/index.css'
 import { FaIcon } from '../assets/fontAwesome.js';
@@ -1050,7 +1050,7 @@ function GroupRecognition(){
     console.log("GetScramble",ollCaseSet.cases[algRef.current])
     try{
         groupdict ={
-            id:ollCaseSet.cases[algRef.current].name+"-"+algIndexRef.current,
+            id:crypto.randomUUID(),
             name:ollCaseSet.cases[algRef.current].name,
             ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
             algNumber:algIndexRef.current,

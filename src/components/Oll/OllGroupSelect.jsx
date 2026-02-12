@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CaseImage from "./cubing/cubeImage.jsx";
-import { ThemeContext } from '../../DarkThemeContext.jsx';
+import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import { db } from '../../data/db.js';
 
