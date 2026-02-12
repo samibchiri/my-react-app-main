@@ -5,6 +5,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../data/db.js";
 
 const OllContext = createContext();
+export const useOll = () => useContext(OllContext);
 
 export const OllProvider = ({ children }) => {
   const allOlls = useLiveQuery(() => db.olls.toArray(), []);

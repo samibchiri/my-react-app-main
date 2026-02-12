@@ -3,8 +3,7 @@
 
 import arrowOllSet from "../../data/arrowOllSet copy.js"
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
-import { useOll } from '../../context/OllContext.jsx';
-
+import {useOll} from "../../context/ollContext.jsx"
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 import '../../styling/index.css'
 import { FaIcon } from '../../assets/fontAwesome.js';
@@ -16,10 +15,6 @@ import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
 
-
-import { db } from '../../data/db.js';
-
-import { useLiveQuery } from "dexie-react-hooks";
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 
 import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,
@@ -29,7 +24,7 @@ import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,ge
 export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
 
-  const [groupSelected,setGroupSelected]=useState(0)
+  const [groupSelected,setGroupSelected]=useState(1)
   const [ollSelectList,setOllSelectList]=useState([])
 
   const [cubeSize, setCubeSize] = useState(200);
@@ -37,6 +32,7 @@ export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCase
   const [lineWidth, setLineWidth] = useState(4);
   const [refsReady, setRefsReady] = useState(false);
 
+  const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
 
   
   const altoverlayRefs = useRef([]);
@@ -61,33 +57,20 @@ export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCase
   14: "Corners Oriented"
 }
 
-  
-const allOlls = useLiveQuery(() => db.olls.toArray(), []);
-
-
 // const selectedGroupOlls = useLiveQuery(
 //   () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
 //   [groupSelected]
 // );
 
-const selectedGroupOllsRaw = useLiveQuery(()=>{
-    if (groupSelected === null) {
-      return [];
-    }
-    return db.olls.where("group").equals(groupTable[groupSelected]).toArray();
-  },[groupSelected]
-);
-
-const selectedGroupOlls = useMemo(
-  () => selectedGroupOllsRaw ?? [],
-  [JSON.stringify(selectedGroupOllsRaw)]
-);
-
-
+const selectedGroupOlls = useMemo(() => {
+    if (groupSelected==null || !allOlls) return [];
+    return getOllsByGroup(groupTable[groupSelected]); // getOllsByGroup now handles filtering
+  }, [groupSelected, allOlls]);
 
 useEffect(() => {
   altoverlayRefs.current = [];
   if(refsReady){
+    setPathCalculated(false)
     setRefsReady(false);
   }
 

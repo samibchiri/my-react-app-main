@@ -34,8 +34,10 @@ function AppLayout() {
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
-      <NavBar />
-      <Outlet />
+      <OllProvider>
+        <NavBar />
+        <Outlet />
+      </OllProvider>
 
     </ThemeContext.Provider>
   )
