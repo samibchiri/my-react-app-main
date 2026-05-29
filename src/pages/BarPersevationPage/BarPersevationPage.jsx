@@ -14,9 +14,10 @@ import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
 import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
+import { db } from "../../data/db";
 
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
-
+import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx';
 import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,
   sortPointsList,sortCenterLeftRight,isPositionLeft,Connect2Points,
   CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./BarPersevationLogic.jsx"
@@ -68,7 +69,6 @@ const selectedGroupOlls = useMemo(() => {
   }, [groupSelected, allOlls]);
 
 useEffect(() => {
-  altoverlayRefs.current = [];
   if(refsReady){
     setPathCalculated(false)
     setRefsReady(false);
@@ -212,6 +212,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       //Bars can be connected if they are close to each other, 
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
+      console.log("Pas2",selectedGroupOlls[OllIndex].difficultCenters)
       maxdistance=maxdistance*10
       if(colorIndexList[i][0].color!=colorIndexList[i][1].color){
         distance=10000
@@ -780,6 +781,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
 
   let testList=[]
   try{
+    console.log("Pass",inputString)
     if(inputString.includes(",")){
       inputString=inputString.split(",")
       for(let i=0;i<inputString.length;i++){   
@@ -787,7 +789,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
           let intInputString=parseInt(inputString[i])
           if (!isNaN(intInputString)){
             if(intInputString<0 || intInputString>=25){
-              throw new Error(`Invalid number: ${inputString[i]}`)
+              throw new Error(` number: ${inputString[i]}`)
             }
             else{
               testList.push(intInputString);

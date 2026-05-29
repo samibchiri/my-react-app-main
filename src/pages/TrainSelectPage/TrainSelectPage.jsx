@@ -1,7 +1,7 @@
 import React, { use, useContext, useEffect, useState } from "react";
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import { FaChevronRight,FaChevronDown } from 'react-icons/fa';
-import CornerPermutationPage from '../CpPage/CpPage.jsx'
+import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx'
 //import ArrowDataGenerator from './ArrowDataGenerator.jsx'
 import BarPersevation from '../BarPersevationPage/BarPersevationPage.jsx'
 import cpllCaseSet from "../../data/cpllCaseSet.js";

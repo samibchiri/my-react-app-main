@@ -3,7 +3,7 @@ import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 
 import TestPage from '../TestPage/TestPage.jsx';
-import CornerPermutationPage from '../CpPage/CpPage.jsx';
+import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx';
 //import ArrowDataGenerator from '../../dataGeneration/ArrowDataGenerator.jsx'
 import cpllCaseSet from "../../data/cpllCaseSet.js";
 import eollCaseSet from "../../data/eollCaseSet.js";

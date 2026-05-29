@@ -3,7 +3,7 @@ import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 
 import AlgTrainerPage from '../AlgTrainerPage/AlgTrainerPage.jsx';
-import CornerPermutationPage from '../CpPage/CpPage.jsx';
+import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx';
 import ollCaseSet from "../../data/ollCaseSet.js";
 
 // Bootstrap CSS fir-st
