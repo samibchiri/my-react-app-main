@@ -1,6 +1,6 @@
 const arrowOllSet = [
   {
-    id: "4a20bd08-30d0-4b07-b5e2-656633ec03f6",
+    id: "OLL 21-0",
     name: "OLL 21",
     ollNumber: 21,
     algNumber: 0,
@@ -90,7 +90,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R' U' R U R' U' R U' R'",
+    algs: [
+      "R U2' R' U' R U R' U' R U' R'"
+    ],
     scrambles: [
       "U2 R B2 D2 L2 D' L2 D' B2 R2 U R",
       "F2 L B2 L' F2 U2 F2 R D2 R' F2 U",
@@ -238,7 +240,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "39a6140e-781c-4333-aea9-bebdc596dd4c",
+    id: "OLL 21-1",
     name: "OLL 21",
     ollNumber: 21,
     algNumber: 1,
@@ -328,7 +330,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' R U R' U' R U R' U' F'",
+    algs: [
+      "F R U R' U' R U R' U' R U R' U' F'"
+    ],
     scrambles: [
       "U2 R B2 D2 L2 D' L2 D' B2 R2 U R",
       "F2 L B2 L' F2 U2 F2 R D2 R' F2 U",
@@ -476,7 +480,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "7e3ede5a-f9f4-4149-827b-e64c39cf506a",
+    id: "OLL 22-0",
     name: "OLL 22",
     ollNumber: 22,
     algNumber: 0,
@@ -566,7 +570,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R2' U' R2 U' R2' U2' R",
+    algs: [
+      "R U2' R2' U' R2 U' R2' U2' R"
+    ],
     scrambles: [
       "R' F2 R U2 R U2 R' F2 U' R U' R'",
       "F R2 F' U2 F' U2 F R2 U F' U F",
@@ -714,7 +720,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "a542b25f-0381-4094-a295-f0b910b80f9a",
+    id: "OLL 23-0",
     name: "OLL 23",
     ollNumber: 23,
     algNumber: 0,
@@ -804,7 +810,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R2 D R' U2 R D' R' U2 R'",
+    algs: [
+      "R2 D R' U2 R D' R' U2 R'"
+    ],
     scrambles: [
       "L' U2 L2 F2 D2 R2 D' R2 D' F2 L' U",
       "U2 B' U2 B2 L2 D2 F2 D' F2 D' L2 B'",
@@ -952,7 +960,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "03f32673-a8a7-4d64-9b2a-021604b8c7f6",
+    id: "OLL 23-1",
     name: "OLL 23",
     ollNumber: 23,
     algNumber: 1,
@@ -1042,7 +1050,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R2 D' R U2 R' D R U2 R",
+    algs: [
+      "R2 D' R U2 R' D R U2 R"
+    ],
     scrambles: [
       "L' U2 L2 F2 D2 R2 D' R2 D' F2 L' U",
       "U2 B' U2 B2 L2 D2 F2 D' F2 D' L2 B'",
@@ -1190,7 +1200,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "79e69ddc-ba34-461a-b470-a45f29d051be",
+    id: "OLL 24-0",
     name: "OLL 24",
     ollNumber: 24,
     algNumber: 0,
@@ -1280,7 +1290,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' r' F R F'",
+    algs: [
+      "r U R' U' r' F R F'"
+    ],
     scrambles: [
       "R2 D2 L' F2 R U2 R' F2 D2 R' B2 R'",
       "R' U' R U R B2 R' B2 L U2 L' U2",
@@ -1428,7 +1440,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "5eec6782-4f89-41eb-84af-3ce27cdab972",
+    id: "OLL 24-1",
     name: "OLL 24",
     ollNumber: 24,
     algNumber: 1,
@@ -1518,7 +1530,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R D R' U' R D' R2",
+    algs: [
+      "R U R D R' U' R D' R2"
+    ],
     scrambles: [
       "R2 D2 L' F2 R U2 R' F2 D2 R' B2 R'",
       "R' U' R U R B2 R' B2 L U2 L' U2",
@@ -1666,7 +1680,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "4b934a6a-1b0e-4404-8ec9-4dae6c92143f",
+    id: "OLL 25-0",
     name: "OLL 25",
     ollNumber: 25,
     algNumber: 0,
@@ -1756,7 +1770,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "x R' U R D' R' U' R D x'",
+    algs: [
+      "x R' U R D' R' U' R D x'"
+    ],
     scrambles: [
       "L U2 L' B2 R B2 R' U' R' U R U'",
       "U2 B' R2 B R2 F' U2 F U B U' B'",
@@ -1904,7 +1920,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "997f40ae-2b4b-40ae-aadd-a3fd8808ace0",
+    id: "OLL 25-1",
     name: "OLL 25",
     ollNumber: 25,
     algNumber: 1,
@@ -1994,7 +2010,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R B' R' F' R B",
+    algs: [
+      "R' F R B' R' F' R B"
+    ],
     scrambles: [
       "L U2 L' B2 R B2 R' U' R' U R U'",
       "U2 B' R2 B R2 F' U2 F U B U' B'",
@@ -2142,7 +2160,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "91029df4-4b65-4388-bd7e-83f2d0e11708",
+    id: "OLL 26-0",
     name: "OLL 26",
     ollNumber: 26,
     algNumber: 0,
@@ -2232,7 +2250,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R U' R' U2 R",
+    algs: [
+      "R' U' R U' R' U2 R"
+    ],
     scrambles: [
       "U2 L2 B2 R D2 R D R' D R' B2 L2",
       "U2 B' U2 B2 U2 B2 U' B2 U' B2 U B",
@@ -2380,7 +2400,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "6b150100-8c3a-45bc-9ba4-d6ebab4d91d8",
+    id: "OLL 26-1",
     name: "OLL 26",
     ollNumber: 26,
     algNumber: 1,
@@ -2470,7 +2490,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2' R' U' R U' R'",
+    algs: [
+      "R U2' R' U' R U' R'"
+    ],
     scrambles: [
       "U2 L2 B2 R D2 R D R' D R' B2 L2",
       "U2 B' U2 B2 U2 B2 U' B2 U' B2 U B",
@@ -2618,7 +2640,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "58b4da06-3eee-4db7-83b7-52e75dceae80",
+    id: "OLL 27-0",
     name: "OLL 27",
     ollNumber: 27,
     algNumber: 0,
@@ -2708,7 +2730,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U2' R'",
+    algs: [
+      "R U R' U R U2' R'"
+    ],
     scrambles: [
       "U2 L U2 L B2 D R' F2 R D' B2 L2",
       "B' U' B2 U B2 U B2 U2 B2 U2 B U2",
@@ -2856,7 +2880,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "99576176-3e19-4721-83c0-6853a0301405",
+    id: "OLL 27-1",
     name: "OLL 27",
     ollNumber: 27,
     algNumber: 1,
@@ -2946,7 +2970,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U2 R U R' U R",
+    algs: [
+      "R' U2 R U R' U R"
+    ],
     scrambles: [
       "U2 L U2 L B2 D R' F2 R D' B2 L2",
       "B' U' B2 U B2 U B2 U2 B2 U2 B U2",
@@ -3094,7 +3120,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "ebfee10a-8149-4d26-9067-e189655eeb38",
+    id: "OLL 1-0",
     name: "OLL 1",
     ollNumber: 1,
     algNumber: 0,
@@ -3184,7 +3210,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R2' F R F' U2 R' F R F'",
+    algs: [
+      "R U2 R2' F R F' U2 R' F R F'"
+    ],
     scrambles: [
       "L' B' U R' U R B L U2 F' L2 F L2 B' U2 B",
       "B2 R2 F' D2 F L2 R2 F U' F' U L B' U2 L2 B'",
@@ -3332,7 +3360,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "80fc6f4e-4b5e-4628-bfda-ea80b04b8495",
+    id: "OLL 2-0",
     name: "OLL 2",
     ollNumber: 2,
     algNumber: 0,
@@ -3422,7 +3450,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F' f R U R' U' f'",
+    algs: [
+      "F R U R' U' F' f R U R' U' f'"
+    ],
     scrambles: [
       "L' U2 F2 D2 R2 B' R2 D2 F L F U L' U L U",
       "L U2 F' L2 F2 U2 F' L2 F' L F' U R U' R' F2",
@@ -3570,7 +3600,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "e24703cf-c665-4f21-8757-2fe1a850fdf6",
+    id: "OLL 2-1",
     name: "OLL 2",
     ollNumber: 2,
     algNumber: 1,
@@ -3660,7 +3690,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' U2 r U2 R' U2 R U' r'",
+    algs: [
+      "r U r' U2 r U2 R' U2 R U' r'"
+    ],
     scrambles: [
       "L' U2 F2 D2 R2 B' R2 D2 F L F U L' U L U",
       "L U2 F' L2 F2 U2 F' L2 F' L F' U R U' R' F2",
@@ -3808,7 +3840,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "53a5508f-f739-4438-b814-35262c393603",
+    id: "OLL 3-0",
     name: "OLL 3",
     ollNumber: 3,
     algNumber: 0,
@@ -3898,7 +3930,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f' U' F R U R' U' F'",
+    algs: [
+      "f R U R' U' f' U' F R U R' U' F'"
+    ],
     scrambles: [
       "F2 L2 R2 B' R2 B' D2 B R' D' F D' B F' L2 F2",
       "D2 F2 R2 F' U2 B' R2 F R' D' F D' F2 L2 B F'",
@@ -4046,7 +4080,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "08d10c8d-ba6f-42e8-b527-20a9a71c104a",
+    id: "OLL 3-1",
     name: "OLL 3",
     ollNumber: 3,
     algNumber: 1,
@@ -4136,7 +4170,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R2 U R' U r U2 r' U M'",
+    algs: [
+      "r' R2 U R' U r U2 r' U M'"
+    ],
     scrambles: [
       "F2 L2 R2 B' R2 B' D2 B R' D' F D' B F' L2 F2",
       "D2 F2 R2 F' U2 B' R2 F R' D' F D' F2 L2 B F'",
@@ -4284,7 +4320,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "d520a627-1a65-4d8e-bf4b-c44a31bcb65c",
+    id: "OLL 4-0",
     name: "OLL 4",
     ollNumber: 4,
     algNumber: 0,
@@ -4374,7 +4410,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f' U F R U R' U' F'",
+    algs: [
+      "f R U R' U' f' U F R U R' U' F'"
+    ],
     scrambles: [
       "B L2 D' B U2 B2 D L' B2 U2 B' L2 B2 U2 B U2",
       "B L2 D' B D2 F2 D R F' R2 F' D2 B' L2 B' U2",
@@ -4522,7 +4560,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "08ff696f-1d8e-4c65-a178-156b6bc899c9",
+    id: "OLL 4-1",
     name: "OLL 4",
     ollNumber: 4,
     algNumber: 1,
@@ -4612,7 +4650,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "M U' r U2 r' U' R U' R' M'",
+    algs: [
+      "M U' r U2 r' U' R U' R' M'"
+    ],
     scrambles: [
       "B L2 D' B U2 B2 D L' B2 U2 B' L2 B2 U2 B U2",
       "B L2 D' B D2 F2 D R F' R2 F' D2 B' L2 B' U2",
@@ -4760,7 +4800,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "63b0f066-8a15-45b6-984c-738861e6eecf",
+    id: "OLL 5-0",
     name: "OLL 5",
     ollNumber: 5,
     algNumber: 0,
@@ -4850,7 +4890,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U2 R U R' U r",
+    algs: [
+      "r' U2 R U R' U r"
+    ],
     scrambles: [
       "F' U2 F R2 B L' B L B2 R2",
       "R2 F2 L F L' F R2 B U2 B'",
@@ -4998,7 +5040,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "58692544-a3c0-4d52-8b74-4e7e86efd5b8",
+    id: "OLL 5-1",
     name: "OLL 5",
     ollNumber: 5,
     algNumber: 1,
@@ -5088,7 +5130,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U2 L U L' U l",
+    algs: [
+      "l' U2 L U L' U l"
+    ],
     scrambles: [
       "F' U2 F R2 B L' B L B2 R2",
       "R2 F2 L F L' F R2 B U2 B'",
@@ -5236,7 +5280,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "00c20ccb-5be5-4a91-82db-c779c2fdadaf",
+    id: "OLL 6-0",
     name: "OLL 6",
     ollNumber: 6,
     algNumber: 0,
@@ -5326,7 +5370,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U2 R' U' R U' r'",
+    algs: [
+      "r U2 R' U' R U' r'"
+    ],
     scrambles: [
       "F U2 F' L2 B' R B' R' B2 L2",
       "R2 B2 L' B' L B' R2 F' U2 F",
@@ -5474,7 +5520,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "dac53b3c-d233-4f38-b0ca-4684107528c7",
+    id: "OLL 7-0",
     name: "OLL 7",
     ollNumber: 7,
     algNumber: 0,
@@ -5564,7 +5610,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U2 r'",
+    algs: [
+      "r U R' U R U2 r'"
+    ],
     scrambles: [
       "L F U' R U' R2 F' L F2 R F2 L2",
       "B2 R F R' F' B R' F R2 F' R2 B",
@@ -5712,7 +5760,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "7f5fb580-f8cb-4460-b484-c2edc86e169d",
+    id: "OLL 8-0",
     name: "OLL 8",
     ollNumber: 8,
     algNumber: 0,
@@ -5802,7 +5850,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' R U' R' U2 r",
+    algs: [
+      "r' U' R U' R' U2 r"
+    ],
     scrambles: [
       "R' F2 R U2 L' U L2 F L' F U F2",
       "B' R2 B U2 F' U F2 R F' R U R2",
@@ -5950,7 +6000,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "543fe9c6-abf1-4aad-80a0-265a121fa2c8",
+    id: "OLL 8-1",
     name: "OLL 8",
     ollNumber: 8,
     algNumber: 1,
@@ -6040,7 +6090,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U' L U' L' U2 l",
+    algs: [
+      "l' U' L U' L' U2 l"
+    ],
     scrambles: [
       "R' F2 R U2 L' U L2 F L' F U F2",
       "B' R2 B U2 F' U F2 R F' R U R2",
@@ -6188,7 +6240,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "7af0eac7-04ae-4b57-89c6-a1e5936cff61",
+    id: "OLL 9-0",
     name: "OLL 9",
     ollNumber: 9,
     algNumber: 0,
@@ -6278,7 +6330,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R' F R2 U R' U' F'",
+    algs: [
+      "R U R' U' R' F R2 U R' U' F'"
+    ],
     scrambles: [
       "U B2 R2 B' L F' L F L2 B R2 B2",
       "U F2 L2 F' R B' R B R2 F L2 F2",
@@ -6426,7 +6480,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "bb7d8ee0-6807-4875-9d6e-97cb918d71fd",
+    id: "OLL 10-0",
     name: "OLL 10",
     ollNumber: 10,
     algNumber: 0,
@@ -6516,7 +6570,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R' F R F' R U2 R'",
+    algs: [
+      "R U R' U R' F R F' R U2 R'"
+    ],
     scrambles: [
       "U2 L F2 R2 D2 R D2 F' R F2 L' F",
       "R' U2 R2 U R2 F' U F R2 U' R' U2",
@@ -6664,7 +6720,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "90af477d-3318-4616-ab42-12768c3bc0b8",
+    id: "OLL 10-1",
     name: "OLL 10",
     ollNumber: 10,
     algNumber: 1,
@@ -6754,7 +6810,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U' R' U' r' R U R U' R'",
+    algs: [
+      "r U R' U R U' R' U' r' R U R U' R'"
+    ],
     scrambles: [
       "U2 L F2 R2 D2 R D2 F' R F2 L' F",
       "R' U2 R2 U R2 F' U F R2 U' R' U2",
@@ -6902,7 +6960,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "a21ed148-20ab-4afb-a450-01d970e39a1b",
+    id: "OLL 11-0",
     name: "OLL 11",
     ollNumber: 11,
     algNumber: 0,
@@ -6992,7 +7050,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R' F R F' R U2 r'",
+    algs: [
+      "r U R' U R' F R F' R U2 r'"
+    ],
     scrambles: [
       "U L F' L2 B L' D2 F' D2 F2 L2 B'",
       "U' B2 R2 F R' B R' B' R2 F' R2 B2",
@@ -7140,7 +7200,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "bf912597-afc2-4303-91bb-f8c6d55b0917",
+    id: "OLL 11-1",
     name: "OLL 11",
     ollNumber: 11,
     algNumber: 1,
@@ -7230,7 +7290,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R2 U R' U R U2 R' U M'",
+    algs: [
+      "r' R2 U R' U R U2 R' U M'"
+    ],
     scrambles: [
       "U L F' L2 B L' D2 F' D2 F2 L2 B'",
       "U' B2 R2 F R' B R' B' R2 F' R2 B2",
@@ -7378,7 +7440,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "8ff27761-61e8-4dff-96e9-8bf5a3c18364",
+    id: "OLL 12-0",
     name: "OLL 12",
     ollNumber: 12,
     algNumber: 0,
@@ -7468,7 +7530,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "M' R' U' R U' R' U2 R U' R r'",
+    algs: [
+      "M' R' U' R U' R' U2 R U' R r'"
+    ],
     scrambles: [
       "U B L' B L' F2 R' D2 R F2 L2 B2",
       "B2 L2 B R2 F R F' R B' L2 B2 U",
@@ -7616,7 +7680,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "e4daa178-110e-414f-bc8d-d188d8163807",
+    id: "OLL 13-0",
     name: "OLL 13",
     ollNumber: 13,
     algNumber: 0,
@@ -7706,7 +7770,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R2 F' R U R U' R'",
+    algs: [
+      "F U R U' R2 F' R U R U' R'"
+    ],
     scrambles: [
       "B D' R2 D U L U' L' D' R2 D B'",
       "F R2 U R' U R F R' F' U2 R2 F'",
@@ -7854,7 +7920,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "96f674e7-9b6b-45b9-a4b0-e15a1e2bf442",
+    id: "OLL 13-1",
     name: "OLL 13",
     ollNumber: 13,
     algNumber: 1,
@@ -7944,7 +8010,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U' r' U' r U r' y' R' U R",
+    algs: [
+      "r U' r' U' r U r' y' R' U R"
+    ],
     scrambles: [
       "B D' R2 D U L U' L' D' R2 D B'",
       "F R2 U R' U R F R' F' U2 R2 F'",
@@ -8092,7 +8160,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "73a4ac92-0e87-4010-bf90-4801e0325b0f",
+    id: "OLL 14-0",
     name: "OLL 14",
     ollNumber: 14,
     algNumber: 0,
@@ -8182,7 +8250,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R' F' R F U' F'",
+    algs: [
+      "R' F R U R' F' R F U' F'"
+    ],
     scrambles: [
       "R' F2 U' F U' F' R' F R U2 F2 R",
       "U2 B U2 B2 U' R D' R D R2 U B",
@@ -8330,7 +8400,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "bacd072b-33b8-41d1-a8be-61d7a895f9a0",
+    id: "OLL 14-1",
     name: "OLL 14",
     ollNumber: 14,
     algNumber: 1,
@@ -8420,7 +8490,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F' U' L' U2 L U L' U' L F",
+    algs: [
+      "F' U' L' U2 L U L' U' L F"
+    ],
     scrambles: [
       "R' F2 U' F U' F' R' F R U2 F2 R",
       "U2 B U2 B2 U' R D' R D R2 U B",
@@ -8568,7 +8640,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "997aebd6-62b9-4861-8d4f-351d44a2cd5e",
+    id: "OLL 15-0",
     name: "OLL 15",
     ollNumber: 15,
     algNumber: 0,
@@ -8658,7 +8730,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' r R' U' R U r' U r",
+    algs: [
+      "r' U' r R' U' R U r' U r"
+    ],
     scrambles: [
       "U2 F' U' F2 R U R' F2 U F2 U2 F'",
       "U2 R' U' R2 B U B' R2 U R2 U2 R'",
@@ -8806,7 +8880,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "e799fe0c-26a6-4360-997a-161943cedbc2",
+    id: "OLL 15-1",
     name: "OLL 15",
     ollNumber: 15,
     algNumber: 1,
@@ -8896,7 +8970,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U' l L' U' L U l' U l",
+    algs: [
+      "l' U' l L' U' L U l' U l"
+    ],
     scrambles: [
       "U2 F' U' F2 R U R' F2 U F2 U2 F'",
       "U2 R' U' R2 B U B' R2 U R2 U2 R'",
@@ -9044,7 +9120,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "3a77f9c4-a450-4869-9c02-4f4d387675e0",
+    id: "OLL 16-0",
     name: "OLL 16",
     ollNumber: 16,
     algNumber: 0,
@@ -9134,7 +9210,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' R U R' U' r U' r'",
+    algs: [
+      "r U r' R U R' U' r U' r'"
+    ],
     scrambles: [
       "U F U F2 L' U' L F2 U' F2 U2 F",
       "R U2 R' F2 L F L2 U' L U F U",
@@ -9282,7 +9360,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "ab8ebb4e-8e7c-4c0d-a368-7f0436054884",
+    id: "OLL 17-0",
     name: "OLL 17",
     ollNumber: 17,
     algNumber: 0,
@@ -9372,7 +9450,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R' F R F' U2 R' F R F'",
+    algs: [
+      "R U R' U R' F R F' U2 R' F R F'"
+    ],
     scrambles: [
       "B2 R2 F2 L D2 L' F2 R2 B R' F' U' F U' R B",
       "L U F U2 R U' R2 F' R F2 L' U2 L U2 F2 L'",
@@ -9520,7 +9600,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "9b61097d-8683-4917-9f50-b90c4f666992",
+    id: "OLL 17-1",
     name: "OLL 17",
     ollNumber: 17,
     algNumber: 1,
@@ -9610,7 +9690,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F' R2 r' U R U' R' U' M'",
+    algs: [
+      "F R' F' R2 r' U R U' R' U' M'"
+    ],
     scrambles: [
       "B2 R2 F2 L D2 L' F2 R2 B R' F' U' F U' R B",
       "L U F U2 R U' R2 F' R F2 L' U2 L U2 F2 L'",
@@ -9758,7 +9840,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "0972879f-b102-4db3-82a0-ce92dac2865b",
+    id: "OLL 18-0",
     name: "OLL 18",
     ollNumber: 18,
     algNumber: 0,
@@ -9848,7 +9930,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R' R' F R F' U2 M' U R U' r'",
+    algs: [
+      "R U2 R' R' F R F' U2 M' U R U' r'"
+    ],
     scrambles: [
       "F R2 B2 U' F2 D L2 B2 D2 B L B' D F2 U F'",
       "F L2 F' R2 F L2 F' R' U2 B U' L U' L' B' R'",
@@ -9996,7 +10080,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "8cfa446e-2743-40cf-b3e7-9c3a1ff6603b",
+    id: "OLL 18-1",
     name: "OLL 18",
     ollNumber: 18,
     algNumber: 1,
@@ -10086,7 +10170,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U2 r' r' U' R U' R' U2 r",
+    algs: [
+      "r U R' U R U2 r' r' U' R U' R' U2 r"
+    ],
     scrambles: [
       "F R2 B2 U' F2 D L2 B2 D2 B L B' D F2 U F'",
       "F L2 F' R2 F L2 F' R' U2 B U' L U' L' B' R'",
@@ -10234,7 +10320,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "1866ff4f-bf95-44c5-aa9a-dc78af0094e3",
+    id: "OLL 19-0",
     name: "OLL 19",
     ollNumber: 19,
     algNumber: 0,
@@ -10324,7 +10410,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' M' R' F R F'",
+    algs: [
+      "r' R U R U R' U' M' R' F R F'"
+    ],
     scrambles: [
       "F' L2 B L2 B2 D2 B U2 L B' D2 F R B' R B2",
       "B L F2 U2 L F2 L' U2 F2 U' F U' F' L' B' U2",
@@ -10472,7 +10560,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "c3c514b0-ae4b-459c-9112-6f2cbd8c086e",
+    id: "OLL 20-0",
     name: "OLL 20",
     ollNumber: 20,
     algNumber: 0,
@@ -10562,7 +10650,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' M2 U R U' R' U' M'",
+    algs: [
+      "r U R' U' M2 U R U' R' U' M'"
+    ],
     scrambles: [
       "F2 D' R2 B2 U' L2 B2 F2 U B' F' R B F' U2 R2",
       "L2 F2 R2 D L2 B2 R2 F2 U' L' R B U2 B2 L R'",
@@ -10710,7 +10800,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "89b01aa3-07d2-43c9-8517-56f15ecc77d4",
+    id: "OLL 20-1",
     name: "OLL 20",
     ollNumber: 20,
     algNumber: 1,
@@ -10800,7 +10890,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' M2 U R U' r'",
+    algs: [
+      "r' R U R U R' U' M2 U R U' r'"
+    ],
     scrambles: [
       "F2 D' R2 B2 U' L2 B2 F2 U B' F' R B F' U2 R2",
       "L2 F2 R2 D L2 B2 R2 F2 U' L' R B U2 B2 L R'",
@@ -10948,7 +11040,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "dfb00ebc-267a-416c-ace8-71ee558848a2",
+    id: "OLL 28-0",
     name: "OLL 28",
     ollNumber: 28,
     algNumber: 0,
@@ -11038,7 +11130,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U' r' R U R U' R'",
+    algs: [
+      "r U R' U' r' R U R U' R'"
+    ],
     scrambles: [
       "U2 B2 D' R2 D B F' R' U2 R B F",
       "F2 D' L2 D F2 L R B U2 B' L' R'",
@@ -11186,7 +11280,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "db846283-00a6-4aa7-9b7b-ea1d76a9d438",
+    id: "OLL 29-0",
     name: "OLL 29",
     ollNumber: 29,
     algNumber: 0,
@@ -11276,7 +11370,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' R U R U R' U' R' F R F' r R'",
+    algs: [
+      "r' R U R U R' U' R' F R F' r R'"
+    ],
     scrambles: [
       "U' R2 B2 R F' U' F U R' B2 R2",
       "B L F' L' B' L2 F L2 B' U2 B",
@@ -11424,7 +11520,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "27ac29a2-57f7-4850-9178-812b61dbd06f",
+    id: "OLL 29-1",
     name: "OLL 29",
     ollNumber: 29,
     algNumber: 1,
@@ -11514,7 +11610,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R U' R' F' U' F R U R'",
+    algs: [
+      "R U R' U' R U' R' F' U' F R U R'"
+    ],
     scrambles: [
       "U' R2 B2 R F' U' F U R' B2 R2",
       "B L F' L' B' L2 F L2 B' U2 B",
@@ -11662,7 +11760,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "5cac1bc5-b56f-4c58-94a8-cca2f0c4d54c",
+    id: "OLL 30-0",
     name: "OLL 30",
     ollNumber: 30,
     algNumber: 0,
@@ -11752,7 +11850,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U2 R' U' R U2 R' U' F'",
+    algs: [
+      "F U R U2 R' U' R U2 R' U' F'"
+    ],
     scrambles: [
       "U R2 F2 R' B U B' U' R F2 R2",
       "F' L' B L F L2 B' L2 F U2 F'",
@@ -11900,7 +12000,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "59103cfc-3311-4569-97e0-299e65c17f1a",
+    id: "OLL 30-1",
     name: "OLL 30",
     ollNumber: 30,
     algNumber: 1,
@@ -11990,7 +12090,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F R2 U' R' U' R U R' F2",
+    algs: [
+      "F R' F R2 U' R' U' R U R' F2"
+    ],
     scrambles: [
       "U R2 F2 R' B U B' U' R F2 R2",
       "F' L' B L F L2 B' L2 F U2 F'",
@@ -12138,7 +12240,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "8423f6b9-29c0-43ad-9bf6-1a6ddb34ded9",
+    id: "OLL 31-0",
     name: "OLL 31",
     ollNumber: 31,
     algNumber: 0,
@@ -12228,7 +12330,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' F U R U' R' F' R",
+    algs: [
+      "R' U' F U R U' R' F' R"
+    ],
     scrambles: [
       "U' L2 B2 R B' D' B D R' B2 L2",
       "U' R2 F2 L F' D' F D L' F2 R2",
@@ -12376,7 +12480,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "6a4a6c81-89ff-4811-96f4-a8f63e6e8dbd",
+    id: "OLL 32-0",
     name: "OLL 32",
     ollNumber: 32,
     algNumber: 0,
@@ -12466,7 +12570,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "S R U R' U' R' F R f'",
+    algs: [
+      "S R U R' U' R' F R f'"
+    ],
     scrambles: [
       "U2 L2 F2 R' F D F' D' R F2 L2",
       "U2 L U2 L' U2 F' L' B L B' F",
@@ -12614,7 +12720,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "c29abb87-fea4-4371-ba70-16d72e024172",
+    id: "OLL 32-1",
     name: "OLL 32",
     ollNumber: 32,
     algNumber: 1,
@@ -12704,7 +12810,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L U F' U' L' U L F L'",
+    algs: [
+      "L U F' U' L' U L F L'"
+    ],
     scrambles: [
       "U2 L2 F2 R' F D F' D' R F2 L2",
       "U2 L U2 L' U2 F' L' B L B' F",
@@ -12852,7 +12960,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "b0d940b5-a638-4a3e-819d-53955ac96c06",
+    id: "OLL 33-0",
     name: "OLL 33",
     ollNumber: 33,
     algNumber: 0,
@@ -12942,7 +13050,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' R' F R F'",
+    algs: [
+      "R U R' U' R' F R F'"
+    ],
     scrambles: [
       "R' B' R2 B R' U' R2 U R2 U'",
       "B R B2 R' B U B2 U' B2 U'",
@@ -13090,7 +13200,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "822ece25-67d1-42e2-a174-2e749e1950dd",
+    id: "OLL 34-0",
     name: "OLL 34",
     ollNumber: 34,
     algNumber: 0,
@@ -13180,7 +13290,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R2 U' R' F R U R U' F'",
+    algs: [
+      "R U R2 U' R' F R U R U' F'"
+    ],
     scrambles: [
       "U F2 L2 F' U R U' R' F L2 F2",
       "U' F2 R2 B' D R D' R' B R2 F2",
@@ -13328,7 +13440,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "e619f15c-52a4-4cb9-927b-3591f4270d00",
+    id: "OLL 34-1",
     name: "OLL 34",
     ollNumber: 34,
     algNumber: 1,
@@ -13418,7 +13530,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' B' R' F R F' B",
+    algs: [
+      "R U R' U' B' R' F R F' B"
+    ],
     scrambles: [
       "U F2 L2 F' U R U' R' F L2 F2",
       "U' F2 R2 B' D R D' R' B R2 F2",
@@ -13566,7 +13680,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "906f5ef1-fe44-4081-a901-b572ba5fd199",
+    id: "OLL 35-0",
     name: "OLL 35",
     ollNumber: 35,
     algNumber: 0,
@@ -13656,7 +13770,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R' R' F R F' R U2 R'",
+    algs: [
+      "R U2 R' R' F R F' R U2 R'"
+    ],
     scrambles: [
       "U R' F L F2 R' L B D2 B' R2 L2",
       "L2 U' L2 U' L U F U' F' L U L2",
@@ -13804,7 +13920,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "d843b87a-b53e-4a35-99ec-6af331ff3598",
+    id: "OLL 36-0",
     name: "OLL 36",
     ollNumber: 36,
     algNumber: 0,
@@ -13894,7 +14010,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L' U' L U' L' U L U L F' L' F",
+    algs: [
+      "L' U' L U' L' U L U L F' L' F"
+    ],
     scrambles: [
       "B' U2 B L2 F' L2 B L F L' B'",
       "R' F R2 B' R F' R2 B2 U2 B' U2",
@@ -14042,7 +14160,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "7b24e7aa-3f64-4597-a1f9-3a3021c7a273",
+    id: "OLL 36-1",
     name: "OLL 36",
     ollNumber: 36,
     algNumber: 1,
@@ -14132,7 +14250,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' F' U2 F U R U R'",
+    algs: [
+      "R U R' U' F' U2 F U R U R'"
+    ],
     scrambles: [
       "B' U2 B L2 F' L2 B L F L' B'",
       "R' F R2 B' R F' R2 B2 U2 B' U2",
@@ -14280,7 +14400,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "20e82989-e676-428b-994a-686857aa5207",
+    id: "OLL 37-0",
     name: "OLL 37",
     ollNumber: 37,
     algNumber: 0,
@@ -14370,7 +14490,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R' F' R U R U' R'",
+    algs: [
+      "F R' F' R U R U' R'"
+    ],
     scrambles: [
       "R2 U' F2 D' F2 U F D R F' U' R",
       "D F2 R2 U R2 D' F2 L' B L2 B' L'",
@@ -14518,7 +14640,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "55f30202-e25a-4f69-9ebd-cd5e31ed30b3",
+    id: "OLL 37-1",
     name: "OLL 37",
     ollNumber: 37,
     algNumber: 1,
@@ -14608,7 +14730,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U' R' U' R U R' F'",
+    algs: [
+      "F R U' R' U' R U R' F'"
+    ],
     scrambles: [
       "R2 U' F2 D' F2 U F D R F' U' R",
       "D F2 R2 U R2 D' F2 L' B L2 B' L'",
@@ -14756,7 +14880,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "05d9a226-e916-41bd-be04-50a33a6fc13b",
+    id: "OLL 38-0",
     name: "OLL 38",
     ollNumber: 38,
     algNumber: 0,
@@ -14846,7 +14970,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' R' U' R' F R F'",
+    algs: [
+      "R U R' U R U' R' U' R' F R F'"
+    ],
     scrambles: [
       "L U2 L' B2 R B2 L' B' R' B L",
       "U' B L' B2 R B' R' B2 L2 U2 L'",
@@ -14994,7 +15120,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "63c1e321-7989-493c-acbb-9630312640bc",
+    id: "OLL 39-0",
     name: "OLL 39",
     ollNumber: 39,
     algNumber: 0,
@@ -15084,7 +15210,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "L F' L' U' L U F U' L'",
+    algs: [
+      "L F' L' U' L U F U' L'"
+    ],
     scrambles: [
       "U2 B F' U' L' U L U B' U' F",
       "R' U2 B L2 D F2 D' L2 B' U' R",
@@ -15232,7 +15360,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "bb6e615c-58e7-4968-8fec-a3680bca30e0",
+    id: "OLL 39-1",
     name: "OLL 39",
     ollNumber: 39,
     algNumber: 1,
@@ -15322,7 +15450,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F' R' U' R U' R' U2 R",
+    algs: [
+      "F R U R' U' F' R' U' R U' R' U2 R"
+    ],
     scrambles: [
       "U2 B F' U' L' U L U B' U' F",
       "R' U2 B L2 D F2 D' L2 B' U' R",
@@ -15470,7 +15600,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "e3c75a1c-1dc6-4ade-998c-dd822176c9ad",
+    id: "OLL 40-0",
     name: "OLL 40",
     ollNumber: 40,
     algNumber: 0,
@@ -15560,7 +15690,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R' U' F' U R",
+    algs: [
+      "R' F R U R' U' F' U R"
+    ],
     scrambles: [
       "F' U2 F U R U B U B' R' U'",
       "R U2 F' L2 D' B2 D L2 F U R'",
@@ -15708,7 +15840,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "675eb66c-f02c-4a3d-ab49-6bac63159a4e",
+    id: "OLL 41-0",
     name: "OLL 41",
     ollNumber: 41,
     algNumber: 0,
@@ -15798,7 +15930,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U2 R' F R U R' U' F'",
+    algs: [
+      "R U R' U R U2 R' F R U R' U' F'"
+    ],
     scrambles: [
       "U2 L' R2 D B' D' L R2 F' U F",
       "F R2 F2 U2 R' U' R U' F2 R2 F'",
@@ -15946,7 +16080,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "609a5450-7dda-4f8a-93b8-4413d43b107e",
+    id: "OLL 42-0",
     name: "OLL 42",
     ollNumber: 42,
     algNumber: 0,
@@ -16036,7 +16170,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R U' R' U2 R F R U R' U' F'",
+    algs: [
+      "R' U' R U' R' U2 R F R U R' U' F'"
+    ],
     scrambles: [
       "U2 B2 F D' R D B2 F' L U' L'",
       "U2 L2 R D' B D L2 R' F U' F'",
@@ -16184,7 +16320,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "1630b70b-1d40-4511-ade6-c347e46050d5",
+    id: "OLL 43-0",
     name: "OLL 43",
     ollNumber: 43,
     algNumber: 0,
@@ -16274,7 +16410,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F' U' L' U L F",
+    algs: [
+      "F' U' L' U L F"
+    ],
     scrambles: [
       "L' U2 L2 F2 R' F' R F2 L' F U",
       "U2 L' U2 L2 F2 R' F' R F2 L' F",
@@ -16422,7 +16560,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "17dc9ea8-4118-420c-b5b4-96ebd4d1ae4e",
+    id: "OLL 43-1",
     name: "OLL 43",
     ollNumber: 43,
     algNumber: 1,
@@ -16512,7 +16650,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' F R' F' R U R",
+    algs: [
+      "R' U' F R' F' R U R"
+    ],
     scrambles: [
       "L' U2 L2 F2 R' F' R F2 L' F U",
       "U2 L' U2 L2 F2 R' F' R F2 L' F",
@@ -16660,7 +16800,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "fc63bd10-fb87-4840-ace4-44408bd7712d",
+    id: "OLL 44-0",
     name: "OLL 44",
     ollNumber: 44,
     algNumber: 0,
@@ -16750,7 +16890,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R' F'",
+    algs: [
+      "F U R U' R' F'"
+    ],
     scrambles: [
       "B U2 B R2 F R F' R2 B2 R' U",
       "U2 L U2 L2 B2 R B R' B2 L B'",
@@ -16898,7 +17040,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "0a87ba71-1e60-4555-a8e8-554d742a395c",
+    id: "OLL 44-1",
     name: "OLL 44",
     ollNumber: 44,
     algNumber: 1,
@@ -16988,7 +17130,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' f'",
+    algs: [
+      "f R U R' U' f'"
+    ],
     scrambles: [
       "B U2 B R2 F R F' R2 B2 R' U",
       "U2 L U2 L2 B2 R B R' B2 L B'",
@@ -17136,7 +17280,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "c603196c-556f-4bcf-9600-c78e991597fc",
+    id: "OLL 45-0",
     name: "OLL 45",
     ollNumber: 45,
     algNumber: 0,
@@ -17226,7 +17370,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' F'",
+    algs: [
+      "F R U R' U' F'"
+    ],
     scrambles: [
       "B U2 B2 R2 D' R' D R' B2 U2 B'",
       "R2 F2 R' U B U' B R F2 R' B2 R'",
@@ -17374,7 +17520,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "7cb04ae0-24dc-4e26-beeb-deaa2fb20c1d",
+    id: "OLL 46-0",
     name: "OLL 46",
     ollNumber: 46,
     algNumber: 0,
@@ -17464,7 +17610,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R' F R F' U R",
+    algs: [
+      "R' U' R' F R F' U R"
+    ],
     scrambles: [
       "U2 F U2 L U' R U L' U2 R' F'",
       "L U F' U' L' U L2 F L2 B' U2 B",
@@ -17612,7 +17760,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "bcb3db94-04c5-415f-a3dd-9d3e0ae977e3",
+    id: "OLL 47-0",
     name: "OLL 47",
     ollNumber: 47,
     algNumber: 0,
@@ -17702,7 +17850,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' U' R' F R F' R' F R F' U R",
+    algs: [
+      "R' U' R' F R F' R' F R F' U R"
+    ],
     scrambles: [
       "R2 B2 R F2 R' B2 R D' F' D F' R2 U' R'",
       "L D2 B' D2 F L2 B2 U' B2 U2 F' U' B2 L",
@@ -17850,7 +18000,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "2395073e-5a86-4876-9ba5-55bb864f5cf5",
+    id: "OLL 47-1",
     name: "OLL 47",
     ollNumber: 47,
     algNumber: 1,
@@ -17940,7 +18090,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F' L' U' L U L' U' L U F",
+    algs: [
+      "F' L' U' L U L' U' L U F"
+    ],
     scrambles: [
       "R2 B2 R F2 R' B2 R D' F' D F' R2 U' R'",
       "L D2 B' D2 F L2 B2 U' B2 U2 F' U' B2 L",
@@ -18088,7 +18240,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "db4fa95a-a9eb-447f-8542-46f5c9d97292",
+    id: "OLL 48-0",
     name: "OLL 48",
     ollNumber: 48,
     algNumber: 0,
@@ -18178,7 +18330,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F R U R' U' R U R' U' F'",
+    algs: [
+      "F R U R' U' R U R' U' F'"
+    ],
     scrambles: [
       "F U2 F2 D2 U B2 U' L' B2 D2 F2 R' F' U'",
       "U' B' R2 F2 R' B R2 U2 R U2 R' F2 U2 R",
@@ -18326,7 +18480,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "758638fd-8c53-4670-9550-a01f32d323cc",
+    id: "OLL 49-0",
     name: "OLL 49",
     ollNumber: 49,
     algNumber: 0,
@@ -18416,7 +18570,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U' r2 U r2 U r2 U' r",
+    algs: [
+      "r U' r2 U r2 U r2 U' r"
+    ],
     scrambles: [
       "R2 D L2 F2 R2 U B R2 F2 R' B' L2 B2 R'",
       "B L' B2 L B2 R' U2 R U' L U' L' B' U",
@@ -18564,7 +18720,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "d2caf86d-5d06-46b1-87b8-2cf6d645e7e1",
+    id: "OLL 50-0",
     name: "OLL 50",
     ollNumber: 50,
     algNumber: 0,
@@ -18654,7 +18810,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U r2 U' r2 U' r2 U r'",
+    algs: [
+      "r' U r2 U' r2 U' r2 U r'"
+    ],
     scrambles: [
       "F2 D F2 L2 B2 U L B2 L2 F' L' F2 R2 F'",
       "R' F2 L2 R' B2 L2 U R F' R F' L2 D L2",
@@ -18802,7 +18960,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "4bcda54d-cbee-406b-baf6-f92381811ed6",
+    id: "OLL 51-0",
     name: "OLL 51",
     ollNumber: 51,
     algNumber: 0,
@@ -18892,7 +19050,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "f R U R' U' R U R' U' f'",
+    algs: [
+      "f R U R' U' R U R' U' f'"
+    ],
     scrambles: [
       "F' R D2 R' U2 R D2 R' U L' U L F U'",
       "R' U' F' U L F' R2 U2 R' L2 U2 L' F2 L2",
@@ -19040,7 +19200,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "4bdaf30a-6778-4264-b045-41895c934818",
+    id: "OLL 51-1",
     name: "OLL 51",
     ollNumber: 51,
     algNumber: 1,
@@ -19130,7 +19290,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "F U R U' R' U R U' R' F'",
+    algs: [
+      "F U R U' R' U R U' R' F'"
+    ],
     scrambles: [
       "F' R D2 R' U2 R D2 R' U L' U L F U'",
       "R' U' F' U L F' R2 U2 R' L2 U2 L' F2 L2",
@@ -19278,7 +19440,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "14ddde03-f8a2-45b6-bf18-c3074b614eb7",
+    id: "OLL 52-0",
     name: "OLL 52",
     ollNumber: 52,
     algNumber: 0,
@@ -19368,7 +19530,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' y R U' R' F'",
+    algs: [
+      "R U R' U R U' y R U' R' F'"
+    ],
     scrambles: [
       "F R' F R F2 L U2 L2 U' L2 U' L2 U L",
       "B L B' U F U F' L' U2 L2 U2 L' U2 L'",
@@ -19516,7 +19680,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "6b7a6feb-8d00-4f61-ba3e-1eb0ce514cdc",
+    id: "OLL 52-1",
     name: "OLL 52",
     ollNumber: 52,
     algNumber: 1,
@@ -19606,7 +19770,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U R U' B U' B' R'",
+    algs: [
+      "R U R' U R U' B U' B' R'"
+    ],
     scrambles: [
       "F R' F R F2 L U2 L2 U' L2 U' L2 U L",
       "B L B' U F U F' L' U2 L2 U2 L' U2 L'",
@@ -19754,7 +19920,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "b5edc754-5b94-48d2-af0b-fade1f9cd143",
+    id: "OLL 53-0",
     name: "OLL 53",
     ollNumber: 53,
     algNumber: 0,
@@ -19844,7 +20010,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U2 R U R' U' R U R' U r",
+    algs: [
+      "r' U2 R U R' U' R U R' U r"
+    ],
     scrambles: [
       "F R2 B2 D2 B' F2 U2 F' L' B2 D2 F2 R B",
       "R' F2 R' B2 L D2 F2 L2 B' L B2 R2 B U",
@@ -19992,7 +20160,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "8fdef797-9692-40e9-abe5-04f2ecd1689e",
+    id: "OLL 53-1",
     name: "OLL 53",
     ollNumber: 53,
     algNumber: 1,
@@ -20082,7 +20250,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "l' U2 L U L' U' L U L' U l",
+    algs: [
+      "l' U2 L U L' U' L U L' U l"
+    ],
     scrambles: [
       "F R2 B2 D2 B' F2 U2 F' L' B2 D2 F2 R B",
       "R' F2 R' B2 L D2 F2 L2 B' L B2 R2 B U",
@@ -20230,7 +20400,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "05482321-ba80-4d66-928f-0bde47cfae9b",
+    id: "OLL 54-0",
     name: "OLL 54",
     ollNumber: 54,
     algNumber: 0,
@@ -20320,7 +20490,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U2 R' U' R U R' U' R U' r'",
+    algs: [
+      "r U2 R' U' R U R' U' R U' r'"
+    ],
     scrambles: [
       "R' F2 D' L2 D' L2 D2 F2 R U2 R' F R F'",
       "L U2 L2 U' B D' B' U B2 D B2 L2 U2 L'",
@@ -20468,7 +20640,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "99181e5a-8f6f-47e1-afef-3381a14af1dc",
+    id: "OLL 54-1",
     name: "OLL 54",
     ollNumber: 54,
     algNumber: 1,
@@ -20558,7 +20730,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U R' U R U' R' U R U2 r'",
+    algs: [
+      "r U R' U R U' R' U R U2 r'"
+    ],
     scrambles: [
       "R' F2 D' L2 D' L2 D2 F2 R U2 R' F R F'",
       "L U2 L2 U' B D' B' U B2 D B2 L2 U2 L'",
@@ -20706,7 +20880,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "4e2fdc6a-6f18-47d3-ad0d-35f12fac9429",
+    id: "OLL 55-0",
     name: "OLL 55",
     ollNumber: 55,
     algNumber: 0,
@@ -20796,7 +20970,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U2 R2 U' R U' R' U2 F R F'",
+    algs: [
+      "R U2 R2 U' R U' R' U2 F R F'"
+    ],
     scrambles: [
       "U2 F R U2 R' F' B L2 U' L2 U L2 U B'",
       "L F' L' B U B' U R2 F R2 U2 F2 U2 F'",
@@ -20944,7 +21120,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "da683f1a-a62b-41e7-87b3-8f1ad14909da",
+    id: "OLL 55-1",
     name: "OLL 55",
     ollNumber: 55,
     algNumber: 1,
@@ -21034,7 +21210,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R' F R U R U' R2 F' R2 U' R' U R U R'",
+    algs: [
+      "R' F R U R U' R2 F' R2 U' R' U R U R'"
+    ],
     scrambles: [
       "U2 F R U2 R' F' B L2 U' L2 U L2 U B'",
       "L F' L' B U B' U R2 F R2 U2 F2 U2 F'",
@@ -21182,7 +21360,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "f0f11060-1a7c-4364-aa2d-db17f3c1b1ab",
+    id: "OLL 56-0",
     name: "OLL 56",
     ollNumber: 56,
     algNumber: 0,
@@ -21272,7 +21450,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r' U' r U' R' U R U' R' U R r' U r",
+    algs: [
+      "r' U' r U' R' U R U' R' U R r' U r"
+    ],
     scrambles: [
       "F' D' L2 U B2 U' B2 L' D L' F2 U2 F' U2",
       "B U L U' L F' L2 B' L2 F L2 B' U2 B",
@@ -21420,7 +21600,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "5f278241-9b7a-41dc-8609-e6e4328eab9a",
+    id: "OLL 56-1",
     name: "OLL 56",
     ollNumber: 56,
     algNumber: 1,
@@ -21510,7 +21690,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "r U r' U R U' R' U R U' R' r U' r'",
+    algs: [
+      "r U r' U R U' R' U R U' R' r U' r'"
+    ],
     scrambles: [
       "F' D' L2 U B2 U' B2 L' D L' F2 U2 F' U2",
       "B U L U' L F' L2 B' L2 F L2 B' U2 B",
@@ -21658,7 +21840,7 @@ const arrowOllSet = [
     ]
   },
   {
-    id: "38162d9f-cfbf-41e6-9bad-5cd5e453ad06",
+    id: "OLL 57-0",
     name: "OLL 57",
     ollNumber: 57,
     algNumber: 0,
@@ -21748,7 +21930,9 @@ const arrowOllSet = [
     algAttemptCount: null,
     algSpeed: null,
     algTps: null,
-    algs: "R U R' U' M' U R U' r'",
+    algs: [
+      "R U R' U' M' U R U' r'"
+    ],
     scrambles: [
       "R L F U2 F' R' L D F2 D' L2 U",
       "R' L' F' U2 F R' L D' F2 D R2 U'",

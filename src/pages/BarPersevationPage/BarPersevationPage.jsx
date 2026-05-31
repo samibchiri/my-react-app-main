@@ -15,9 +15,9 @@ import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
 import { db } from "../../data/db";
-
+import {ChangeOllCont} from "./changeAlg.jsx"
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
-import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx';
+
 import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,
   sortPointsList,sortCenterLeftRight,isPositionLeft,Connect2Points,
   CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./BarPersevationLogic.jsx"
@@ -64,9 +64,9 @@ export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCase
 // );
 
 const selectedGroupOlls = useMemo(() => {
-    if (groupSelected==null || !allOlls) return [];
-    return getOllsByGroup(groupTable[groupSelected]); // getOllsByGroup now handles filtering
-  }, [groupSelected, allOlls]);
+  if (!allOlls) return [];
+  return allOlls.filter(o => o.group === groupTable[groupSelected]);
+}, [allOlls, groupSelected]);
 
 useEffect(() => {
   if(refsReady){
@@ -180,8 +180,9 @@ function GetBarsIndices(OllIndex,PermIndex){
   colorIndexList=addInformationToColorIndexList(selectedGroupOlls[OllIndex].piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList)
 
 
+    console.log("HelpME",colorIndexList)
    colorIndexList.forEach(list=>{
-      list.sort((a,b)=>(sortCenterLeftRight(a[0],newSquaresColors)-sortCenterLeftRight(b[0],newSquaresColors)))
+      list.sort((a,b)=>(sortCenterLeftRight(a.currentIndex,newSquaresColors)-sortCenterLeftRight(b.currentIndex,newSquaresColors)))
 
       //Sort Points clockwise
       list=sortPointsList(list)
@@ -778,7 +779,7 @@ function excludeCenters(e,OllIndex,oll){
 }
 
 function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
-
+  console.log("verifyAndUpdateExcludeBarInput",inputString)
   let testList=[]
   try{
     console.log("Pass",inputString)
@@ -862,29 +863,6 @@ const updatedOll = await db.olls.get(oll.id);
 }
 
 
-function changeOllAlgEnterPressed(e,oll){
-  if(e.key=="Enter"){
-      e.preventDefault()
-      changeOllAlg(e.target.value,oll)
-      console.log("EnterPressed")
-      e.target.value = "";
-  }
-    
-}
-
-function changeOllAlg(newAlg,oll){
-
-//  let updatedNewAlg= correctAlgString(newAlg)
-
-  if(newAlg!=oll.algs){
-    setChangedAlgArray([newAlg,oll,true])
-  }
-  else{
-    setChangedAlgArray([newAlg,oll,false])
-  }
-  
-}
-
 function correctAlgString(inputstring){
   //Remove brackets () and []
   inputstring = inputstring.replace(/[()\[\]]/g, "");
@@ -948,7 +926,7 @@ return (
                           <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
                           
                           selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
-                          oll.name + " Version "+oll.algNumber:oll.name}</h2>
+                          oll.name + "-"+oll.algNumber:oll.name}</h2>
                           <h3>{selectedGroupOlls[i].algs}</h3>
                           
                           
@@ -1127,20 +1105,8 @@ return (
     verifyAndUpdateExcludeBarInput(value, i,oll);
   }}> Save</button></div>
   </div>
-                      
-<div className="barExcludeCont">
-  <div></div>
-  <div style={{display:"flex", justifyContent:"center",justifySelf :"end"}}>
-   <label htmlFor={`barchangeOllAlg-${i}`}>Change alg:</label>
-   </div>
-   <div>
-   <input id={`barchangeOllAlg-${i}`} className="barExcludeCentersInput" placeholder="Enter new alg, ex: R U R' U R U2 R'" onKeyDown={ (e)=>(changeOllAlgEnterPressed(e,oll))}></input>
-  <button className="barExcludeButtonSave" onClick={() => {
-    const value = document.getElementById(`barchangeOllAlg-${i}`).value;
-    changeOllAlg(value, oll);
-    document.getElementById(`barchangeOllAlg-${i}`).value=""
-  }}> Save</button> </div>
-  </div>
+      
+  <ChangeOllCont refIndex={i} oll={oll} setChangedAlgArray={setChangedAlgArray}/>
                       </div>
                       
                           </div>
@@ -1216,8 +1182,8 @@ return (
   {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
     && (<>
     {console.log("NewPage")}
-        <CornerPermutationPage
-          key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
+        <ArrowDataGenerator
+          key={`${changedAlgArray[0]}-${changedAlgArray[1].id}`}
           newAlg={changedAlgArray[0]}
           oll={changedAlgArray[1]}
           onError={(errorMessage) => {

@@ -13,7 +13,7 @@ import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
 import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
-
+import {sortOlls} from "../../context/OllContext.jsx"
 
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
@@ -26,7 +26,7 @@ function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClic
 //     const newOll= 
 // }
 
-const [groupSelected,setGroupSelected]=useState(null)
+const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
 
 const ScrambleVisualizerDetails={
@@ -54,7 +54,10 @@ const {darkMode}= useContext(ThemeContext)
       if (groupSelected === null) {
         return [];
       }
-      return db.olls.where("group").equals(groupTable[groupSelected]).toArray();
+      db.olls.toArray().then(olls => {
+    console.log("Wut3", olls);
+    });
+      return db.olls.where("group").equals(groupTable[groupSelected]).toArray().then(arr => arr.sort(sortOlls));;
     },[groupSelected]
   );
   
@@ -494,11 +497,8 @@ useEffect(() => {
             
                     <div>
                     {/* <h2>{oll.name}</h2> */}
-                    <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
-                                              
-                                              selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
-                                              oll.name + " Version "+oll.algNumber:oll.name+" Version 0"}</h2>
-                    
+                    <h2>{oll.name + "-"+oll.algNumber}</h2>
+                    <h2>{oll.algs}</h2>
                     <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
@@ -579,11 +579,10 @@ useEffect(() => {
 
                 
                     <div>
-                    {/* <h2>{oll.name}</h2> */}
-                    <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
-                          
-                          selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
-                          oll.name + " Version "+oll.algNumber:oll.name +" Version 0"}</h2>
+                     
+                    <h2>{selectedGroupOlls[i+(1-selectedGroupOlls[i].algNumber)]?
+                          oll.name + "-"+oll.algNumber:oll.name}</h2>
+                    <h2>{oll.algs}</h2>
                     
                     <div className="OllGrid">
                         

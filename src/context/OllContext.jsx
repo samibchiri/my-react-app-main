@@ -8,8 +8,15 @@ const OllContext = createContext();
 export const useOll = () => useContext(OllContext);
 
 export const OllProvider = ({ children }) => {
-  const allOlls = useLiveQuery(() => db.olls.toArray(), []);
-
+  //const allOlls = useLiveQuery(() => db.olls.toArray(), [])?? [];
+  const allOlls = useLiveQuery(
+    () => db.olls.toArray().then(arr =>
+      arr.sort((a, b) =>
+        a.ollNumber - b.ollNumber || a.algNumber - b.algNumber
+      )
+    ),
+    []
+  ) ?? [];
   const getOllsByGroup = (group) => {
     return allOlls?.filter(oll => oll.group === group) ?? [];
   };
@@ -18,7 +25,8 @@ export const OllProvider = ({ children }) => {
   const addAlg = async (ollNumber, group, newAlg) => {
     try {
       // Find the highest algNumber for this oll
-      const existing = allOlls?.filter(o => o.ollNumber === ollNumber) ?? [];
+      //const existing = allOlls?.filter(o => o.ollNumber === ollNumber) ?? [];
+      const existing=await db.olls.where("ollNumber").equals(ollNumber).toArray();
       const maxAlgNumber = existing.length > 0 ? Math.max(...existing.map(o => o.algNumber)) : -1;
 
       const newId = `OLL ${ollNumber}-${maxAlgNumber + 1}`;
@@ -67,13 +75,13 @@ export const OllProvider = ({ children }) => {
     }
   }
 
-  const value = useMemo(() => ({
+  const value = {
     allOlls,
     getOllsByGroup,
     addAlg,
     createEmptySlot,
     swapOllsAlgnumber,
-  }), [allOlls]);
+  };
 
   return (
   <OllContext.Provider value={value}>
@@ -82,3 +90,7 @@ export const OllProvider = ({ children }) => {
 );
 
 };
+
+export function sortOlls(a, b) {
+  return a.ollNumber - b.ollNumber || a.algNumber - b.algNumber;
+}

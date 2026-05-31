@@ -5,10 +5,12 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import AlgTrainerPage from "./pages/AlgTrainerPage/AlgTrainerPage.jsx"
 import TrainPage from "./pages/TrainSelectPage/TrainSelectPage.jsx";
 import CornerPermutationPage from "./pages/CpPage/CornerPermutationPage.jsx";
+
 import BarPersevationPage from "./pages/BarPersevationPage/BarPersevationPage.jsx";
 import CpTrainer from './pages/CpTrainerPage/CpTrainerPage.jsx'
 import BarTrainer from "./pages/BarTrainerPage/BarTrainer.jsx";
-import LabsPage from "./pages/LabsPage/LabsPage.jsx";
+//import LabsPage from "./pages/LabsPage/LabsPage.jsx";
+import LabsPage from "./1OllArrowGen.jsx"
 import MyAlgsPage from "./pages/MyAlgsPage/MyAlgsPage.jsx";
 import MyOllPage from "./pages/MyAlgsPage/MyOllPage.jsx"
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'

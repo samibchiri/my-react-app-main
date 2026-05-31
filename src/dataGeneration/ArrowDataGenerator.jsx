@@ -15,7 +15,7 @@ import OllGroupSelector from "../components/Oll/OllGroupSelect.jsx";
 //Function to invert the oll alg
 function Inverse(alg){
 
-    console.log(`InverseAlgStart ${alg}`)
+    console.log(`InverseAlgStart ${alg}`,typeof(alg))
     let inverse=""
     alg=alg.trim()
     let splitAlg=alg.split(" ")
@@ -1062,7 +1062,7 @@ function GroupRecognition(){
             algAttemptCount:null,
             algSpeed:null,
             algTps:null,
-            algs:[ollCaseSet.cases[algRef.current].algs[algIndexRef.current]],
+            algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
             scrambles:ollCaseSet.cases[algRef.current].scrambles,
             group:ollCaseSet.cases[algRef.current].group,
             difficultCenters:[],
@@ -1467,7 +1467,7 @@ function getAltHeadlightsMovement(){
         
         
         let containsOnlyYellow=true
-        console.log("Not Yellow Check")
+        console.log("Not Yellow Check",altContainerSvgSquaresInsideList)
         altContainerSvgSquaresInsideList.forEach((item)=>{
             if(item.getAttribute("fill")=="yellow"){
                 
