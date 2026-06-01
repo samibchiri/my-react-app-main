@@ -23,6 +23,11 @@ import { FaIcon } from '../../assets/fontAwesome.js';
 import '../../styling/App.css';
 import '../../styling/index.css';
 
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from '../../data/db.js';
+
+import {sortOlls} from "../../context/OllContext.jsx"
+
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
 
@@ -67,6 +72,12 @@ export default function AlgTrainerPage() {
         backgroundColor: "#000000"
 
     }
+
+    const dbOllCaseSet = useLiveQuery(()=>{
+        
+          return db.olls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortOlls));;
+        },[]
+      );
 
     const [selectedCaseSet, setSelectedCaseSet] = useState(null)
 
@@ -198,8 +209,20 @@ export default function AlgTrainerPage() {
 
 
     const handleAlgCaseSetClicked = (caseItem) => {
+        console.log("Case",dbOllCaseSet)
         setCaseClicked(!caseClicked)
-        setSelectedCaseSet(caseItem)
+        if(caseItem.details.id="oll"){
+            setSelectedCaseSet({
+                dbOllCaseSet,
+                details: {
+                    id: "oll"
+                }
+            });
+        }
+        else{
+            setSelectedCaseSet(caseItem)
+        }
+        
         setOpenGroups([])
         setSelectedAlg([])
         setAlgCasesSet(caseItem)
@@ -351,6 +374,13 @@ export default function AlgTrainerPage() {
                                         Num Solves
                                     </div>
                                 </th>
+                                {selectedCaseSet.details.id=="oll" &&
+                                    <th className='align-middle' role="columnheader">
+                                    <div>
+                                        Order
+                                    </div>
+                                </th>
+                                }
                                 <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                                     <input style={{ margin: "10px", width: "20px", height: "20px", verticalAlign: "middle" }} type="checkbox" checked={AreAllAlgsChecked()} onChange={CheckAllAlgs}>
                                     </input>
@@ -399,6 +429,12 @@ export default function AlgTrainerPage() {
                                             <td className=' d-sm-table-cell align-middle' role="columnheader">
                                                 Item9
                                             </td>
+                                            {selectedCaseSet.details.id=="oll" &&
+                                            <td className=' d-sm-table-cell align-middle' role="columnheader">
+                                                
+                                            </td>
+                                            }
+                                            
                                             <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                                                 <input
                                                     type="checkbox"
@@ -410,7 +446,7 @@ export default function AlgTrainerPage() {
 
 
                                         </tr>
-                                        {AlgCasesSet.cases.map(alg => {
+                                        {(selectedCaseSet.details.id=="oll"?selectedCaseSet.dbOllCaseSet:AlgCasesSet.cases).map(alg => {
                                             return (
 
 
@@ -425,7 +461,7 @@ export default function AlgTrainerPage() {
                                                             <div>
                                                                 <CaseImage
                                                                     size={80}
-                                                                    alg={alg.algs[0]}
+                                                                    alg={alg instanceof Array?alg.algs[0]:alg.algs}
                                                                     caseSetDetails={AlgCasesSet.details}
                                                                 ></CaseImage>
                                                             </div>
@@ -450,6 +486,15 @@ export default function AlgTrainerPage() {
                                                                 Item5
                                                             </div>
                                                         </td>
+                                                        {selectedCaseSet.details.id=="oll" &&
+                                                        
+                                                        <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
+                                                            <div>
+                                                                {console.log(alg)}
+                                                                {alg.order}
+                                                            </div>
+                                                        
+                                                        </td>}
                                                         <td>
                                                             <input style={{ margin: "20px", width: "20px", height: "30px" }} className="align-middle" type="checkbox" checked={selectedAlg.includes(alg)} onClick={() => { toggleSelectedAlg(alg) }}>
                                                             </input>

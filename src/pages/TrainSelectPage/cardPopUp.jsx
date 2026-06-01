@@ -5,8 +5,27 @@ import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import "../../styling/index.css";
 import '../../styling/PopUp.css';
 
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from '../../data/db.js';
+
+import {sortOlls} from "../../context/OllContext.jsx"
+
 function ShowAlgCard({alg,onClose,AlgCasesSet}){
     console.log("Showing Card",alg)
+
+        
+    const [editClick1,setEditClick1]= useState(false)
+    const [editClick2,setEditClick2]= useState(false)
+    const [editedAlg1,setEditedAlg1]=useState([])
+    const [editedAlg2,setEditedAlg2]=useState([])
+    const [existPrevAlg,setExistPrevAlg]= useState(false)
+
+     const AlgVersions = useLiveQuery(()=>{
+            
+              return db.olls.where("ollNumber").equals(alg.ollNumber).toArray().then(arr => arr.sort(sortOlls));;
+            },[]
+          );
+    console.log(AlgVersions)
 
     useEffect(()=>{
         if(editClick2 && InputAlg2.current){
@@ -21,6 +40,17 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     const InputAlg1= useRef(null)
     const InputAlg2= useRef(null)
 
+    let DefaultAlg1= AlgVersions?AlgVersions[0].algs:""
+    let DefaultAlg2= AlgVersions?.[1]?AlgVersions[1].algs:""
+
+    useEffect(() => {
+    if (AlgVersions?.[0]?.algs) {
+        setEditedAlg1([AlgVersions[0].algs]);
+    }
+    if (AlgVersions?.[1]?.algs) {
+        setEditedAlg2([AlgVersions[1].algs]);
+    }
+    }, [AlgVersions]);
     const CloseAndClearPopUp= (onClose)=>{
         setEditClick1(false)
         setEditClick2(false)
@@ -48,11 +78,14 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         }
     }
 
+    const swapAlgs= ()=>{
+        
+    }
     const SaveAndChange1= ()=>{
         
         console.log("Default")
-        let DefaultAlg1= alg.algs[0]
-        let DefaultAlg2=alg.algs[1]?alg.algs[1]:alg.algs[0]
+        
+        
         
         let Alg1Input=document.getElementById("PopUpInputAlg1").value
 
@@ -76,9 +109,6 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     const SaveAndChange2= ()=>{
         
         console.log("Default")
-        let DefaultAlg1= alg.algs[0]
-        let DefaultAlg2=alg.algs[1]?alg.algs[1]:alg.algs[0]
-        
         let Alg2Input=document.getElementById("PopUpInputAlg2").value
         
         console.log(Alg2Input)
@@ -102,8 +132,6 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         console.log("ConsoleUndo")
         console.log(editedAlg1)
 
-        let DefaultAlg1=alg.algs[0]
-        let DefaultAlg2=alg.algs[1]?alg.algs[1]:alg.algs[0]
         if(editedAlg1.length>1){
             setEditedAlg1((prev)=>prev.slice(0,-1))
         }
@@ -122,12 +150,9 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         }
         
     }
-    
-    const [editClick1,setEditClick1]= useState(false)
-    const [editClick2,setEditClick2]= useState(false)
-    const [editedAlg1,setEditedAlg1]=useState([alg.algs[0]])
-    const [editedAlg2,setEditedAlg2]=useState(alg.algs[1]? [alg.algs[1]]:[alg.algs[0]])
-    const [existPrevAlg,setExistPrevAlg]= useState(false)
+
+
+    console.log("EditedAlg",editedAlg1)
     return (
         <Modal centered className="ModalPopUp" show={true} onHide={onClose}
         dialogClassName="alg-modal-dialog"
@@ -138,7 +163,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
             <Modal.Body className="text-center">
                 <CaseImage
                     size={200}
-                    alg={alg.algs[0]}
+                    alg={DefaultAlg1?DefaultAlg1:""}
                     caseSetDetails={AlgCasesSet.details}
                 ></CaseImage>
                 <div className="popUpContainer">
@@ -193,7 +218,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                             editClick1 &&
                             <td className="PopUpTd2">
                                 <input type="text" onKeyDown={SaveInput1} ref={InputAlg1} wrap="soft"  rows="2" id="PopUpInputAlg1" placeholder="Enter Algorithm"/>
-
+                                
                             </td>
                            
                             }
@@ -213,6 +238,19 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                     <button className="PopUpButtonSave" onClick={()=>{setEditClick1((prev)=>!prev)}}>Edit </button>
                                 }
                                  </div>
+                            </td>
+                        </tr>
+                        <tr style={{height:"10px"}}>
+                            <td>
+
+                            </td>
+                            <td>
+                            <div className="swapAlgsButton" onClick={()=>{swapAlgs()}}>
+                                 <FaIcon icon="arrows-up-down" ></FaIcon>
+                            </div>
+                            </td>
+                            <td>
+                                
                             </td>
                         </tr>
                         <tr className="lastPopUpRow">

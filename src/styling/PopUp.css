@@ -406,3 +406,19 @@ table input.PopUpInputAlg:active {
   background-color: transparent;
   max-width: 60px;
 }
+
+.swapAlgsButton {
+  left: 50%;
+  margin-top: -18px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+.swapAlgsButton:hover{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+}
