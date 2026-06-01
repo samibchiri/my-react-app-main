@@ -1,34 +1,36 @@
 
 //import arrowOllSet from "./data/arrowOllSet.js";
 
-import arrowOllSet from "../../data/arrowOllSet copy.js"
-import { ThemeContext } from '../../context/DarkThemeContext.jsx';
-import {useOll} from "../../context/ollContext.jsx"
+import arrowOllSet from "./data/arrowOllSet copy.js"
+import { ThemeContext } from './context/DarkThemeContext.jsx';
+import {useOll} from "./context/ollContext.jsx"
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
-import '../../styling/index.css'
-import { FaIcon } from '../../assets/fontAwesome.js';
-import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
-import ollCaseSet from "../../data/ollCaseSet.js";
-import OllCaseFilter from "../../components/Oll/OllCaseFilter.jsx";
-import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
+import './styling/index.css'
+import { FaIcon } from './assets/fontAwesome.js';
+import CaseImage from "./components/Oll/cubing/cubeImage.jsx";
+import ollCaseSet from "./data/ollCaseSet.js";
+import OllCaseFilter from "./components/Oll/OllCaseFilter.jsx";
+import OllGroupSelector from "./components/Oll/OllGroupSelect.jsx";
 import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
-import { db } from "../../data/db";
-import {ChangeOllCont} from "./changeAlg.jsx"
-import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
+import { db } from "./data/db.js";
+import {ChangeOllCont} from "./pages/BarPersevationPage/changeAlg.jsx"
+import {ArrowDataGenerator} from "./dataGeneration/ArrowDataGenerator.jsx"
 
 import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,getCubeColors,
   sortPointsList,sortCenterLeftRight,isPositionLeft,Connect2Points,
-  CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./BarPersevationLogic.jsx"
+  CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./pages/BarPersevationPage/BarPersevationLogic.jsx"
+import arrowsInfoGen from "./1OllArrowCpInfo"
 
-export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
+export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted}){
+  let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
+  let PermTable=[0,5,1,2,3,4]
+  let pllPreAUF=["","","U2","U","U'",""]
 
-
-  const [groupSelected,setGroupSelected]=useState(1)
-  const [ollSelectList,setOllSelectList]=useState([])
-
-  const [cubeSize, setCubeSize] = useState(200);
+  pll=pllPreAUF[PermTable[permIndex]]+pll
+  //   let pllPreAUF=["","","U2"   ,"U","U'",""]
+  // pll=pllPreAUF[permIndex]+pll
   const [strokeWidth, setStrokeWidth] = useState(1.5);
   const [lineWidth, setLineWidth] = useState(4);
   const [refsReady, setRefsReady] = useState(false);
@@ -36,47 +38,12 @@ export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCase
   const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
 
   
+  const [cubeSize, setCubeSize] = useState(200);
   const altoverlayRefs = useRef([]);
   const rerenderRef = useRef(0);
 
   const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
-  const groupTable = {
-  0: "Cross",
-  1: "Dot",
-  2: "T Shape",
-  3: "C Shape",
-  4: "I Shape",
-  5: "P Shape",
-  6: "W Shape",
-  7: "Small L Shape",
-  8: "Small Lightning Bolt",
-  9: "Big Lightning Bolt",
-  10: "Square Shape",
-  11: "Fish Shape",
-  12: "Knight Move Shape",
-  13: "Awkward Shape",
-  14: "Corners Oriented"
-}
-
-// const selectedGroupOlls = useLiveQuery(
-//   () => db.olls.where("group").equals(groupTable[groupSelected]).toArray(),
-//   [groupSelected]
-// );
-
-const selectedGroupOlls = useMemo(() => {
-  if (!allOlls) return [];
-  return allOlls.filter(o => o.group === groupTable[groupSelected]);
-}, [allOlls, groupSelected]);
-
-useEffect(() => {
-  if(refsReady){
-    setPathCalculated(false)
-    setRefsReady(false);
-    altoverlayRefs.current=[]
-  }
-
-}, [selectedGroupOlls,cubeSize]);
-
+ 
   const [pathCalculated,setPathCalculated]= useState(false)
   const [overlayPaths, setOverlayPaths] = useState([]); // <-- new: store [path,color] per ref
   
@@ -86,21 +53,20 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
-
 useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,cubeSize);
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
 
   const piecesMovementRef = useRef([]) // mirror for immediate reads
 
-  let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
+  
   let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
   let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
   let CornerPermutations=["",T_Perm, "U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
   //let CornerPermutations=["","", "","","",""]
-  let PermTable=[0,5,1,2,3,4]
+  // let PermTable=[0,5,1,2,3,4]
 
   let CpLocation=["Full","Diag","Left","Right","Front","Back"]
     const ScrambleVisualizerDetails={
@@ -113,6 +79,8 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
     }
     const {darkMode}= useContext(ThemeContext)
     
+
+
 let Centers= GetCentersPosition(cubeSize)
 
 
@@ -122,7 +90,7 @@ function GetBarsIndices(OllIndex,PermIndex){
   rerenderRef.current+=1
 
   //let {newSquaresColors,newCombinedSquaresList}= getCubeColors(altoverlayRefs,OllIndex,PermIndex)
-  let containerparent = altoverlayRefs.current[OllIndex][PermIndex];
+  let containerparent = altoverlayRefs.current;
   
     if (!containerparent) {
       console.warn('GetBarsIndices: no ref for index', PermIndex);
@@ -178,7 +146,7 @@ function GetBarsIndices(OllIndex,PermIndex){
   
   //each colorIndexList[i,j]= [currentIndex,futureIndex,color,Points]
 
-  colorIndexList=addInformationToColorIndexList(selectedGroupOlls[OllIndex].piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList)
+  colorIndexList=addInformationToColorIndexList(oll.piecesMovement,newSquaresColors,newCombinedSquaresList,colorIndexList)
 
 
     console.log("HelpME",colorIndexList)
@@ -214,12 +182,12 @@ function GetBarsIndices(OllIndex,PermIndex){
       //Bars can be connected if they are close to each other, 
       //or always if maxdistance is multiplied by a large number
       //Bars with hard to see pieces can be excluded with difficultCenters Array
-      console.log("Pas2",selectedGroupOlls[OllIndex].difficultCenters)
+      console.log("Pas2",oll.difficultCenters)
       maxdistance=maxdistance*10
       if(colorIndexList[i][0].color!=colorIndexList[i][1].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0].currentIndex)|| selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1].currentIndex)){
+      else if(oll.difficultCenters.includes(colorIndexList[i][0].currentIndex)|| oll.difficultCenters.includes(colorIndexList[i][1].currentIndex)){
         distance=10000
       }
       else{
@@ -255,7 +223,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][0].color!=colorIndexList[i][2].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][0].currentIndex) ||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2].currentIndex)){
+      else if(oll.difficultCenters.includes(colorIndexList[i][0].currentIndex) ||oll.difficultCenters.includes(colorIndexList[i][2].currentIndex)){
         distance=10000
       }
       else{
@@ -285,7 +253,7 @@ function GetBarsIndices(OllIndex,PermIndex){
       if(colorIndexList[i][1].color!=colorIndexList[i][2].color){
         distance=10000
       }
-      else if(selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][1].currentIndex)||selectedGroupOlls[OllIndex].difficultCenters.includes(colorIndexList[i][2].currentIndex)){
+      else if(oll.difficultCenters.includes(colorIndexList[i][1].currentIndex)||oll.difficultCenters.includes(colorIndexList[i][2].currentIndex)){
         distance=10000
       }
       else{
@@ -617,30 +585,11 @@ function CalculateNewCoordinates(c1,slope1,c2,slope2,x1,x2,strokeWidth,averagex,
 
 const setOverlayRef = (el,index)=> {
 
-  if(testedAlgs){
 
-  }
-  else{
-      const rowIndex = Math.floor(index / 6);
-      const colIndex = index % 6;
 
-      if (!altoverlayRefs.current[rowIndex]) {
-        altoverlayRefs.current[rowIndex] = Array.from({length:6}, ()=> null);
-      }
+  altoverlayRefs.current = el;
 
-      altoverlayRefs.current[rowIndex][colIndex] = el;
-  }
-
-  // Check if ALL refs are mounted
-  const allMounted =
-    altoverlayRefs.current.length > 0 
-    &&
-    altoverlayRefs.current.every(row =>{
-      return row.every(item => item != null)
-    }  
-    );
-
-  if (allMounted && (selectedGroupOlls?.length)){
+  if (el && oll){
     if(!refsReady){
       setRefsReady(true);
     }
@@ -649,27 +598,21 @@ const setOverlayRef = (el,index)=> {
 
 // compute overlayPaths after refs mount; run this AFTER refsReady becomes true
 useLayoutEffect(() => {
-
+  let paths
   if (!refsReady) return;
-  const paths = altoverlayRefs.current.map((algListRef, OllIndex) => {
-    return algListRef.map((_,PermIndex)=>{
-
-      try {
-        const result = GetBarsIndices(OllIndex,PermIndex); 
-
-        return result || ["","none"];
+  try {
+    paths =  GetBarsIndices(0, 0) || ["", "none"];
         
       } catch (err) {
-        console.error('GetBarsIndices error for idx',OllIndex ,PermIndex, err)
+        console.error('GetBarsIndices error for idx',0 ,0, err)
         return ["","none"];
       }
-    });
-  })
+
 
 
   setOverlayPaths(paths);
   setPathCalculated(true);
-}, [refsReady,selectedGroupOlls,cubeSize]);
+}, [refsReady,cubeSize]);
 
 
 //Calculate inner outline
@@ -825,11 +768,11 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
   }
   catch (error){
     console.error(error)
-    document.getElementById(`barExcludeCenters-${OllIndex}`).value=selectedGroupOlls[OllIndex].difficultCenters
+    document.getElementById(`barExcludeCenters-${OllIndex}`).value=oll.difficultCenters
     
   }
 
-  const sortedOld = [...selectedGroupOlls[OllIndex].difficultCenters].sort((a,b) => a-b);
+  const sortedOld = [...oll.difficultCenters].sort((a,b) => a-b);
   const sortedNew = [...testList].sort((a,b) => a-b);
 
 
@@ -873,7 +816,7 @@ function correctAlgString(inputstring){
   let newinputstring=""
 
   let oddSpacing=0
-  for (let i=0; i<inputstring.length;i++){
+  for (let i=0; i<inputstring.length;i++){s
     newinputstring+=inputstring[i]
 
     if(inputstring[(i+1)%inputstring.length]!="'" &&inputstring[(i+1)%inputstring.length]!="2" ){
@@ -886,318 +829,162 @@ function correctAlgString(inputstring){
 
 }
 
-console.log("Wut",groupSelected,refsReady,altoverlayRefs.current)
 
-
-
+let OllLists=[oll]
+let PermIndex=0
+console.log("Nothing.",pathCalculated)
 return (
   
   <>
   
-  {groupSelected == null && (
-      <OllGroupSelector
-          arrowOllSet={arrowOllSet}
-          caseDetails={ollCaseSet.details}
-          onSelectGroup={setGroupSelected}
-      />
-      )}
 
 
-      {groupSelected != null && (
-        
-      <OllCaseFilter
-          groupSelected={groupSelected}
-          setGroupSelected={setGroupSelected}
-          arrowOllSet={arrowOllSet}
-          ollSelectList={ollSelectList}
-          setOllSelectList={setOllSelectList}
-          caseDetails={ollCaseSet.details}
+  { (OllLists != null) && (
+    <>
 
-      />
 
-  )}
-
-  { (groupSelected != null) && (
-    <div className="BarOllGridsCont">
-
-    {
-    selectedGroupOlls.map((oll,i)=>(
-      <>
-            {(i<=100 && (ollSelectList.includes(oll.name.split(" ")[1]) ||ollSelectList.length==0) &&     
-              <div id="ContY" key={oll.id}>
-                          <div>
-                          <h2>{(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%selectedGroupOlls.length].name||
+                    <div className="RecCont"  ref={(el)=> setOverlayRef(el,0)}> 
+                    
+                    <CaseImage
+                        size={cubeSize}
+                        alg={(oll.algs+pll).replace(/\s+/g, "")+"y2"}
+                        caseSetDetails={ScrambleVisualizerDetails}
+                        co="40"
+                    ></CaseImage>
+                    
+                    <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+9}px`,marginTop:`${-21+cubeSize/10}px`}}>
+                      {
+                      pathCalculated && barMovementWanted &&(
+                      <>
+                      
+                      {
+                        //In this array to prevent outline from overlapping with connecting lines
+                        Array.from({ length: 5 }, (_, i) => i).map(i => (
+                        <>
+                        <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
                           
-                          selectedGroupOlls[i].name==selectedGroupOlls[(i-1+selectedGroupOlls.length)%selectedGroupOlls.length].name)?
-                          oll.name + "-"+oll.algNumber:oll.name}</h2>
-                          <h3>{selectedGroupOlls[i].algs}</h3>
-                          
-                          
-                          <div className="OllGrid">
-                              
-                              {CornerPermutations.map((_,j)=>{
-                                if(j>=1 && testedAlgs){
-                                  return
-                                }
+                          <path
+                            d={overlayPaths?.centerOutLine?.[i] || ""}
+                            //fill={overlayPaths?.[4]?.[i][1] || "black"}
+                            fill={"rgba(248, 246, 246, 1)"}
+                            fillRule="evenodd"
+                            stroke="rgba(44, 44, 44, 1)"
+                            strokeWidth="1"
+                            strokeLinejoin="round"
+                            filter="url(#shadow)"
+                          />
+                      </svg>
 
-                              const refIndex = i * CornerPermutations.length + j;
-                              const OllIndex=i
-                              const PermIndex=j
-                              return(
-                                <>
-                              <div className="RecCont"  ref={(el)=> setOverlayRef(el,refIndex)}> 
-                              <h2 className="OllCpLocation">{CpLocation[j]}</h2>
-                              
-                              <CaseImage
-                                  size={cubeSize}
-                                  alg={(oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
-                                  caseSetDetails={ScrambleVisualizerDetails}
-                                  co="40"
-                              ></CaseImage>
-                             
-                              <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,marginTop:`${33+cubeSize/10}px`}}>
+                      <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
 
-                               {
-                                pathCalculated &&(
-                               <>
-                               
-                                {
-                                  //In this array to prevent outline from overlapping with connecting lines
-                                  Array.from({ length: 5 }, (_, i) => i).map(i => (
-                                  <>
-                                  <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
-                                    
-                                    <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.centerOutLine?.[i] || ""}
-                                      //fill={overlayPaths[OllIndex][PermIndex]?.[4]?.[i][1] || "black"}
-                                      fill={"rgba(248, 246, 246, 1)"}
-                                      fillRule="evenodd"
-                                      stroke="rgba(44, 44, 44, 1)"
-                                      strokeWidth="1"
-                                      strokeLinejoin="round"
-                                      filter="url(#shadow)"
-                                    />
-                                </svg>
-
-                                <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
-      
-                                  <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.noMovementCircle||""}
-                                      fill={"black"}
-                                      stroke="rgba(255, 255, 255, 1)"
-                                      strokeWidth="0.5"
-                                      strokeLinejoin="round"
-                                      
-                                  />
-                                </svg>
-                                </>
-                                  ))}
-
-                                  {
-                                    Array.from({length:5},(_,i)=>i).map(i=>(
-                                    <>
-                                    {Array.from({ length: 2 }, (_, j) => j).map(j => (
-                                  <>
-                                  
-                                  <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
-                                    
-                                    <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].linePath || ""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][0] || "black"}
-                                      
-                                      stroke="rgba(44, 44, 44, 1)"
-                                      strokeWidth="1"
-                                      strokeLinejoin="round"
-                                      
-                                      
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.connectingLines?.[i][j].lineRotationCoordY ||"0"})`}
-                                    />
-                                    
-                                </svg>
-                                </>
-                                ))} 
-                                </>
-                                ))
-                                  }
-                                  {
-                                  
-                                Array.from({ length: 5 }, (_, i) => i).map(i => (
-                                  <>                            
-                                    <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
-                                  <path
-                                      d={overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowPath||""}
-                                      fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][1] || "purple"}
-                                    stroke="rgba(0, 0, 0, 1)"
-                                      strokeWidth="1.5"
-                                      strokeLinejoin="round"
-                                      transform={`rotate(${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotation || "0"} ${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotationCoordX ||"0"} ${overlayPaths[OllIndex][PermIndex]?.arrow?.[i].arrowRotationCoordY ||"0"})`}
-                                  />
-                                  
-                                </svg>
-                               
-                                 <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
-                                    <path
-                                        d={overlayPaths[OllIndex][PermIndex]?.centerCircle?.[i]||""}
-                                        fill={overlayPaths[OllIndex][PermIndex]?.combinedColorList?.[i][1] || ""}
-                                      stroke="rgba(22, 22, 22, 1)"
-                                      strokeWidth="1"
-                                    />
-                                  </svg>
-
-                                </>))
-                               } 
-                                
-                                
-                                {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
-
-                                    
-                                    <path
-                                      d={"M 58,54 L 58,56 L 133,56 L 133,54 Z "}
-                                      fill={"rgba(207, 1, 1, 1)"}
-                                      stroke="rgba(255, 0, 234, 1)"
-                                      strokeWidthstrokeWidth="0.1"
-                                      filter="url(#shadow)"
-                                      transform="rotate(45)"
-                                    />
-                                </svg>                              */}
-                                </>
-                                )
-                            }
-                            </div>
-                              <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}>
+                        <path
+                            d={overlayPaths?.noMovementCircle||""}
+                            fill={"black"}
+                            stroke="rgba(255, 255, 255, 1)"
+                            strokeWidth="0.5"
+                            strokeLinejoin="round"
                             
-                               </div>
-                              </div>
-                               
-                        </>
-                              )})}
-                          
-                      
-                      </div>
-<div className="barExcludeCont">
-  <div></div>
-  <div style={{display:"flex",justifyContent:"center",justifySelf :"end"}}>
-    <div className="barQuestionIconCont">
-        <FaIcon className="barQuestionCircle" icon="question-circle" style={{ color: "white",width:"24px",height:"24px",border:"2px solid black",borderRadius:"50%",verticalAlign:"middle"}} />
-        <div className="barQuestionIconExtraInfo">
-        {Array.from({ length: 5 }).map((_, i) =>
-            Array.from({ length: 5 }).map((_, j) => (
-              <div
-                key={`${i}-${j}`}
-                style={{
-                  border: "1px solid grey",
-                  backgroundColor: "black",
-                  color: "white",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {i * 5 + j}
-              </div>
-            ))
-          )}                  
-        </div>
-    </div>
-          <label htmlFor={`barExcludeCenters-${i}`}>Do not include bars with:</label>
-    </div>
-    <div>
-   <input id={`barExcludeCenters-${i}`} className="barExcludeCentersInput" placeholder="Exclude centers, ex: 1,2,3" defaultValue={oll.difficultCenters.join(',')} onKeyDown={ (e)=>(excludeCenters(e,i,oll))}></input>
-  <button className="barExcludeButtonSave" onClick={() => {
-    const value = document.getElementById(`barExcludeCenters-${i}`).value;
-    verifyAndUpdateExcludeBarInput(value, i,oll);
-  }}> Save</button></div>
-  </div>
-      
-  <ChangeOllCont refIndex={i} oll={oll} setChangedAlgArray={setChangedAlgArray}/>
-                      </div>
-                      
-                          </div>
-                          )}
-                      
+                        />
+                      </svg>
                       </>
-    ))}
-    <div>
+                        ))}
 
-    </div>
+                        {
+                          Array.from({length:5},(_,i)=>i).map(i=>(
+                          <>
+                          {Array.from({ length: 2 }, (_, j) => j).map(j => (
+                        <>
+                        
+                        <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
+                          
+                          <path
+                            d={overlayPaths?.connectingLines?.[i][j].linePath || ""}
+                            fill={overlayPaths?.combinedColorList?.[i][0] || "black"}
+                            
+                            stroke="rgba(44, 44, 44, 1)"
+                            strokeWidth="1"
+                            strokeLinejoin="round"
+                            
+                            
+                            transform={`rotate(${overlayPaths?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths?.connectingLines?.[i][j].lineRotationCoordY ||"0"})`}
+                          />
+                          
+                      </svg>
+                      </>
+                      ))} 
+                      </>
+                      ))
+                        }
+                        {
+                        
+                      Array.from({ length: 5 }, (_, i) => i).map(i => (
+                        <>                            
+                          <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
+                        <path
+                            d={overlayPaths?.arrow?.[i].arrowPath||""}
+                            fill={overlayPaths?.combinedColorList?.[i][1] || "purple"}
+                          stroke="rgba(0, 0, 0, 1)"
+                            strokeWidth="1.5"
+                            strokeLinejoin="round"
+                            transform={`rotate(${overlayPaths?.arrow?.[i].arrowRotation || "0"} ${overlayPaths?.arrow?.[i].arrowRotationCoordX ||"0"} ${overlayPaths?.arrow?.[i].arrowRotationCoordY ||"0"})`}
+                        />
+                        
+                      </svg>
+                      
+                        <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                          <path
+                              d={overlayPaths?.centerCircle?.[i]||""}
+                              fill={overlayPaths?.combinedColorList?.[i][1] || ""}
+                            stroke="rgba(22, 22, 22, 1)"
+                            strokeWidth="1"
+                          />
+                        </svg>
 
-    </div>
+                      </>))
+                      } 
+                      
+                      
+                      {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
+
+                          
+                          <path
+                            d={"M 58,54 L 58,56 L 133,56 L 133,54 Z "}
+                            fill={"rgba(207, 1, 1, 1)"}
+                            stroke="rgba(255, 0, 234, 1)"
+                            strokeWidthstrokeWidth="0.1"
+                            filter="url(#shadow)"
+                            transform="rotate(45)"
+                          />
+                      </svg>                              */}
+                      </>
+                      )
+                  }
+                  {arrowsInfoGen(oll,permIndex,cubeSize,cpEasyWanted,cpSameOppWanted).map((arrow, i) => (
+                  <svg
+                  key={i}
+                  width="100%"
+                  height="100%"
+                  style={{ position: "absolute" }}
+                  >
+                  <path
+                      d={arrow.path}
+                      fill={arrow.color}
+                      stroke="rgba(0,0,0,1)"
+                      strokeWidth="1"
+                      transform={`rotate(${arrow.rotation} ${arrow.rotateX} ${arrow.rotateY})`}
+                  />
+                  </svg>
+              ))}
+                  </div>
+                    <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-21+cubeSize/10}px`}}>
+                  
+                      </div>
+                    </div>
+                    
+
+    </>
   )}
 
-
-  {(false)&&
-    selectedGroupOlls.map((oll,i)=>(
-      <div key={oll.id}>
-                          {(
-                          <div>
-                          <h2>{selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%2].name?oll.name + " Version "+oll.algNumber:oll.name}</h2>
-                          <div className="OllGrid">
-                              
-                              {CornerPermutations.map((_,j)=>{
-
-                              const refIndex = i * CornerPermutations.length + j;
-                              return(
-                                <>
-                              <div className="RecCont"  ref={(el) => setOverlayRef(el,refIndex)}>  
-                              <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2>
-                              
-                              <CaseImage
-                                  size={cubeSize}
-                                  alg={(oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
-                                  caseSetDetails={ScrambleVisualizerDetails}
-                                  co="40"
-                              ></CaseImage>
-                              
-                              </div>
-                              <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${45+cubeSize/10}px`}}> 
-                        </div>
-                        </>
-                          )})}
-                      </div>
-                      </div>
-                          )}
-                    {(!oll.algNumber) &&(selectedGroupOlls[i].name==selectedGroupOlls[(i+1)%2].name)&&(
-                      <div>
-                          <h2>{oll.name + " AUF ("+oll.altAUF[0]+ ") Version 1"}</h2>
-                          <div className="OllGrid">
-                              
-                              {CornerPermutations.map((_,j)=>{
-                              return(
-                              <div className="RecCont">  
-                              <h2 className="OllCpLocation">{CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]}</h2>
-                              
-                              <CaseImage
-                                  size={cubeSize}
-                                  //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
-                                      alg={(oll.altAUF[0]+"'"+oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
-                                  caseSetDetails={ScrambleVisualizerDetails}
-                                  co="40"
-                              ></CaseImage>
-                              
-                              </div>
-                              )})}
-                      </div>
-                      </div>
-                      )}    
-                      </div>
-    ))
-  }
-  {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
-    && (<>
-    {console.log("NewPage")}
-        <ArrowDataGenerator
-          key={`${changedAlgArray[0]}-${changedAlgArray[1].id}`}
-          newAlg={changedAlgArray[0]}
-          oll={changedAlgArray[1]}
-          onError={(errorMessage) => {
-          console.warn("CornerPermutation error:", errorMessage);
-
-          setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false]);
-        }}
-        />
-        </>
-        
-      )}
 
   </>
 
@@ -1205,4 +992,4 @@ return (
 
 }
 
-export default BarPersevationPage
+export default BarPersevationOverlay

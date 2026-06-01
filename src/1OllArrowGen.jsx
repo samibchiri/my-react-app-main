@@ -14,6 +14,7 @@ import { db } from './data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {sortOlls} from "./context/OllContext.jsx"
+import BarPersevationOverlay from "./1OllBarInfo"
 
 
 function LabsPage({ollNumber}){
@@ -28,7 +29,7 @@ function LabsPage({ollNumber}){
         .equals(effectiveOllNumber)
         .toArray();
 
-      setOll(result[0]);
+      setOll(result[1]);
     }
 
     fetchData();
@@ -65,6 +66,7 @@ const {darkMode}= useContext(ThemeContext)
 
 
 let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
+let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
 let CornerPermutations=["",T_Perm,"U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
@@ -93,7 +95,7 @@ const cubeSize=150
                         <div className="RecCont">  
                         <h2 className="OllCpLocation">{CpLocation[j]}</h2>
                         {/* <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2> */}
-                        <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
+                        {/* <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
                         <CaseImage
                             size={cubeSize}
                             //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
@@ -107,13 +109,13 @@ const cubeSize=150
                             oll={oll}
                             permIndex={j}
                             cubeSize={cubeSize}
-                            cpEasyWanted={true}
+                            cpEasyWanted={false}
                             cpSameOppWanted={false}
                             barMovementWanted={false}
                             />
 
 
-                        </div>
+                        </div> */}
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
                         </div>
@@ -132,32 +134,45 @@ const cubeSize=150
                     <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
-                        <div className="RecCont">  
-                        <h2 className="OllCpLocation">{CpLocation[j]}</h2>
+                        <>
+                        <div>
+                        <h5 className="OllCpLocation">{CpLocation[j]}</h5>
                         
-                         <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
-                       
-                        <CaseImage
+
+                        {/* <CaseImage
                             size={cubeSize}
                             //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
                                 alg={(oll.algs+CornerPermutations[PermTable[j]]).replace(/\s+/g, "")+"y2"}
                             caseSetDetails={ScrambleVisualizerDetails}
                             co="40"
-                        ></CaseImage>
+                        ></CaseImage> */}
 
-                        <CubeOverlay
+                        {/* <CubeOverlay
                             oll={oll}
                             permIndex={j}
                             cubeSize={cubeSize}
                             cpEasyWanted={false}
                             cpSameOppWanted={false}
                             barMovementWanted={true}
-                            />
-                        </div>
+                            /> */}
+                            
+{/*                        
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
+                        </div> */}
+                        { 
+                                <BarPersevationOverlay
+                                oll={oll}
+                                pll={F_Perm}
+                                permIndex={j}
+                                cpEasyWanted={false}
+                                cpSameOppWanted={true}
+                                barMovementWanted={false}
+                                />
+                                
+                                }
                         </div>
-                        </div>
+                        </>
                         )}
                     
                 

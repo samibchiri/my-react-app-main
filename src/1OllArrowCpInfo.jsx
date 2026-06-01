@@ -1,24 +1,24 @@
-
+import { GetCentersPosition } from "./pages/BarPersevationPage/BarPersevationLogic";
 export default function arrowsInfoGen(oll,permIndex,cubeSize,cpEasyWanted,cpSameOppWanted){
 
     let arrowsInfo=[]
-    function GetCentersPosition(cubeSize){
+//     function GetCentersPosition(cubeSize){
  
-    const xCoords = [9.5, 39.5, 79.5, 119.5,149.5];
-    const yCoords = [9.75, 39.75, 79.75, 119.75, 149.75];
+//     const xCoords = [9.5, 39.5, 79.5, 119.5,149.5];
+//     const yCoords = [9.75, 39.75, 79.75, 119.75, 149.75];
 
-    let Centers = [];
+//     let Centers = [];
 
    
-    for (let y of yCoords) {
-        for (let x of xCoords) {
-            Centers.push([x*(cubeSize/200), y*(cubeSize/200)]);
-        }
-    }
+//     for (let y of yCoords) {
+//         for (let x of xCoords) {
+//             Centers.push([x*(cubeSize/200), y*(cubeSize/200)]);
+//         }
+//     }
     
-    return Centers
+//     return Centers
 
-}
+// }
 
 function Arrow(Center1,Center2,color,index){
 
