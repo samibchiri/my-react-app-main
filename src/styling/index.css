@@ -481,7 +481,7 @@ th{
 
 .CpRecContainer{
   position: relative;
-  display: none;
+  display: block;
 }
 
 

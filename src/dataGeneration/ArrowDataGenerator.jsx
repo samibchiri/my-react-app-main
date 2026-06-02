@@ -219,7 +219,7 @@ useEffect(() => {
     if(algIndexRef.current==0){
         setBarMovements([["Full"],["Back"],["Front"],["Left"],["Right"],["Diag"]])
     }
-  }, 10);
+  }, 1000);
 
   return () => clearTimeout(timeout);
 }, [scramble]);

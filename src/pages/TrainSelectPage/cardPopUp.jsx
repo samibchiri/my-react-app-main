@@ -4,11 +4,14 @@ import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import "../../styling/index.css";
 import '../../styling/PopUp.css';
+import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
+
 
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/db.js';
 
 import {sortOlls} from "../../context/OllContext.jsx"
+import { ChangeOlls } from "./ChangeOlls.jsx";
 
 function ShowAlgCard({alg,onClose,AlgCasesSet}){
     console.log("Showing Card",alg)
@@ -19,6 +22,9 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     const [editedAlg1,setEditedAlg1]=useState([])
     const [editedAlg2,setEditedAlg2]=useState([])
     const [existPrevAlg,setExistPrevAlg]= useState(false)
+
+    
+    const [changedAlgArray,setChangedAlgArray]=useState(["","",false,null])
 
      const AlgVersions = useLiveQuery(()=>{
             
@@ -44,12 +50,19 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     let DefaultAlg2= AlgVersions?.[1]?AlgVersions[1].algs:""
 
     useEffect(() => {
-    if (AlgVersions?.[0]?.algs) {
-        setEditedAlg1([AlgVersions[0].algs]);
+        console.log("Wut44",AlgVersions,editedAlg1,editedAlg2)
+    //if(editedAlg1.length==0){
+        if (AlgVersions?.[0]?.algs) {
+        setEditedAlg1((prev)=>[...prev,AlgVersions[0]])
+        //setEditedAlg1([AlgVersions[0]]);
+   // }
     }
-    if (AlgVersions?.[1]?.algs) {
-        setEditedAlg2([AlgVersions[1].algs]);
-    }
+    //if(editedAlg2.length==0){
+        if (AlgVersions?.[1]?.algs) {
+            //setEditedAlg2([AlgVersions[1]]);
+            setEditedAlg2((prev)=>[...prev,AlgVersions[1]])
+        }
+   // }
     }, [AlgVersions]);
     const CloseAndClearPopUp= (onClose)=>{
         setEditClick1(false)
@@ -89,20 +102,25 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         
         let Alg1Input=document.getElementById("PopUpInputAlg1").value
 
-        setEditedAlg2((prev)=>[...prev,prev[prev.length-1]])
         
-        if(Alg1Input){
-            setEditedAlg1((prev)=>[...prev,Alg1Input])
+        if(Alg1Input&&Alg1Input!=editedAlg1[editedAlg1.length-1].algs){
+            console.log("Same",Alg1Input,editedAlg1[editedAlg1.length-1])
+            console.log("Changalgarray1",[Alg1Input, AlgVersions[0], true])
+            // setEditedAlg2((prev)=>[...prev,prev[prev.length-1]])
+            // setEditedAlg1((prev)=>[...prev,Alg1Input])
+            setChangedAlgArray([Alg1Input, AlgVersions[0], true,1])
+            
         }
-        else{
-            setEditedAlg1((prev)=>[...prev,prev[prev.length-1]])
-        }
+        // else{
+        //     setEditedAlg1((prev)=>[...prev,prev[prev.length-1]])
+        // }
         setEditClick1(false)
 
         
-        if(Alg1Input){
+        if(Alg1Input&&Alg1Input!=editedAlg1[editedAlg1.length-1].algs){
             setExistPrevAlg(true)
         }
+        console.log("Same2",editedAlg1)
     }
 
 
@@ -112,47 +130,79 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         let Alg2Input=document.getElementById("PopUpInputAlg2").value
         
         console.log(Alg2Input)
-        setEditedAlg1((prev)=>[...prev,prev[prev.length-1]])
         
-        if(Alg2Input){
-            setEditedAlg2((prev)=>[...prev,Alg2Input])
+        if(Alg2Input&&Alg2Input!=editedAlg2[editedAlg2.length-1]){
+            // setEditedAlg1((prev)=>[...prev,prev[prev.length-1]])
+            // setEditedAlg2((prev)=>[...prev,Alg2Input])
+            console.log("Changalgarray2",[Alg2Input, AlgVersions[1], true])
+            setChangedAlgArray([Alg2Input, AlgVersions[1], true,2])
+
         }
         else{
-            setEditedAlg2((prev)=>[...prev,prev[prev.length-1]])
+            //setEditedAlg2((prev)=>[...prev,prev[prev.length-1]])
         }
         setEditClick2(false)
 
         
-        if(Alg2Input){
+        if(Alg2Input&&Alg2Input!=editedAlg2[editedAlg2.length-1]){
             setExistPrevAlg(true)
         }
     }
 
-    const UndoAlgInput= ()=>{
-        console.log("ConsoleUndo")
-        console.log(editedAlg1)
+    const UndoAlgInput= async ()=>{
+        console.log("ConsoleUndo",editedAlg1,editedAlg2)
+
+         await db.olls.update(AlgVersions[0].id,editedAlg1[editedAlg1.length-2]);
+         await db.olls.update(AlgVersions[1].id,editedAlg2[editedAlg2.length-2]);
 
         if(editedAlg1.length>1){
+            if(editedAlg1.length>2){
+                setExistPrevAlg(true)
+            }
+            else{
+                setExistPrevAlg(false)
+            }
             setEditedAlg1((prev)=>prev.slice(0,-1))
         }
         
         if(editedAlg2.length>1){
+            if(editedAlg2.length>2){
+                setExistPrevAlg(true)
+            }
+            else{
+                setExistPrevAlg(false)
+            }
             setEditedAlg2((prev)=>prev.slice(0,-1))
         }
 
-        if(DefaultAlg1==editedAlg1[editedAlg1.length-2] &&DefaultAlg2==editedAlg2[editedAlg2.length-2]){
-            console.log("No Prev")
-            setExistPrevAlg(false)
-        }
-        else{
-            console.log(editedAlg1[editedAlg1.length-1])
-            setExistPrevAlg(true)
-        }
+        console.log("SameUndoing",editedAlg1,editedAlg2)
+        // if(editedAlg1.length > 1 || editedAlg2.length > 1){
+        //      console.log("Exist Prev",editedAlg1,editedAlg2,editedAlg1.length,editedAlg2.length)
+        //     setExistPrevAlg(true)
+        // }
+        // else{
+        //     console.log("No Prev")
+        //     setExistPrevAlg(true)
+        // }
         
     }
 
+//     useEffect(() => {
+//         console.log("Wut4",changedAlgArray,editedAlg1,editedAlg2,AlgVersions)
+//   if (changedAlgArray[3] === 1) {
+//     setEditedAlg1(prev => [...prev, prev[prev.length - 1]]);
+//     setEditedAlg2(prev => [...prev, AlgVersions[1]]);
+//   }
 
-    console.log("EditedAlg",editedAlg1)
+//   if (changedAlgArray[3] === 2) {
+//     setEditedAlg1(prev => [...prev, AlgVersions[0]]);
+//     setEditedAlg2(prev => [...prev, prev[prev.length - 1]]);
+//   }
+
+// }, [changedAlgArray,existPrevAlg]);
+
+
+    console.log("EditedAlg",editedAlg1,editedAlg2)
     return (
         <Modal centered className="ModalPopUp" show={true} onHide={onClose}
         dialogClassName="alg-modal-dialog"
@@ -208,9 +258,9 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                 Algorithm 1
                             </td>
                             {
-                                !editClick1 &&
+                                !editClick1 && 
                             <td className="PopUpTd2" onDoubleClick={()=>{setEditClick1((prev)=>!prev)}}>
-                                {editedAlg1[editedAlg1.length - 1]}
+                                {editedAlg1[editedAlg1.length - 1]?.algs}
                             </td>
                             }
                            
@@ -226,7 +276,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                 <div id="buttonSaveAndCopy1">
 
                                 <button className="PopUpCopyButton" onClick={() => {
-                                    navigator.clipboard.writeText(editedAlg1[editedAlg1.length - 1])}}>
+                                    navigator.clipboard.writeText(editedAlg1[editedAlg1.length - 1]?.algs)}}>
                                     <FaIcon icon="copy"></FaIcon>
                                 </button>
                                 {editClick1 &&
@@ -260,7 +310,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                             
                                 {!editClick2 &&
                                 <td className="PopUpTd2" onDoubleClick={()=>{DoubleClick2Handler()}}>
-                                {editedAlg2[editedAlg2.length - 1]}
+                                {editedAlg2[editedAlg2.length - 1]?.algs}
                                 </td>
                                 }
                                 {editClick2 &&
@@ -273,7 +323,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                 <div id="buttonSaveAndCopy2">
 
                                 <button className="PopUpCopyButton" onClick={() => {
-                                    navigator.clipboard.writeText(editedAlg2[editedAlg2.length - 1])}}>
+                                    navigator.clipboard.writeText(editedAlg2[editedAlg2.length - 1]?.algs)}}>
                                     <FaIcon icon="copy"></FaIcon>
                                 </button>
                                 {editClick2 &&
@@ -323,7 +373,26 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                 </div>
                 
             </Modal.Footer>
+            {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  
+                && (<>
+                {console.log("NewPage")}
+                    <ArrowDataGenerator
+                      key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
+                      newAlg={changedAlgArray[0]}
+                      oll={changedAlgArray[1]}
+                      onError={(errorMessage) => {
+                      console.warn("CornerPermutation error:", errorMessage);
+            
+                      setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false,changedAlgArray[3]]);
+                      setExistPrevAlg(false)
+                    }}
+                    />
+                    </>
+                    
+                  )}
+            
         </Modal>
+        
     )
 }
 
