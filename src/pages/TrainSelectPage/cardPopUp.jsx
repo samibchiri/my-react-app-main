@@ -10,11 +10,15 @@ import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/db.js';
 
+import { useOll } from "../../context/OllContext";
+
 import {sortOlls} from "../../context/OllContext.jsx"
 import { ChangeOlls } from "./ChangeOlls.jsx";
 
 function ShowAlgCard({alg,onClose,AlgCasesSet}){
     console.log("Showing Card",alg)
+
+    const {swapOllsAlgnumber } = useOll();
 
         
     const [editClick1,setEditClick1]= useState(false)
@@ -23,12 +27,14 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     const [editedAlg2,setEditedAlg2]=useState([])
     const [existPrevAlg,setExistPrevAlg]= useState(false)
 
+    // let handleSwapClicked= useRef(false)
+    const [handleSwapClicked, setHandleSwapClicked] = useState(false);
     
     const [changedAlgArray,setChangedAlgArray]=useState(["","",false,null])
 
      const AlgVersions = useLiveQuery(()=>{
             
-              return db.olls.where("ollNumber").equals(alg.ollNumber).toArray().then(arr => arr.sort(sortOlls));;
+              return db.olls.where("ollNumber").equals(alg.ollNumber).toArray().then(arr => [...arr].sort(sortOlls));;
             },[]
           );
     console.log(AlgVersions)
@@ -49,10 +55,39 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
     let DefaultAlg1= AlgVersions?AlgVersions[0].algs:""
     let DefaultAlg2= AlgVersions?.[1]?AlgVersions[1].algs:""
 
+    const handleSwap = async () => {
+    if(handleSwapClicked==false){
+
+        setHandleSwapClicked(true)
+        setTimeout(() => {
+            //handleSwapClicked.current=false
+            setHandleSwapClicked(false)
+        }, 2000);
+        if(!changedAlgArray[2]){
+            if (AlgVersions?.[0]?.algs ) {
+                setEditedAlg1((prev)=>[...prev,AlgVersions[1]])
+                //setEditedAlg1([AlgVersions[0]]);
+        // }
+            }
+            //if(editedAlg2.length==0){
+                if (AlgVersions?.[1]?.algs) {
+                    //setEditedAlg2([AlgVersions[1]]);
+                    setEditedAlg2((prev)=>[...prev,AlgVersions[0]])
+        }
+        await swapOllsAlgnumber(AlgVersions[0], AlgVersions[1]);
+        }
+        setExistPrevAlg(true)
+    }
+    
+  };
+  
     useEffect(() => {
+        if(!handleSwapClicked){
+
+        
         console.log("Wut44",AlgVersions,editedAlg1,editedAlg2)
     //if(editedAlg1.length==0){
-        if (AlgVersions?.[0]?.algs) {
+        if (AlgVersions?.[0]?.algs ) {
         setEditedAlg1((prev)=>[...prev,AlgVersions[0]])
         //setEditedAlg1([AlgVersions[0]]);
    // }
@@ -62,18 +97,13 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
             //setEditedAlg2([AlgVersions[1]]);
             setEditedAlg2((prev)=>[...prev,AlgVersions[1]])
         }
+        }
    // }
     }, [AlgVersions]);
     const CloseAndClearPopUp= (onClose)=>{
         setEditClick1(false)
         setEditClick2(false)
         onClose()
-    }
-
-    const DoubleClick2Handler=()=>{
-        setEditClick2((prev)=>!prev)
-        
-        
     }
 
     const SaveInput1=(e)=>{
@@ -91,9 +121,6 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         }
     }
 
-    const swapAlgs= ()=>{
-        
-    }
     const SaveAndChange1= ()=>{
         
         console.log("Default")
@@ -149,12 +176,15 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         }
     }
 
-    const UndoAlgInput= async ()=>{
+    const UndoAlgInput= async()=>{
         console.log("ConsoleUndo",editedAlg1,editedAlg2)
 
-         await db.olls.update(AlgVersions[0].id,editedAlg1[editedAlg1.length-2]);
-         await db.olls.update(AlgVersions[1].id,editedAlg2[editedAlg2.length-2]);
+        if(!changedAlgArray[2]){
+            // await db.olls.update(AlgVersions[0].id,editedAlg1[editedAlg1.length-2]);
+            // await db.olls.update(AlgVersions[1].id,editedAlg2[editedAlg2.length-2]);
 
+        
+        
         if(editedAlg1.length>1){
             if(editedAlg1.length>2){
                 setExistPrevAlg(true)
@@ -184,17 +214,18 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
         //     console.log("No Prev")
         //     setExistPrevAlg(true)
         // }
+        }
         
     }
 
 //     useEffect(() => {
 //         console.log("Wut4",changedAlgArray,editedAlg1,editedAlg2,AlgVersions)
-//   if (changedAlgArray[3] === 1) {
+//   if (changedAlgArray[3] == 1) {
 //     setEditedAlg1(prev => [...prev, prev[prev.length - 1]]);
 //     setEditedAlg2(prev => [...prev, AlgVersions[1]]);
 //   }
 
-//   if (changedAlgArray[3] === 2) {
+//   if (changedAlgArray[3] == 2) {
 //     setEditedAlg1(prev => [...prev, AlgVersions[0]]);
 //     setEditedAlg2(prev => [...prev, prev[prev.length - 1]]);
 //   }
@@ -259,7 +290,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                             </td>
                             {
                                 !editClick1 && 
-                            <td className="PopUpTd2" onDoubleClick={()=>{setEditClick1((prev)=>!prev)}}>
+                            <td className="PopUpTd2">
                                 {editedAlg1[editedAlg1.length - 1]?.algs}
                             </td>
                             }
@@ -285,7 +316,8 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                  </button>
                                 }
                                 {!editClick1 &&
-                                    <button className="PopUpButtonSave" onClick={()=>{setEditClick1((prev)=>!prev)}}>Edit </button>
+                                    <button className="PopUpButtonSave" onClick={()=>{ if (changedAlgArray[2] == true) return
+                                                                                        setEditClick1((prev)=>!prev)}}>Edit </button>
                                 }
                                  </div>
                             </td>
@@ -295,8 +327,8 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
 
                             </td>
                             <td>
-                            <div className="swapAlgsButton" onClick={()=>{swapAlgs()}}>
-                                 <FaIcon icon="arrows-up-down" ></FaIcon>
+                            <div className={`swapAlgsButton  ${!changedAlgArray[2]&&!handleSwapClicked ? "active" : ""}`} onClick={(()=>handleSwap())}>
+                                 <FaIcon icon="arrows-up-down"  ></FaIcon>
                             </div>
                             </td>
                             <td>
@@ -309,7 +341,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                             </td>
                             
                                 {!editClick2 &&
-                                <td className="PopUpTd2" onDoubleClick={()=>{DoubleClick2Handler()}}>
+                                <td className="PopUpTd2">
                                 {editedAlg2[editedAlg2.length - 1]?.algs}
                                 </td>
                                 }
@@ -332,7 +364,8 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                                  </button>
                                 }
                                 {!editClick2 &&
-                                    <button className="PopUpButtonSave" onClick={()=>{setEditClick2((prev)=>!prev)}}>Edit </button>
+                                    <button className="PopUpButtonSave" onClick={()=>{ if (changedAlgArray[2] == true) return
+                                                                                        setEditClick2((prev)=>!prev)}}>Edit </button>
                                 }
                                  </div>
                             </td>
@@ -345,7 +378,7 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                 <div>
                     {
                         existPrevAlg && !editClick1 &&!editClick2 &&
-                        <button onClick={()=>{UndoAlgInput()}} className="PopUpButtonClose">Undo
+                        <button onClick={()=>{UndoAlgInput()}} className={`PopUpButtonClose ${!changedAlgArray[2]&&!handleSwapClicked ? "active" : ""}`}>Undo
                         </button>
                          
                     }
@@ -369,13 +402,14 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
                        
                         </>
                     } */}
-                 <button className="PopUpButtonClose" onClick={()=>CloseAndClearPopUp(onClose)}>Close </button>
+                 <button className="PopUpButtonClose active" onClick={()=>CloseAndClearPopUp(onClose)}>Close </button>
                 </div>
                 
             </Modal.Footer>
             {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  
                 && (<>
                 {console.log("NewPage")}
+                
                     <ArrowDataGenerator
                       key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
                       newAlg={changedAlgArray[0]}
@@ -385,6 +419,10 @@ function ShowAlgCard({alg,onClose,AlgCasesSet}){
             
                       setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false,changedAlgArray[3]]);
                       setExistPrevAlg(false)
+                    }}
+                    onSuccess={() => {
+                        console.log("Succes")
+                      setChangedAlgArray([changedAlgArray[0], changedAlgArray[1], false,changedAlgArray[3]]);
                     }}
                     />
                     </>

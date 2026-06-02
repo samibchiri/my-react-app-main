@@ -187,7 +187,7 @@ body .popUpContainer{
   border:2px solid rgb(40, 40, 40);
 }
 
-body .PopUpButtonClose:hover{
+body .PopUpButtonClose.active:hover{
   background-color: rgb(31, 31, 31);
   border:2px solid rgba(255, 255, 255, 0.868);
   transform: scale(1.05);
@@ -417,7 +417,7 @@ table input.PopUpInputAlg:active {
   height: 30px;
   position: absolute;
 }
-.swapAlgsButton:hover{
+.swapAlgsButton.active:hover{
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.2s;

@@ -43,7 +43,7 @@ async function UpdateOll(oll_id,newdata){
 
 
 
-export function ArrowDataGenerator({newAlg,oll,setCaseClicked,onError }){
+export function ArrowDataGenerator({newAlg,oll,setCaseClicked,onError,onSuccess }){
 
 // oll={}
 // oll["id"]="OLL 57-0"
@@ -1140,6 +1140,7 @@ useEffect(() => {
         if(chosenAlg!=""){
             console.log("UpdateNewOll",jsonArrowsToExport[0],allAltAUF)
             UpdateOll(oll.id,jsonArrowsToExport[0])    
+            onSuccess()
         }
     }
   if (algRef.current+1 === ollCaseSet.cases.length) {
