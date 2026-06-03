@@ -14,6 +14,8 @@ import { db } from '../../data/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {sortOlls} from "../../context/OllContext.jsx"
+import { ChangeOllCont } from "../BarPersevationPage/changeAlg.jsx";
+import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
@@ -28,6 +30,7 @@ function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClic
 
 const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
+const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
 
 const ScrambleVisualizerDetails={
     id: "oll",
@@ -569,7 +572,9 @@ useEffect(() => {
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
                         </div>
+                        
                         </div>
+                        
                         )}
                     
                 
@@ -657,6 +662,28 @@ useEffect(() => {
                 
                 </div>
                 </div>
+                <ChangeOllCont refIndex={i} oll={oll} setChangedAlgArray={setChangedAlgArray}/>
+                {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
+                    && (<>
+                    {console.log("NewPage")}
+                        <ArrowDataGenerator
+                            key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
+                            newAlg={changedAlgArray[0]}
+                            oll={changedAlgArray[1]}
+                            onError={(errorMessage) => {
+                            console.warn("CornerPermutation error:", errorMessage);
+                
+                            setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false,changedAlgArray[3]]);
+                          
+                        }}
+                        onSuccess={() => {
+                            console.log("Succes")
+                            setChangedAlgArray([changedAlgArray[0], changedAlgArray[1], false,changedAlgArray[3]]);
+                        }}
+                        />
+                        </>
+                        
+                        )}
                 </>
                 )
             )

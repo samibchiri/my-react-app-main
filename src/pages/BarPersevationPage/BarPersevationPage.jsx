@@ -1186,15 +1186,20 @@ return (
     && (<>
     {console.log("NewPage")}
         <ArrowDataGenerator
-          key={`${changedAlgArray[0]}-${changedAlgArray[1].id}`}
-          newAlg={changedAlgArray[0]}
-          oll={changedAlgArray[1]}
-          onError={(errorMessage) => {
-          console.warn("CornerPermutation error:", errorMessage);
-
-          setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false]);
-        }}
-        />
+              key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
+              newAlg={changedAlgArray[0]}
+              oll={changedAlgArray[1]}
+              onError={(errorMessage) => {
+              console.warn("CornerPermutation error:", errorMessage);
+  
+              setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false,changedAlgArray[3]]);
+      
+          }}
+          onSuccess={() => {
+              console.log("Succes")
+              setChangedAlgArray([changedAlgArray[0], changedAlgArray[1], false,changedAlgArray[3]]);
+          }}
+          />
         </>
         
       )}
