@@ -554,8 +554,10 @@ th{
 .OllCpLocation{
   position:relative;
   margin-top: 20px;
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 25px;
+  margin-bottom: 5px;
+  color: white;
+  font-weight: 500;
 }
 
 .CpRecOverlay{

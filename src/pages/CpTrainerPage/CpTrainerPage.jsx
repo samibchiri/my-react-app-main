@@ -468,6 +468,6 @@ export default function CpTrainerPage(){
                 
             </div>
 
-            {showPopUpCard.length > 0 && <ShowCpFullHint alg={showPopUpCard[0]} cubeSize={cubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
+            {showPopUpCard.length > 0 && <ShowCpFullHint alg={showPopUpCard[0]} cubeSize={150} setCubeSize={setCubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
     </>
 }

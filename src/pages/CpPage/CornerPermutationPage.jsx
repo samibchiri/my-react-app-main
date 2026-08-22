@@ -16,7 +16,8 @@ import { useLiveQuery } from "dexie-react-hooks";
 import {sortOlls} from "../../context/OllContext.jsx"
 import { ChangeOllCont } from "../BarPersevationPage/changeAlg.jsx";
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
-
+import BarPersevationOverlay from "../../1OllBarInfo.jsx";
+import Cp6Grid from "./Cp6Grid.jsx";
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
@@ -304,13 +305,14 @@ function getArrowTipCoord(oll,index,arrowNumber,cubeSize){
 let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
 let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
-let CornerPermutations=["",T_Perm,"U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
+let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
+//let CornerPermutations=["","",T_Perm,"","",""]
 let PermTable=[0,5,1,2,3,4]
 
 let CpLocation=["Full","Diag","Left","Right","Front","Back"]
 
 
-const cubeSize=150
+const [cubeSize,setCubeSize]=useState(150)
 
 function getEasyRotation(Center1,Center2,cubeSize){
 
@@ -502,12 +504,12 @@ useEffect(() => {
                     {/* <h2>{oll.name}</h2> */}
                     <h2>{oll.name + "-"+oll.algNumber}</h2>
                     <h2>{oll.algs}</h2>
-                    <div className="OllGrid">
+                    {/* <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
                         <div className="RecCont">  
                         <h2 className="OllCpLocation">{CpLocation[j]}</h2>
-                        {/* <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2> */}
+                        <h2 className="OllCpLocation">{oll.algNumber?CpLocation[j] +" -> "+oll.barMovements[PermTable[j]][0]:CpLocation[j] }</h2>
                         <div id="tempCont" style={{position:"relative",height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}`,marginBottom:"20px"}}>
                         <CaseImage
                             size={cubeSize}
@@ -518,7 +520,7 @@ useEffect(() => {
                         ></CaseImage>
 
                         
-                        {/* <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
+                        <div className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -546,7 +548,7 @@ useEffect(() => {
                         
                             }
                             
-                        </div> */}
+                        </div>
                         <CpRecOverlay
                             cubeSize={cubeSize}
                             arrowsInfo={[
@@ -566,6 +568,17 @@ useEffect(() => {
                                 },
                             ]}
                             />
+                            <BarPersevationOverlay
+                                oll={oll}
+                                pll={CornerPermutations[PermTable[j]]}
+                                permIndex={j}
+                                cpEasyWanted={true}
+                                cpSameOppWanted={false}
+                                barMovementWanted={false}
+                                cubeSize={cubeSize}
+                                setCubeSize={setCubeSize}
+                                cubeSizeFixed={true}
+                                />
 
 
                         </div>
@@ -578,7 +591,9 @@ useEffect(() => {
                         )}
                     
                 
-                </div>
+                </div> */}
+                <Cp6Grid oll={oll} cubeSize={cubeSize} setCubeSize={setCubeSize} cpEasyWanted={true} cpSameOppWanted={false}></Cp6Grid>
+                
                 </div>
                 
 
@@ -589,7 +604,7 @@ useEffect(() => {
                           oll.name + "-"+oll.algNumber:oll.name}</h2>
                     <h2>{oll.algs}</h2>
                     
-                    <div className="OllGrid">
+                    {/* <div className="OllGrid">
                         
                         {CornerPermutations.map((_,j)=>
                         <div className="RecCont">  
@@ -604,7 +619,7 @@ useEffect(() => {
                             caseSetDetails={ScrambleVisualizerDetails}
                             co="40"
                         ></CaseImage>
-                        {/* <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
+                        <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                            
                             {
                                <>
@@ -632,7 +647,7 @@ useEffect(() => {
                         
                             }
                             
-                        </div> */}
+                        </div>
                         <CpRecOverlay
                             cubeSize={cubeSize}
                             arrowsInfo={[
@@ -652,6 +667,17 @@ useEffect(() => {
                                 },
                             ]}
                             />
+                            <BarPersevationOverlay
+                                oll={oll}
+                                pll={CornerPermutations[PermTable[j]]}
+                                permIndex={j}
+                                cpEasyWanted={false}
+                                cpSameOppWanted={true}
+                                barMovementWanted={false}
+                                cubeSize={cubeSize}
+                                setCubeSize={setCubeSize}
+                                cubeSizeFixed={true}
+                                />
                         </div>
                         <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>
                             
@@ -660,8 +686,9 @@ useEffect(() => {
                         )}
                     
                 
-                </div>
-                </div>
+                </div> */}
+                <Cp6Grid oll={oll} cubeSize={cubeSize} setCubeSize={setCubeSize} cpEasyWanted={false} cpSameOppWanted={true}></Cp6Grid>
+                
                 <ChangeOllCont refIndex={i} oll={oll} setChangedAlgArray={setChangedAlgArray}/>
                 {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
                     && (<>
@@ -684,6 +711,7 @@ useEffect(() => {
                         </>
                         
                         )}
+                        </div>
                 </>
                 )
             )

@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { FaIcon } from '../../assets/fontAwesome.js';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
 import "../../styling/index.css";
-import '../../styling/PopUp.css';
+//import '../../styling/PopUp.css';
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 
 import Cp6Grid from "../CpPage/Cp6Grid.jsx";
@@ -15,7 +15,7 @@ import { useOll } from "../../context/OllContext";
 
 import {sortOlls} from "../../context/OllContext.jsx"
 
-function ShowCpFullHint({alg,cubeSize, onClose,algCasesSet}){
+function ShowCpFullHint({alg,cubeSize, setCubeSize, onClose,algCasesSet}){
     console.log("Showing Card",alg)
 
     const {swapOllsAlgnumber,createEmptySlot } = useOll();
@@ -338,7 +338,8 @@ function ShowCpFullHint({alg,cubeSize, onClose,algCasesSet}){
             </Modal.Header>
             <Modal.Body className="text-center">
 
-                    <Cp6Grid oll={alg} cubeSize={150}></Cp6Grid>
+                    <Cp6Grid oll={alg} cubeSize={cubeSize} setCubeSize={setCubeSize} cpEasyWanted={true} cpSameOppWanted={false}></Cp6Grid>
+                
             </Modal.Body>
             
         </Modal>

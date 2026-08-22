@@ -26,7 +26,8 @@ import arrowsInfoGen from "./1OllArrowCpInfo"
 export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted,cubeSize,setCubeSize,cubeSizeFixed}){
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let PermTable=[0,5,1,2,3,4]
-  let pllPreAUF=["","","U2","U","U'",""]
+  //let pllPreAUF=["","","U2","U","U'",""]
+  let pllPreAUF=["","","","","'",""]
 
   pll=pllPreAUF[PermTable[permIndex]]+pll
   //   let pllPreAUF=["","","U2"   ,"U","U'",""]
@@ -323,7 +324,7 @@ function GetBarsIndices(OllIndex,PermIndex){
 
   let [pathList,color]= centerOutLineInfo(colorIndexList)
 
-  color=newSquaresColors[PermIndex]
+  //color=newSquaresColors[PermIndex]
   color="rgba(13, 139, 13, 1)"
 
   //FinalPath stores the outline of centers,grouped by color of pllskip, later color is hardcoded as white ("rgba(248, 246, 246, 1)")
