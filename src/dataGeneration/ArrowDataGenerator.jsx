@@ -36,6 +36,7 @@ function Inverse(alg){
 }
 
 async function UpdateOll(oll_id,newdata){
+    console.log("UpdateO",oll_id, newdata)
     await db.olls.update(oll_id, {
     ...newdata
   });
@@ -50,7 +51,7 @@ export function ArrowDataGenerator({newAlg,oll,setCaseClicked,onError,onSuccess 
 // chosenAlg="F R U R' U' F'"
 console.log("Run Function")
     
-console.log("Start",newAlg,oll)
+console.log("StartArrowDataGen",newAlg,oll)
 
 const [pathArrowList, setPathArrowList] = useState([]);
 const [angleList, setAngleList] = useState([]);
@@ -166,6 +167,7 @@ useEffect(() => {
         
         
         //Search for angle in which alternative oll should be performed
+        
         setAltScramble(
             new Array(4).fill("").map((_,i)=>
                 alg2+allAUFPerm[i] +alg1+
@@ -219,7 +221,7 @@ useEffect(() => {
     if(algIndexRef.current==0){
         setBarMovements([["Full"],["Back"],["Front"],["Left"],["Right"],["Diag"]])
     }
-  }, 1000);
+  }, 100);
 
   return () => clearTimeout(timeout);
 }, [scramble]);
@@ -250,7 +252,6 @@ useEffect(() => {
         setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
         //setScramble(currentalg.algs[algIndexRef.current])
 
-        
         //if(scrambleIndex.current==1){
 
             let alg1=currentalg.algs[0]
@@ -485,9 +486,9 @@ function EasyRecognition(){
         name:ollCaseSet.cases[algRef.current].name,
     }
 
-    if (chosenAlg !=null){
-        dict["name"]=oll.name
-    }
+    // if (chosenAlg !=null){
+    //     dict["name"]=oll.name
+    // }
 
     jsonArrowsToExport.forEach((item)=>{
         console.log(item.name===dict.name)
@@ -867,6 +868,7 @@ function GroupRecognition(){
 
                     for( let index2=0;index2<arrowCombination[0].length;index2++){
                         if(index2!=index1){
+                            console.log("arrowWtf",arrowCombination,arrowCombination[Pairs[j][1]],index2)
                          if(arrowCombination[Pairs[j][0]][index2][2]!="adj" && arrowCombination[Pairs[j][1]][index2][2]!="adj"){
                             if(index1!=index2){
                             
@@ -1049,6 +1051,7 @@ function GroupRecognition(){
     
     console.log("GetScramble",ollCaseSet.cases[algRef.current])
     try{
+        console.log("Cgroup", ollCaseSet,algRef.current)
         groupdict ={
             id:crypto.randomUUID(),
             name:ollCaseSet.cases[algRef.current].name,
@@ -1088,6 +1091,7 @@ function GroupRecognition(){
             groupdict["group"]=oll.group
 
         }
+        console.log("GroupD",groupdict,chosenAlg)
     }
     catch(error){
         console.error(error)
@@ -1135,7 +1139,7 @@ function GroupRecognition(){
 }
 
 useEffect(() => {
-    console.log("Print Json")
+    console.log("Print Json",chosenAlg,jsonArrowsToExport)
     if(chosenAlg !=null){
         if(chosenAlg!=""){
             console.log("UpdateNewOll",jsonArrowsToExport[0],allAltAUF)
@@ -1454,6 +1458,8 @@ const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
 function getAltHeadlightsMovement(){
     
     let containsOnlyYellowFound=false
+    let noneSolveOll= true
+    console.log("Altscrambles",scramble,altscramble,algIndexRef.current)
     if(altscramble[0]!=""){
     for(let i=0;i<4;i++){
         console.log(altoverlayRefs)
@@ -1468,20 +1474,19 @@ function getAltHeadlightsMovement(){
         
         
         let containsOnlyYellow=true
-        console.log("Not Yellow Check",altContainerSvgSquaresInsideList)
+        console.log("Not Yellow Check",altContainerSvgSquaresInsideList, i,containsOnlyYellow)
         altContainerSvgSquaresInsideList.forEach((item)=>{
             if(item.getAttribute("fill")=="yellow"){
                 
             }
             else{
                 containsOnlyYellow=false
+                console.log("Fail",item,i)
             }
             
         })
         if(containsOnlyYellow){
-            if(!containsOnlyYellowFound){
-                containsOnlyYellowFound=true
-            
+            noneSolveOll=false
             
             console.log(altscramble)
             //if(scrambleIndex.current==1){
@@ -1495,8 +1500,11 @@ function getAltHeadlightsMovement(){
                 else if(aufIndex==2){
                     aufIndex=1
                 }
-                console.log("CHangeAUF")
-                setAllAltAUF([allAUFPerm[aufIndex]])
+                console.log("CHangeAUF",allAUFPerm,aufIndex,algRef.current,algIndexRef.current)
+                if(!allAltAUF.includes(allAUFPerm[aufIndex])){
+                    setAllAltAUF(prev=>[...prev,allAUFPerm[aufIndex]])
+                }
+                
                     
            // }
             // if(scrambleIndex.current==2){
@@ -1531,7 +1539,7 @@ function getAltHeadlightsMovement(){
             // setBarMovements(tempBarMovement)
             // console.log(`ScrambleIndex: ${scrambleIndex.current}`)
             // console.log(`THe problem:, ${JSON.stringify(tempBarMovement)}`)
-            }
+            
         }
 
         
@@ -1540,7 +1548,7 @@ function getAltHeadlightsMovement(){
         // console.log("TempBarMovementsPushed",i)
         // tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
     }
-    if (!containsOnlyYellowFound){
+    if (noneSolveOll){
         console.log("Stopping CornerPermutationPage because it doesn't solve the oll");
         if (onError) onError("Invalid OLL");  // notify parent
         return;                   // stop further updates

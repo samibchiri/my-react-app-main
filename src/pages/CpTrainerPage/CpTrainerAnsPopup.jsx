@@ -6,6 +6,7 @@ import "../../styling/index.css";
 import '../../styling/PopUp.css';
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 
+import Cp6Grid from "../CpPage/Cp6Grid.jsx";
 
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/db.js';
@@ -13,9 +14,8 @@ import { db } from '../../data/db.js';
 import { useOll } from "../../context/OllContext";
 
 import {sortOlls} from "../../context/OllContext.jsx"
-import { ChangeOlls } from "./ChangeOlls.jsx";
 
-function ShowAlgCard({alg,onClose,algCasesSet}){
+function ShowCpFullHint({alg,cubeSize, onClose,algCasesSet}){
     console.log("Showing Card",alg)
 
     const {swapOllsAlgnumber,createEmptySlot } = useOll();
@@ -330,203 +330,20 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
 
     console.log("EditedAlg",editedAlg1,editedAlg2)
     return (
-        <Modal centered className="ModalPopUp" show={true} onHide={onClose}
+        <Modal centered className="ModalCpPopUp" show={true} onHide={onClose}
         dialogClassName="alg-modal-dialog"
       contentClassName="alg-modal-content">
             <Modal.Header className="justify-content-center">
                 <Modal.Title className="popUpTitle">{alg.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center">
-                <CaseImage
-                    size={200}
-                    alg={DefaultAlg1?DefaultAlg1:""}
-                    caseSetDetails={algCasesSet.details}
-                ></CaseImage>
-                <div className="popUpContainer">
-                    <table className="popUpTable text-center">
-                        <tbody>
-                        <tr className="popUpRow">
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                {alg.name}
-                            </th>
-                        </tr>
-                        <tr className="popUpRow">
-                            <td className="PopUpTd1">
-                                Group
-                            </td>
-                            <td className="PopUpTd2">
-                                {alg.group}
-                            </td>
-                        </tr>
-                        <tr className="popUpRow">
-                            <td className="PopUpTd1">
-                                Case Set
-                            </td>
-                            <td className="PopUpTd2">
-                                {algCasesSet.details.title}
-                            </td>
-                            
-                        </tr>
-                        <tr className="popUpRowScramble">
-                            <td className="PopUpTd1">
-                                Scramble
-                            </td>
-                            <td className="PopUpTd2">
-                                {alg.scrambles[0]}
-                            </td>
-                            
-                        </tr>
-                        <tr className="popAlgUpRow">
-                            <td className="PopUpTd1">
-                                Algorithm 1
-                            </td>
-                            {
-                                !editClick1 && 
-                            <td className="PopUpTd2">
-                                {editedAlg1[editedAlg1.length - 1]?.algs}
-                            </td>
-                            }
-                           
-                            {
-                            editClick1 &&
-                            <td className="PopUpTd2">
-                                <input type="text" onKeyDown={SaveInput1} ref={InputAlg1} wrap="soft"  rows="2" id="PopUpInputAlg1" placeholder="Enter Algorithm"/>
-                                
-                            </td>
-                           
-                            }
-                            <td className="PopUpTd3" >
-                                <div id="buttonSaveAndCopy1">
 
-                                <button className="PopUpCopyButton" onClick={() => {
-                                    navigator.clipboard.writeText(editedAlg1[editedAlg1.length - 1]?.algs)}}>
-                                    <FaIcon icon="copy"></FaIcon>
-                                </button>
-                                {editClick1 &&
-                                 <button  className="PopUpButtonSave" onClick={()=>{SaveAndChange1()}}>Save 
-
-                                 </button>
-                                }
-                                {!editClick1 &&
-                                    <button className="PopUpButtonSave" onClick={()=>{ if (changedAlgArray[2] == true) return
-                                                                                        setEditClick1((prev)=>!prev)}}>Edit </button>
-                                }
-                                 </div>
-                            </td>
-                        </tr>
-                        <tr style={{height:"10px"}}>
-                            <td>
-
-                            </td>
-                            <td>
-                            <div className={`swapAlgsButton  ${!changedAlgArray[2]&&!handleSwapClicked ? "active" : ""}`} onClick={(()=>handleSwap())}>
-                                 <FaIcon icon="arrows-up-down"  ></FaIcon>
-                            </div>
-                            </td>
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        <tr className="lastPopUpRow">
-                            <td className="PopUpTd1">
-                                Algorithm 2
-                            </td>
-                            
-                                {!editClick2 &&
-                                <td className="PopUpTd2">
-                                {editedAlg2[editedAlg2.length - 1]?.algs}
-                                </td>
-                                }
-                                {editClick2 &&
-                                <td className="PopUpTd2">
-                                    <input type="text" onKeyDown={SaveInput2} ref={InputAlg2} wrap="hard" rows="2" id="PopUpInputAlg2" placeholder="Enter Algorithm"/>
-                                </td>
-                                }
-                            
-                            <td>
-                                <div id="buttonSaveAndCopy2">
-
-                                <button className="PopUpCopyButton" onClick={() => {
-                                    navigator.clipboard.writeText(editedAlg2[editedAlg2.length - 1]?.algs)}}>
-                                    <FaIcon icon="copy"></FaIcon>
-                                </button>
-                                {editClick2 &&
-                                 <button  className="PopUpButtonSave" onClick={()=>{SaveAndChange2()}}>Save 
-
-                                 </button>
-                                }
-                                {!editClick2 &&
-                                    <button className="PopUpButtonSave" onClick={()=>{ if (changedAlgArray[2] == true) return
-                                                                                        setEditClick2((prev)=>!prev)}}>Edit </button>
-                                }
-                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <Cp6Grid oll={alg} cubeSize={150}></Cp6Grid>
             </Modal.Body>
-            <Modal.Footer>
-                <div>
-                    {
-                        existPrevAlg && !editClick1 &&!editClick2 &&
-                        <button onClick={()=>{UndoAlgInput()}} className={`PopUpButtonClose ${!changedAlgArray[2]&&!handleSwapClicked ? "active" : ""}`}>Undo
-                        </button>
-                         
-                    }
-                    {
-                        !existPrevAlg &&
-                        <button className="PopUpButtonHidden">Undo
-                        </button>
-                    }
-                    
-                    {/* {
-                        !editClick &&
-                        <>
-                            <button className="PopUpButtonClose" onClick={()=>{setEditClick((prev)=>!prev)}}>Edit </button>
-                        </>
-                    } */}
-                    {/* {
-                        editClick &&
-                        <>
-                        <button className="PopUpButtonClose" onClick={()=>{setEditClick((prev)=>(!prev))}}>Undo</button>
-                        
-                       
-                        </>
-                    } */}
-                 <button className="PopUpButtonClose active" onClick={()=>CloseAndClearPopUp(onClose)}>Close </button>
-                </div>
-                
-            </Modal.Footer>
-            {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true)  
-                && (<>
-                {console.log("NewPage",changedAlgArray)}
-                
-                    <ArrowDataGenerator
-                      key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
-                      newAlg={changedAlgArray[0]}
-                      oll={changedAlgArray[1].algs!=""?changedAlgArray[1]:{...AlgVersions[0], id:changedAlgArray[1].id, algNumber:changedAlgArray[1].algNumber}}
-                      onError={(errorMessage) => {
-                      console.warn("CornerPermutation error:", errorMessage);
-            
-                      setChangedAlgArray([changedAlgArray[1], changedAlgArray[1], false,changedAlgArray[3]]);
-                      setExistPrevAlg(false)
-                    }}
-                    onSuccess={() => {
-                        console.log("Succes",changedAlgArray)
-                      setChangedAlgArray([changedAlgArray[0], changedAlgArray[1], false,changedAlgArray[3]]);
-                    }}
-                    />
-                    </>
-                    
-                  )}
             
         </Modal>
         
     )
 }
 
-export default ShowAlgCard
+export default ShowCpFullHint

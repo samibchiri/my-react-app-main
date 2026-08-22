@@ -1,6 +1,8 @@
-import React, { useContext, useState } from "react"; // removed 'use'
+
+import React, { useContext, useState, useEffect } from "react"; // removed 'use'
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import CaseImage from "../../components/Oll/cubing/cubeImage.jsx";
+
 
 import TestPage from '../TestPage/TestPage.jsx';
 import CornerPermutationPage from '../CpPage/CornerPermutationPage.jsx';
@@ -26,22 +28,36 @@ import '../../styling/index.css';
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/db.js';
 
+import { useOll } from "../../context/ollContext.jsx";
+
 import {sortOlls} from "../../context/OllContext.jsx"
 
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
-import AlgDisplayPage from "./AlgDisplayPage.jsx";
 
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 
-export default function AlgTrainerPage() {
-
+export default function AlgDisplayPage(
+    {selectedCaseSet,
+  setSelectedCaseSet,
+  openGroups,
+  setOpenGroups,
+  selectedAlg,
+  setSelectedAlg,
+  algGroups,
+  setAlgGroups,
+  algCasesSet,
+  setAlgCasesSet,
+  caseClicked,
+  setCaseClicked})
+  {
     const { darkMode } = useContext(ThemeContext)
-    const [caseClicked, setCaseClicked] = useState(false)
+    //const [caseClicked, setCaseClicked] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [cpClicked, setCpClicked] = useState(false)
     const [barClicked, setBarClicked] = useState(false)
+    //const [caseItem, setCaseItem] = useState()
     const navigate = useNavigate();
     
     const buttonStyle = {
@@ -79,8 +95,11 @@ export default function AlgTrainerPage() {
           return db.olls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortOlls));;
         },[]
       );
-
-    const [selectedCaseSet, setSelectedCaseSet] = useState(null)
+    
+      const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
+      
+      console.log("UseCont",allOlls,getOllsByGroup("Dot"))
+//    const [selectedCaseSet, setSelectedCaseSet] = useState(null)
 
     let AllCases = [cpllCaseSet, eollCaseSet, epllCaseSet, f2lCaseSet, ocllCaseSet, ollCaseSet, pllCaseSet]
 
@@ -90,14 +109,19 @@ export default function AlgTrainerPage() {
     const cubeImageSize = xs ? "100" : "120";
 
 
-    const [openGroups, setOpenGroups] = useState({});
-    const [selectedAlg, setSelectedAlg] = useState([])
+    //const [openGroups, setOpenGroups] = useState({});
+    //const [selectedAlg, setSelectedAlg] = useState([])
     const [showPopUpCard, setShowPopUpCard] = useState([])
-    const [algCasesSet, setAlgCasesSet] = useState(null);
-    const [algGroups, setAlgGroups] = useState([]);
+    //const [AlgCasesSet, setAlgCasesSet] = useState(null);
+   // const [AlgGroups, setAlgGroups] = useState([]);
+
+   console.log("SelAlg",selectedAlg,algGroups,algCasesSet)
+
+   
+
     const toggleSelectedAlg = (alg => {
 
-
+        
 
         if (!(selectedAlg.includes(alg))) {
             setSelectedAlg((prev) => [...prev, alg])
@@ -111,12 +135,22 @@ export default function AlgTrainerPage() {
     const CheckGroupSelected = (group) => {
 
         let ChosenGroupAlgs = []
-
-        algCasesSet.cases.forEach((alg) => {
-            if (alg.group == group) {
-                ChosenGroupAlgs.push(alg)
-            }
-        })
+        //console.log("ClickedSelG",dbOllCaseSet,group,algCasesSet,selectedAlg,ChosenGroupAlgs)
+        
+        if(algCasesSet.details.id!="oll"){
+            algCasesSet.cases.forEach((alg) => {
+                if (alg.group == group) {
+                    ChosenGroupAlgs.push(alg)
+                }
+            })
+        }
+        else{
+            dbOllCaseSet.forEach((alg)=>{
+                if (alg.group == group) {
+                    ChosenGroupAlgs.push(alg)
+                }
+            })
+        }
         const GroupAlgsInSelected = ChosenGroupAlgs.every((alg) => selectedAlg.includes(alg))
 
         return GroupAlgsInSelected
@@ -126,13 +160,23 @@ export default function AlgTrainerPage() {
 
         let ChosenGroupAlgs = []
 
-        algCasesSet.cases.forEach((alg) => {
+        if(algCasesSet.details.id!="oll"){
+            algCasesSet.cases.forEach((alg) => {
             if (alg.group == group) {
                 ChosenGroupAlgs.push(alg)
             }
         })
-        console.log("Groups")
-        console.log(ChosenGroupAlgs)
+        }
+        else{
+            dbOllCaseSet.forEach((alg) => {
+            if (alg.group == group) {
+                ChosenGroupAlgs.push(alg)
+            }
+        })
+        }
+       
+
+
         const GroupAlgsInSelected = ChosenGroupAlgs.every((alg) => selectedAlg.includes(alg))
         if (GroupAlgsInSelected) {
             setSelectedAlg((prev) => prev.filter((item) => !ChosenGroupAlgs.includes(item)))
@@ -144,14 +188,13 @@ export default function AlgTrainerPage() {
 
             setSelectedAlg((prev) => [...prev, ...AlgsToAdd])
         }
-        console.log(selectedAlg)
     })
 
 
     const toggleGroup = (group) => {
         setOpenGroups((prev) => {
 
-
+            console.log("SetOpen",openGroups,prev)
             if (!(group in openGroups)) {
 
                 return { ...prev, [group]: true };
@@ -167,7 +210,14 @@ export default function AlgTrainerPage() {
 
     const AreAllAlgsChecked = () => {
         if (!algCasesSet) return false;
-        return algCasesSet.cases.every(alg => selectedAlg.includes(alg))
+
+        if(algCasesSet.details.id!="oll"){
+            return algCasesSet.cases.every(alg => selectedAlg.includes(alg))
+        }
+        else{
+            return dbOllCaseSet.every(alg => selectedAlg.includes(alg))
+        }
+        
 
     }
 
@@ -178,7 +228,12 @@ export default function AlgTrainerPage() {
             setSelectedAlg([])
         }
         else {
+            if(algCasesSet.details.id!="oll"){
             setSelectedAlg([...algCasesSet.cases])
+            }
+            else{
+                setSelectedAlg([...dbOllCaseSet])
+            }
         }
     }
 
@@ -208,31 +263,46 @@ export default function AlgTrainerPage() {
         setShowPopUpCard([alg])
     }
 
+    // useEffect(()=> {
+    //     if(caseItem){
+    //         if(caseItem.details.id="oll"){
+    //             setSelectedCaseSet({
+    //                 dbOllCaseSet,
+    //                 details: {
+    //                     id: "oll"
+    //                 }
+    //             });
+    //         }
+    //         else{
+    //             setSelectedCaseSet(caseItem)
+    //         }
+    //     setOpenGroups([])
+    //     setSelectedAlg([])
+    //     setAlgCasesSet(caseItem)
+    //     setAlgGroups([... new Set(caseItem.cases.map(alg => alg.group))])
+    //     }
+    // },[caseItem,dbOllCaseSet])
 
-    const handleAlgCaseSetClicked = (caseItem) => {
+    // const handleAlgCaseSetClicked = (caseItem) => {
+    //     console.log("Case",dbOllCaseSet)
+    //     setCaseClicked(!caseClicked)
+    //     if(caseItem.details.id="oll"){
+    //         setSelectedCaseSet({
+    //             dbOllCaseSet,
+    //             details: {
+    //                 id: "oll"
+    //             }
+    //         });
+    //     }
+    //     else{
+    //         setSelectedCaseSet(caseItem)
+    //     }
         
-        setCaseClicked(!caseClicked)
-        let newCaseItem=caseItem
-        if(caseItem.details.id=="oll"){
-            newCaseItem={
-                dbOllCaseSet,
-                details: {
-                    id: "oll"
-                }
-            };
-        }
-
-        if(!dbOllCaseSet){
-            newCaseItem=[]
-        }
-        console.log("NewCase",newCaseItem)
-        setSelectedCaseSet(newCaseItem)
-        
-        setOpenGroups([])
-        setSelectedAlg([])
-        setAlgCasesSet(caseItem)
-        setAlgGroups([... new Set(caseItem.cases.map(alg => alg.group))])
-    }
+    //     setOpenGroups([])
+    //     setSelectedAlg([])
+    //     setAlgCasesSet(caseItem)
+    //     setAlgGroups([... new Set(caseItem.cases.map(alg => alg.group))])
+    // }
 
     const TestButtonClick = () => {
         setCaseClicked(prev => !prev)
@@ -249,103 +319,25 @@ export default function AlgTrainerPage() {
         setButtonClicked(false)
     }
 
+    useEffect(()=>{
+        
+        let newCaseItem
+        if(algCasesSet.details.id=="oll"){
+            newCaseItem={
+                dbOllCaseSet:dbOllCaseSet,
+                details: {
+                    id: "oll"
+                }
+            };
+        }
+        console.log("Case2",dbOllCaseSet,algCasesSet)
+        setSelectedCaseSet(newCaseItem)
+        
+    },[dbOllCaseSet])
 
     return <>
-
-        <div style={{ height: "50px", alignItems: "center" }} className='col p-0 justify-content-start d-flex'>
-            <button
-                onClick={() => { handleBackClicked()}}
-                className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                style={{
-                    ...BackButtonstyle,
-
-                    "--bs-border-style": "solid",
-                    "--bs-border-color": "white",
-                    "--bs-btn-hover-border-color": "red",
-                    "--bs-btn-focus-border-color": "red",
-                    "--bs-btn-active-border-color": "red",
-                }}
-            >
-                Back
-            </button>
-        </div>
-
-        {
-            cpClicked && (
-                <>
-                    <CornerPermutationPage algGroup={algGroups} testedAlgs={selectedAlg} setButtonClicked={setButtonClicked} setCaseClicked={setCaseClicked} />
-                </>
-            )
-
-        }
-        {barClicked && (
-            <>
-                <BarPersevation algGroup={algGroups} testedAlgs={selectedAlg} setButtonClicked={setButtonClicked} setCaseClicked={setCaseClicked} />
-            </>
-        )}
-
-        {!cpClicked && !barClicked && !caseClicked && !buttonClicked && (
-            <>
-                <div className='container'>
-                    <h2 className=''>Choose what you want to practice</h2>
-
-                    <div className='row'>
-                        {AllCases.map((caseItem, i) => (
-                            <div key={i} style={{ maxWidth: "1200px", minHeight: "100px" }} className='col-12 col-md-6 mb-3 d-flex justify-content-center'>
-                                <button onClick={() => { handleAlgCaseSetClicked(caseItem) }} className={`m-2 border btn-block btn ${darkMode ? "btn-dark" : "btn-primary"}`} style={buttonStyle}>
-                                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }} >
-                                        <div>
-                                            <CaseImage
-                                                size={80}
-                                                alg={caseItem.cases[Math.floor(Math.random() * (caseItem.cases.length - 1))].algs[0]}
-                                                caseSetDetails={caseItem.details}
-                                            ></CaseImage>
-                                        </div >
-                                        <div className='col'>
-                                            <h2>{caseItem.details.title}</h2>
-                                        </div>
-                                        <div>
-                                            <CaseImage
-                                                size={80}
-                                                alg={caseItem.cases[0].algs[-1]}
-                                                caseSetDetails={caseItem.details}
-                                            ></CaseImage>
-                                        </div>
-
-                                    </div>
-                                </button>
-                            </div>
-                        ))}
-
-                    </div>
-                </div>
-
-            </>)}
-
-
-
-
-
-
-        {selectedCaseSet  && (
-            
-            <>
-             <AlgDisplayPage    
-             selectedCaseSet={selectedCaseSet}
-             setSelectedCaseSet={setSelectedCaseSet}
-            openGroups={openGroups}
-            setOpenGroups={setOpenGroups}
-            selectedAlg={selectedAlg}
-            setSelectedAlg={setSelectedAlg}
-            algGroups={algGroups}
-            setAlgGroups={setAlgGroups}
-            algCasesSet={algCasesSet}
-            setAlgCasesSet={setAlgCasesSet}
-            caseClicked={caseClicked}
-            setCaseClicked={setCaseClicked}
-            />
-
-                {/* <div className='container-fluid '>
+        {console.log(selectedCaseSet)}
+        {selectedCaseSet && caseClicked && dbOllCaseSet && <div className='container-fluid '>
                     <div className='row align-items-center'>
                         <div className='col justify-content-end d-flex p-0'>
                             <button className={`${darkMode ? "dark-learn-btn" : "light-learn-btn"} m-1 btn btn-info `} disabled={DissableLearnBtn()} type='button'>
@@ -410,7 +402,7 @@ export default function AlgTrainerPage() {
 
 
                             {algGroups.map(group => {
-                                const FirstGroupCase = AlgCasesSet.cases.find(alg => (
+                                const FirstGroupCase = algCasesSet.cases.find(alg => (
                                     alg.group == group
                                 ))
 
@@ -430,7 +422,7 @@ export default function AlgTrainerPage() {
                                                         <CaseImage
                                                             size={80}
                                                             alg={FirstGroupCase.algs[0]}
-                                                            caseSetDetails={AlgCasesSet.details}
+                                                            caseSetDetails={algCasesSet.details}
                                                         ></CaseImage>
                                                     </div>
                                                 )}
@@ -465,7 +457,9 @@ export default function AlgTrainerPage() {
 
 
                                         </tr>
-                                        {(selectedCaseSet.details.id=="oll"?selectedCaseSet.dbOllCaseSet:AlgCasesSet.cases).map(alg => {
+                                       
+                                        {(selectedCaseSet.details.id=="oll"?dbOllCaseSet:algCasesSet.cases).map(alg => {
+                                            
                                             return (
 
 
@@ -481,7 +475,7 @@ export default function AlgTrainerPage() {
                                                                 <CaseImage
                                                                     size={80}
                                                                     alg={alg instanceof Array?alg.algs[0]:alg.algs}
-                                                                    caseSetDetails={AlgCasesSet.details}
+                                                                    caseSetDetails={algCasesSet.details}
                                                                 ></CaseImage>
                                                             </div>
                                                         </td>
@@ -509,13 +503,12 @@ export default function AlgTrainerPage() {
                                                         
                                                         <td onClick={() => { handleAlgCardShown(alg) }} className=' d-sm-table-cell align-middle' role="columnheader">
                                                             <div>
-                                                                {console.log(alg)}
                                                                 {alg.order}
                                                             </div>
                                                         
                                                         </td>}
                                                         <td>
-                                                            <input style={{ margin: "20px", width: "20px", height: "30px" }} className="align-middle" type="checkbox" checked={selectedAlg.includes(alg)} onClick={() => { toggleSelectedAlg(alg) }}>
+                                                            <input style={{ margin: "20px", width: "20px", height: "30px" }} className="align-middle" type="checkbox" checked={selectedAlg.includes(alg)} onChange={() => { toggleSelectedAlg(alg) }}>
                                                             </input>
                                                         </td>
 
@@ -533,20 +526,8 @@ export default function AlgTrainerPage() {
 
                         </tbody>
                     </table>
-                    {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} onClose={() => setShowPopUpCard([])} AlgCasesSet={AlgCasesSet} />}
+                    {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
 
-                </div> */}
-
-            </>
-        )}
-
-        {
-            buttonClicked && (
-                <>
-
-                    <TestPage testedAlgs={selectedAlg} setButtonClicked={setButtonClicked} setCaseClicked={setCaseClicked} />
-                </>
-            )
-        }
+                </div>}
     </>
 }

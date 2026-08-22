@@ -31,7 +31,7 @@ export const OllProvider = ({ children }) => {
 
       const newId = `OLL ${ollNumber}-${maxAlgNumber + 1}`;
       await db.olls.add({
-        id: newId,
+        id: crypto.randomUUID(),
         ollNumber,
         algNumber: maxAlgNumber + 1,
         group,
@@ -47,33 +47,70 @@ export const OllProvider = ({ children }) => {
     try {
       const existing = allOlls?.filter(o => o.ollNumber === ollNumber) ?? [];
       const maxAlgNumber = existing.length > 0 ? Math.max(...existing.map(o => o.algNumber)) : -1;
-
-      const newId = `OLL ${ollNumber}-Empty`;
+      console.log("CopyEx",existing)
+      const newId = crypto.randomUUID();
       await db.olls.add({
+        ...existing[0],
         id: newId,
+        algSpeed: null,
+        algTps: null,
+        algAttemptCount: null,
         ollNumber: ollNumber,
         algNumber: maxAlgNumber + 1,
         group: group,
-        algs: null // empty
+        algs: ""
       });
     } catch (err) {
       console.error("Failed to create empty OLL slot:", err);
     }
   };
 
-  const swapOllsAlgnumber = async (firstOll,secondOll) =>{
+  // const swapOllsAlgnumber = async (firstOll,secondOll) =>{
     
-    let firstAlgNumber = firstOll.algNumber
-    let secondAlgNumber = secondOll.algNumber
-   
-    try {
-      await db.olls.update(firstOll.id, { algNumber: secondAlgNumber });
-      await db.olls.update(secondOll.id, { algNumber: firstAlgNumber });
+  //   let firstAlgNumber = firstOll.algNumber
+  //   let secondAlgNumber = secondOll.algNumber
+    
+  //   try {
+  //     await db.olls.update(firstOll.id, { algNumber: secondAlgNumber });
+  //     await db.olls.update(secondOll.id, { algNumber: firstAlgNumber });
       
+  //   } catch (err) {
+  //     console.error("Failed to update OLL alg:", err);
+  //   }
+  // }
+
+  const swapOllsAlgnumber = async (firstOll, secondOll) => {
+    try {
+      console.log("SwapNum2",firstOll,secondOll)
+        await db.transaction("rw", db.olls, async () => {
+
+            const firstAlgNumber = firstOll.algNumber;
+            const secondAlgNumber = secondOll.algNumber;
+
+            await db.olls.update(
+                firstOll.id,
+                { algNumber: secondAlgNumber }
+            );
+
+            await db.olls.update(
+                secondOll.id,
+                { algNumber: firstAlgNumber }
+            );
+            console.log("AFTER SWAP");
+
+        console.log(
+            await db.olls.get(firstOll.id)
+        );
+
+        console.log(
+            await db.olls.get(secondOll.id)
+        );
+        });
+
     } catch (err) {
-      console.error("Failed to update OLL alg:", err);
+        console.error("Failed to swap OLL alg numbers:", err);
     }
-  }
+};
 
   const value = {
     allOlls,

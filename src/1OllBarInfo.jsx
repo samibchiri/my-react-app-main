@@ -23,7 +23,7 @@ import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,ge
   CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./pages/BarPersevationPage/BarPersevationLogic.jsx"
 import arrowsInfoGen from "./1OllArrowCpInfo"
 
-export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted}){
+export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted,cubeSize,setCubeSize,cubeSizeFixed}){
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let PermTable=[0,5,1,2,3,4]
   let pllPreAUF=["","","U2","U","U'",""]
@@ -37,8 +37,8 @@ export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppW
 
   const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
 
-  
-  const [cubeSize, setCubeSize] = useState(200);
+  console.log("CubeSize",cubeSize)
+  //const [cubeSize, setCubeSize] = useState(200);
   const altoverlayRefs = useRef([]);
   const rerenderRef = useRef(0);
 
@@ -53,7 +53,9 @@ const noMovementCenterRef = useRef(
   Array.from({ length: 25 }, () => [false, false])  // 25 separate [false, false] arrays
 );
 
+if(!cubeSizeFixed){
 useWindowWidthLogic(setCubeSize,setStrokeWidth,setLineWidth,setRefsReady,cubeSize);
+}
 
 const Scale=13.1/0.15740740740740744/150*cubeSize
 

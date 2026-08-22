@@ -9,9 +9,9 @@ import '../../styling/index.css';
 function AlgTrainerPage({ testedAlgs, setButtonClicked, setCaseClicked }) {
 
 
-    const TestBackClick = () => {
-        setButtonClicked(prev => !prev)
-        setCaseClicked(true)
+   const handleBackClicked = ()=>{
+        console.log("BackC")
+        navigate("/train")
     }
 
     const BackButtonstyle = {
@@ -311,7 +311,7 @@ function AlgTrainerPage({ testedAlgs, setButtonClicked, setCaseClicked }) {
                 <div className='Timercontainer '>
                     <div className='TestButtonsCont row align-items-center d-flex alignItems:"center"'>
                         <div style={{ height: "50px", alignItems: "center" }} className='col p-0 justify-content-start d-flex'>
-                            <button onClick={() => { TestBackClick() }}
+                            <button onClick={() => { handleBackClicked}}
                                 className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                                 style={{
                                     ...BackButtonstyle,
