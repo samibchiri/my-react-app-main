@@ -10,7 +10,7 @@ import ollCaseSet from "../../data/ollCaseSet.js";
 import CpRecOverlay from "../../assetsGeneration/CpOverlay.jsx"
 import OllCaseFilter from "../../components/Oll/OllCaseFilter.jsx";
 import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 

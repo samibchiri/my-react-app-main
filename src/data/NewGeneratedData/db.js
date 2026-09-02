@@ -1,5 +1,5 @@
 import Dexie from "dexie";
-import arrowOllSet from "./arrowOllSet.js";
+import arrowOllSet from "../arrowOllSet.js";
 
 export const db = new Dexie("ollDatabase");
 
@@ -13,7 +13,13 @@ db.version(1).stores({
     ollNumber,
     algNumber,
     group
-  `
+  `,
+  deletedOlls: `
+  id,
+  ollNumber,
+  algNumber,
+  group,
+  algs`
 });
 
 export async function seedDatabaseIfEmpty() {

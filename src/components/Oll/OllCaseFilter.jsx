@@ -2,7 +2,7 @@ import CaseImage from "./cubing/cubeImage.jsx";
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import React, { useMemo, useContext,useRef, useEffect, useState, useLayoutEffect } from "react";
 
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 

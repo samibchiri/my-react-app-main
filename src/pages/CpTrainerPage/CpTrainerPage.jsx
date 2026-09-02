@@ -26,13 +26,13 @@ import '../../styling/index.css';
 import '../../styling/PopUp.css';
 
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import {sortOlls} from "../../context/OllContext.jsx"
 
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
-import ShowCpFullHint from "../CpTrainerPage/CpTrainerAnsPopup.jsx";
+import Bar6Grid from "../BarPersevationPage/Bar6Grid.jsx";
 
 import Stopwatch from '../../components/Train/Stopwatch.jsx';
 
@@ -293,7 +293,7 @@ export default function CpTrainerPage(){
     }
 
     const handleHintClicked = ()=>{
-        setCpSameOpp(true)
+        setCpSameOpp(!cpSameOpp)
     }
     
 
@@ -468,6 +468,8 @@ export default function CpTrainerPage(){
                 
             </div>
 
-            {showPopUpCard.length > 0 && <ShowCpFullHint alg={showPopUpCard[0]} cubeSize={150} setCubeSize={setCubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
-    </>
+              {showPopUpCard.length > 0 && <Bar6Grid alg={showPopUpCard[0]} pll={""} cpEasyWanted={true}
+                            cpSameOpp={!cpSameOpp}
+                            barMovementWanted={false} cubeSizeFixed={true} cubeSize={250} setCubeSize={setCubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
+ </>
 }

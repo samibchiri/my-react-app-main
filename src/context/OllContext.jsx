@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useMemo } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../data/db.js";
+import { db } from "../data/NewGeneratedData/db.js";
 
 const OllContext = createContext();
 export const useOll = () => useContext(OllContext);

@@ -9,8 +9,9 @@ import CornerPermutationPage from "./pages/CpPage/CornerPermutationPage.jsx";
 import BarPersevationPage from "./pages/BarPersevationPage/BarPersevationPage.jsx";
 import CpTrainer from './pages/CpTrainerPage/CpTrainerPage.jsx'
 import BarTrainer from "./pages/BarTrainerPage/BarTrainer.jsx";
-//import LabsPage from "./pages/LabsPage/LabsPage.jsx";
-import LabsPage from "./1OllArrowGen.jsx"
+import PllTrainer from "./pages/PllTrainerPage/PllTrainerPage.jsx"
+import LabsPage from "./pages/LabsPage/LabsPage.jsx";
+// import LabsPage from "./1OllArrowGen.jsx"
 import MyAlgsPage from "./pages/MyAlgsPage/MyAlgsPage.jsx";
 import MyOllPage from "./pages/MyAlgsPage/MyOllPage.jsx"
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
@@ -30,7 +31,8 @@ export const router = createBrowserRouter([
           { index: true, element: <HomePage /> },
           { path: "alg", element: <AlgTrainerPage /> },
           { path: "cp", element: <CpTrainer/> },
-          { path: "bar", element: <ArrowDataGenerator /> },
+          { path: "bar", element: <BarTrainer /> },
+          { path: "pll", element: <PllTrainer/>}
         ],
       },
 
@@ -44,6 +46,7 @@ export const router = createBrowserRouter([
       },
 
       { path: "labs", element: <LabsPage/>},
+      // { path: "labs", element: <ArrowDataGenerator/>},
       { path: "myAlgs",
           children:[
             {index: true, element: <MyAlgsPage/>},

@@ -9,14 +9,14 @@ import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 import Cp6Grid from "../CpPage/Cp6Grid.jsx";
 
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useOll } from "../../context/OllContext";
 
 import {sortOlls} from "../../context/OllContext.jsx"
 
 function ShowCpFullHint({alg,cubeSize, setCubeSize, onClose,algCasesSet}){
-    console.log("Showing Card",alg)
+    console.log("Showing Card",alg,cubeSize, setCubeSize, onClose,algCasesSet)
 
     const {swapOllsAlgnumber,createEmptySlot } = useOll();
 

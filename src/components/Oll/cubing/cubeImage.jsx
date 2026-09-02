@@ -51,14 +51,15 @@ CubeImage.defaultProps = {
   height: "50",
 };
 
-const CaseImage = ({ size = 100, caseSetDetails, maskColor, alg, ...props }) => {
+const CaseImage = ({ size = 100, caseSetDetails, maskColor, alg,cubeOpacity,stickerOpacity,cubeSize, ...props }) => {
   if (!caseSetDetails) throw new Error("CaseImage must have caseSetDetails property");
   const { darkMode } = useContext(ThemeContext);
   const resolvedMaskColor = maskColor ?? (darkMode ? "#404044" : "#666");
   const cubeColor = darkMode ? "#000" : "#181818";
   const algorithm = props.case?.algs?.[0] || alg;
   const { mask, view,arrows } = caseSetDetails;
-  const rest = { mask, view, arrows, maskColor: resolvedMaskColor, cubeColor };
+  const rest = { mask, view, arrows, maskColor: resolvedMaskColor, cubeColor,cubeOpacity,cubeSize,
+  stickerOpacity };
 
   return <CubeImage case={algorithm || ""} height={size} width={size} {...rest} />;
 };
@@ -66,6 +67,9 @@ const CaseImage = ({ size = 100, caseSetDetails, maskColor, alg, ...props }) => 
 
 CaseImage.defaultProps = {
   size: "100",
+  stickerOpacity:"100",
+  cubeOpacity:"100",
+  cubeSize:3
 };
 
 export default CaseImage;

@@ -10,14 +10,14 @@ import ollCaseSet from "./data/ollCaseSet.js";
 import CubeOverlay from "./1OllArrowGenHelper.jsx"
 import OllCaseFilter from "./components/Oll/OllCaseFilter.jsx";
 import OllGroupSelector from "./components/Oll/OllGroupSelect.jsx";
-import { db } from './data/db.js';
+import { db } from './data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {sortOlls} from "./context/OllContext.jsx"
 import BarPersevationOverlay from "./1OllBarInfo"
 
 
-function LabsPage({ollNumber}){
+function OllArrowGen({ollNumber}){
 
     const [oll, setOll] = useState([]);
     let effectiveOllNumber=ollNumber ?? 21;
@@ -161,14 +161,14 @@ const cubeSize=150
                             
                         </div> */}
                         { 
-                                <BarPersevationOverlay
-                                oll={oll}
-                                pll={F_Perm}
-                                permIndex={j}
-                                cpEasyWanted={false}
-                                cpSameOppWanted={true}
-                                barMovementWanted={false}
-                                />
+                                // <BarPersevationOverlay
+                                // oll={oll}
+                                // pll={F_Perm}
+                                // permIndex={j}
+                                // cpEasyWanted={false}
+                                // cpSameOppWanted={true}
+                                // barMovementWanted={false}
+                                // />
                                 
                                 }
                         </div>
@@ -189,4 +189,4 @@ const cubeSize=150
     )
 }
 
-export default LabsPage
+export default OllArrowGen

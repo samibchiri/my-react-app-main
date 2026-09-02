@@ -14,7 +14,7 @@ import OllGroupSelector from "./components/Oll/OllGroupSelect.jsx";
 import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
-import { db } from "./data/db.js";
+import { db } from "./data/NewGeneratedData/db.js";
 import {ChangeOllCont} from "./pages/BarPersevationPage/changeAlg.jsx"
 import {ArrowDataGenerator} from "./dataGeneration/ArrowDataGenerator.jsx"
 
@@ -27,7 +27,7 @@ export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppW
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let PermTable=[0,5,1,2,3,4]
   //let pllPreAUF=["","","U2","U","U'",""]
-  let pllPreAUF=["","","","","'",""]
+  let pllPreAUF=["","","","","",""]
 
   pll=pllPreAUF[PermTable[permIndex]]+pll
   //   let pllPreAUF=["","","U2"   ,"U","U'",""]
@@ -38,7 +38,7 @@ export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppW
 
   const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
 
-  console.log("CubeSize",cubeSize)
+  // console.log("CubeSize",cubeSize)
   //const [cubeSize, setCubeSize] = useState(200);
   const altoverlayRefs = useRef([]);
   const rerenderRef = useRef(0);
@@ -67,7 +67,7 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
   let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
-  let CornerPermutations=["",T_Perm, "U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
+  let CornerPermutations=["",T_Perm, "U2 "+T_Perm   ,"U "+T_Perm,"U' "+T_Perm,Y_Perm]
   //let CornerPermutations=["","", "","","",""]
   // let PermTable=[0,5,1,2,3,4]
 
@@ -835,7 +835,7 @@ function correctAlgString(inputstring){
 
 let OllLists=[oll]
 let PermIndex=0
-console.log("Nothing.",pathCalculated)
+// console.log("Nothing.",pathCalculated)
 return (
   
   <>
@@ -847,13 +847,26 @@ return (
 
 
                     <div className="RecCont"  ref={(el)=> setOverlayRef(el,0)}> 
-                    
+                    {console.log("Erro?",oll.algs,oll.ollNumber,oll.algNumber,pll)}
+                    {oll?.algs &&
                     <CaseImage
                         size={cubeSize}
                         alg={(oll.algs+pll).replace(/\s+/g, "")+"y2"}
                         caseSetDetails={ScrambleVisualizerDetails}
                         co="40"
                     ></CaseImage>
+                    }
+                    {
+                      !oll?.algs &&
+                      <CaseImage
+                        size={cubeSize}
+                        alg={(pll).replace(/\s+/g, "")+"y2"}
+                        caseSetDetails={ScrambleVisualizerDetails}
+                        cubeOpacity="100"
+                        stickerOpacity="100"
+                        
+                    ></CaseImage>
+                    }
                     
                     <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+9}px`,marginTop:`${-21+cubeSize/10}px`}}>
                       {

@@ -74,6 +74,10 @@ export default function HomePage() {
     { label: "Bar Recognition", route: "/recognition/bar" },
     { label: "Bar Trainer", route: "/train/bar" },
     
+   { label: "Labs", route: "/labs" },
+   
+    { label: "Pll Trainer", route: "/train/pll"},
+
     { label: "Labs", route: "/labs" },
     { label: "My Algs", route: "/myAlgs" },
     ];
@@ -107,7 +111,7 @@ export default function HomePage() {
                                 <div>
                                     <CaseImage
                                         size={80}
-                                        alg={"RUR'U'RU2R'"}
+                                        alg={"RUR'URU2R'"}
                                         caseSetDetails={ollCaseSet.details}
                                     ></CaseImage>
                                 </div>

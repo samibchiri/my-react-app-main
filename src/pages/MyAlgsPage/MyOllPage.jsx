@@ -30,7 +30,7 @@ import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 
 import { useLiveQuery } from "dexie-react-hooks";
-import {db} from '../../data/db.js';
+import {db} from '../../data/NewGeneratedData/db.js';
 
 export default function MyOllPage() {
 

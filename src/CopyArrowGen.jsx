@@ -5,7 +5,7 @@ import { FaIcon } from './fontAwesome.js';
 import CaseImage from "./cubing/cubeImage.jsx";
 import { flushSync } from 'react-dom';
 import ollCaseSet from "./data/ollCaseSet.js";
-import { db } from "./data/db";
+import { db } from "./data/NewGeneratedData/db.js";
 import {piecesMovementGen}  from "./BarPersevationLogic.jsx"
 
 

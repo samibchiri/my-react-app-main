@@ -11,7 +11,7 @@ import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
 
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
@@ -295,14 +295,14 @@ export function isPositionLeft(Center1,SquareColors){
         PositionLeft=true
       }
     }
-    console.log("PositionLeft",Center1,PositionLeft)
+    // console.log("PositionLeft",Center1,PositionLeft)
       return PositionLeft
   }
 
 
 //Sorts colorIndexList on Center,PositionLeft,PositionRight
 export function sortCenterLeftRight(index,SquareColors){
-  console.log("sortCenterLeftRight",index,SquareColors)  
+  // console.log("sortCenterLeftRight",index,SquareColors)  
   let newIndex=index%10
     let returnedvalue=0
     if(newIndex<5){

@@ -6,11 +6,13 @@ import { FaIcon } from '../assets/fontAwesome.js';
 import CaseImage from "../components/Oll/cubing/cubeImage.jsx";
 import { flushSync } from 'react-dom';
 import ollCaseSet from "../data/ollCaseSet.js";
-import { db } from "../data/db.js";
+import { db } from '../data/NewGeneratedData/db.js';
 import {piecesMovementGen}  from "../pages/BarPersevationPage/BarPersevationLogic.jsx"
 import OllCaseFilter from "../components/Oll/OllCaseFilter.jsx";
 import OllGroupSelector from "../components/Oll/OllGroupSelect.jsx";
 
+import { sortOlls } from '../context/ollContext.jsx';
+import { useLiveQuery } from "dexie-react-hooks";
 
 //Function to invert the oll alg
 function Inverse(alg){
@@ -43,16 +45,54 @@ async function UpdateOll(oll_id,newdata){
 }
 
 
+export function getHeadlights(svgSquaresOutsideList){
+           
+            let LeftTrue=false
+            let RightTrue=false
+            let FrontTrue=false
+            let BackTrue=false
+            if(svgSquaresOutsideList[0].getAttribute("fill")==svgSquaresOutsideList[2].getAttribute("fill")){
+                RightTrue=true
+            }
+            if(svgSquaresOutsideList[3].getAttribute("fill")==svgSquaresOutsideList[5].getAttribute("fill")){
+                FrontTrue=true
+            }
+            if(svgSquaresOutsideList[6].getAttribute("fill")==svgSquaresOutsideList[8].getAttribute("fill")){
+                LeftTrue=true
+            }
+            if(svgSquaresOutsideList[9].getAttribute("fill")==svgSquaresOutsideList[11].getAttribute("fill")){
+                BackTrue=true
+            }
+            let ReturnedValue=""
+            if(RightTrue&&FrontTrue){
+                ReturnedValue="Full"
+            }
+            else if(LeftTrue){
+                ReturnedValue="Left"
+            }
+            else if(RightTrue){
+                ReturnedValue="Right"
+            }
+            else if(FrontTrue){
+                ReturnedValue="Front"
+            }
+            else if(BackTrue){
+               ReturnedValue="Back"
+            }
+            else{
+                ReturnedValue="Diag"
+            }
+            console.log("ReturnedHeadlightsValue",ReturnedValue)
+            return ReturnedValue
+        }
 
-export function ArrowDataGenerator({newAlg,oll,setCaseClicked,onError,onSuccess }){
+export function ArrowDataGenerator({newAlg,tempoll,setCaseClicked,onError,onSuccess }){
 
 // oll={}
 // oll["id"]="OLL 57-0"
 // chosenAlg="F R U R' U' F'"
 console.log("Run Function")
     
-console.log("StartArrowDataGen",newAlg,oll)
-
 const [pathArrowList, setPathArrowList] = useState([]);
 const [angleList, setAngleList] = useState([]);
 const [centerPathList, setCenterPathList] = useState([]);
@@ -64,12 +104,47 @@ const [centery2List, setCentery2List] = useState([]);
 const [squaresColors, setSquaresColors] = useState([]);
 const [arrowCombination,setArrowCombination]=useState([])
 const [arrowColor, setArrowColor]=useState([])
-const [scramble, setScramble] = useState("");
+const [scramble, setScramble] = useState(newAlg);
 const [chosenAlg,setChosenAlg]= useState(null)
 
+const [oll, setOll] = useState(tempoll);
+
+console.log("StartArrowDataGen",newAlg,oll)
+
+
 const [altscramble,setAltScramble] = useState(Array(4).fill("null"));
-const [allAltAUF,setAllAltAUF]=useState([])
-const [allAUF,setAllAUF]=useState([])
+// const [allAltAUF,setAllAltAUF]=useState([])
+
+let allAltAUF=useRef([])
+let allAUF=useRef([])
+
+let altAUFToSave= useRef([])
+let AUFToSave= useRef([])
+
+let AlgNumber1Data= useRef()
+
+
+const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
+const dbOllCaseSet = useLiveQuery(
+    () => {
+        console.log("Helel", oll);
+
+        if (chosenAlg == null) {
+            return [];
+        }
+
+        return db.olls
+            .where("ollNumber")
+            .equals(oll.ollNumber)
+            .toArray()
+            .then(arr => arr.sort(sortOlls));
+    },
+    [chosenAlg],
+    []
+);
+
+
+// const [allAUF,setAllAUF]=useState
 const [barMovements,setBarMovements]=useState([])
 const [piecesMovement,setPiecesMovement]=useState([])
 
@@ -81,7 +156,6 @@ const [arrowDone,setArrowDone]=useState(false)
 const [tempArrowSet, setTempArrowSet] = useState(new Set());
 const [possibleArrowCombination, setPossibleArrowCombination] = useState(new Set());
 
-const [jsonArrowsToExport,setJsonArrowsToExport]=useState([])
 const originalAlg=useRef()
 
 
@@ -90,8 +164,11 @@ const originalAlg=useRef()
     let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
     
-    let algRef=useRef(0)
+    let algRef=useRef(55)
     let algIndexRef=useRef(0)
+
+    const currentAlgIndexRef = algIndexRef.current 
+    const currentAlgRef= algRef.current
 
     let CornerPermutations=["",T_Perm,"U2"+T_Perm,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
     let allAUFPerm=["","U'","U","U2"]
@@ -128,37 +205,90 @@ for (let y of yCoords) {
 
 let scrambleIndex=useRef(0)
 console.log("SetNewAlg",newAlg!=chosenAlg,newAlg,[newAlg,chosenAlg])
+
 useEffect(() => {
   if (newAlg && newAlg !== chosenAlg) {
     setChosenAlg(newAlg);
   }
+  else if(newAlg!=null){
+    console.log("Dup",chosenAlg,newAlg)
+    onError("Duplicate Oll")
+    return;
+  }
 }, [newAlg]);
+
 
 //Initialize scramble
 useEffect(() => {
+    if (!(dbOllCaseSet?.length>0) && chosenAlg!=null){
+        console.log("Returned, no db")
+        return;
+    }
+    else{
+        console.log("DB:",dbOllCaseSet,chosenAlg,oll)
+    } 
+
     let currentalg={}
     if (chosenAlg ==null){
-        currentalg=ollCaseSet.cases[algRef.current]
+        currentalg=ollCaseSet.cases[currentAlgRef]
     }
     else{
         currentalg["algs"]=[chosenAlg,oll.algs]
         console.log("NewCurrentAlg",currentalg)
         scrambleIndex.current=0
     }
+
+    console.log("Rapid1",newAlg,currentalg,dbOllCaseSet,chosenAlg,oll)
     
-    setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
+    setTimeout(() => { 
+        if(newAlg==null){
+                setScramble(currentalg.algs[currentAlgIndexRef] + CornerPermutations[scrambleIndex.current]);        
+        }
+        else if (chosenAlg!=null){
+            console.log("SettedScramble",currentalg.algs[currentAlgIndexRef],CornerPermutations[scrambleIndex.current])
+            setScramble(currentalg.algs[currentAlgIndexRef] + CornerPermutations[scrambleIndex.current]); 
+        }
+           
+    }, 200);
+
+    if(newAlg==null){
+                setScramble(currentalg.algs[currentAlgIndexRef] + CornerPermutations[scrambleIndex.current]);        
+        }
+    
     let alg1=currentalg.algs[0]
     let alg2=currentalg.algs[1]
 
-    if(alg2==undefined){
+    if(chosenAlg!=null&& dbOllCaseSet.length>0){
+
+        let checkedAlgNumber=1
+        if(oll.algNumber==0 && dbOllCaseSet.length>1 ){
+            checkedAlgNumber=1
+        }
+        else{
+            checkedAlgNumber=0
+        }
+        console.log("FKedUp",checkedAlgNumber, alg1,alg2,oll)
+        alg2= dbOllCaseSet[checkedAlgNumber].algs
+        alg2=Inverse(alg1)
         setAltScramble(
-        new Array(4).fill("").map((_,i)=>
-            ""
-        ));
+            new Array(4).fill("").map((_,i)=>
+                alg2+allAUFPerm[i] +alg1+
+                CornerPermutations[scrambleIndex.current]
+            )
+        );
+    }
+    else if(currentAlgIndexRef==0){
+        alg2=Inverse(alg1)
+        setAltScramble(
+            new Array(4).fill("").map((_,i)=>
+                alg2+allAUFPerm[i] +alg1+
+                CornerPermutations[scrambleIndex.current]
+            )
+        );
     }
     
     else{
-        if(algIndexRef.current==1){
+        if(currentAlgIndexRef==1){
             alg1=currentalg.algs[1]
             alg2=currentalg.algs[0]
         }
@@ -179,13 +309,16 @@ useEffect(() => {
     
 
     
-}, [chosenAlg]);
+}, [chosenAlg,dbOllCaseSet]);
 
 //Whenever scramble changes, reset lists & read squares
 useEffect(() => {
     // console.log(`ScrambleIndex,${scrambleIndex.current}`)
     // console.log("CurrentScramble",scramble)
     if (!scramble && scramble!="") return;
+
+    const currentAlgIndexRef = algIndexRef.current 
+    const currentAlgRef= algRef.current
 
     setPathArrowList([]);
     setAngleList([]);
@@ -197,6 +330,10 @@ useEffect(() => {
     setCentery2List([]);
     setArrowColor([]);
     tempBarMovementRef.current=[]
+    
+    console.log("Rests",scramble,allAltAUF.current, allAUF.current)
+    allAltAUF.current=[]
+    allAUF.current=[]
 
     // give CaseImage time to render
      const timeout = setTimeout(() => {
@@ -218,10 +355,10 @@ useEffect(() => {
         setPiecesMovement(piecesMovement)
     }
     getAltHeadlightsMovement()
-    if(algIndexRef.current==0){
+    if(currentAlgIndexRef==0){
         setBarMovements([["Full"],["Back"],["Front"],["Left"],["Right"],["Diag"]])
     }
-  }, 100);
+  },200);
 
   return () => clearTimeout(timeout);
 }, [scramble]);
@@ -243,46 +380,76 @@ useEffect(() => {
         scrambleIndex.current += 1
         let currentalg={}
         
-        if (chosenAlg ==null){
-            currentalg=ollCaseSet.cases[algRef.current]
+        if (chosenAlg !=null){
+            currentalg["algs"]=[chosenAlg,oll.algs]
+            setScramble(currentalg.algs[currentAlgIndexRef] + CornerPermutations[scrambleIndex.current]);
+            
         }
         else{
-            currentalg["algs"]=[chosenAlg,oll.algs]
+            currentalg=ollCaseSet.cases[currentAlgRef]
         }
-        setScramble(currentalg.algs[algIndexRef.current] + CornerPermutations[scrambleIndex.current]);
-        //setScramble(currentalg.algs[algIndexRef.current])
+            console.log("Rapid2",currentalg.algs[currentAlgIndexRef],CornerPermutations[scrambleIndex.current])
+        setScramble(currentalg.algs[currentAlgIndexRef] + CornerPermutations[scrambleIndex.current]);
+        //setScramble(currentalg.algs[currentAlgIndexRef])
 
         //if(scrambleIndex.current==1){
 
             let alg1=currentalg.algs[0]
             let alg2=currentalg.algs[1]
-            console.log("CurrentAlg",currentalg)
-            if(alg2==undefined){
-                console.log("SettingAltScramble1")
+            console.log("CurrentAlg",currentalg,scrambleIndex.current)
+            // if(alg2==""||alg2==undefined){
+            //     console.log("SettingAltScramble1")
+            //     setAltScramble(
+            //     new Array(4).fill("").map((_,i)=>
+            //         ""
+            //     ));
+            // }
+            // else{
+            //     if(currentAlgIndexRef==1){
+            //         alg1=currentalg.algs[1]
+            //         alg2=currentalg.algs[0]
+            //     }
+            //     alg2=Inverse(alg2)
+            //     console.log("SettingAltScramble2")
+            //     setAltScramble(
+            //     new Array(4).fill("").map((_,i)=>
+            //         alg2+allAUFPerm[i] +alg1+
+            //         CornerPermutations[scrambleIndex.current]
+            //     ));
+            // }
+            
+            if(currentAlgIndexRef==0){
+                alg2=Inverse(alg1)
+                if(chosenAlg!=null && oll.algNumber==1){
+                    alg2=Inverse(currentalg.algs[1])
+                }
+                console.log("Errro?",alg1,currentAlgRef,alg2)
+                console.log("FKedUp2",alg1,alg2,oll)
                 setAltScramble(
                 new Array(4).fill("").map((_,i)=>
-                    ""
-                ));
+                    alg2+allAUFPerm[i] +alg1+
+                    CornerPermutations[scrambleIndex.current]
+                )
+            );
             }
             else{
-                if(algIndexRef.current==1){
-                    alg1=currentalg.algs[1]
+               alg1=currentalg.algs[1]
                     alg2=currentalg.algs[0]
-                }
+                
                 alg2=Inverse(alg2)
                 console.log("SettingAltScramble2")
+                console.log("FKedUp3",alg1,checkedAlgNumber,alg2,oll)
                 setAltScramble(
                 new Array(4).fill("").map((_,i)=>
                     alg2+allAUFPerm[i] +alg1+
                     CornerPermutations[scrambleIndex.current]
                 ));
-            }
             
         //}
         // if(scrambleIndex.current==2){
 
-        //     let alg1=currentalg.algs[algIndexRef.current]
-        //     let alg2=currentalg.algs[algIndexRef.current]
+        //     let alg1=currentalg.algs[currentAlgIndexRef]
+        //     let alg2=currentalg.algs[currentAlgIndexRef]
         //     if(alg2==undefined){
         //         setAltScramble(
         //         new Array(4).fill("").map((_,i)=>
@@ -300,6 +467,7 @@ useEffect(() => {
         //     }
             
         // }
+        }
     }
     
 }, [arrowCombination]);
@@ -483,28 +651,69 @@ function EasyRecognition(){
     }
 
     let dict ={
-        name:ollCaseSet.cases[algRef.current].name,
+        name:ollCaseSet.cases[currentAlgRef].name,
     }
 
-    // if (chosenAlg !=null){
-    //     dict["name"]=oll.name
+    if (chosenAlg !=null){
+        dict["name"]=oll.name
+    }
+
+    console.log("GoOrder",groupdict,currentAlgRef)
+
+    // jsonArrowsToExport.forEach((item)=>{
+    //     console.log(item.name===dict.name)
+    // })
+
+
+    // const altAUFToSave = [...allAltAUF.current];
+
+    // if(currentAlgIndexRef==1){
+    //     AUFToSave = [...allAUF.current];
     // }
 
-    jsonArrowsToExport.forEach((item)=>{
-        console.log(item.name===dict.name)
-    })
+    const groupdictToSave= groupdict
+    
+    console.log("TOSave",altAUFToSave.current,AUFToSave.current)
 
     if(chosenAlg){
         setJsonArrowsToExport(prev=>
-    [{...groupdict,...dict}]
+    [...prev,{...groupdict,...dict}]
     )
     }
     else{
-        setJsonArrowsToExport(prev=>
-        [...prev,{...groupdict,...dict}]
-        )
-    }
         
+        setJsonArrowsToExport(prev=>{
+            console.log("GoOrder2",prev,currentAlgRef)
+             console.log("Rests2",altAUFToSave.current,allAltAUF.current, AUFToSave.current,currentAlgRef,currentAlgIndexRef)
+            if(currentAlgIndexRef==1){
+                console.log("Rests3",altAUFToSave.current,AUFToSave.current,groupdict,groupdictToSave)
+                let newAltAUF=[]
+                console.log("GoOrder2AltItem2",AUFToSave.current,altAUFToSave.current,currentAlgRef,currentAlgIndexRef)
+                altAUFToSave.current.forEach((item)=>{
+                    console.log("AltItem",item,newAltAUF)
+                    if(item=="U"){
+                        newAltAUF.push("U'")
+                    }
+                    else if(item=="U'"){
+                        newAltAUF.push("U")
+                    }
+                    else{
+                        newAltAUF.push(item)
+                    }
+                    console.log(newAltAUF)
+                })
+         console.log("GoOrder2AltItem22",prev,AUFToSave.current,altAUFToSave.current,currentAlgRef,currentAlgIndexRef)
+        return[...prev.slice(0,-1), { ...prev[prev.length - 1], differentAUF: [...AUFToSave.current] },{...groupdict,differentAUF: groupdictToSave.differentAUF}]
+    }
+    else{
+           
+        return [...prev,{...groupdict}]
+        
+    }
+    })
+        
+    }
+    
 
     scrambleIndex.current=0
     setPathArrowList([]);
@@ -520,54 +729,90 @@ function EasyRecognition(){
     setArrowColor([]);
     setArrowCombinationSorted(false);
     setArrowDone(false);
+    
+
+    
 
   
     if(!chosenAlg){
 
    //Continue if it isnt the last alg
-    if(algRef.current+1<ollCaseSet.cases.length || ollCaseSet.cases[algRef.current].algs[algIndexRef.current+1]){
-    //if(algRef.current+1<0 || ollCaseSet.cases[algRef.current].algs[algIndexRef.current+1]){
+    if(currentAlgRef+1<ollCaseSet.cases.length || ollCaseSet.cases[currentAlgRef].algs[currentAlgIndexRef+1]){
+    //if(currentAlgRef+1<0 || ollCaseSet.cases[currentAlgRef].algs[currentAlgIndexRef+1]){
      
-        if(algIndexRef.current==1){
+        if(currentAlgIndexRef==1){
             algIndexRef.current=0
             algRef.current+=1
         }
-        else if(algIndexRef.current==0){
+        else if(currentAlgIndexRef==0 &&chosenAlg==null1){
             algIndexRef.current=1
-            if(ollCaseSet.cases[algRef.current].algs[algIndexRef.current]==undefined){
+            if(ollCaseSet.cases[algRef.current].algs[currentAlgIndexRef]==undefined){
                 algIndexRef.current=0
                 algRef.current+=1
             }
         }
 
-        if(algRef.current==1){
+        if(currentAlgRef==1){
             algRef.current=1
         }
 
 
-    
+    console.log("Rapid3")
     setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current])
 
     let alg1=ollCaseSet.cases[algRef.current].algs[0]
     let alg2=ollCaseSet.cases[algRef.current].algs[1]
-    if(alg2==undefined){
+    if(alg2==""||alg2==undefined){
         alg2=alg1
     }
-    if(algIndexRef.current==1){
+    if(currentAlgIndexRef==1){
         alg1=ollCaseSet.cases[algRef.current].algs[1]
         alg2=ollCaseSet.cases[algRef.current].algs[0]
     }
+
+    let currentalg={}
+    
+    if (chosenAlg ==null){
+        currentalg=ollCaseSet.cases[currentAlgRef]
+    }
+    else{
+        currentalg["algs"]=[chosenAlg,oll.algs]
+    }
+
     alg2=Inverse(alg2)
       
-    setAllAltAUF([])
-    setAllAUF([])
+    // setAllAltAUF([])
     setBarMovements([])
-    setAltScramble(
-        new Array(4).fill("").map((_,i)=>
-            alg2+allAUFPerm[i] +alg1+
-            CornerPermutations[scrambleIndex.current] 
-        )
-    );
+    console.log("Wutsd",alg1,currentAlgRef,currentAlgIndexRef,alg2)
+    if(currentAlgIndexRef==0){
+        alg2=Inverse(alg1)
+        console.log("FKedUp4",alg1,checkedAlgNumber,alg2,oll)
+        setAltScramble(
+            new Array(4).fill("").map((_,i)=>
+                alg2+allAUFPerm[i] +alg1+
+                CornerPermutations[scrambleIndex.current]
+            )
+        );
+    }
+    
+    else{
+        if(currentAlgIndexRef==1){
+            alg1=currentalg.algs[1]
+            alg2=currentalg.algs[0]
+        }
+        alg2=Inverse(alg2)
+
+        
+        
+        //Search for angle in which alternative oll should be performed
+        console.log("FKedUp5",alg1,checkedAlgNumber,alg2,oll)
+        setAltScramble(
+            new Array(4).fill("").map((_,i)=>
+                alg2+allAUFPerm[i] +alg1+
+                CornerPermutations[scrambleIndex.current]
+            )
+        );
+    }
      }
     }
 }
@@ -720,7 +965,8 @@ function GroupRecognition(){
                             }
                             let ArrayToPush= [[center1a,center1b,arrowCombination[Pairs[j][0]][index1][2],center2a,center2b,arrowCombination[Pairs[j][0]][index2][2],totalpenalty]]
                             ArrayToPush.push([center1a,center1b,arrowCombination[Pairs[j][1]][index1][2],center2a,center2b,arrowCombination[Pairs[j][1]][index2][2],totalpenalty])
-
+                            
+                            console.log("ErrorPush",ArrayToPush,j,oll.algNumber,chosenAlg)
                             if(j==0){
                                 FirstPairOppTrueList.push(ArrayToPush)
                             }
@@ -991,6 +1237,7 @@ function GroupRecognition(){
             
 
         }
+        console.log("2errorpush",oll.algNumber,FirstPairSameOppTrueList,SecondPairSameOppTrueList,ThirdPairSameOppTrueList)
     }
 
     function SortAndShortenPenaltiesList(list){
@@ -1030,15 +1277,15 @@ function GroupRecognition(){
 
     if(FirstPairSameOppTrueList.length==0){
         console.log("COoked")
-        console.log(algRef.current)
+        console.log(currentAlgRef)
     }
     if(SecondPairSameOppTrueList.length==0){
         console.log("COoked")
-        console.log(algRef.current)
+        console.log(currentAlgRef)
     }
     if(ThirdPairSameOppTrueList.length==0){
         console.log("COoked")
-        console.log(algRef.current)
+        console.log(currentAlgRef)
     }
 
 
@@ -1046,28 +1293,50 @@ function GroupRecognition(){
     SecondPairSameOppTrueList=SortAndShortenPenaltiesList(SecondPairSameOppTrueList)
     ThirdPairSameOppTrueList=SortAndShortenPenaltiesList(ThirdPairSameOppTrueList)
     
-    console.log("GoOrder")
+    
     let finalOrder= getOrder(piecesMovement,squaresColors)
     
-    console.log("GetScramble",ollCaseSet.cases[algRef.current])
+    console.log("GetScramble",ollCaseSet.cases[currentAlgRef])
+    
+    if(chosenAlg!=null){
+        if(oll.algNumber==0){
+            AUFToSave.current = [...allAUF.current];
+        }
+        if(oll.algNumber==1){
+             altAUFToSave.current = [...allAltAUF.current];
+        }
+    }
+    else{
+        if(currentAlgIndexRef==1){
+        altAUFToSave.current = [...allAltAUF.current];
+        }
+        if(currentAlgIndexRef==0){
+            AUFToSave.current = [...allAUF.current];
+        }
+    }
+    
+
+    console.log("TOSave2",altAUFToSave.current,AUFToSave.current,currentAlgIndexRef,allAUF.current)
+
     try{
-        console.log("Cgroup", ollCaseSet,algRef.current)
+        console.log("groupC", chosenAlg,oll,oll.algNumber,currentAlgRef,currentAlgIndexRef)
+        
         groupdict ={
             id:crypto.randomUUID(),
-            name:ollCaseSet.cases[algRef.current].name,
-            ollNumber:parseInt(ollCaseSet.cases[algRef.current].name.split(" ")[1]),
-            algNumber:algIndexRef.current,
-            differentAUF:allAUF,
-            altAUF:allAltAUF,
+            name:ollCaseSet.cases[currentAlgRef].name,
+            ollNumber:parseInt(ollCaseSet.cases[currentAlgRef].name.split(" ")[1]),
+            algNumber:currentAlgIndexRef,
+            differentAUF:allAUF.current,
+            altAUF:allAltAUF.current,
             barMovements:barMovements,
             piecesMovement:piecesMovement,
             order:finalOrder,
             algAttemptCount:null,
             algSpeed:null,
             algTps:null,
-            algs:ollCaseSet.cases[algRef.current].algs[algIndexRef.current],
-            scrambles:ollCaseSet.cases[algRef.current].scrambles,
-            group:ollCaseSet.cases[algRef.current].group,
+            algs:ollCaseSet.cases[currentAlgRef].algs[currentAlgIndexRef],
+            scrambles:ollCaseSet.cases[currentAlgRef].scrambles,
+            group:ollCaseSet.cases[currentAlgRef].group,
             difficultCenters:[],
             difficultColors:[],
             groupRecUsed:true,
@@ -1089,6 +1358,7 @@ function GroupRecognition(){
             groupdict["algNumber"]=oll.algNumber
             groupdict["algs"]=chosenAlg
             groupdict["group"]=oll.group
+            console.log("GroupE")
 
         }
         console.log("GroupD",groupdict,chosenAlg)
@@ -1099,11 +1369,11 @@ function GroupRecognition(){
 
     //Groupdict will be added in EasyRecognition Function
 
-    //if(algRef.current+1<ollCaseSet.cases.length){
+    //if(currentAlgRef+1<ollCaseSet.cases.length){
 
-    // if(algRef.current+1<3){
-    //     algRef.current+=1
-    //     console.log(`Through, ${algRef.current}`)
+    // if(currentAlgRef+1<3){
+    //     currentAlgRef+=1
+    //     console.log(`Through, ${currentAlgRef}`)
     //     console.log()
 
    
@@ -1122,12 +1392,12 @@ function GroupRecognition(){
     // setArrowCombinationSorted(false);
     // setArrowDone(false);
 
-    // setScramble(ollCaseSet.cases[algRef.current].algs[algIndexRef.current])
+    // setScramble(ollCaseSet.cases[currentAlgRef].algs[currentAlgIndexRef])
     //  }
 
     //Clean Up and Next scramble generated at easyrecognition
 
-    //  if(algRef.current+1==ollCaseSet.cases.length){
+    //  if(currentAlgRef+1==ollCaseSet.cases.length){
   
     //     console.log(`CopyToExport`,JSON.stringify(jsonArrowsToExport, null, 2))
     //     console.dir(jsonArrowsToExport, { depth: null });
@@ -1135,19 +1405,125 @@ function GroupRecognition(){
     // Arrow(FirstPairOppTrueList[0][1][0],FirstPairOppTrueList[0][1][1],"blue")
     // Arrow(FirstPairOppTrueList[0][1][3],FirstPairOppTrueList[0][1][4],"red")
     //Arrow(6,16,"red")
-    
 }
 
-useEffect(() => {
-    console.log("Print Json",chosenAlg,jsonArrowsToExport)
-    if(chosenAlg !=null){
-        if(chosenAlg!=""){
-            console.log("UpdateNewOll",jsonArrowsToExport[0],allAltAUF)
-            UpdateOll(oll.id,jsonArrowsToExport[0])    
-            onSuccess()
-        }
+function UpdateAUFs(jsonArrowsToExport){
+
+
+    let updatedJsonArrowsToExport=[]
+
+    if(oll.algNumber==0){
+         jsonArrowsToExport=[[...jsonArrowsToExport][1],[...jsonArrowsToExport][0]]
+
     }
-  if (algRef.current+1 === ollCaseSet.cases.length) {
+    let maxLength=jsonArrowsToExport.length-1
+
+    console.log("GivenJson",jsonArrowsToExport)
+    
+    jsonArrowsToExport.forEach((item,i)=>{
+        // console.log("Item",i,jsonArrowsToExport)
+        
+        if(jsonArrowsToExport[i].algNumber==0&&i<maxLength &&jsonArrowsToExport[i+1].algNumber==1){
+
+            AlgNumber1Data.current={...jsonArrowsToExport[i+1],differentAUF:jsonArrowsToExport[i].differentAUF}
+            console.log("StoredData",AlgNumber1Data.current)
+        }
+        if(jsonArrowsToExport[i].algNumber==1){
+            
+            let altAUFs=jsonArrowsToExport[i].altAUF
+            let newAltAUFs= []
+
+            console.log("ALtAUFS",altAUFs,jsonArrowsToExport[i].ollNumber,jsonArrowsToExport[i].algNumber)
+            altAUFs.forEach((item)=>{
+                console.log("altItm",item)
+                if(item=="U"){
+                    newAltAUFs.push("U'")
+                }
+                else if(item=="U'"){
+                    newAltAUFs.push("U")
+                }
+                else{
+                    newAltAUFs.push(item)
+                }
+            })
+            console.log("NewAUF",newAltAUFs,AlgNumber1Data.current)
+            updatedJsonArrowsToExport.push({...jsonArrowsToExport[i-1],altAUF:newAltAUFs})
+            updatedJsonArrowsToExport.push(AlgNumber1Data.current)
+        }
+
+
+    })
+
+    console.log("Pls",updatedJsonArrowsToExport)
+    return updatedJsonArrowsToExport
+}
+
+
+useEffect(() => {
+    if (
+        jsonArrowsToExport.length === 0 ||
+        chosenAlg == null ||
+        !dbOllCaseSet ||
+        dbOllCaseSet.length === 0
+    ) {
+        return;
+    }
+
+    if(jsonArrowsToExport.length>0 &&chosenAlg!=null){
+
+    console.log(dbOllCaseSet,"Print Json",chosenAlg,jsonArrowsToExport)
+    if(chosenAlg !=null&&chosenAlg!=""){
+        if(jsonArrowsToExport.length>1){
+            let newJsonArrowsToExport = UpdateAUFs(jsonArrowsToExport)
+
+            console.log("UpdateNewOll",jsonArrowsToExport,newJsonArrowsToExport)
+            UpdateOll(newJsonArrowsToExport[0].id,newJsonArrowsToExport[0])    
+            UpdateOll(newJsonArrowsToExport[1].id,newJsonArrowsToExport[1]) 
+            
+            console.log(
+            "Temp arrowOllSet = " +
+            JSON.stringify(newJsonArrowsToExport, null, 2)
+                .replace(/"([^"]+)":/g, '$1:') + 
+            ";\n\nexport default arrowOllSet;"
+            );
+            setChosenAlg(null)
+            onSuccess()
+            
+        }
+        else{
+        let checkedAlgNumber=1
+        if(oll.algNumber==0){
+            checkedAlgNumber=1
+        }
+        else{
+            checkedAlgNumber=0
+        }
+
+        console.log("LengthThest",dbOllCaseSet,checkedAlgNumber,chosenAlg,)
+        if(dbOllCaseSet.length>1){
+            console.log("NewChosenAlg",checkedAlgNumber,dbOllCaseSet[checkedAlgNumber])
+            setOll(dbOllCaseSet[checkedAlgNumber])
+            console.log("NewOll",dbOllCaseSet[checkedAlgNumber])
+            setChosenAlg(dbOllCaseSet[checkedAlgNumber].algs)
+        }
+        else{
+            UpdateOll(jsonArrowsToExport[0].id,jsonArrowsToExport[0])  
+            console.log(
+    "Temp2 arrowOllSet = " +
+    JSON.stringify(jsonArrowsToExport, null, 2)
+        .replace(/"([^"]+)":/g, '$1:') + 
+    ";\n\nexport default arrowOllSet;"
+    );  
+            setChosenAlg(null)
+            onSuccess()
+            
+        }
+        
+    }
+    }
+}
+    
+  if (currentAlgRef+1 === ollCaseSet.cases.length) {
     // const groupTable = {
     // "Cross": 0,
     // "Dot": 1,
@@ -1192,9 +1568,12 @@ useEffect(() => {
     ";\n\nexport default arrowOllSet;"
     );
 
+let newJsonArrowsToExport = UpdateAUFs([...jsonArrowsToExport]);
+    console.log("NewPls",newJsonArrowsToExport)
   }
+    
 
-}, [jsonArrowsToExport]);
+}, [jsonArrowsToExport,dbOllCaseSet]);
 
 
 useEffect(()=>{
@@ -1384,46 +1763,7 @@ const tempBarMovementRef = useRef([]);
 const altoverlayRefs = useRef(Array.from({ length: 4}, () => null));
 
 
-    function getHeadlights(svgSquaresOutsideList){
-           
-            let LeftTrue=false
-            let RightTrue=false
-            let FrontTrue=false
-            let BackTrue=false
-            if(svgSquaresOutsideList[0].getAttribute("fill")==svgSquaresOutsideList[2].getAttribute("fill")){
-                RightTrue=true
-            }
-            if(svgSquaresOutsideList[3].getAttribute("fill")==svgSquaresOutsideList[5].getAttribute("fill")){
-                FrontTrue=true
-            }
-            if(svgSquaresOutsideList[6].getAttribute("fill")==svgSquaresOutsideList[8].getAttribute("fill")){
-                LeftTrue=true
-            }
-            if(svgSquaresOutsideList[9].getAttribute("fill")==svgSquaresOutsideList[11].getAttribute("fill")){
-                BackTrue=true
-            }
-            let ReturnedValue=""
-            if(RightTrue&&FrontTrue){
-                ReturnedValue="Full"
-            }
-            else if(LeftTrue){
-                ReturnedValue="Left"
-            }
-            else if(RightTrue){
-                ReturnedValue="Right"
-            }
-            else if(FrontTrue){
-                ReturnedValue="Front"
-            }
-            else if(BackTrue){
-               ReturnedValue="Back"
-            }
-            else{
-                ReturnedValue="Diag"
-            }
-            console.log("ReturnedHeadlightsValue",ReturnedValue)
-            return ReturnedValue
-        }
+    
 
      function getSquaresInfo(){
          const containerParent = overlayRef.current;
@@ -1459,7 +1799,7 @@ function getAltHeadlightsMovement(){
     
     let containsOnlyYellowFound=false
     let noneSolveOll= true
-    console.log("Altscrambles",scramble,altscramble,algIndexRef.current)
+    console.log("Altscrambles",scramble,altscramble,currentAlgIndexRef)
     if(altscramble[0]!=""){
     for(let i=0;i<4;i++){
         console.log(altoverlayRefs)
@@ -1488,22 +1828,42 @@ function getAltHeadlightsMovement(){
         if(containsOnlyYellow){
             noneSolveOll=false
             
+
             console.log(altscramble)
             //if(scrambleIndex.current==1){
                 
-            console.log(`ReturnPassedIndex: ${[algRef.current,algIndexRef.current,i]}`)
+            console.log(`ReturnPassedIndex: ${[currentAlgRef,currentAlgIndexRef,i]}`)
             
                 let aufIndex=i
-                if(aufIndex==1){
-                    aufIndex=2
+                // if(aufIndex==1){
+                //     aufIndex=2
+                // }
+                // else if(aufIndex==2){
+                //     aufIndex=1
+                // }
+                console.log("CHangeAUF",chosenAlg,altscramble,allAUFPerm,aufIndex,currentAlgRef,currentAlgIndexRef)
+                if(chosenAlg==null){
+                     if(!allAltAUF.current.includes(allAUFPerm[aufIndex])&&currentAlgIndexRef==1){
+                    allAltAUF.current.push(allAUFPerm[aufIndex])
                 }
-                else if(aufIndex==2){
-                    aufIndex=1
+                if(!allAUF.current.includes(allAUFPerm[aufIndex])&&currentAlgIndexRef==0){
+                    console.log("Yadd",allAUF.current,allAUFPerm[aufIndex],currentAlgRef)
+                    allAUF.current.push(allAUFPerm[aufIndex])
                 }
-                console.log("CHangeAUF",allAUFPerm,aufIndex,algRef.current,algIndexRef.current)
-                if(!allAltAUF.includes(allAUFPerm[aufIndex])){
-                    setAllAltAUF(prev=>[...prev,allAUFPerm[aufIndex]])
                 }
+                else{
+                    console.log("Yaddi8",chosenAlg,oll,allAltAUF.current,allAUFPerm,aufIndex)
+                     if(!allAltAUF.current.includes(allAUFPerm[aufIndex])&&oll.algNumber==1){
+                         console.log("Yadd8",allAltAUF.current,allAUFPerm[aufIndex],currentAlgRef)
+                    allAltAUF.current.push(allAUFPerm[aufIndex])
+                }
+                if(!allAUF.current.includes(allAUFPerm[aufIndex])&&oll.algNumber==0){
+                    console.log("Yadd9",allAUF.current,allAUFPerm[aufIndex],currentAlgRef)
+                    allAUF.current.push(allAUFPerm[aufIndex])
+                }
+                }
+               
+                
                 
                     
            // }
@@ -1520,14 +1880,20 @@ function getAltHeadlightsMovement(){
                 
                 
             // }
-            console.log("Check")
+            
             
             tempBarMovementRef.current.push(getHeadlights(altContainerSvgSquaresOutsideList))
-            setBarMovements(prev => (
-                [...prev,[...tempBarMovementRef.current]]
-            ));
+            
+            console.log("Check45",barMovements,tempBarMovementRef.current)
+            
+            // if(!barMovements.includes([...tempBarMovementRef.current])){
+            //         setBarMovements(prev=>[...prev,[...tempBarMovementRef.current]])
+            //     }
+            // setBarMovements(prev => (
+            //     [...prev,[...tempBarMovementRef.current]]
+            // ));
             if(scrambleIndex.current==0 && tempBarMovementRef.current[0]!=BarPositionDict[0]){
-                console.log("Different CP Found",algRef.current,tempBarMovementRef.current,BarPositionDict[0],scrambleIndex.current)
+                console.log("Different CP Found",currentAlgRef,tempBarMovementRef.current,BarPositionDict[0],scrambleIndex.current)
             }
             // for(let i=0;i<barMovements.length;i++){
             //     tempBarMovement[i]=barMovements[i]
@@ -1548,6 +1914,10 @@ function getAltHeadlightsMovement(){
         // console.log("TempBarMovementsPushed",i)
         // tempBarMovement.push(getHeadlights(altContainerSvgSquaresOutsideList))
     }
+  
+ 
+    console.log("Yadd3rests2",allAltAUF.current,allAUF.current,currentAlgRef,currentAlgIndexRef)
+
     if (noneSolveOll){
         console.log("Stopping CornerPermutationPage because it doesn't solve the oll");
         if (onError) onError("Invalid OLL");  // notify parent
@@ -1556,8 +1926,8 @@ function getAltHeadlightsMovement(){
     console.log("TempBarMovements",tempBarMovementRef.current,barMovements)
     }
      else{
-        console.log("NoAlt",ollCaseSet.cases[algRef.current])
-        setAllAltAUF([null])
+        console.log("NoAlt",ollCaseSet.cases[currentAlgRef])
+        allAltAUF.current=[null]
     }
 }   
 
@@ -1716,10 +2086,17 @@ if(arrowCombination.length<6){
         <>
     
         <div className='CpRecContainer' ref={overlayRef}>
-              <CaseImage
+              {/* <CaseImage
                 size={200}
                 //alg={""+scramble2.replace(/\s+/g, "")+"y2"}
                    alg={scramble.replace(/\s+/g, "")+"y2"}
+                caseSetDetails={ScrambleVisualizerDetails}
+                co="40"
+            ></CaseImage> */}
+            <CaseImage
+                size={200}
+                alg={""+scramble.replace(/\s+/g, "")+"y2"}
+                //    alg={"U4"}
                 caseSetDetails={ScrambleVisualizerDetails}
                 co="40"
             ></CaseImage>

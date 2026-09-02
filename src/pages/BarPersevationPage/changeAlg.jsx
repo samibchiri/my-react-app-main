@@ -2,7 +2,7 @@
 
 export function ChangeOllCont({refIndex,oll,setChangedAlgArray}){
 
-console.log("SetChanged",setChangedAlgArray)
+// console.log("SetChanged",setChangedAlgArray)
 return (
 <div className="barExcludeCont">
   <div></div>
@@ -33,8 +33,11 @@ function changeOllAlgEnterPressed(e,oll,setChangedAlgArray){
 function changeOllAlg(newAlg,oll,setChangedAlgArray){
 
 //  let updatedNewAlg= correctAlgString(newAlg)
+
+console.log("ChangedOllAlg",newAlg,oll)
   
   if(newAlg!=oll.algs){
+    console.log("SetChanges",[newAlg,oll,true])
     setChangedAlgArray([newAlg,oll,true])
   }
   else{

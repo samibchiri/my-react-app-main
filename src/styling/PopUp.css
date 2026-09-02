@@ -4,7 +4,33 @@
   top:40vw;
 }
 
+
 .ModalPopUp .modal-content{
+  display: flex;
+  flex-direction: column;
+  background-color: #191d21;
+  height:1200px;
+  width:600px;
+  max-width: 105%;
+  top:100px;
+  border:2px solid #484a4d;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.ModalPopUp .modal-header{
+  top:0px;
+  border-bottom:1px solid #484a4d;
+  background-color: #191d21;
+}
+.ModalPopUp .modal-footer{
+  display: flex;
+  flex-direction: column;
+  background-color: #191d21;
+  border:0px;
+}
+
+/* .ModalPopUp .modal-content{
   display: flex;
   flex-direction: column;
   background-color: #191d21;
@@ -28,9 +54,9 @@
   border:1px solid #484a4d;
   border-top:0px;
   border-bottom:0px;
-  height:600px;
+  height:200px;
   background-color: #191d21;
-}
+} */
 
 
 @media (max-width: 576px) {
@@ -422,3 +448,4 @@ table input.PopUpInputAlg:active {
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.2s;
 }
+

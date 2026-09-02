@@ -32,7 +32,7 @@ import {sortOlls} from "../../context/OllContext.jsx"
 
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
-import ShowBarFullHint from "./BarTrainerAnsPopup.jsx";
+import ShowPllFullHint from "./PllTrainerAnsPopup.jsx";
 
 import Stopwatch from '../../components/Train/Stopwatch.jsx';
 
@@ -41,7 +41,7 @@ import BarPersevationOverlay from "../../1OllBarInfo.jsx";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 
-export default function BarTrainer(){
+export default function PllTrainerPage(){
     const { darkMode } = useContext(ThemeContext)
     const [caseClicked, setCaseClicked] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
@@ -98,6 +98,7 @@ export default function BarTrainer(){
 
     }
 
+
     const dbOllCaseSet = useLiveQuery(()=>{
         
           return db.olls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortOlls));;
@@ -110,11 +111,11 @@ export default function BarTrainer(){
 
     let dCrossShown = true
 
-    const { xs } = useWindowDimensions();
-    const cubeImageSize = xs ? "100" : "120";
+    // const { xs } = useWindowDimensions();
+    // const cubeImageSize = xs ? "150" : "200";
 
     const [cubeSize, setCubeSize] = useState(300);
-    console.log("CuSize",cubeSize)
+    console.log("PllTrained",cubeSize)
     const [openGroups, setOpenGroups] = useState({});
     const [selectedAlg, setSelectedAlg] = useState([])
     const [algCasesSet, setAlgCasesSet] = useState(ollCaseSet)
@@ -468,7 +469,7 @@ export default function BarTrainer(){
                 
             </div>
 
-            {showPopUpCard.length > 0 && <ShowBarFullHint alg={showPopUpCard[0]} pll={""} cpEasyWanted={true}
+            {showPopUpCard.length > 0 && <ShowPllFullHint alg={showPopUpCard[0]} pll={""} cpEasyWanted={true}
                             cpSameOpp={!cpSameOpp}
                             barMovementWanted={false} cubeSizeFixed={true} cubeSize={250} setCubeSize={setCubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
     </>

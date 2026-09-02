@@ -12,7 +12,7 @@ function Cp6Grid({oll,cubeSize,setCubeSize,cpEasyWanted,cpSameOppWanted}){
 let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
 let Y_Perm="F R U' R' U' R U R' F' R U R' U' R' F R F'"
 
-let CornerPermutations=["",T_Perm,"U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
+let CornerPermutations=["",T_Perm,"U2 "+T_Perm   ,"U "+T_Perm,"U' "+T_Perm,Y_Perm]
 let PermTable=[0,5,1,2,3,4]
 
 let CpLocation=["Full","Diag","Left","Right","Front","Back"]
@@ -94,6 +94,7 @@ return (
                                                             },
                                                         ]}
                                                         /> */}
+                                                        {console.log("2erro?",oll,oll.ollNumber,oll.algNumber,CornerPermutations[PermTable[j]])}
                                                         <BarPersevationOverlay
                                                             oll={oll}
                                                             pll={CornerPermutations[PermTable[j]]}
@@ -103,7 +104,7 @@ return (
                                                             barMovementWanted={false}
                                                             cubeSize={cubeSize}
                                                             setCubeSize={setCubeSize}
-                                                            cubeSizeFixed={true}
+                                                            cubeSizeFixed={false}
                                                             />
                                                     </div>
                                                     <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-20+cubeSize/10}px`}}>

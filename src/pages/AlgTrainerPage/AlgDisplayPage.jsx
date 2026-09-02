@@ -26,7 +26,7 @@ import '../../styling/App.css';
 import '../../styling/index.css';
 
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useOll } from "../../context/ollContext.jsx";
 

@@ -27,6 +27,8 @@ import {
   faCopy,
   faArrowsUpDown,
   faQuestionCircle,
+  faLink,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -57,6 +59,8 @@ library.add(
   faCopy,
   faArrowsUpDown,
   faQuestionCircle,
+  faLink,
+  faPlus,
 );
 
 export { FontAwesomeIcon as FaIcon };

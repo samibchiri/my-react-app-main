@@ -7,7 +7,7 @@ import { ThemeContext } from '../context/DarkThemeContext.jsx'
 import { OllProvider } from '../context/OllContext.jsx';
 
 
-import { seedDatabaseIfEmpty } from '../data/db.js'
+import { seedDatabaseIfEmpty } from '../data/NewGeneratedData/db.js'
 import '../styling/App.css'
 import '../styling/index.css'
 import NavBar from './NavBar.jsx'

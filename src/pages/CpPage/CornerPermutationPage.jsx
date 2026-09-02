@@ -10,7 +10,7 @@ import ollCaseSet from "../../data/ollCaseSet.js";
 import CpRecOverlay from "../../assetsGeneration/CpOverlay.jsx"
 import OllCaseFilter from "../../components/Oll/OllCaseFilter.jsx";
 import OllGroupSelector from "../../components/Oll/OllGroupSelect.jsx";
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {sortOlls} from "../../context/OllContext.jsx"
@@ -18,6 +18,8 @@ import { ChangeOllCont } from "../BarPersevationPage/changeAlg.jsx";
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"
 import BarPersevationOverlay from "../../1OllBarInfo.jsx";
 import Cp6Grid from "./Cp6Grid.jsx";
+import ShowBarFullHint from "../BarTrainerPage/BarTrainerAnsPopup.jsx";
+
 
 function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClicked}){
 
@@ -32,6 +34,10 @@ function CornerPermutationPage({algGroup,testedAlgs,setButtonClicked,setCaseClic
 const [groupSelected,setGroupSelected]=useState(0)
 const [ollSelectList,setOllSelectList]=useState([])
 const [changedAlgArray,setChangedAlgArray]=useState(["","",false])
+
+const [showPopUpCard, setShowPopUpCard] = useState([])
+const [algCasesSet, setAlgCasesSet] = useState(ollCaseSet)
+
 
 const ScrambleVisualizerDetails={
     id: "oll",
@@ -53,6 +59,19 @@ const {darkMode}= useContext(ThemeContext)
     
 
   }
+  
+  const ContinueButtonstyle = {
+        alignItems: "center",
+        fontWeight: "bold",
+        borderWidth: "2px",
+        height: "50px",
+    }
+
+    const handleAlgCardShown = (alg) => {
+        console.log("HandleShown")
+        console.log(alg)
+        setShowPopUpCard([alg])
+    }
 
   const selectedGroupOllsRaw = useLiveQuery(()=>{
       if (groupSelected === null) {
@@ -592,6 +611,7 @@ useEffect(() => {
                     
                 
                 </div> */}
+                {console.log("ollFD",oll)}
                 <Cp6Grid oll={oll} cubeSize={cubeSize} setCubeSize={setCubeSize} cpEasyWanted={true} cpSameOppWanted={false}></Cp6Grid>
                 
                 </div>
@@ -689,6 +709,23 @@ useEffect(() => {
                 </div> */}
                 <Cp6Grid oll={oll} cubeSize={cubeSize} setCubeSize={setCubeSize} cpEasyWanted={false} cpSameOppWanted={true}></Cp6Grid>
                 
+                <div className="d-flex justify-content-center" style={{marginBottom:"20px"}}>
+
+                                <button onClick={() => { handleAlgCardShown(oll) }}
+                                className={`${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+                                    style={{
+                                        ...ContinueButtonstyle,
+
+                                        "--bs-border-style": "solid",
+                                        "--bs-border-color": "white",
+                                        "--bs-btn-hover-border-color": "red",
+                                        "--bs-btn-focus-border-color": "red",
+                                        "--bs-btn-active-border-color": "red",
+                                    }}>
+                                    <h3 className="ContinueRecTrainCont">Show Bar Info</h3>
+                                </button>
+                            </div>
+
                 <ChangeOllCont refIndex={i} oll={oll} setChangedAlgArray={setChangedAlgArray}/>
                 {(changedAlgArray.length>0 &&changedAlgArray[0] && changedAlgArray[1]!=null &&changedAlgArray[2]==true && changedAlgArray[0]!=changedAlgArray[1])  
                     && (<>
@@ -696,7 +733,7 @@ useEffect(() => {
                         <ArrowDataGenerator
                             key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
                             newAlg={changedAlgArray[0]}
-                            oll={changedAlgArray[1]}
+                            tempoll={changedAlgArray[1]}
                             onError={(errorMessage) => {
                             console.warn("CornerPermutation error:", errorMessage);
                 
@@ -719,7 +756,11 @@ useEffect(() => {
         </div>
         )
             }
+
+            
         
+    {showPopUpCard.length > 0 && <ShowBarFullHint sixGridWanted={true} alg={showPopUpCard[0]} cubeSize={150} setCubeSize={setCubeSize} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
+  
                     
 
 

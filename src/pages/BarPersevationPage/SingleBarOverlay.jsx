@@ -13,7 +13,7 @@ import { TbRuler } from "react-icons/tb";
 import { range } from "lodash";
 import { SiTrueup } from "react-icons/si";
 
-import { db } from '../../data/db.js';
+import { db } from '../../data/NewGeneratedData/db.js';
 
 import { useLiveQuery } from "dexie-react-hooks";
 import {ArrowDataGenerator} from "../../dataGeneration/ArrowDataGenerator.jsx"

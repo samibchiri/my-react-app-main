@@ -37,13 +37,13 @@ export default function CubeOverlay({oll,permIndex,cubeSize,cpEasyWanted,cpSameO
         </>
         )
         })}
-        { (barMovementWanted) &&(
+        {/* { (barMovementWanted) &&(
         <BarPersevationOverlay
         oll={oll}
         pll={pll}
         />
         )
-        }
+        } */}
         </>
     )
     
