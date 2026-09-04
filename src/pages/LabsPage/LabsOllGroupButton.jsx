@@ -32,7 +32,7 @@ import BarPersevationOverlay from "../../1OllBarInfo.jsx";
 import { LabsLastSlotButton } from "./LabsLastSlotButton.jsx"; 
 
 
-export function LabsOllGroupButton({text,subtext}){
+export function LabsOllGroupButton({onClick,text,subtext}){
 
 
 
@@ -45,7 +45,7 @@ export function LabsOllGroupButton({text,subtext}){
     }
 
     return(
-  <button  className={`LabsOLLGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+  <button onClick={()=>{onClick(text)}} className={`LabsOLLGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                                    
                                    style={{
                                  
@@ -66,7 +66,7 @@ export function LabsOllGroupButton({text,subtext}){
 }
 
 
-export function LabsOllAlgButton({text, lastslot,oll, pll}){
+export function LabsOllAlgButton({onClick,cellNumber, ollNumber, algNumber, text, lastslot,oll, pll}){
 
 
 
@@ -82,11 +82,12 @@ export function LabsOllAlgButton({text, lastslot,oll, pll}){
 
     let alg= oll
 
+    console.log("Test44",onClick)
     return(
         <>
-        
        
-  <button  className={`LabsOllAlgButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+       
+  <button onClick={()=>{onClick(cellNumber,ollNumber,algNumber)}} className={`LabsOllAlgButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                                    
                                    style={{
                                  
@@ -109,8 +110,8 @@ export function LabsOllAlgButton({text, lastslot,oll, pll}){
                         cpEasyWanted={false}
                         cpSameOppWanted={false}
                         barMovementWanted={false}
-                        cubeSize={40}
-                        
+                        cubeSize={80}
+                        labsPageTrue={true}
                         cubeSizeFixed={true}
                         />
                                                             
@@ -119,7 +120,7 @@ export function LabsOllAlgButton({text, lastslot,oll, pll}){
 )
 }
 
-export function LabsPllGroupButton({text}){
+export function LabsPllGroupButton({onClick, text}){
     
 
     const { darkMode } = useContext(ThemeContext)
@@ -131,7 +132,7 @@ export function LabsPllGroupButton({text}){
     }
 
     return(
-  <button  className={`LabsPLLGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+  <button onClick={()=>{onClick(text)}} className={`LabsPLLGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                                    
                                    style={{
                                  
@@ -151,7 +152,7 @@ export function LabsPllGroupButton({text}){
     )
 }
 
-export function LabsCellCopyNumber({text}){
+export function LabsCellCopyNumber({cells,setCells,cellNumber,text}){
  
 
 
@@ -165,11 +166,25 @@ export function LabsCellCopyNumber({text}){
         width: "100px"
     }
 
+    const handleCopyClicked = (cellNumber, cellNumberToCopy)=>{
+        
+        console.log("Added5",cellNumber,cellNumberToCopy)
+        setCells((prev)=>{
+                
+                let newCells=[...prev]
+                
+                newCells[cellNumber]={...cells[cellNumberToCopy],   id: `cell-${cellNumber}`,
+        cellNumber: cellNumber,}
+                // newCells[cellNumber]=defaultCellInfo(cellNumber)
+                console.log("Added45",newCells)
+                return newCells})
+       
+    }
     return(
         <>
         
        
-  <button  className={`LabsAlgCopyNumberButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+  <button onClick={()=>{handleCopyClicked(cellNumber,text)}} className={`LabsAlgCopyNumberButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                                    
                                    style={{
                                  
@@ -185,23 +200,23 @@ export function LabsCellCopyNumber({text}){
                                         "--bs-btn-active-border-color": "red",
                                     
                                                             }}
-                                                            >{text}
+                                                            >{text+1}
                                                             
                                                             </button>
      </>
 )   
 }
 
-export function AUFGrid(){
+export function AUFGrid({onClick}){
 
     return(
      <div className="LabsLastSlotGroupMenu">
     
                                                                 
-    <LabsLastSlotButton text={"No AUF"}></LabsLastSlotButton>
-    <LabsLastSlotButton text={"U2"}></LabsLastSlotButton>
-            <LabsLastSlotButton text={"U"}></LabsLastSlotButton>
-    <LabsLastSlotButton text={"U'"}></LabsLastSlotButton>
+    <LabsLastSlotButton onClick={onClick} text={"No AUF"}></LabsLastSlotButton>
+    <LabsLastSlotButton onClick={onClick} text={"U2"}></LabsLastSlotButton>
+            <LabsLastSlotButton onClick={onClick} text={"U"}></LabsLastSlotButton>
+    <LabsLastSlotButton onClick={onClick} text={"U'"}></LabsLastSlotButton>
 
 </div>
     )

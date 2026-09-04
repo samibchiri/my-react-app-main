@@ -1217,7 +1217,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
       inputString=inputString.split(",")
       console.log(inputString)
       for(let i=0;i<inputString.length;i++){   
-        if(inputString[i]!=""){
+        if(inputString[i]!==""){
           let intInputString=parseInt(inputString[i])
           if (!isNaN(intInputString)){
             if(intInputString<0 || intInputString>=25){
@@ -1234,7 +1234,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
       }
     }
     else{
-      if(inputString!=""){
+      if(inputString!==""){
         let intInputString=parseInt(inputString)
         if (!isNaN(intInputString)) {
           if(intInputString<0 || intInputString>=25){

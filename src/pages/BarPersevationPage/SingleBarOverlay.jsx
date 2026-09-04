@@ -61,14 +61,14 @@ const allOlls = useLiveQuery(() => db.olls.toArray(), []);
 
 const selectedOll= useLiveQuery(async ()=>{
     console.log("Search")
-    if (ollId != null && ollId !="") {
+    if (ollId != null && ollId !=="") {
         let retrievedOll=  await db.olls.get(ollId)
         if(!retrievedOll){
             console.warn("ollId not found")
         }
     return retrievedOll??[]
     }
-    else if(ollAlg !=null && ollAlg!=""){
+    else if(ollAlg !=null && ollAlg!==""){
         let simplifiedOllAlg= correctAlgString(ollAlg)
         const allOlls = await db.olls.toArray();
         
@@ -791,7 +791,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
     if(inputString.includes(",")){
       inputString=inputString.split(",")
       for(let i=0;i<inputString.length;i++){   
-        if(inputString[i]!=""){
+        if(inputString[i]!==""){
           let intInputString=parseInt(inputString[i])
           if (!isNaN(intInputString)){
             if(intInputString<0 || intInputString>=25){
@@ -808,7 +808,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
       }
     }
     else{
-      if(inputString!=""){
+      if(inputString!==""){
         let intInputString=parseInt(inputString)
         if (!isNaN(intInputString)) {
           if(intInputString<0 || intInputString>=25){

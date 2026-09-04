@@ -508,7 +508,7 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
                     <ArrowDataGenerator
                       key={`${changedAlgArray[0]}-${changedAlgArray[1]}`}
                       newAlg={changedAlgArray[0]}
-                      tempoll={changedAlgArray[1].algs!=""?changedAlgArray[1]:{...AlgVersions[0], id:changedAlgArray[1].id, algNumber:changedAlgArray[1].algNumber}}
+                      tempoll={changedAlgArray[1].algs!==""?changedAlgArray[1]:{...AlgVersions[0], id:changedAlgArray[1].id, algNumber:changedAlgArray[1].algNumber}}
                       onError={(errorMessage) => {
                       console.warn("CornerPermutation error:", errorMessage);
             

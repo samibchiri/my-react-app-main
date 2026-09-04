@@ -26,6 +26,10 @@ a:hover {
   margin: 0;
 }
 
+.navbar{
+  z-index: 999999 !important;
+}
+
 
 
 .CasesGroupTableRow{
@@ -557,7 +561,7 @@ th{
 }
 
 .CpRecOverlay{
-  z-index: 100;
+
   position: absolute;
   height: 160px;
   width:160px;
@@ -569,7 +573,6 @@ th{
 }
 
 .CpGridOverlay{
-  z-index: 2;
   position: absolute;
   height: 160px;
   width:160px;
@@ -747,7 +750,6 @@ g polygon{
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  z-index: 2000;
   width:150px;
   height:150px;
 }
@@ -1158,20 +1160,20 @@ table input.PopUpInputAlg:active {
   height: max-content;
 }
 
-.LabsCell{
-  position: relative;
-  border: 2px solid blue;
-  margin: 0px;
-  margin-bottom:40px;
-  margin-top: 10px;
-  padding-top:40px;
+.LabsCell {
+    position: relative;
+    border: 2px solid blue;
+    margin: 0;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    padding-top: 40px;
+    overflow: visible !important;
 }
 
 .LabsPopUpCont{
   position: absolute;
   top:-2px;
   left:0px;
-  z-index: 1050;
 
 }
 
@@ -1242,19 +1244,45 @@ table input.PopUpInputAlg:active {
 
 .LabsOLLGroupMenu {
   /* display: grid !important; */
-  display: none !important;
   grid-template-columns: repeat(3, max-content) !important;
   width: max-content !important;
+  height: max-content !important;
+  min-width: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-right: 5px !important;
+  margin: 0 !important;
+  margin-left:10px !important;
+  gap:13px;
+  background-color: black !important;
+  /* width:250px; */
+  /* height:200px; */
+  z-index: 20 !important;
+}
+
+.LabsLastSlotGroupCont{
+    /* width: max-content !important;
   min-width: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
+  background-color: black !important; */
+  grid-template-columns: repeat(2, max-content) !important;
+  width: max-content !important;
+  height: max-content !important;
+  min-width: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-right: 5px !important;
+  margin: 0 !important;
+  margin-left:10px !important;
   gap:13px;
   background-color: black !important;
-  padding: 5px !important;
+  /* width:250px; */
+  /* height:200px; */
+  z-index: 20 !important;
 }
 
 .LabsOLLAlgMenu{
-  display: none !important;
   grid-template-columns: repeat(2, max-content) !important;
   width: max-content !important;
   min-width: 0 !important;
@@ -1271,18 +1299,18 @@ table input.PopUpInputAlg:active {
   padding-left: 0 !important;
   padding-right: 0 !important;
   height: 45px !important;
-  width: 80px !important;
+  width: 100px !important;
   font-size: 0.8rem !important;
 }
 
 .LabsOllAlgButton{
-  padding: 5 !important;
-  padding-top: 5 !important;
+  padding: 5px !important;
+  /* padding-top: 5 !important; */
   padding-left: 0 !important;
   padding-right: 0 !important;
-  width: 112px !important;
-  height: 50px !important;
-  font-size: 0.8rem !important;
+  width: 152px !important;
+  height: 90px !important;
+  font-size: 1rem !important;
 }
 
 .LabsPLLGroupButton{
@@ -1295,13 +1323,13 @@ table input.PopUpInputAlg:active {
   font-size: 1rem !important;
 }
 
-.LabsLastSlotGroupCont{
+/* .LabsLastSlotGroupCont{
   width: max-content !important;
   min-width: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
   background-color: black !important;
-}
+} */
 
 .LabsLastSlotGroupMenu{
   display: grid !important;
@@ -1392,6 +1420,7 @@ table input.PopUpInputAlg:active {
   align-items: center;
   width: max-content !important;
   gap:10px;
+  margin-top: 5px;
 }
 
 .LabsLastSlotButtonSave{
@@ -1416,28 +1445,37 @@ table input.PopUpInputAlg:active {
 
 
 .LabsPLLGroupMenu{
-  display: none !important;
-  grid-template-columns: repeat(5, max-content) !important;
+  position: absolute !important;
+  grid-template-columns: repeat(3, max-content) !important;
   width: max-content !important;
+  height: max-content !important;
   min-width: 0 !important;
-  padding: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-right: 5px !important;
   margin: 0 !important;
+  margin-left:10px !important;
   gap:13px;
   background-color: black !important;
-  padding: 5px !important;
+  /* width:250px; */
+  /* height:200px; */
+  z-index: 10 !important;
 }
 
 
-.LabsCopyButtonCont{
-  position: absolute;
-  right:0px;
-  top:0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.LabsNestedDropdown .dropdown-menu {
+    display: none;
 }
 
+.LabsCopyButtonCont {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
 
 .LabsCopyButton{
   position: absolute;
@@ -1452,6 +1490,7 @@ table input.PopUpInputAlg:active {
     display: none !important;
 }
 
+
 .LabsLinkButton{
   position: absolute;
   height:35px !important;
@@ -1461,6 +1500,7 @@ table input.PopUpInputAlg:active {
   justify-content: center !important;
   right:0px;
   top:40px;
+  z-index: 100;
 }
 .LabsLinkButton.dropdown-toggle::after {
     display: none !important;
@@ -1512,6 +1552,7 @@ table input.PopUpInputAlg:active {
   border-right: 0px !important;
 }
 
+
 .LabsLinkDropdownCont.dropdown-menu{
   position: absolute !important;
   top:-3px !important;
@@ -1530,6 +1571,8 @@ table input.PopUpInputAlg:active {
   border-bottom-right-radius: 6px !important;
 }
 
+
+
 .LabsCellCopyNumberCont{
   display: grid;
   grid-template-columns: repeat(2, max-content) !important;
@@ -1540,6 +1583,7 @@ table input.PopUpInputAlg:active {
   gap:13px;
   padding: 0px !important;
   margin-top: 10px !important;
+
 }
 
 .LabsCellCopyNumberHeader{
@@ -1581,12 +1625,12 @@ table input.PopUpInputAlg:active {
   border-radius: 5px;
   left:75px;
   top:0px;
-  z-index: 100;
 }
 
 .AddLabsCellsCont{
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
   width:fit-content;
@@ -1605,7 +1649,6 @@ table input.PopUpInputAlg:active {
   padding: 10px !important;
   margin: 0 !important;
   background-color: black !important;
-  z-index: 100;
   width: 250px;
 }
 

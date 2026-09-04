@@ -57,11 +57,26 @@ const CaseImage = ({ size = 100, caseSetDetails, maskColor, alg,cubeOpacity,stic
   const resolvedMaskColor = maskColor ?? (darkMode ? "#404044" : "#666");
   const cubeColor = darkMode ? "#000" : "#181818";
   const algorithm = props.case?.algs?.[0] || alg;
+
+const normalizedAlgorithm = algorithm
+  ?.replace(/R3/g, "R'")
+  ?.replace(/U3/g, "U'")
+  ?.replace(/F3/g, "F'")
+  ?.replace(/D3/g, "D'")
+  ?.replace(/L3/g, "L'")
+  ?.replace(/B3/g, "B'")
+  ?.replace(/R4/g, "")
+  ?.replace(/U4/g, "")
+  ?.replace(/F4/g, "")
+  ?.replace(/D4/g, "")
+  ?.replace(/L4/g, "")
+  ?.replace(/B4/g, "");
   const { mask, view,arrows } = caseSetDetails;
   const rest = { mask, view, arrows, maskColor: resolvedMaskColor, cubeColor,cubeOpacity,cubeSize,
   stickerOpacity };
 
-  return <CubeImage case={algorithm || ""} height={size} width={size} {...rest} />;
+  console.log("Normalized",normalizedAlgorithm)
+  return <CubeImage case={normalizedAlgorithm || ""} height={size} width={size} {...rest} />;
 };
 
 

@@ -23,11 +23,15 @@ import {useWindowWidthLogic,GetCentersPosition,addInformationToColorIndexList,ge
   CalculatePointsDistance, convert2CentersToCoordinates, Connect2Centers,getCirclePath,ArrowBarMovement} from "./pages/BarPersevationPage/BarPersevationLogic.jsx"
 import arrowsInfoGen from "./1OllArrowCpInfo"
 
-export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted,cubeSize,setCubeSize,cubeSizeFixed}){
+export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppWanted,barMovementWanted,cubeSize,setCubeSize,cubeSizeFixed, labsPageTrue}){
+ 
+
+  //Todo: fix caseimage bug R3 and U4 by splitting such moves up in R2 R etc.
+ 
   let T_Perm="R U R' U' R' F R2 U' R' U' R U R' F'"
   let PermTable=[0,5,1,2,3,4]
   //let pllPreAUF=["","","U2","U","U'",""]
-  let pllPreAUF=["","","","","",""]
+  let pllPreAUF=["","","","","'",""]
 
   pll=pllPreAUF[PermTable[permIndex]]+pll
   //   let pllPreAUF=["","","U2"   ,"U","U'",""]
@@ -67,7 +71,7 @@ const Scale=13.1/0.15740740740740744/150*cubeSize
   let F_Perm="R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"
 
 
-  let CornerPermutations=["",T_Perm, "U2 "+T_Perm   ,"U "+T_Perm,"U' "+T_Perm,Y_Perm]
+  let CornerPermutations=["",T_Perm, "U2"+T_Perm   ,"U"+T_Perm,"U'"+T_Perm,Y_Perm]
   //let CornerPermutations=["","", "","","",""]
   // let PermTable=[0,5,1,2,3,4]
 
@@ -733,7 +737,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
     if(inputString.includes(",")){
       inputString=inputString.split(",")
       for(let i=0;i<inputString.length;i++){   
-        if(inputString[i]!=""){
+        if(inputString[i]!==""){
           let intInputString=parseInt(inputString[i])
           if (!isNaN(intInputString)){
             if(intInputString<0 || intInputString>=25){
@@ -750,7 +754,7 @@ function verifyAndUpdateExcludeBarInput(inputString,OllIndex,oll){
       }
     }
     else{
-      if(inputString!=""){
+      if(inputString!==""){
         let intInputString=parseInt(inputString)
         if (!isNaN(intInputString)) {
           if(intInputString<0 || intInputString>=25){
@@ -835,38 +839,166 @@ function correctAlgString(inputstring){
 
 let OllLists=[oll]
 let PermIndex=0
-// console.log("Nothing.",pathCalculated)
+// console.log("Nothing.",pathCalculated,labsPageTrue)
 return (
   
   <>
-  
+
+  {labsPageTrue &&
+
+    
+    <div className="RecCont"  ref={(el)=> setOverlayRef(el,0)}> 
+                   
+                    <CaseImage
+                        size={cubeSize}
+                        alg={(pll).replace(/\s+/g, "")+" y2"}
+                        caseSetDetails={ScrambleVisualizerDetails}
+                        co="40"
+                    ></CaseImage>
+
+                    <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+9}px`,marginTop:`${-21+cubeSize/10}px`}}>
+                      {
+                      pathCalculated && barMovementWanted && oll &&(
+                      <>
+                      
+                      {
+                        //In this array to prevent outline from overlapping with connecting lines
+                        Array.from({ length: 5 }, (_, i) => i).map(i => (
+                        <>
+                        <svg style={{position:"absolute"}}id="GoodLine" width="100%" height="100%">
+                          
+                          <path
+                            d={overlayPaths?.centerOutLine?.[i] || ""}
+                            //fill={overlayPaths?.[4]?.[i][1] || "black"}
+                            fill={"rgba(248, 246, 246, 1)"}
+                            fillRule="evenodd"
+                            stroke="rgba(44, 44, 44, 1)"
+                            strokeWidth="1"
+                            strokeLinejoin="round"
+                            filter="url(#shadow)"
+                          />
+                      </svg>
+
+                      <svg id="SmallCirclePath" style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+10}px`,zIndex: "100",position:"absolute"}}>
+
+                        <path
+                            d={overlayPaths?.noMovementCircle||""}
+                            fill={"black"}
+                            stroke="rgba(255, 255, 255, 1)"
+                            strokeWidth="0.5"
+                            strokeLinejoin="round"
+                            
+                        />
+                      </svg>
+                      </>
+                        ))}
+
+                        {
+                          Array.from({length:5},(_,i)=>i).map(i=>(
+                          <>
+                          {Array.from({ length: 2 }, (_, j) => j).map(j => (
+                        <>
+                        
+                        <svg style={{position:"absolute"}}id="ConnectingLines" width="100%" height="100%" >
+                          
+                          <path
+                            d={overlayPaths?.connectingLines?.[i][j].linePath || ""}
+                            fill={overlayPaths?.combinedColorList?.[i][0] || "black"}
+                            
+                            stroke="rgba(44, 44, 44, 1)"
+                            strokeWidth="1"
+                            strokeLinejoin="round"
+                            
+                            
+                            transform={`rotate(${overlayPaths?.connectingLines?.[i][j].lineRotation || "0"} ${overlayPaths?.connectingLines?.[i][j].lineRotationCoordX ||"0"} ${overlayPaths?.connectingLines?.[i][j].lineRotationCoordY ||"0"})`}
+                          />
+                          
+                      </svg>
+                      </>
+                      ))} 
+                      </>
+                      ))
+                        }
+                        {
+                        
+                      Array.from({ length: 5 }, (_, i) => i).map(i => (
+                        <>                            
+                          <svg style={{position:"absolute"}}id="PointingArrow" width="100%" height="100%" >
+                        <path
+                            d={overlayPaths?.arrow?.[i].arrowPath||""}
+                            fill={overlayPaths?.combinedColorList?.[i][1] || "purple"}
+                          stroke="rgba(0, 0, 0, 1)"
+                            strokeWidth="1.5"
+                            strokeLinejoin="round"
+                            transform={`rotate(${overlayPaths?.arrow?.[i].arrowRotation || "0"} ${overlayPaths?.arrow?.[i].arrowRotationCoordX ||"0"} ${overlayPaths?.arrow?.[i].arrowRotationCoordY ||"0"})`}
+                        />
+                        
+                      </svg>
+                      
+                        <svg style={{position:"absolute"}}id="CirclePath" width="100%" height="100%" >
+                          <path
+                              d={overlayPaths?.centerCircle?.[i]||""}
+                              fill={overlayPaths?.combinedColorList?.[i][1] || ""}
+                            stroke="rgba(22, 22, 22, 1)"
+                            strokeWidth="1"
+                          />
+                        </svg>
+
+                      </>))
+                      } 
+                      
+                      
+                      {/* <svg style={{position:"absolute", zIndex:"100"}}id="GoodLine" width="100%" height="100%">
+
+                          
+                          <path
+                            d={"M 58,54 L 58,56 L 133,56 L 133,54 Z "}
+                            fill={"rgba(207, 1, 1, 1)"}
+                            stroke="rgba(255, 0, 234, 1)"
+                            strokeWidthstrokeWidth="0.1"
+                            filter="url(#shadow)"
+                            transform="rotate(45)"
+                          />
+                      </svg>                              */}
+                      </>
+                      )
+                  }
+                  {oll&& arrowsInfoGen(oll,permIndex,cubeSize,cpEasyWanted,cpSameOppWanted).map((arrow, i) => (
+                  <svg
+                  key={i}
+                  width="100%"
+                  height="100%"
+                  style={{ position: "absolute" }}
+                  >
+                  <path
+                      d={arrow.path}
+                      fill={arrow.color}
+                      stroke="rgba(0,0,0,1)"
+                      strokeWidth="1"
+                      transform={`rotate(${arrow.rotation} ${arrow.rotateX} ${arrow.rotateY})`}
+                  />
+                  </svg>
+              ))}
+                  </div>
+                    <div className='CpGridOverlay' style={{height:`${cubeSize*160/200}px`,width:`${cubeSize*160/200}px`,marginTop:`${-21+cubeSize/10}px`}}>
+                  
+                      </div>
+                    </div>
+  }  
 
 
-  { (OllLists != null) && (
+  { oll && !labsPageTrue && (
     <>
 
 
                     <div className="RecCont"  ref={(el)=> setOverlayRef(el,0)}> 
-                    {console.log("Erro?",oll.algs,oll.ollNumber,oll.algNumber,pll)}
-                    {oll?.algs &&
+                    
                     <CaseImage
                         size={cubeSize}
-                        alg={(oll.algs+pll).replace(/\s+/g, "")+"y2"}
+                        alg={(oll.algs+pll).replace(/\s+/g, "")+" y2"}
                         caseSetDetails={ScrambleVisualizerDetails}
                         co="40"
                     ></CaseImage>
-                    }
-                    {
-                      !oll?.algs &&
-                      <CaseImage
-                        size={cubeSize}
-                        alg={(pll).replace(/\s+/g, "")+"y2"}
-                        caseSetDetails={ScrambleVisualizerDetails}
-                        cubeOpacity="100"
-                        stickerOpacity="100"
-                        
-                    ></CaseImage>
-                    }
                     
                     <div  className='CpRecOverlay' style={{height:`${cubeSize*160/200+10}px`,width:`${cubeSize*160/200+9}px`,marginTop:`${-21+cubeSize/10}px`}}>
                       {

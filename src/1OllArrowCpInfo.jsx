@@ -394,6 +394,6 @@ function getSameOppInfo(oll,index,arrowNumber,cubeSize){
             rotateY: getSameOppInfo(oll,PermTable[permIndex],1,cubeSize).rotateY,
             }]
         }
-console.log("ArrowsInfo",arrowsInfo,cpEasyWanted)
+// console.log("ArrowsInfo",arrowsInfo,cpEasyWanted)
 return arrowsInfo
 }

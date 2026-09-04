@@ -49,7 +49,8 @@ export const router = createBrowserRouter([
       // { path: "labs", element: <ArrowDataGenerator/>},
       { path: "myAlgs",
           children:[
-            {index: true, element: <MyAlgsPage/>},
+            {index: true, element: <ArrowDataGenerator/>},
+            // {index: true, element: <MyAlgsPage/>},
             { path: "oll", element: <MyOllPage/>}
           ] },
       { path: "*", element: <NotFoundPage /> },

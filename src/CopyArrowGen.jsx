@@ -155,7 +155,7 @@ useEffect(() => {
 useEffect(() => {
     console.log(`ScrambleIndex,${scrambleIndex.current}`)
     console.log("CurrentScramble",scramble)
-    if (!scramble && scramble!="") return;
+    if (!scramble && scramble!=="") return;
     console.log("run")
 
     setPathArrowList([]);
@@ -1162,7 +1162,7 @@ function GroupRecognition(){
 useEffect(() => {
     console.log("Print Json")
     if(chosenAlg !=null){
-        if(chosenAlg!=""){
+        if(chosenAlg!==""){
             console.log("Update",jsonArrowsToExport[0])
             UpdateOll(oll.id,jsonArrowsToExport[0])    
         }

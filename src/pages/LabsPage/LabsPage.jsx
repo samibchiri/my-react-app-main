@@ -44,7 +44,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions.jsx";
 import LabsOllGroupButton, {LabsOllAlgButton,LabsPllGroupButton, LabsCellCopyNumber, AUFGrid} from "./LabsOllGroupButton.jsx";
 import { LabsLastSlotButton } from "./LabsLastSlotButton.jsx"; 
 import LabsCell from "./LabsCell.jsx";
-import Labs2CellGrid, {Labs4CellLastSlotGrid, Labs4CellPLLGrid} from "./LabsGrids.jsx";
+import Labs2CellGrid, {Labs4CellLastSlotGrid, Labs4CellOLLGrid, Labs4CellPLLGrid} from "./LabsGrids.jsx";
 
 
 export default function CpTrainerPage(){
@@ -137,23 +137,64 @@ export default function CpTrainerPage(){
 
     }
 
+    let T_Perm= "R U R' U' R' F R2 U' R' U' R U R' F' "
+
+    const shortGroupTable = {
+  0: "Cross",
+  1: "Dot",
+  2: "T Shape",
+  3: "C Shape",
+  4: "I Shape",
+  5: "P Shape",
+  6: "W Shape",
+  7: "Small L Shape",
+  8: "Small Bolt",
+  9: "Big Bolt",
+  10: "Square Shape",
+  11: "Fish Shape",
+  12: "Knight Shape",
+  13: "Awkward Shape",
+  14: "Corners Oriented"
+}
+
     const [cells, setCells] = useState([
-    {
-        id: "cell-1",
-        cellNumber: 1,
+         {
+        id: "cell-0",
+        cellNumber: 0,
         ollRecSetting: "",
         lastSlotAlgSetup: "",
         preOLLAUFSetup: "",
-        ollAlgSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
         prePLLAUFSetup: "",
-        pllAlgSetup: "",
+        pllAlgSetup: ``,
         postPLLAUFSetup: "",
         lastSlotAlgSolve:"",
         OLLAlgSolve:"",
         PLLAlgSolve:"",
         lastSlotGridNumber:"",
         PLLGridNumber:"",
-        linkedCell: [1,"LastSlot"]
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-1",
+        cellNumber: 1,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "RU2R'",
+        preOLLAUFSetup: "U",
+        ollAlgSetupNumber: 27,
+        ollAlgNumber:0,
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"U' R U' R'",
+        OLLAlgSolve:"U' R U2 R2 U' R2 U' R2 U2 R",
+        PLLAlgSolve:"U R' U R' U' R3 U' R' U R U R2",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
     },
     {
         id: "cell-2",
@@ -161,7 +202,8 @@ export default function CpTrainerPage(){
         ollRecSetting: "",
         lastSlotAlgSetup: "",
         preOLLAUFSetup: "",
-        ollAlgSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
         prePLLAUFSetup: "",
         pllAlgSetup: "",
         postPLLAUFSetup: "",
@@ -170,12 +212,149 @@ export default function CpTrainerPage(){
         PLLAlgSolve:"",
         lastSlotGridNumber:"",
         PLLGridNumber:"",
-        linkedCell: [1,"LastSlot"]
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-3",
+        cellNumber: 3,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "R U2 R'",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-4",
+        cellNumber: 4,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-5",
+        cellNumber: 5,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-6",
+        cellNumber: 6,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-2",
+        cellNumber: 2,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
+    },
+    {
+        id: "cell-7",
+        cellNumber: 7,
+        ollRecSetting: "",
+        lastSlotAlgSetup: "",
+        preOLLAUFSetup: "",
+        ollAlgSetupNumber: "",
+        ollAlgNumber:"",
+        prePLLAUFSetup: "",
+        pllAlgSetup: "",
+        postPLLAUFSetup: "",
+        lastSlotAlgSolve:"",
+        OLLAlgSolve:"",
+        PLLAlgSolve:"",
+        lastSlotGridNumber:"",
+        PLLGridNumber:"",
+        linkedCell: [1,"LastSlot"],
+        hidden: false
     }
 ]);
 
-    const [unLinkable, setUnlinkable] = useState([])
+    const [gridList,setGridList] = useState([["LastSlot",0],["2Grid",6],["PLL",8]])
 
+    const [unlinkable, setUnlinkable] = useState([])
+
+
+    let unlinkableList = []
+    let prevCount=0
+    useEffect(()=>{
+        gridList.forEach((grid)=>{
+        
+        let startCountNumber= grid[1]
+        if(grid[0]!="2Grid"){
+            while(prevCount<startCountNumber){
+            unlinkableList.push(prevCount)
+            prevCount+=1
+            }
+        }
+        prevCount=startCountNumber
+
+        setUnlinkable(unlinkableList)
+    })
+
+    },[gridList])
+    
     const ScrambleDetails = {
         id: "oll",
         title: "OLL",
@@ -193,8 +372,8 @@ export default function CpTrainerPage(){
     }
 
     let scramble = "F L2 U2 L2 R2 B2 L2 U2 R2 F R2 F U L' F R2 B2 F2 R2 U' B D2 L"
-    let oll = dbOllCaseSet?dbOllCaseSet[0]:""
-    console.log("Oll",oll)
+    // let oll = dbOllCaseSet?dbOllCaseSet[0]:""
+    // console.log("Oll",oll)
     let j=0
 
     const LastSlotAlgs=["R U' R'", "L U L'","R U R'","L U' L'","R U2 R'", "L U2 L'", "R' F R F'", "L F' L' F"]
@@ -229,424 +408,33 @@ export default function CpTrainerPage(){
 
         
                     </div>
-                                {//${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn }}
-}
                     <div className={`LabsGridCont`}>
-                        {/* <div className="LabsCell">
-                        {!recAnswered && 
-                        
-                        dbOllCaseSet && oll && <BarPersevationOverlay
-                            oll={oll}
-                            pll={""}
-                            permIndex={0}
-                            cpEasyWanted={false}
-                            cpSameOppWanted={!cpSameOpp}
-                            barMovementWanted={false}
-                            cubeSize={cubeSize}
-                            setCubeSize={setCubeSize}
-                            cubeSizeFixed={true}
-                            />
-                        }
-                        </div> */}
-                        
-                        {/* <LabsCell cubeSize={cubeSize} setCubeSize={setCubeSize} oll={oll} LastSlotAlgs={LastSlotAlgs}></LabsCell> */}
-                        {/* <div className="LabsCell">
-                            <div className="LabsTrashButtonCont">
-                                <button className='LabsTrashButton'>
-                                                                    <FaIcon icon="trash" style={{ color: "white", fontSize: "20px" }} />
-                                                                </button>
-
-                            </div>
-                            <div className="LabsCopyButtonCont">
-                                    <div className="LabsCellNumberCont">
-                                        <h4 className="LabsCellNumber">22</h4>
-                                    </div>
-                                    
-                                    <div className='navbar-nav ms-auto'>
-                                            <ul className="navbar-nav">
-                                              <li className='nav-item dropdown ms-ltr-5 list-unstyled'>
-                                    
-                                    
-                                    <button className={`LabsCopyButton dropdown-toggle ${darkMode ? "btn-dark border-2 btn-back-dark" : "btn-secondary border-2 border-dark btn-back-light"} border border-2 btn `}
-                                     data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        data-bs-auto-close="outside"
-                                        >
-                                        <FaIcon icon="copy"></FaIcon>
-                                    </button>
-                                    <ul className="dropdown-menu LabsCellNumberDropdownCont">
-                                        <h4 className="LabsCellCopyNumberHeader">Which cell <br></br>to copy? </h4>
-                                           <li>
-                                            <hr className="dropdown-divider LabsCellCopyNumberDivider" />
-                                        </li>
-
-                                        <li className="LabsCellCopyNumberCont">
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-      
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-                                            
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-
-                                            <LabsCellCopyNumber text={"111"}></LabsCellCopyNumber>
-                                                           
-                                    </li>
-
-
-                                     </ul>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                </div>
-
-
-                            <div className="LabsPopUpCont" >
-                                
-                                <div className='navbar-nav ms-auto'>
-                                            <ul className="navbar-nav">
-                                              <li className='nav-item dropdown ms-ltr-5 list-unstyled'>
-                                    <button  className={`LabsInfoButton dropdown-toggle ${darkMode ? "btn-dark border-2 btn-back-dark" : "btn-secondary border-2 border-dark btn-back-light"} border border-2 btn `}  
-                                         onClick={()=>{console.log("Clicked")}}
-                                        id="navbarDropdown"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        data-bs-auto-close="outside"
-                                        
-                                    >
-                                        
-                                    </button>
-                                                <ul className={`LabsDropDownMenu dropdown-menu`} aria-labelledby="navbarDropdown">
-                                                <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >Oll Recognition</button>
-
-            
-                                                                      <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                    <div className="LabsLastSlotGroupMenu">
-                                                       
-                                                                                                                   
-                                                       <LabsLastSlotButton text={"Nothing"}></LabsLastSlotButton>
-                                                       <LabsLastSlotButton text={"Bar Movement"}></LabsLastSlotButton>
-                                                               <LabsLastSlotButton text={"Cp Easy"}></LabsLastSlotButton>
-                                                       <LabsLastSlotButton text={"Cp Same Opp"}></LabsLastSlotButton>
-                                                   
-                                                   </div>
-                                                          
-                                                </div>
-                                                </li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li style={{marginTop:"30px"}}>
-                                                     <button disabled={true} className="dropdown-item LabsDropDownItem"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{fontWeight:"700", borderBottomLeftRadius:"6px",borderBottomRightRadius:"6px"}}
-                                                >Setup</button>
-                                                </li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >Last Slot</button>
-
-                                                <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                    <div className="LabsLastSlotGroupMenu">
-
-                                                    
-                                                        {LastSlotAlgs.map((alg)=>(
-                                                            <LabsLastSlotButton text={alg}></LabsLastSlotButton>
-                                                        ))}
-                                                        
-                                                        </div>
-                                                           <div className="LabsLastSlotInputCont">
-                                                                 <input className="LastSlotCustomInput"></input>
-                                                            <div id="buttonSaveAndCopy1">
-                                                            
-                                                            <button className="LabsLastSlotButtonSave" >Save
-                                                            </button>
-                                                           </div>
-                                                          
-                                                        
-                                                                </div>
-                                                </div>
-                                                                     <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                    <div className="LabsLastSlotGroupMenu">
-
-                                                    
-                                                           <LabsLastSlotButton text={"Hi"}></LabsLastSlotButton>
-                                                           <LabsLastSlotButton text={"Bye"}></LabsLastSlotButton>
-                                                                  <LabsLastSlotButton text={"Hi"}></LabsLastSlotButton>
-                                                           <LabsLastSlotButton text={"Bye"}></LabsLastSlotButton>
-
-                                                        </div>
-                                                           <div className="LabsLastSlotInputCont">
-                                                                 <input className="LastSlotCustomInput"></input>
-                                                            <div id="buttonSaveAndCopy1">
-                                                            
-                                                            <button className="LabsLastSlotButtonSave" >Save
-                                                            </button>
-                                                           </div>
-                                                          
-                                                        
-                                                                </div>
-                                                </div>
-                                                </li>
-
-                                                <li><hr className="dropdown-divider" /></li>
-
-                                                <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >Oll Pre-AUF</button>
-
-            
-                                                                      <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                   {AUFGrid()}
-                                                          
-                                                </div>
-                                                </li>
-
-                                               <li><hr className="dropdown-divider" /></li>
-
-                                                  <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >OLL Group</button>
-                                                        
-                                                        
-                                                        <div style={{}} className="dropdown-menu LabsOLLGroupMenu">
-                                                            {/* <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                                   
-                                   style={{
-                                 
-                                        ...ContinueButtonstyle,
-
-                                        "--bs-border-style": "solid",
-                                        "--bs-border-color": "white",
-                                        "--bs-btn-hover-border-color": "red",
-                                        "--bs-btn-focus-border-color": "red",
-                                        "--bs-btn-active-border-color": "red",
-                                    
-                                                            }}
-                                                            >Group 1</button> }
-                                                            <LabsOllGroupButton text={"Group 1"} subtext={"Small Bolt"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 2"} subtext={"Knight Move"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 3"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 4"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 5"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 6"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 7"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 8"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 9"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 10"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 11"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 12"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 13"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 14"}></LabsOllGroupButton>
-                                                            <LabsOllGroupButton text={"Group 15"} subtext={"Knight Move"}></LabsOllGroupButton>
-                                                        </div>
-
-                                                        <div className="dropdown-menu LabsOLLAlgMenu ">
-                                                            {/* <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                                   
-                                   style={{
-                                 
-                                        ...ContinueButtonstyle,
-
-                                        "--bs-border-style": "solid",
-                                        "--bs-border-color": "white",
-                                        "--bs-btn-hover-border-color": "red",
-                                        "--bs-btn-focus-border-color": "red",
-                                        "--bs-btn-active-border-color": "red",
-                                    
-                                                            }}
-                                                            >Group 1</button> }
-                                                            <LabsOllAlgButton text={"Alg 111"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                           
-                                                            <LabsOllAlgButton text={"Alg 2"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 3"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 4"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 5"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 6"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 7"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                            <LabsOllAlgButton text={"Alg 8"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
-                                                        </div>
-{/* 
-                                                        <hr className="dropdown-divider" />
-
-                                                        <div className="LabsOLLGrid">
-                                                            <button>OLL 51</button>
-                                                            <button>OLL 52</button>
-                                                            <button>OLL 53</button>
-                                                            <button>OLL 54</button>
-                                                            <button>OLL 55</button>
-                                                            <button>OLL 56</button>
-                                                        </div> }
-
-                                                  
-                                                  </li>
-                                                  <li><hr className="dropdown-divider" /></li>
-                                                   <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >PLL Pre-AUF</button>
-
-            
-                                                                    <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                   {AUFGrid()}
-                                                          
-                                                </div>
-                                                          
-                                                
-                                                </li>
-
-                                               <li><hr className="dropdown-divider" /></li>
-
-                                                    <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >PLL Group</button>
-                                                        {/* <div className="dropdown-menu LabsOLLMenu"> }
-
-                                                        <div style={{}} className="dropdown-menu LabsPLLGroupMenu">
-                                                            {/* <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
-                                   
-                                   style={{
-                                 
-                                        ...ContinueButtonstyle,
-
-                                        "--bs-border-style": "solid",
-                                        "--bs-border-color": "white",
-                                        "--bs-btn-hover-border-color": "red",
-                                        "--bs-btn-focus-border-color": "red",
-                                        "--bs-btn-active-border-color": "red",
-                                    
-                                                            }}
-                                                            >Group 1</button> }
-                                                            <LabsPllGroupButton text="E" />
-                                                            <LabsPllGroupButton text="Ua" />
-                                                            <LabsPllGroupButton text="Ra" />
-                                                            <LabsPllGroupButton text="T" />
-                                                            <LabsPllGroupButton text="Ga" />
-                                                            
-                                                            <LabsPllGroupButton text="Na" />
-                                                            <LabsPllGroupButton text="Ub" />
-                                                            <LabsPllGroupButton text="Rb" />
-                                                            <LabsPllGroupButton text="F" />
-                                                            <LabsPllGroupButton text="Gb" />
-                                                            
-                                                            <LabsPllGroupButton text="Nb" />
-                                                            <LabsPllGroupButton text="H" />
-                                                            <LabsPllGroupButton text="Ja" />
-                                                            <LabsPllGroupButton text="Aa" />
-                                                            <LabsPllGroupButton text="Gc" />
-                                                            
-                                                            <LabsPllGroupButton text="V" />
-                                                            <LabsPllGroupButton text="Z" />
-                                                            <LabsPllGroupButton text="Jb" />
-                                                            <LabsPllGroupButton text="Ab" />
-                                                            <LabsPllGroupButton text="Gd" />
-
-                                                            <LabsPllGroupButton text="Y" />
-    
-                                                        </div>
-
-                                                     
-                                                  </li>
-                                                  <li><hr className="dropdown-divider" /></li>
-                                                   <li className="dropdown LabsNestedDropdown">
-
-                                                    <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                >PLL Post-AUF</button>
-
-            
-                                                                     <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                   {AUFGrid()}
-                                                          
-                                                </div>
-                                                </li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li className="dropdown LabsNestedDropdown" style={{marginTop:"20px"}}>
-                                                     <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{borderBottomLeftRadius:"6px",borderBottomRightRadius:"6px"}}
-                                                >Algs to Solve</button>
-
-                                                <div className="dropdown-menu LabsSolveInputCont">
-                                                    
-                                                        <div className="d-flex" alignItems="center">
-                                                             <label style={{color:"white"}} for="LastSlotAlg">Last Slot Alg:</label>
-                                                              <input name="LastSlotAlg" className="LastSlotSolveInput"></input>
-                                                        </div>
-                                                       
-                                                        <input className="LastSlotCustomInput"></input>
-                                                        <input className="LastSlotCustomInput"></input>
-                                                </div>
-                                                </li>
-                                                
-                                                
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li style={{marginTop:"30px"}}>
-                                                     <button  className="dropdown-item LabsDropDownItem"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                style={{fontWeight:"700", borderBottomLeftRadius:"6px",borderBottomRightRadius:"6px"}}
-                                                >Reset to Default</button>
-                                                </li>
-
-                                             
-                                                </ul>
-                                              </li>
-                                            </ul>
-                                          </div>
-                            </div>
-                            {!recAnswered && 
-                        
-                        
-                            !recAnswered && dbOllCaseSet && oll && <BarPersevationOverlay
-                            oll={oll}
-                            pll={""}
-                            permIndex={1}
-                            cpEasyWanted={false}
-                            cpSameOppWanted={!cpSameOpp}
-                            barMovementWanted={false}
-                            cubeSize={cubeSize}
-                            setCubeSize={setCubeSize}
-                            cubeSizeFixed={true}
-                            />
-                        }
-                        </div> */}
-
-                <Labs2CellGrid cubeSize={cubeSize} setCubeSize={setCubeSize} oll={oll} LastSlotAlgs={LastSlotAlgs}></Labs2CellGrid>
-
-                <Labs4CellLastSlotGrid cubeSize={cubeSize} setCubeSize={setCubeSize} oll={oll} LastSlotAlgs={LastSlotAlgs}> </Labs4CellLastSlotGrid>
-                <Labs4CellPLLGrid cubeSize={cubeSize} setCubeSize={setCubeSize} oll={oll} LastSlotAlgs={LastSlotAlgs}> </Labs4CellPLLGrid>
+                    
+                
+                {gridList.map((item)=>{
+                    if(item[0]=="LastSlot"){
+                        return(
+                            <Labs4CellLastSlotGrid startCountNumber={item[1]} cells={cells} setCells={setCells} unlinkable={unlinkable} cubeSize={cubeSize} setCubeSize={setCubeSize} LastSlotAlgs={LastSlotAlgs} shortGroupTable={shortGroupTable}> </Labs4CellLastSlotGrid>
+                
+                        )
+                    }
+                    if(item[0]=="2Grid"){
+                        return(
+                            <h2></h2>
+                            // <Labs2CellGrid startCountNumber={item[1]} cells={cells} setCells={setCells} unlinkable={unlinkable} cubeSize={cubeSize} setCubeSize={setCubeSize}LastSlotAlgs={LastSlotAlgs} shortGroupTable={shortGroupTable}> </Labs2CellGrid>
+                
+                        )
+                    }
+                    if(item[0]=="PLL"){
+                        return(
+                            <h2></h2>
+                            // <Labs4CellPLLGrid startCountNumber={item[1]} cells={cells} setCells={setCells} unlinkable={unlinkable} cubeSize={cubeSize} setCubeSize={setCubeSize} LastSlotAlgs={LastSlotAlgs} shortGroupTable={shortGroupTable}> </Labs4CellPLLGrid>
+                
+                        )
+                    }
+                })}
+                {/* <Labs2CellGrid startCountNumber={10} cells={cells} setCells={setCells} unlinkable={unlinkable} cubeSize={cubeSize} setCubeSize={setCubeSize} LastSlotAlgs={LastSlotAlgs} shortGroupTable={shortGroupTable}> </Labs2CellGrid> */}
+                
                 
                 </div>
                 
@@ -681,6 +469,21 @@ export default function CpTrainerPage(){
                 
                                         }}
                                         >Add 2 GridCells</button>
+                                        <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+                
+                style={{
+                
+                    ...ContinueButtonstyle,
+
+                    "--bs-border-style": "solid",
+                    "--bs-border-color": "white",
+                    "--bs-btn-hover-border-color": "red",
+                    "--bs-btn-focus-border-color": "red",
+                    "--bs-btn-active-border-color": "red",
+                
+                                        }}
+                                        >Add 4 OLLCells</button>
+
                                         <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
                 
                 style={{
