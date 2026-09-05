@@ -22,7 +22,7 @@ export const OllProvider = ({ children }) => {
   };
 
   // Add a new alg variant for a given oll number
-  const addAlg = async (ollNumber, group, newAlg) => {
+  const addOllAlg = async (ollNumber, group, newAlg) => {
     try {
       // Find the highest algNumber for this oll
       //const existing = allOlls?.filter(o => o.ollNumber === ollNumber) ?? [];
@@ -43,7 +43,7 @@ export const OllProvider = ({ children }) => {
   };
 
   // Create an empty slot for an oll
-  const createEmptySlot = async (ollNumber, group) => {
+  const createOllEmptySlot = async (ollNumber, group) => {
     try {
       const existing = allOlls?.filter(o => o.ollNumber === ollNumber) ?? [];
       const maxAlgNumber = existing.length > 0 ? Math.max(...existing.map(o => o.algNumber)) : -1;
@@ -115,8 +115,8 @@ export const OllProvider = ({ children }) => {
   const value = {
     allOlls,
     getOllsByGroup,
-    addAlg,
-    createEmptySlot,
+    addOllAlg,
+    createOllEmptySlot,
     swapOllsAlgnumber,
   };
 

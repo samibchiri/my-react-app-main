@@ -21,7 +21,7 @@ import Bar6Grid from "../BarPersevationPage/Bar6Grid.jsx";
 function ShowBarFullHint({alg,pll, sixGridWanted,cpEasyWanted, cpSameOpp, cubeSizeFixed, cubeSize, setCubeSize, onClose,algCasesSet}){
     console.log("Showing Card",alg)
 
-    const {swapOllsAlgnumber,createEmptySlot } = useOll();
+    const {swapOllsAlgnumber,createOllEmptySlot } = useOll();
 
         
     const [editClick1,setEditClick1]= useState(false)
@@ -47,11 +47,11 @@ function ShowBarFullHint({alg,pll, sixGridWanted,cpEasyWanted, cpSameOpp, cubeSi
     useEffect(()=>{
     if(AlgVersions){
         if (AlgVersions.length==1){
-            console.log("CreateEmptySlot")
+            console.log("createOllEmptySlot")
             const createSlot = async ()=>{
 
             
-            await createEmptySlot(AlgVersions[0].ollNumber, AlgVersions[0].group);
+            await createOllEmptySlot(AlgVersions[0].ollNumber, AlgVersions[0].group);
             }
         
         createSlot()

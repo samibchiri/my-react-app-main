@@ -1331,7 +1331,7 @@ table input.PopUpInputAlg:active {
   background-color: black !important;
 } */
 
-.LabsLastSlotGroupMenu{
+/* .LabsLastSlotGroupMenu{
   display: grid !important;
   grid-template-columns: repeat(2, max-content) !important;
   width: max-content !important;
@@ -1341,7 +1341,7 @@ table input.PopUpInputAlg:active {
   gap:19px !important;
   background-color: black !important;
   padding: 5px !important;
-}
+} */
 
 
 .LastSlotCustomInput{
@@ -1411,7 +1411,7 @@ table input.PopUpInputAlg:active {
   padding-left: 0 !important;
   padding-right: 0 !important;
   height: 30px !important;
-  width: 109px !important;
+  width: 100px !important;
   font-size: 0.8rem !important;
 }
 
@@ -1446,7 +1446,7 @@ table input.PopUpInputAlg:active {
 
 .LabsPLLGroupMenu{
   position: absolute !important;
-  grid-template-columns: repeat(3, max-content) !important;
+  grid-template-columns: repeat(5, max-content) !important;
   width: max-content !important;
   height: max-content !important;
   min-width: 0 !important;
@@ -1462,11 +1462,19 @@ table input.PopUpInputAlg:active {
   z-index: 10 !important;
 }
 
+.LabsPLLGroupMenu > :last-child {
+    grid-column: span 2;
+    justify-self: center;
+    width: 100% !important;
+}
 
 .LabsNestedDropdown .dropdown-menu {
     display: none;
 }
 
+.LabsDropDownItem {
+   font-size: 0.9rem;
+}
 .LabsCopyButtonCont {
     position: absolute;
     right: 0;

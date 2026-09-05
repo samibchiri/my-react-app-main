@@ -28,9 +28,12 @@ import '../../styling/index.css';
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/NewGeneratedData/db.js';
 
-import { useOll } from "../../context/ollContext.jsx";
+import { useOll } from "../../context/OllContext.jsx";
 
 import {sortOlls} from "../../context/OllContext.jsx"
+
+import { usePll } from "../../context/PllContext.jsx";
+import {sortPlls} from "../../context/PllContext.jsx"
 
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
@@ -94,9 +97,16 @@ export default function AlgDisplayPage(
         
           return db.olls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortOlls));;
         },[]
-      );
+      ) ?? [];
     
-      const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
+      const dbPllCaseSet = useLiveQuery(()=>{
+        
+          return db.plls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortPlls));;
+        },[]
+      ) ?? [];;
+    
+      const { allOlls, getOllsByGroup, addOllAlg, createOllEmptySlot, swapOllsAlgnumber } = useOll();
+      const { allPlls, getPllsByGroup, addPllAlg, createPllEmptySlot, swapPllsAlgnumber } = usePll();
       
       console.log("UseCont",allOlls,getOllsByGroup("Dot"))
 //    const [selectedCaseSet, setSelectedCaseSet] = useState(null)
@@ -160,15 +170,22 @@ export default function AlgDisplayPage(
 
         let ChosenGroupAlgs = []
 
-        if(algCasesSet.details.id!="oll"){
+        if(algCasesSet.details.id!="oll" && algCasesSet.details.id!="pll"){
             algCasesSet.cases.forEach((alg) => {
             if (alg.group == group) {
                 ChosenGroupAlgs.push(alg)
             }
         })
         }
-        else{
+        else if(algCasesSet.details.id=="oll"){
             dbOllCaseSet.forEach((alg) => {
+            if (alg.group == group) {
+                ChosenGroupAlgs.push(alg)
+            }
+        })
+        }
+        else{
+            dbPllCaseSet.forEach((alg) => {
             if (alg.group == group) {
                 ChosenGroupAlgs.push(alg)
             }
@@ -211,11 +228,14 @@ export default function AlgDisplayPage(
     const AreAllAlgsChecked = () => {
         if (!algCasesSet) return false;
 
-        if(algCasesSet.details.id!="oll"){
+        if(algCasesSet.details.id!="oll"&& algCasesSet.details.id!="pll"){
             return algCasesSet.cases.every(alg => selectedAlg.includes(alg))
         }
-        else{
+        else if(algCasesSet.details.id=="oll"){
             return dbOllCaseSet.every(alg => selectedAlg.includes(alg))
+        }
+        else{
+            return dbPllCaseSet.every(alg => selectedAlg.includes(alg))
         }
         
 
@@ -228,11 +248,14 @@ export default function AlgDisplayPage(
             setSelectedAlg([])
         }
         else {
-            if(algCasesSet.details.id!="oll"){
+            if(algCasesSet.details.id!="oll"&& algCasesSet.details.id!="pll"){
             setSelectedAlg([...algCasesSet.cases])
             }
-            else{
+            else if(algCasesSet.details.id=="oll"){
                 setSelectedAlg([...dbOllCaseSet])
+            }
+            else{
+                setSelectedAlg([...dbPllCaseSet])
             }
         }
     }
@@ -258,8 +281,8 @@ export default function AlgDisplayPage(
         }
     }
     const handleAlgCardShown = (alg) => {
-        console.log("HandleShown")
-        console.log(alg)
+        console.log("HandleShown",alg)
+
         setShowPopUpCard([alg])
     }
 
@@ -330,14 +353,28 @@ export default function AlgDisplayPage(
                 }
             };
         }
+        else if(algCasesSet.details.id=="pll"){
+            newCaseItem={
+                dbPllCaseSet:dbPllCaseSet,
+                details: {
+                    id: "pll"
+                }
+            };
+        }
+            else {
+            newCaseItem = algCasesSet;
+        }
         console.log("Case2",dbOllCaseSet,algCasesSet)
         setSelectedCaseSet(newCaseItem)
         
-    },[dbOllCaseSet])
+    },[dbOllCaseSet,dbPllCaseSet])
+
+
+
 
     return <>
-        {console.log(selectedCaseSet)}
-        {selectedCaseSet && caseClicked && dbOllCaseSet && <div className='container-fluid '>
+        {console.log("Case3",selectedCaseSet,caseClicked,dbOllCaseSet,dbOllCaseSet==true)}
+        {selectedCaseSet && caseClicked && (selectedCaseSet.details.id!="pll" || dbPllCaseSet.length>0) && (selectedCaseSet.details.id!="oll" || dbOllCaseSet.length>0) && <div className='container-fluid '>
                     <div className='row align-items-center'>
                         <div className='col justify-content-end d-flex p-0'>
                             <button className={`${darkMode ? "dark-learn-btn" : "light-learn-btn"} m-1 btn btn-info `} disabled={DissableLearnBtn()} type='button'>
@@ -458,7 +495,7 @@ export default function AlgDisplayPage(
 
                                         </tr>
                                        
-                                        {(selectedCaseSet.details.id=="oll"?dbOllCaseSet:algCasesSet.cases).map(alg => {
+                                        {(selectedCaseSet.details.id=="oll"?dbOllCaseSet: "pll"? dbPllCaseSet:algCasesSet.cases).map(alg => {
                                             
                                             return (
 
@@ -526,7 +563,7 @@ export default function AlgDisplayPage(
 
                         </tbody>
                     </table>
-                    {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
+                    {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} algtype={selectedCaseSet.details.id} onClose={() => setShowPopUpCard([])} algCasesSet={algCasesSet} />}
 
                 </div>}
     </>

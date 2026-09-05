@@ -66,9 +66,10 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
 
     const [ollRecognitionClicked,setOllRecognitionClicked] = useState(false)
     const [lastSlotClicked,setLastSlotClicked] = useState(false)
-    const [ollPreAUFClicked,setOllPreAUFClicked] = useState(false)
-    const [pllPreAUFClicked,setPllPreAUFClicked] = useState(false)
-    const [pllPostAUFClicked,setPllPostAUFClicked] = useState(false)
+    const [preOllAUFClicked,setPreOllAUFClicked] = useState(false)
+    const [prePllAUFClicked,setPrePllAUFClicked] = useState(false)
+    const [postPllAUFClicked,setPostPllAUFClicked] = useState(false)
+    const [algsToSolveClicked,setAlgsToSolveClicked] = useState(false)
 
      const [caseClicked, setCaseClicked] = useState(false)
         const [buttonClicked, setButtonClicked] = useState(false)
@@ -82,6 +83,8 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
         const [ollGroupClicked, setOllGroupClicked]= useState(false)
         
         const [pllGroupClicked, setPllGroupClicked]= useState(false)
+
+        const [pllName, setPllName] = useState("")
 
 
         const [ollNumberGroupList, setOllNumberGroupList] = useState([])
@@ -104,6 +107,8 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
         14: "Corners Oriented"
         }
 
+        const AUFList=["No AUF", "U2", "U", "U'"]
+
         const PllList = [
             "E",
             "Ua",
@@ -125,12 +130,40 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
             "Jb",
             "Ab",
             "Gd",
-            "Y"
+            "Y",
+            "",
+            "",
+            "No pll"
             ];
+
+
+        let tempAlgsToSolveList = [cells[cellNumber].lastSlotAlgSolve,cells[cellNumber].ollAlgSolve, cells[cellNumber].pllAlgSolve]
+
+        let algToSolveList = []
+
+        tempAlgsToSolveList.forEach((alg,i)=>{
+            if(alg!=""){
+                console.log("AlgsSOlve",i)
+                if(i==0){
+                    algToSolveList.push("Last Slot")
+                }
+                if(i==1){
+                    algToSolveList.push("OLL")
+                }
+                if(i==2){
+                    algToSolveList.push("PLL")
+                }
+                
+            }
+        })
 
         const LastSlotSetupInputRef= useRef(null)
 
         const PreOLLSetupInputRef= useRef(null)
+
+        const AlgsToSolveLastSlotInputRef= useRef("")
+        const AlgsToSolveOllInputRef= useRef("")
+        const AlgsToSolvePllInputRef= useRef("")
         
         const ollCaseSetByGroup = useRef([])
 
@@ -185,13 +218,27 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
             }
             const handleLastSlotSetupClicked = (value)=>{
 
-                
-
-                console.log("ClickedSetup",value)
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    newCells[cellNumber].lastSlotAlgSetup=value
+                    return newCells
+                })
             }
         
             const handlePreOLLSetupClicked = (value)=>{
-                console.log("ClickedSetup",value)
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    if(value=="No AUF"){
+                        value=""
+                    }
+                    newCells[cellNumber].preOllAUFSetup=value
+
+                    return newCells
+                })
             }
         
             const handleOLLSetupClicked1 = (value)=>{
@@ -237,7 +284,19 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                 }
                 
             const handlePrePLLSetupClicked = (value)=>{
-                console.log("ClickedSetup",value)
+                
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    if(value=="No AUF"){
+                        value=""
+                    }
+                    newCells[cellNumber].prePllAUFSetup=value
+
+
+                    return newCells
+                })
             }
             const handlePLLSetupClicked1 = (value)=>{
                 console.log("PLLClickedSetup1",ollGroupClicked,value)
@@ -254,9 +313,23 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
             const handlePLLSetupClicked2 = (value)=>{
                 console.log("PLLClickedSetup2",pllCaseSet,value)
                 pllCaseSet.cases.forEach((pll)=>{
-                    console.log("JbError",pll.name,pll.name[0],pll.name.split(" ")[0]=="Jb")
+                    console.log("JbError",pll.name,pll.name.split(" ")[0],pll.name.split(" ")[0]=="Ub")
                 })
-                let pllAlg = pllCaseSet.cases.find((pll)=>pll.name[0]==value).algs[0]
+                if(value=="No pll"){
+                    setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    newCells[cellNumber].pllAlgSetup=""
+                    console.log("Updated25",newCells)
+                    setPllName(value)
+                    setPllGroupClicked(false)
+                    hideDropDown()
+                    return newCells
+                })
+
+                }
+                let pllAlg = pllCaseSet.cases.find((pll)=>pll.name.split(" ")[0]==value).algs[0]
 
                 console.log("PLLAlg",pllAlg)
                 setCells((prev)=>{
@@ -267,24 +340,92 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                     console.log("Updated5",newCells)
                     return newCells
                 })
+
+                setPllName(value)
                 setPllGroupClicked(false)
                 hideDropDown()
             }
+
+            const handlePLLSetupClicked3 = (cellNumber,ollNumber,algNumber)=>{
+                
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    newCells[cellNumber].ollAlgSetupNumber=ollNumber
+                    newCells[cellNumber].ollAlgNumber=algNumber
+                    
+                    console.log("Updated5",newCells)
+                    return newCells
+                })
+              
+              setOllGroupClicked(false)
+                }
 
             const handlePLLClicked = (value)=>{
                 console.log("ClickedSetup",value)
             }
         
             const handlePostPLLSetupClicked = (value)=>{
-                console.log("ClickedSetup",value)
+                
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    if(value=="No AUF"){
+                        value=""
+                    }
+                    newCells[cellNumber].postPllAUFSetup=value
+
+
+                    return newCells
+                })
             }
 
             const handleResetClicked = ()=>{
-                console.log("Reset")
+                
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    newCells[cellNumber]=defaultCellInfo(cellNumber,false)
+
+
+                    return newCells
+                })
             }
             const handleAlgsToSolveSaveClicked = ()=>{
 
+                setCells((prev)=>{
+                    
+                    let newCells=[...prev]
+                    
+                    newCells[cellNumber].lastSlotAlgSolve=AlgsToSolveLastSlotInputRef.current.value
+                    newCells[cellNumber].ollAlgSolve=AlgsToSolveOllInputRef.current.value
+                    newCells[cellNumber].pllAlgSolve=AlgsToSolvePllInputRef.current.value
+
+
+                    return newCells
+                })
+
+                console.log("AlgsToSolve",AlgsToSolveLastSlotInputRef.current.value,AlgsToSolveOllInputRef.current.value,AlgsToSolvePllInputRef.current.value)
+            
+                if (AlgsToSolveLastSlotInputRef.current) {
+                AlgsToSolveLastSlotInputRef.current.value = "";
             }
+
+            if (AlgsToSolveOllInputRef.current) {
+                AlgsToSolveOllInputRef.current.value = "";
+            }
+
+            if (AlgsToSolvePllInputRef.current) {
+                AlgsToSolvePllInputRef.current.value = "";
+            }
+
+            setAlgsToSolveClicked(false)
+            }
+            
+            
 
             const handleChainedClicked = ()=>{
 
@@ -375,9 +516,9 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
         // alg =  cells[cellNumber].lastSlotAlgSetup+tempOllAlg
         // console.log("InverseTest",cells[cellNumber].lastSlotAlgSolve,Inverse(cells[cellNumber].lastSlotAlgSolve))
         console.log("Updated6",cells,cellNumber,)
-         alg = Inverse(cells[cellNumber].PLLAlgSolve)+ Inverse(cells[cellNumber].OLLAlgSolve) + Inverse(cells[cellNumber].lastSlotAlgSolve)
-            +cells[cellNumber].lastSlotAlgSetup+ cells[cellNumber].preOLLAUFSetup+tempOllAlg+ cells[cellNumber].prePLLAUFSetup
-                +cells[cellNumber].pllAlgSetup+ cells[cellNumber].postPLLAUFSetup
+         alg = Inverse(cells[cellNumber].pllAlgSolve)+ Inverse(cells[cellNumber].ollAlgSolve) + Inverse(cells[cellNumber].lastSlotAlgSolve)
+            +cells[cellNumber].lastSlotAlgSetup+ cells[cellNumber].preOllAUFSetup+tempOllAlg+ cells[cellNumber].prePllAUFSetup
+                +cells[cellNumber].pllAlgSetup+ cells[cellNumber].postPllAUFSetup
 
     return (
         <div className="LabsCell">
@@ -549,7 +690,7 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                                                         type="button"
                                                     
                                                         style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                        >Last Slot {`${cells[cellNumber].ollAlgSetupNumber!=""?`(OLL ${cells[cellNumber].ollAlgSetupNumber}-${cells[cellNumber].ollAlgNumber})` :""}`}</button>
+                                                        >Last Slot {`${cells[cellNumber].lastSlotAlgSetup!=""?`(${cells[cellNumber].lastSlotAlgSetup})` :""}`}</button>
                                                                 {/* <div className="dropdown-menu LabsOLLMenu"> */}
                                                                 {console.log("GroupClicked",shortGroupTable,ollGroupClicked,ollGroupClicked=="Group")}
                                                                 <div style={{display: lastSlotClicked ? "flex" : "none"}} className="flex-column">
@@ -610,15 +751,36 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
         
                                                         <li className="dropdown LabsNestedDropdown">
         
-                                                            <button onClick={()=>setOllPreAUFClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
+                                                            <button onClick={()=>setPreOllAUFClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
                                                         type="button"
                                                         data-bs-toggle="dropdown"
                                                         style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                        >Oll Pre-AUF</button>
-        
-                    
-                                                                              <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                           {AUFGrid({onClick:handlePreOLLSetupClicked})}
+                                                        >Pre-OLL AUF {`${cells[cellNumber].preOllAUFSetup!=""?`(${cells[cellNumber].preOllAUFSetup})` :""}`}</button>
+                                                                {/* <div className="dropdown-menu LabsOLLMenu"> */}
+                                                                {console.log("GroupClicked",shortGroupTable,ollGroupClicked,ollGroupClicked=="Group")}
+                                                                {/* <div style={{display: lastSlotClicked ? "flex" : "none"}} className="flex-column"> */}
+                                                                <div style={{display: preOllAUFClicked ? "grid" : "none"}} className="LabsLastSlotGroupCont">
+                                                               
+                                                                {AUFList.map((alg)=>(
+                                                                    <LabsLastSlotButton onClick={handlePreOLLSetupClicked} text={alg}></LabsLastSlotButton>
+                                                                ))}
+                                       {/* <button onClick={()=>setLastSlotClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
+                                                        type="button"
+                                                    
+                                                        style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
+                                                        >Last Slot {`${cells[cellNumber].ollAlgSetupNumber!=""?`(OLL ${cells[cellNumber].ollAlgSetupNumber}-${cells[cellNumber].ollAlgNumber})` :""}`}</button>
+                                                                {/* <div className="dropdown-menu LabsOLLMenu"> */}
+                                                                {/* {console.log("GroupClicked",shortGroupTable,ollGroupClicked,ollGroupClicked=="Group")}
+                                                                <div style={{display: lastSlotClicked ? "flex" : "none"}} className="flex-column">
+                                                                <div style={{display: lastSlotClicked ? "grid" : "none"}} className="LabsLastSlotGroupCont">
+                                                                */}
+             
+                                                                    {/* <div style={{display: ollPreAUFClicked ? "grid" : "none"}} className="dropdown-menu LabsLastSlotGroupCont" > */}
+                                                           {/* {AUFGrid({onClick:handlePreOLLSetupClicked})} */}
+                                                           {/* {AUFList.map((alg)=>(
+                                                                   <LabsLastSlotButton onClick={handlePreOLLSetupClicked} text={alg}></LabsLastSlotButton>
+                                                               ))} */}
+                                                         
                                                                   
                                                         </div>
                                                         </li>
@@ -718,17 +880,20 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                                                           <li><hr className="dropdown-divider" /></li>
                                                            <li className="dropdown LabsNestedDropdown">
         
-                                                            <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
+                                                            <button onClick={()=>setPrePllAUFClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
                                                         type="button"
                                                         data-bs-toggle="dropdown"
                                                         style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                        >PLL Pre-AUF</button>
-        
-                    
-                                                                            <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                           {AUFGrid({onClick:handlePrePLLSetupClicked})}
-                                                                  
-                                                        </div>
+                                                        >Pre-PLL AUF {`${cells[cellNumber].prePllAUFSetup!=""?`(${cells[cellNumber].prePllAUFSetup})` :""}`}</button>
+                                                                {/* <div className="dropdown-menu LabsOLLMenu"> */}
+                                                                {console.log("GroupClicked",shortGroupTable,ollGroupClicked,ollGroupClicked=="Group")}
+                                                                {/* <div style={{display: lastSlotClicked ? "flex" : "none"}} className="flex-column"> */}
+                                                                <div style={{display: prePllAUFClicked ? "grid" : "none"}} className="LabsLastSlotGroupCont">
+                                                               
+                                                                {AUFList.map((alg)=>(
+                                                                    <LabsLastSlotButton onClick={handlePrePLLSetupClicked} text={alg}></LabsLastSlotButton>
+                                                                ))}
+                                                                </div>
                                                                   
                                                         
                                                         </li>
@@ -741,7 +906,7 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                                                         type="button"
                                                         data-bs-toggle="dropdown"
                                                         style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                        >PLL Group</button>
+                                                        >PLL Group {pllName!=""?`(${pllName})`:""}</button>
                                                                 {/* <div className="dropdown-menu LabsOLLMenu"> */}
 
                                                                 <div style={{display:`${pllGroupClicked=="Group"?"grid":"none"}`}} className="LabsPLLGroupMenu">
@@ -760,6 +925,9 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                                                                     }}
                                                                     >Group 1</button> */}
                                                                     {(PllList).map((pll) => {
+                                                                        if(pll==""){
+                                                                            return <div></div>
+                                                                        }
                                                                         return <LabsPllGroupButton onClick={handlePLLSetupClicked2} text={pll}></LabsPllGroupButton>
                                                                     })}
 
@@ -790,52 +958,88 @@ export function LabsCell({cellNumber,cells,setCells,unlinkable,linkedWith,cubeSi
                                                                     <LabsPllGroupButton text="Y" />
              */}
                                                                 </div>
+                                                                <div style={{display:`${ollGroupClicked=="OLL"?"grid":"none"}`}} className="dropdown-menu LabsOLLAlgMenu ">
+                                                                    {/* <button  className={`LabsGroupButton ${darkMode ? "btn-dark border-3 btn-back-dark" : "btn-secondary border-3 border-dark btn-back-light"} border border-2 btn `}
+                                           
+                                           style={{
+                                         
+                                                ...ContinueButtonstyle,
+        
+                                                "--bs-border-style": "solid",
+                                                "--bs-border-color": "white",
+                                                "--bs-btn-hover-border-color": "red",
+                                                "--bs-btn-focus-border-color": "red",
+                                                "--bs-btn-active-border-color": "red",
+                                            
+                                                                    }}
+                                                                    >Group 1</button> */}
+                                                                    {ollNumberGroupList.map(([ollNumber,algNumber])=>{
+                                                                        console.log("Test3",ollCaseSetByGroup.current,ollCaseSetByGroup.current?.find((oll)=>oll.ollNumber===ollNumber)?.algs)
+                                                                        return(
+                                                                        <LabsOllAlgButton cellNumber={cellNumber} onClick={handleOLLSetupClicked3} ollNumber={ollNumber} algNumber={algNumber} text={`OLL ${ollNumber}-${algNumber}`} oll={ollCaseSetByGroup.current?.find((oll)=>oll.ollNumber===ollNumber)?.algs}></LabsOllAlgButton>
+                                                                        )   
+                                                                    })}
+                                                                   
+                                                                    {/* <LabsOllAlgButton text={"Alg 2"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 3"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 4"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 5"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 6"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 7"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton>
+                                                                    <LabsOllAlgButton text={"Alg 8"} oll={"R U R' U R U2 R' "}></LabsOllAlgButton> */}
+                                                                </div>
         
                                                              
                                                           </li>
                                                           <li><hr className="dropdown-divider" /></li>
                                                            <li className="dropdown LabsNestedDropdown">
         
-                                                            <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
+                                                           <button onClick={()=>setPostPllAUFClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
                                                         type="button"
                                                         data-bs-toggle="dropdown"
                                                         style={{borderTopLeftRadius:"6px",borderTopRightRadius:"6px"}}
-                                                        >PLL Post-AUF</button>
-        
-                    
-                                                                             <div className="dropdown-menu LabsLastSlotGroupCont" >
-                                                           {AUFGrid({onClick:handlePostPLLSetupClicked})}
-                                                                  
-                                                        </div>
+                                                        >Post-PLL AUF {`${cells[cellNumber].postPllAUFSetup!=""?`(${cells[cellNumber].postPllAUFSetup})` :""}`}</button>
+                                                                {/* <div className="dropdown-menu LabsOLLMenu"> */}
+                                                                {console.log("GroupClicked",shortGroupTable,ollGroupClicked,ollGroupClicked=="Group")}
+                                                                {/* <div style={{display: lastSlotClicked ? "flex" : "none"}} className="flex-column"> */}
+                                                                <div style={{display: postPllAUFClicked ? "grid" : "none"}} className="LabsLastSlotGroupCont">
+                                                               
+                                                                {AUFList.map((alg)=>(
+                                                                    <LabsLastSlotButton onClick={handlePostPLLSetupClicked} text={alg}></LabsLastSlotButton>
+                                                                ))}
+                                                                </div>
                                                         </li>
                                                         <li><hr className="dropdown-divider" /></li>
                                                         <li className="dropdown LabsNestedDropdown" style={{marginTop:"20px"}}>
-                                                             <button  className="dropdown-item LabsDropDownItem dropdown-toggle"
+                                                             <button onClick={()=>setAlgsToSolveClicked((prev)=>!prev)} className="dropdown-item LabsDropDownItem dropdown-toggle"
                                                         type="button"
                                                         data-bs-toggle="dropdown"
                                                         style={{borderBottomLeftRadius:"6px",borderBottomRightRadius:"6px"}}
-                                                        >Algs to Solve</button>
+                                                        >Algs to Solve {algToSolveList.length>0?`(${algToSolveList.join(", ")})`:""}</button>
+
+                                                        
         
-                                                        <div className="dropdown-menu LabsSolveInputCont">
+                                                        <div style={{display: algsToSolveClicked ? "flex" : "none"}} className="flex-column LabsLastSlotGroupCont">
+                                                               
                                                             
                                                                 <div className="d-flex align-items-center">
                                                                      <label style={{color:"white",marginRight:"auto"}} htmlFor="LastSlotSolveAlg">Last Slot:</label>
-                                                                      <input id="LastSlotSolveAlg" name="LastSlotSolveAlg" className="LastSlotSolveInput"></input>
+                                                                      <input ref={AlgsToSolveLastSlotInputRef} placeholder={`${cells[cellNumber].lastSlotAlgSolve}`} id="LastSlotSolveAlg" name="LastSlotSolveAlg" className="LastSlotSolveInput"></input>
                                                                 </div>
 
                                                                 <div className="d-flex align-items-center">
                                                                      <label style={{color:"white",marginRight:"auto"}} htmlFor="OLLSolveAlg">OLL:</label>
-                                                                      <input id="OLLSolveAlg" name="OLLSolveAlg" className="LastSlotSolveInput"></input>
+                                                                      <input ref={AlgsToSolveOllInputRef} placeholder={`${cells[cellNumber].ollAlgSolve}`} id="OLLSolveAlg" name="OLLSolveAlg" className="LastSlotSolveInput"></input>
                                                                 </div>
 
                                                                 <div className="d-flex align-items-center">
                                                                      <label style={{color:"white", marginRight:"auto"}} htmlFor="PLLSolveAlg">PLL:</label>
-                                                                      <input id="PLLSolveAlg" name="PLLSolveAlg" className="LastSlotSolveInput"></input>
+                                                                      <input ref={AlgsToSolvePllInputRef} placeholder={`${cells[cellNumber].pllAlgSolve}`} id="PLLSolveAlg" name="PLLSolveAlg" className="LastSlotSolveInput"></input>
                                                                 </div>
 
 
                                                                 <div className="d-flex justify-content-center" style={{marginTop:"10px"}}>
-                                                                <button className="barExcludeButtonSave"> Save</button>
+                                                                <button style={{marginBottom:"10px"}} onClick={handleAlgsToSolveSaveClicked} className="barExcludeButtonSave"> Save</button>
                                                                 </div>
 
                                                         </div>
@@ -881,17 +1085,17 @@ const defaultCellInfo = (cellNumber,hidden)=>{
         cellNumber: cellNumber,
         ollRecSetting: "",
         lastSlotAlgSetup: "",
-        preOLLAUFSetup: "",
+        preOllAUFSetup: "",
         ollAlgSetupNumber: "",
         ollAlgNumber:"",
-        prePLLAUFSetup: "",
+        prePllAUFSetup: "",
         pllAlgSetup: "",
-        postPLLAUFSetup: "",
+        postPllAUFSetup: "",
         lastSlotAlgSolve:"",
-        OLLAlgSolve:"",
-        PLLAlgSolve:"",
+        ollAlgSolve:"",
+        pllAlgSolve:"",
         lastSlotGridNumber:"",
-        PLLGridNumber:"",
+        pllGridNumber:"",
         linkedCell: [1,"LastSlot"],
         hidden: hidden
     }

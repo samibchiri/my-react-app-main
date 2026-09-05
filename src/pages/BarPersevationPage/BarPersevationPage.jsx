@@ -38,7 +38,7 @@ export function BarPersevationPage({algGroup,testedAlgs,setButtonClicked,setCase
 
   const [showPopUpCard, setShowPopUpCard] = useState([])
 
-  const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
+  const { allOlls, getOllsByGroup, addOllAlg, createOllEmptySlot, swapOllsAlgnumber } = useOll();
 
   
   const altoverlayRefs = useRef([]);

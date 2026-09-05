@@ -1,5 +1,9 @@
 import Dexie from "dexie";
 import arrowOllSet from "../arrowOllSet.js";
+import pllCaseSet from "../pllCaseSet.js";
+import ollCaseSet from "../ollCaseSet.js";
+
+import pllCases from "../customPllSet.js";
 
 export const db = new Dexie("ollDatabase");
 
@@ -14,6 +18,13 @@ db.version(1).stores({
     algNumber,
     group
   `,
+  plls: `
+    id,
+    pllNumber,
+    algNumber,
+    pllName,
+    group
+  `,
   deletedOlls: `
   id,
   ollNumber,
@@ -23,6 +34,46 @@ db.version(1).stores({
 });
 
 export async function seedDatabaseIfEmpty() {
+
+  console.log("PLLCaseSet1",pllCaseSet.cases,pllCaseSet.cases.length)
+
+//   let pllCases=[]
+
+//   if(pllCases.length==0){
+//     console.log("PllCases Start",pllCases)
+//   pllCaseSet.cases.forEach((pll,i)=>{
+    
+//     let newPllDict1= {
+//       id:crypto.randomUUID(),
+//       name:pll.name,
+//       group:pll.group,
+//       pllNumber:i,
+//       algNumber:0,
+//       algAttemptCount:null,
+//       algSpeed:null,
+//       algTps:null,
+//       algs:pll.algs[0],
+//       scrambles:pll.scrambles,
+
+//     }
+//     let newPllDict2= {
+//       id:crypto.randomUUID(),
+//       name:pll.name,
+//       group:pll.group,
+//       pllNumber:i,
+//       algNumber:1,
+//       algAttemptCount:null,
+//       algSpeed:null,
+//       algTps:null,
+//       scrambles:pll.scrambles,
+//       algs:pll.algs[1]
+//     }
+//     console.log("AddPll",i,newPllDict1,newPllDict2)
+//     pllCases.push(newPllDict1)
+//     pllCases.push(newPllDict2)
+//   })
+// }
+
   try {
     const count = await db.olls.count();
     console.log("Seeding",arrowOllSet)
@@ -30,7 +81,17 @@ export async function seedDatabaseIfEmpty() {
       await db.olls.clear();
       console.log("Seeding IndexedDB with default OLLs...");
       await db.olls.bulkPut(arrowOllSet);
-      const newCount = await db.olls.count();
+      let newCount = await db.olls.count();
+      console.log(`IndexedDB seeded — ${newCount} records now present.`);
+      
+      await db.plls.clear();
+      console.log("Seeding IndexedDB with default OLLs...");
+      const count = await db.plls.count();
+
+      await db.plls.bulkPut(pllCases);
+
+      // await db.plls.bulkPut(pllCases);
+      newCount = await db.plls.count();
       console.log(`IndexedDB seeded — ${newCount} records now present.`);
     } else {
       console.log(`IndexedDB already has data (${count} records); skipping seed.`);

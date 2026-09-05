@@ -40,7 +40,7 @@ export function BarPersevationOverlay({oll,pll,permIndex,cpEasyWanted,cpSameOppW
   const [lineWidth, setLineWidth] = useState(4);
   const [refsReady, setRefsReady] = useState(false);
 
-  const { allOlls, getOllsByGroup, addAlg, createEmptySlot, swapOllsAlgnumber } = useOll();
+  const { allOlls, getOllsByGroup, addOllAlg, createOllEmptySlot, swapOllsAlgnumber } = useOll();
 
   // console.log("CubeSize",cubeSize)
   //const [cubeSize, setCubeSize] = useState(200);

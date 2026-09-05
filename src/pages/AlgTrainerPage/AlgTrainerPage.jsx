@@ -27,6 +27,8 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from '../../data/NewGeneratedData/db.js';
 
 import {sortOlls} from "../../context/OllContext.jsx"
+import {sortPlls} from "../../context/PllContext.jsx"
+
 
 import { ThemeContext } from '../../context/DarkThemeContext.jsx';
 import ShowAlgCard from "../TrainSelectPage/cardPopUp.jsx";
@@ -49,10 +51,6 @@ export default function AlgTrainerPage() {
         height: "15vh",
         minHeight: "100px",
         color: darkMode ? "#ffffffff" : "#000000ff", // dark text for light grey, white text for dark
-
-
-
-
     };
 
     const BackButtonstyle = {
@@ -79,6 +77,50 @@ export default function AlgTrainerPage() {
           return db.olls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortOlls));;
         },[]
       );
+
+      const dbEollCaseSet = useLiveQuery(async () => {
+        const [alg0, alg1] = await Promise.all([
+            db.olls
+                .where("algNumber")
+                .equals(0)
+                .filter(
+                    oll => oll.ollNumber === 2 || oll.ollNumber === 45
+                )
+                .toArray(),
+
+            db.olls
+                .where("algNumber")
+                .equals(1)
+                .filter(
+                    oll => oll.ollNumber === 44
+                )
+                .toArray()
+        ]);
+
+        return [...alg0, ...alg1].sort(sortOlls)
+    }, []);
+
+     const dbOcllCaseSet = useLiveQuery(() => {
+        return db.olls
+            .where("algNumber")
+            .equals(0)
+            .filter(oll => oll.group === "Cross")
+            .sortBy("ollNumber");
+    }, []);
+
+    const dbPllCaseSet = useLiveQuery(()=>{
+    
+        return db.plls.where("algNumber").equals(0).toArray().then(arr => arr.sort(sortPlls));;
+    },[]
+    );
+
+    const dbCpllCaseSet = useLiveQuery(() => {
+        return db.plls
+            .where("algNumber")
+            .equals(0)
+            .filter(pll => 12<=pll.pllNumber <= 13) //T-Perm or Y-Perm
+            .sortBy("ollNumber");
+    }, []);
 
     const [selectedCaseSet, setSelectedCaseSet] = useState(null)
 
@@ -222,10 +264,28 @@ export default function AlgTrainerPage() {
             };
         }
 
-        if(!dbOllCaseSet){
+        if(caseItem.details.id=="ocll"){
+            newCaseItem={
+                dbPllCaseSet,
+                details: {
+                    id: "pll"
+                }
+            };
+        }
+
+        if(caseItem.details.id=="pll"){
+            newCaseItem={
+                dbPllCaseSet,
+                details: {
+                    id: "pll"
+                }
+            };
+        }
+
+        if(!dbOllCaseSet || !dbPllCaseSet){
             newCaseItem=[]
         }
-        console.log("NewCase",newCaseItem)
+        console.log("NewCase",newCaseItem,dbOllCaseSet,dbPllCaseSet)
         setSelectedCaseSet(newCaseItem)
         
         setOpenGroups([])

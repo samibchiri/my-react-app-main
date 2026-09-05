@@ -209,16 +209,21 @@ export function LabsCellCopyNumber({cells,setCells,cellNumber,text}){
 
 export function AUFGrid({onClick}){
 
+    let AUFList=["No AUF", "U2", "U", "U'"]
     return(
-     <div className="LabsLastSlotGroupMenu">
+    //  <div className="LabsLastSlotGroupCont">
     
-                                                                
-    <LabsLastSlotButton onClick={onClick} text={"No AUF"}></LabsLastSlotButton>
-    <LabsLastSlotButton onClick={onClick} text={"U2"}></LabsLastSlotButton>
-            <LabsLastSlotButton onClick={onClick} text={"U"}></LabsLastSlotButton>
-    <LabsLastSlotButton onClick={onClick} text={"U'"}></LabsLastSlotButton>
+                               <> 
+    {AUFList.map((alg)=>(
+        <LabsLastSlotButton onClick={onClick} text={alg}></LabsLastSlotButton>
+    ))}
+</>   
+    // <LabsLastSlotButton onClick={onClick} text={"No AUF"}></LabsLastSlotButton>
+    // <LabsLastSlotButton onClick={onClick} text={"U2"}></LabsLastSlotButton>
+    //         <LabsLastSlotButton onClick={onClick} text={"U"}></LabsLastSlotButton>
+    // <LabsLastSlotButton onClick={onClick} text={"U'"}></LabsLastSlotButton>
 
-</div>
+// </div>
     )
 }
 

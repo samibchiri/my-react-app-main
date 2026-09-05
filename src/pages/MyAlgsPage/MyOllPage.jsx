@@ -337,7 +337,7 @@ return(
             </tbody>
         </table>
 
-        {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} onClose={() => setShowPopUpCard([])} AlgCasesSet={ollCaseSet} />}
+        {showPopUpCard.length > 0 && <ShowAlgCard alg={showPopUpCard[0]} algtype={"oll"} onClose={() => setShowPopUpCard([])} AlgCasesSet={ollCaseSet} />}
         
         </>)
     }

@@ -18,6 +18,8 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx'
 import BarOverlay from "./pages/BarPersevationPage/SingleBarOverlay.jsx";
 import { ArrowDataGenerator } from "./dataGeneration/ArrowDataGenerator.jsx";
 
+import { PllDataGenerator } from "./dataGeneration/PllDataGenerator.jsx";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -49,7 +51,7 @@ export const router = createBrowserRouter([
       // { path: "labs", element: <ArrowDataGenerator/>},
       { path: "myAlgs",
           children:[
-            {index: true, element: <ArrowDataGenerator/>},
+            {index: true, element: <PllDataGenerator/>},
             // {index: true, element: <MyAlgsPage/>},
             { path: "oll", element: <MyOllPage/>}
           ] },

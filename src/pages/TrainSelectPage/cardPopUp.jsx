@@ -13,12 +13,18 @@ import { db } from '../../data/NewGeneratedData/db.js';
 import { useOll } from "../../context/OllContext";
 
 import {sortOlls} from "../../context/OllContext.jsx"
+
+import { usePll } from "../../context/PllContext";
+
+import {sortPlls} from "../../context/PllContext.jsx"
+
 import { ChangeOlls } from "./ChangeOlls.jsx";
 
-function ShowAlgCard({alg,onClose,algCasesSet}){
-    console.log("Showing Card",alg)
+function ShowAlgCard({alg,algtype,onClose,algCasesSet}){
+    console.log("Showing Card",algtype,alg)
 
-    const {swapOllsAlgnumber,createEmptySlot } = useOll();
+    const {swapOllsAlgnumber,createOllEmptySlot } = useOll();
+    const {swapPllsAlgnumber,createPllEmptySlot } = usePll();
 
         
     const [editClick1,setEditClick1]= useState(false)
@@ -34,7 +40,12 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
 
     let AlgVersions = useLiveQuery(()=>{
             
+        if(algtype=="oll"){
               return db.olls.where("ollNumber").equals(alg.ollNumber).toArray().then(arr => [...arr].sort(sortOlls));;
+        }
+        if(algtype=="pll"){
+            return db.plls.where("pllNumber").equals(alg.pllNumber).toArray().then(arr => [...arr].sort(sortPlls));;
+        }
             },[]
           );
 
@@ -44,11 +55,17 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
     useEffect(()=>{
     if(AlgVersions){
         if (AlgVersions.length==1){
-            console.log("CreateEmptySlot")
+            console.log("createOllEmptySlot")
             const createSlot = async ()=>{
 
             
-            await createEmptySlot(AlgVersions[0].ollNumber, AlgVersions[0].group);
+                if(algtype=="oll"){
+                    await createOllEmptySlot(AlgVersions[0].ollNumber, AlgVersions[0].group);
+                }
+                if(algtype=="pll"){
+                    await createPllEmptySlot(AlgVersions[0].pllNumber, AlgVersions[0].group);
+                }
+            
             }
         
         createSlot()
@@ -104,7 +121,12 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
                     setEditedAlg2((prev)=>[...prev,LastAlg1])
         }
         console.log("StartSwap2",LastAlg1,LastAlg2)
-        await swapOllsAlgnumber(LastAlg1, LastAlg2);
+        if(algtype=="oll"){
+            await swapOllsAlgnumber(LastAlg1, LastAlg2);
+        }
+        if(algtype=="pll"){
+            await swapPllsAlgnumber(LastAlg1, LastAlg2);
+        }
         }
         setExistPrevAlg(true)
     }
@@ -208,10 +230,19 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
 
         console.log("UpdateAlg1",newAlg1,editedAlg1)
         if(newAlg1){
-            await db.olls.update(
+            if(algtype=="oll"){
+                 await db.olls.update(
                 newAlg1.id,
                 {...newAlg1}
             );
+            }
+            if(algtype=="pll"){
+                 await db.plls.update(
+                newAlg1.id,
+                {...newAlg1}
+            );
+            }
+           
         }
         // else{
         //     setEditedAlg1((prev)=>[...prev,prev[prev.length-1]])
@@ -243,10 +274,22 @@ function ShowAlgCard({alg,onClose,algCasesSet}){
 
         }
         if(newAlg2){
-            await db.olls.update(
+            // await db.olls.update(
+            //     newAlg2.id,
+            //     {...newAlg2}
+            // );
+            if(algtype=="oll"){
+                 await db.olls.update(
                 newAlg2.id,
                 {...newAlg2}
             );
+            }
+            if(algtype=="pll"){
+                 await db.plls.update(
+                newAlg2.id,
+                {...newAlg2}
+            );
+            }
         }
         // else{
         //     //setEditedAlg2((prev)=>[...prev,prev[prev.length-1]])
